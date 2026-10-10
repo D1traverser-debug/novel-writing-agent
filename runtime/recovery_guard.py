@@ -10,6 +10,7 @@ def need(rel):
     return p
 for rel in [
  "ENTRYPOINT.md","PROTOCOL.md","SKILL.md","AUTHORITY_STATUS.json","CONTINUITY_ADAPTER.json","TASK_INDEX.json",
+ "continuity/TASK_INDEX.json","continuity/EXECUTION_CAPABILITIES.json",
  "protocols/ACTIVE_RULEBOOK.md","projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json","projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
  "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json","projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
  "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md","projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
@@ -39,6 +40,29 @@ prom=json.loads((TASK/"canon/READER_PROMISES.json").read_text(encoding="utf-8"))
 if not any(c.get("name")=="许知微" and c.get("last_updated_chapter")==8 for c in chars): problems.append("canon-characters")
 if threads.get("T005",{}).get("last_progress_chapter")!=8: problems.append("canon-thread-T005")
 if prom.get("version")!=6: problems.append("canon-promises")
-result={"status":"PASS" if not problems else "FAIL","task_id":m["task_id"],"stage":m["current_stage"],"next_action":m["next_action"],"failures":problems}
+
+# System/project continuity topology guard. NOVEL_OS is the owner-level system router;
+# the active novel remains the single USER task carrying project business state.
+idx=json.loads((ROOT/"continuity/TASK_INDEX.json").read_text(encoding="utf-8"))
+alias=json.loads((ROOT/"TASK_INDEX.json").read_text(encoding="utf-8"))
+adapter=json.loads((ROOT/"CONTINUITY_ADAPTER.json").read_text(encoding="utf-8"))
+system=idx.get("system",{})
+if system.get("system_id")!="NOVEL_OS": problems.append("system-id")
+if system.get("active_project_task_id")!="FQ001_MINGRI_ORDER": problems.append("system-active-project")
+if system.get("resume_behavior")!="ROUTE_TO_ACTIVE_PROJECT": problems.append("system-resume-behavior")
+aliases=set(system.get("resume_aliases",[]))
+if not {"小说系统","NOVEL_OS"}.issubset(aliases): problems.append("system-resume-aliases")
+idx_tasks={t.get("task_id"):t for t in idx.get("tasks",[])}
+active=idx_tasks.get("FQ001_MINGRI_ORDER",{})
+if active.get("system_id")!="NOVEL_OS" or active.get("is_active_project") is not True: problems.append("system-project-binding")
+if active.get("candidate_label_zh")!="小说系统｜《凌晨零点，我接到明天的订单》": problems.append("system-candidate-label")
+if alias.get("canonical_ref")!="continuity/TASK_INDEX.json": problems.append("task-index-alias-canonical")
+if alias.get("system",{}).get("active_project_task_id")!="FQ001_MINGRI_ORDER": problems.append("task-index-alias-active-project")
+topology=adapter.get("system_project_topology",{})
+if topology.get("system_id")!="NOVEL_OS": problems.append("adapter-system-id")
+if topology.get("routing_rule")!="SYSTEM_ALIAS_RESOLVES_OWNER_THEN_ACTIVE_PROJECT": problems.append("adapter-system-routing")
+if topology.get("single_active_project_behavior")!="AUTO_BIND_WITHOUT_SECOND_USER_SELECTION": problems.append("adapter-single-project-autobind")
+
+result={"status":"PASS" if not problems else "FAIL","task_id":m["task_id"],"system_id":system.get("system_id"),"active_project_task_id":system.get("active_project_task_id"),"stage":m["current_stage"],"next_action":m["next_action"],"failures":problems}
 print(json.dumps(result,ensure_ascii=False,indent=2))
 sys.exit(1 if problems else 0)
