@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "architecture_contract_version": "1.0",
+  "owner": "NOVEL_WRITING_AGENT",
+  "owner_kind": "BUSINESS",
+  "skill": {"role": "ROUTER", "entrypoint": "SKILL.md"},
+  "runtime": {
+    "runtime_type": "DETERMINISTIC_WORKFLOW",
+    "entrypoints": ["runtime/recovery_guard.py", "runtime/release_evidence_guard.py"],
+    "judgment_execution": "CHAT_BRIDGED"
+  },
+  "workflow": {
+    "state_authority_refs": ["AUTHORITY_STATUS.json", "projects"],
+    "transition_guard_refs": ["runtime/recovery_guard.py", "runtime/release_evidence_guard.py"]
+  },
+  "harness": {
+    "ci_workflow_ref": ".github/workflows/validate.yml",
+    "commands": ["python runtime/recovery_guard.py", "python runtime/release_evidence_guard.py", "python -m pytest -q"],
+    "suites": ["contract", "trajectory", "release", "recovery"]
+  },
+  "references": {"canonical_roots": ["protocols", "projects"], "mirror_policy": "NONE"},
+  "continuity": {
+    "task_index_ref": "continuity/TASK_INDEX.json",
+    "protocol_adapter_ref": "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json",
+    "execution_capability_ref": "continuity/EXECUTION_CAPABILITIES.json"
+  }
+}
