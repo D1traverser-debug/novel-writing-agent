@@ -9,7 +9,7 @@ def test_recovery_truth():
     m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
     cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
     assert m["task_id"]=="FQ001_MINGRI_ORDER"
-    assert m["status"]=="WAITING"
+    assert m["status"]=="ACTIVE"
     assert m["last_final_chapter"]==8
     assert m["next_serial_chapter"]==9
     assert m["current_stage"]==cp["current_stage"]
@@ -107,3 +107,19 @@ def test_ch8_legacy_acceptance_does_not_fake_role_or_isolation_receipts():
     assert "role_receipts: NOT_AVAILABLE" in text
     assert "isolated_reviewer_attestation: NOT_CLAIMED" in text
     assert "must not replay CH8" in text
+
+
+def test_signing_rejection_is_durable_and_second_attempt_is_gated():
+    m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
+    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
+    signing=m["platform_signing"]
+    assert signing["attempt_1"]=="REJECTED_QUALITY_EVALUATION"
+    assert signing["next_application_threshold"]==50000
+    assert signing["third_application_threshold_if_needed"]==80000
+    assert signing["second_application_gate"]=="SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS"
+    assert cp["platform_signing"]["attempt_1"]==signing["attempt_1"]
+    assert cp["platform_signing"]["second_application_gate"]==signing["second_application_gate"]
+    assert (ROOT/signing["quality_diagnosis_ref"]).exists()
+    assert (ROOT/signing["front_arc_repair_matrix_ref"]).exists()
+    assert "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REPAIR" in m["strategic_constraints"]
+    assert "平台签约拒绝" in (ROOT/"SKILL.md").read_text(encoding="utf-8")
