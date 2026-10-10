@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
   "observed_source_protocol": "3.3",
   "current_universal_protocol": "3.7",
-  "classification": "MIGRATABLE",
+  "classification": "COMPATIBLE",
   "reconciliation_status": "RECONCILED_V37",
   "strategy": "ADDITIVE_PROTOCOL_OVERLAY_DURING_GITHUB_OWNER_CUTOVER",
   "user_migration_required": false,
@@ -19,5 +19,41 @@
   "owner_adapter_ref": "CONTINUITY_ADAPTER.json",
   "short_checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
   "artifact_governance_ref": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
-  "execution_capabilities_ref": "continuity/EXECUTION_CAPABILITIES.json"
+  "execution_capabilities_ref": "continuity/EXECUTION_CAPABILITIES.json",
+  "methodology": {
+    "profile_refs": {
+      "artifact_io": "1.0",
+      "operational_hygiene": "1.0",
+      "evolution": "1.0"
+    },
+    "hook_bindings": {
+      "durable_task_state_location": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#durable_task_state_location",
+      "authoritative_business_evidence_classes": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#authoritative_business_evidence_classes",
+      "canonical_artifact_or_file_stores": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#canonical_artifact_or_file_stores",
+      "cache_or_reference_only_stores": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#cache_or_reference_only_stores",
+      "stable_identity_strategy": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#stable_identity_strategy",
+      "read_freshness_requirements": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#read_freshness_requirements",
+      "mutation_conflict_strategy": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#mutation_conflict_strategy",
+      "post_write_verification_method": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#post_write_verification_method",
+      "upstream_to_downstream_invalidation_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#upstream_to_downstream_invalidation_rule",
+      "delete_and_retention_rules": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#delete_and_retention_rules",
+      "superseded_artifact_cleanup_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule",
+      "external_artifact_vault_if_any": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#external_artifact_vault_if_any",
+      "observability_or_incident_evidence_location": "hash-bound project reviews/acceptance/checkpoints plus CHANGELOG.md and exact incident evidence referenced by the active project",
+      "self_maintenance_trigger_path": "SKILL.md release-hard-gate reminder-dependency rule: when the user identifies a defect the system should have caught, revoke stale release evidence, repair, re-audit and upgrade the general defense",
+      "garbage_collection_owner_and_dependency_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule with published FINAL/Canon retention and dependency checks",
+      "reliability_or_change_freeze_guard": "SKILL.md release hard gates plus periodic regression: no Canon/release promotion on failed quality evidence, stale dependent hashes, or unresolved BLOCKER/HIGH findings",
+      "learning_evidence_location": "project user feedback, post-publication performance evidence, rejected/accepted review evidence and system-level rule evidence referenced by the owner project",
+      "eval_or_regression_promotion_path": "SKILL.md release hard gates + periodic regression; system learning is promoted only after relevant independent review/regression evidence and must not overwrite project facts",
+      "superseded_mechanism_cleanup_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule; old Library/Notion/Drive executable material remains retired and cannot regain authority by presence"
+    },
+    "overrides": {
+      "evaluator_selection": "Novel evolution is judged through chapter/project-specific independent review, identity regression, periodic long-form/Canon checks and real reader/platform evidence when available"
+    }
+  },
+  "methodology_assurance": {
+    "declaration_status": "BOUND_EXACT_VERSION",
+    "operational_status": "DECLARATION_BOUND__OWNER_REGRESSION_PENDING_POST_WRITE_CI",
+    "boundary": "This thin binding reuses existing Novel governance and quality gates; it does not change Canon, chapter text, publication facts, task stage, next_action or writer lease."
+  }
 }
