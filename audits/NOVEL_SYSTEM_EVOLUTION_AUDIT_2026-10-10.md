@@ -160,3 +160,51 @@ No chapter was replayed and no Canon fact was rewritten by this system audit.
 ## 10. Stop rule
 
 Do not add more agents, policies or review layers merely because this audit found a gap. The current reliability defect has a bounded executable repair. Resume normal serialization when the external CH8 publication boundary is cleared, and judge this evolution on actual CH9 evidence and later reader/platform outcomes.
+
+## 11. Universal follow-up challenge — evidence-strength overclaim
+
+The Universal maintenance writer independently re-read the release guard after the first repair and found a second-order weakness: the first repair could still be described too strongly.
+
+The v1 guard initially proved that a receipt object existed and that reviewer FINAL rows matched the FINAL source hash, but it did **not** fully validate every local Context Pack ref/hash, did not require every CHAT_BRIDGED receipt to bind the frozen Context Pack, did not require non-empty role result summaries, and did not bind final-body pipeline roles such as proofread/artifact/canon commit to the FINAL source hash.
+
+More importantly, one aggregate `CHxxxx_EXECUTION_EVIDENCE.json` written by the same CHAT_BRIDGED session can still be authored post hoc. More receipt files, timestamps or role names would not create independent execution provenance. Therefore the assurance claim must stay below attestation.
+
+### Follow-up candidates
+
+- **Force more files / one file per role:** rejected. The same session could still generate them together; file count is not independence.
+- **Force ATTESTED_ISOLATED now:** rejected. The capability remains unavailable and would create either deadlock or fake assurance.
+- **Strengthen what can be deterministically verified and explicitly downgrade what cannot:** accepted.
+
+### Follow-up accepted changes
+
+Compatible hardening of release evidence contract v1 before its first real CH9 production use:
+
+- all local `PROJECT_PROFILE`, Canon and recent-FINAL Context Pack refs must exist and match their recorded SHA-256;
+- every receipt requires a unique `receipt_id`, frozen Context Pack binding for CHAT_BRIDGED mode, and a non-empty role `result_summary`;
+- final-body pipeline roles (`COPYEDITOR_PROOFREADER`, `ARTIFACT_RELEASE_ENGINEER`, `CANON_COMMITTER`) must bind the FINAL source hash;
+- blinded reviewer evidence must itself carry a valid source hash and the frozen Context Pack binding;
+- deterministic output now labels evidence strength as `STRUCTURED_SELF_ATTESTED_CHAT_BRIDGED_UNLESS_EXTERNAL_TRACE_PRESENT`;
+- `SKILL.md` and `continuity/EXECUTION_CAPABILITIES.json` explicitly prohibit describing CHAT_BRIDGED receipts as independent proof of cognition or chronology.
+
+New negative tests cover wrong Canon hash, missing/wrong CHAT_BRIDGED context binding, missing role result summary, and wrong final-source binding for final pipeline roles.
+
+First hardened CI attempt (`38065104562`) failed only because an older recovery-contract test asserted the exact pre-hardening evidence-contract string. Recovery Guard and Release Evidence Guard themselves passed. The stale assertion was updated rather than bypassed.
+
+Hardened validation head: `ced06cec1a2201135d32c7f9d8c8c32c43b83507`
+
+GitHub Actions:
+- workflow: `validate-novel-owner`
+- run id: `38065144178`
+- job id: `114251164978`
+- result: **SUCCESS**
+- Recovery Guard: PASS
+- Release Evidence Guard: PASS
+- Full owner contract tests: PASS
+
+## 12. Refined evidence boundary
+
+The correct claim after hardening is:
+
+> CH9+ cannot reach release merely from aggregate PASS prose. It must carry deterministically verifiable, input/body-bound, role-specific structured receipts. In normal CHAT_BRIDGED mode those receipts remain self-attested execution records, not independent attestation of model cognition or non-post-hoc chronology.
+
+True independent execution proof remains contingent on a distinct execution identity/provider trace. This is an external capability boundary, not something to simulate by adding files or role labels.
