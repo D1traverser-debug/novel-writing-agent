@@ -7,44 +7,83 @@ last_final_hash: fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba1
 story_time: 10月8日 01:47
 current_volume: 1
 current_arc: 不能送错的人
-production_mode: SERIALIZATION_WITH_FRONT_ARC_SIGNING_REPAIR
-production_status: FRONT_ARC_SIGNING_REPAIR_ACTIVE__CH0008_PUBLISH_READY_NOT_CONFIRMED__CH0009_READY
+production_mode: FULL_FRONT_ARC_REBASE
+production_status: FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE
 next_serial_chapter: 9
-next_serial_status: READY
+next_serial_status: HELD_DURING_FULL_FRONT_ARC_REBASE
 
-## 权威说明
-CH1-CH4此前为FROZEN_BASELINE；CH5、CH6、CH7均已由用户确认在番茄发布并与Canon同步。CH8《药盒上的名字》完成审计、终校、身份回归、Word同源与渲染检查，已提交Canon v12，当前为PUBLISH_READY，尚未确认外部发布。
+## 当前权威判断
 
-2026-10-11收到新的平台级外部事实：首次签约申请未通过，平台可见原因为“暂不符合签约质量要求”，达到5万字后开放第二次签约机会。该事实不改变故事Canon，但构成对前2万字质量的强外部负反馈。此前CH1-CH4的FROZEN_BASELINE不再对“签约质量修复”绝对豁免：可生成受控候选修订，但任何正文替换必须经过依赖影响分析、重新审计和用户实际平台操作/确认。
+2026-10-11，用户明确允许当前小说前段整体退回重改。该授权改变了此前“尽量减少已发布正文迁移成本”的优化约束。
 
-签约质量诊断：`audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md`
-前段修复矩阵：`audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md`
+在重新执行 Universal Continuity 完整学习/维护方法（用户信号分类、M0–M11、证据分层、候选竞争、反证、复杂度预算、二阶挑战、supersession、回归计划）后，旧的逐章签约修复矩阵不再是 active 最优方案。
 
-## 主要人物当前状态
+当前采用：`CONTROLLED_FULL_FRONT_ARC_REBASE`。
+
+- active plan: `audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md`
+- learning evidence: `audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md`
+- old targeted matrix: `audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md`，仅历史证据，已 superseded。
+
+## 历史正文 / Canon 边界
+
+- CH1–CH7：历史外部发布事实仍保留，系统**不会因为内部重构就推断平台已经撤回或替换**。
+- CH8《药盒上的名字》：历史 FINAL_ACCEPTED / PUBLISH_READY，Canon v12；外部是否发布仍未确认。
+- CH1–CH8 旧 FINAL 与旧 hash：保留为 `IMMUTABLE_HISTORICAL_BASELINE`，不删除、不改写历史证据。
+- 当前 Canon v12：仍是事实起点。新架构可改变场景顺序/章节边界；若要改变人物已知事实、事件结果、系统规则或时间线，必须走正式 Retcon/Canon reconciliation。
+- 旧CH9合同已改为 `SUPERSEDED_BY_FULL_FRONT_ARC_REBASE`，不可直接执行；其“陈渡/许知微建立前瞻验证关系”设计作为高价值素材迁入新前段目标CH7附近。
+
+## 当前前段重构目标
+
+把旧CH1–CH8约2万字视作一个完整的“签约/读者获取阅读包”重新架构，不再逐章局部打补丁。
+
+当前八章目标架构：
+1. CH1：更快进入明日达、自我订单、死亡时间；保留最少但足够的未来真实性证明。
+2. CH2：168普通订单与死亡窗口相撞；压缩机构验证；匿名“不要提前送达”干预前移。
+3. CH3：完成第一单23:46重大 payoff，陈渡活下来，有真实余波；结算6.8%/未来信用并开启第二单。
+4. CH4：钥匙/B2/车辆错位 + 秦朗拒收，人物冲突为主。
+5. CH5：当前驾驶人/备用钥匙责任冲突 + 药盒钩子。
+6. CH6：药盒秦朗标签 + 许知微正式进入持续主线；确认陈渡提前知道姓名；患者发作早于第二单。
+7. CH7：迁入旧CH9的强设计——建立可前置、可证伪的事实验证关系；陈渡作出是否让另一个人进入验证链的关系选择。
+8. CH8：第二单/验证关系产生新的后果或 reframe，形成完整单元 payoff + 下一单元强承诺，而不是只停在另一个调查起点。
+
+章数/边界是当前项目 prototype，不是不可改的公式；Architecture/Reader review 可以在证据支持下调整。
+
+## 作品身份不变
+
+- 都市脑洞 × 悬疑单元剧 × 城市群像。
+- 第三人称限知陈渡。
+- 现代城市真实运行质感；超常只开一扇小口。
+- 陈渡靠城市/路线/临场判断而非全知推理。
+- 未来信息有用但不完整；修改未来会迁移风险。
+- 核心人物轴改用“小人物选择与后果”，不再把“小人物逆袭”当必须兑现的财富/地位承诺。
+
+## 主要人物历史状态（作为重构素材/Canon参考）
 - 陈渡：10月8日01:47，在二院急诊观察区外；第二单逾期，疑似备用钥匙仍封存在B2值班点。他确认患者在订单出现前已经发作，正在面对许知微对“为何提前知道秦朗”的追问。
-- 许知微：二院急诊医生，CH8正式进入主线；不相信超自然，只承认可验证事实。她已确认陈渡在药盒标签可见前说出秦朗，要求信息来源和时间顺序。
-- 秦朗：仍未在医院；四个月前已交回6Q73，拒收原因未知。其姓名又出现在6Q73储物格的一盒约四个月前旧药上。
-- 董哥：6Q73当前驾驶/使用人之一，仍在二院陪同患者；持工作钥匙，不认识秦朗。
+- 许知微：二院急诊医生；不相信超自然，只承认可验证事实。历史CH8确认陈渡在药盒标签可见前说出秦朗。
+- 秦朗：四个月前已交回6Q73，拒收原因未知；其姓名出现在6Q73储物格的一盒旧药上。
+- 董哥：6Q73当前驾驶/使用人之一，持工作钥匙，不认识秦朗。
 
-## 开放剧情线
-- T001 明日达来源：ACTIVE。
-- T003 偏差率与未来信用：ACTIVE。
-- T005 第二单/拒收车钥匙：ACTIVE；CH8确认钥匙订单出现晚于患者发作，因此其目标更可能位于服药后的车辆控制/后续事件。
+这些事实是当前 Canon 起点；新前段可以调整揭示顺序，但不能无记录地改变事实本身。
 
-## 新增/推进伏笔
-- F010：秦朗拒收钥匙继续推进；6Q73车内出现其旧药盒。
-- F011：214放置备用钥匙的目的仍未知；时间链进一步指向患者发作后的动作。
-- F012：当前患者称半个月前曾把自己的药落在同一储物格，但现存的是秦朗约四个月前的旧药盒；究竟是记忆误差、长期残留还是近期重新布置，尚未证明。
+## 平台签约状态 / 战略硬门
 
-## 平台签约状态 / 新战略约束
-- 首次签约评估：NOT_APPROVED。
-- 当前可见原因：泛化“签约质量要求未达到”，无更细粒度编辑原因。
-- 第二次机会：5万字。
-- 若第二次仍拒绝，当前官方规则还有8万字第三次机会；第三次评估拒绝后无下一次标准签约机会。
-- 不得把拒绝推断为AI检测、安全审核、抄袭或侵权。
-- 二签前硬门：`SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS`。
-- 禁止策略：不修前段、只靠新增字数冲到5万再申请。
-- 当前最高优先修复：CH4 > CH2 > CH3 > CH1；CH5-CH7中等修复；CH8轻触。
+- 首次签约评估：`NOT_APPROVED / REJECTED_QUALITY_EVALUATION`。
+- 可见原因：泛化“签约质量要求未达到”；无更细粒度编辑原因。
+- 不得推断为AI检测、安全审核、抄袭、侵权或其他隐藏原因。
+- 第二次标准机会：当前规则约5万字。
+- 若第二次仍拒绝，当前规则约8万字还有第三次机会。
+- 二签硬门：`SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS`。
+- 禁止：不修 acquisition/front arc，只靠字数继续冲5万。
+- 实际番茄撤回/替换/发布属于用户控制的外部动作；内部候选通过不等于平台已替换。
+
+## 当前执行边界
+
+- CH9 execution：HOLD。
+- 旧CH1–CH8：历史基线，不直接覆盖。
+- 下一阶段先完成新 front-arc architecture 的 packet-level validation，然后再开始 coherent candidate rewrite。
+- 新候选正文必须在 whole-packet gates 通过前保持 candidate；不允许“改完第一章就把它单独变成新FINAL”。
+- future CH9+/replacement release 仍执行 execution-evidence contract v1；CHAT_BRIDGED receipts 不得被描述为独立执行 attestation。
 
 ## 下一步
-在CH8外部发布仍待用户确认的同时，内部立即执行前段签约修复：先对CH4、CH2、CH3、CH1形成候选重构版本和依赖影响表，再做跨章连续性/人物/留存/签约维度复审；不直接覆盖现有FINAL，不直接替换平台正文。CH9合同继续保持READY，并从CH9起继续执行Release Execution Evidence Contract v1。
+
+冻结并引用旧CH1–CH8作为历史基线；以 `FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md` 为当前结构计划，先完成新签约阅读包架构的挑战/验证，然后按统一架构重写候选CH1–CH8。完成 whole-packet Continuity / Fresh Reader / Retention / Editorial / Adversarial / Signing Readiness 审核前，不晋升替换正文，不执行旧CH9，不消耗5万字二签机会。
