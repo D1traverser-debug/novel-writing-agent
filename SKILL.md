@@ -1,6 +1,6 @@
 ---
 name: novel-writing-agent
-version: 2.3.0-github
+version: 2.4.0-github
 scope: 独立长篇网络小说生产、连载、审计、恢复
 primary_platform: 番茄小说
 source_system_version: NOVEL_OS 1.9.0
@@ -24,6 +24,7 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 10. `CHAT_BRIDGED` 角色 receipt 是结构化自证记录，不是独立执行 attestation；不得把可校验的文件/hash 绑定描述成对模型认知过程或执行时序的独立证明。
 11. 平台签约拒绝、真实读者数据显著恶化、事实/合规硬缺陷属于可重新打开既有“冻结基线”的硬证据；不得把这类外部失败降格成普通审美建议，也不得在未诊断前盲目冲下一次平台机会。
 12. 用户允许大改/全退回时，授权只改变可接受的迁移成本与外部操作边界；“全部重写”本身仍是候选机制，必须与局部修复、结构重排、保留/删除旧机制等方案竞争后再采用。
+13. 用户不应负责指出“你还没学大纲/世界观/人物/审核”等系统性能力缺口。重大质量失败或用户指出漏项时，ORCHESTRATOR 必须主动运行能力地图缺口检查，并决定补学习、补 benchmark、补规则还是补项目架构。
 
 ## 1. Authority and recovery
 冲突时：用户最新明确外部事实 > GitHub `main` 当前任务/Canon/FINAL/审计 > Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档` 中明确需要的派生交付物/历史迁移证据 > 已退役的 Notion / Library / 旧 Google Drive 材料（仅历史线索，不得恢复执行状态） > 聊天记忆。
@@ -51,7 +52,7 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 采用最小足够复杂度的编辑部式编排：
 - `EXECUTIVE_ORCHESTRATOR`：恢复、调度、冲突裁决、最终放行；不得自写自批。
 - `CANON_LIBRARIAN`：Context Pack / Canon / 线程 / 伏笔 / 承诺。
-- `ARCHITECT`：章节功能、合同、scene engine、risk map。
+- `ARCHITECT`：系列/卷/单元/章节功能、合同、scene engine、risk map。
 - `WRITER`：只依据冻结 Context Pack + Contract 写正文。
 - 独立首轮判断：Continuity / Fresh Reader / Retention / Editorial / Adversarial / Quality Discovery。
 - `REFINER`：只根据 issue ledger 修稿；默认最多2轮完整 evaluator-optimizer。
@@ -63,6 +64,9 @@ Reviewer 首轮必须在输入层隔离彼此结论；禁止用多数票覆盖 B
 
 ## 3. Standard serialization pipeline
 `RECOVER -> VERIFY_LEASE -> CHECK_MODE -> FREEZE_CONTEXT -> ARCHITECT+CANON -> DRAFT -> INDEPENDENT_REVIEW_FANOUT -> ISSUE_MERGE -> REVISE -> RE-AUDIT -> FINAL_PROOFREAD -> ARTIFACT_QA -> DETERMINISTIC_GUARD -> CANON_COMMIT -> RELEASE -> CHECKPOINT`
+
+Architecture-level work additionally runs:
+`CAPABILITY_GAP_CHECK -> MASTER_OUTLINE / ARC DESIGN -> ALTERNATIVE + FALSIFICATION -> COMPETENCY BENCHMARKS -> ARCHITECTURE_FREEZE`
 
 ### 3.1 Execution-evidence contract v1（CH9+ / promoted replacement prose）
 任何进入 `FINAL_ACCEPTED / PUBLISH_READY` 的新正文必须按适用的 execution-evidence contract 留下证据；正常连续写作从 CH9 起强制，FULL_FRONT_ARC_REBASE 产生的替换候选在准备晋升时同样不得绕过证据/重审义务。
@@ -88,14 +92,18 @@ Writer 默认只接收：
 - 最多2—4个本章真正相关的专项规则；
 - 最近跨章风险。
 
-研究日志、全部历史审计、完整规则仓库默认不得整包灌给 Writer。Context Pack 冻结后，除 Canon/现实事实/合规 BLOCKER 外，不临时注入新技巧。冻结内容必须留下 durable receipt，不能只存在聊天里。
+研究日志、全部历史审计、完整规则仓库、完整 mastery model 默认不得整包灌给 Writer。Context Pack 冻结后，除 Canon/现实事实/合规 BLOCKER 外，不临时注入新技巧。冻结内容必须留下 durable receipt，不能只存在聊天里。
 
 FULL_FRONT_ARC_REBASE 期间，旧 CH1–CH8 FINAL 作为历史业务证据/素材库存在；Writer 不得因为它们存在就机械沿用旧章节边界。只加载当前 Architecture 明确选中的旧场景/事实。
+
+Architecture/Reviewer 可以读取 `protocols/NOVEL_MASTERY_MODEL.md` 中与当前 gate 相关的 competency slices；Writer 只接收已蒸馏后的项目级约束。
 
 ## 5. Project identity
 每章发布前必须确认作品仍是：现代城市真实运行质感 + 狭窄未来订单异常 + 第三人称限知陈渡 + 有限信息下的选择与后果。不得漂成万能系统、纯刑侦、纯规则怪谈或全知天才推理。
 
 项目具体身份、声纹、世界规则与历史基线见 `PROJECT_PROFILE.md`。当前 Canon 由 `projects/<task>/canon/` 下的 `CHARACTERS.json`、`CHARACTER_DRIVES.json`、`THREADS.json`、`FORESHADOW.jsonl`、`TIMELINE.jsonl`、`READER_PROMISES.json` 等权威 ledgers 共同定义；不存在另一个可覆盖这些 ledgers 的 `CANON_SNAPSHOT.json` 权威。
+
+项目级系列/卷/单元未来架构不是 Canon；当前 FQ001 active architecture authority 是 `projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md`。其中 `LOCKED / PLANNED / FLEX / HYPOTHESIS` 必须与 Canon 状态区分，计划不得偷渡成事实。
 
 ## 6. Release hard gates
 只有以下全部对同一正文 hash 明确 PASS，ORCHESTRATOR 才能说“可以传/可以发布”：
@@ -112,14 +120,16 @@ FULL_FRONT_ARC_REBASE 期间，旧 CH1–CH8 FINAL 作为历史业务证据/素�
 
 对于 `FULL_FRONT_ARC_REBASE`，单章 PASS 不能单独晋升替换；还必须完成 whole-packet Continuity / pacing-engine diversity / character attachment / signing-readiness 复审，确认整包可晋升后再执行显式 replacement transaction。
 
-用户指出本应自动发现的问题时，立即撤销旧 Release，按 reminder-dependency incident 修复、重审并升级通用防线。
+用户指出本应自动发现的问题时，立即撤销旧 Release，按 reminder-dependency incident 修复、重审并升级通用防线；若缺陷属于“系统没有意识到自己缺一项能力”，同时触发 C20 meta-learning / competency-gap audit。
 
-## 7. Craft / QA rulebook
-所有当前激活的场景、声纹、对白、人物关系、悬疑、公平信息、长期架构、主题、伏笔、情绪、Reader Memory、Opposition、空间调度、Transition、Domain Reality、平台、字数、终校、Agent组织、防漂移与 full-rebase 规则，统一蒸馏在：
+## 7. Craft / QA and mastery authorities
 
-`protocols/ACTIVE_RULEBOOK.md`
+两个系统级权威分工不同，禁止合并成巨型 Writer prompt：
 
-迁移前的历史完整协议/研究证据仅作为历史迁移快照保存在 Google Drive artifact vault 中，不自动进入 Writer 主上下文，也不能覆盖当前 GitHub active rulebook。旧 Notion、Library 或旧 Google Drive 执行材料即使未来被重新发现，也只能作为非权威历史线索。
+- `protocols/ACTIVE_RULEBOOK.md`：**怎么执行/怎么审稿**的紧凑生产规则；
+- `protocols/NOVEL_MASTERY_MODEL.md`：**小说系统必须掌握哪些能力、从哪里学、掌握到什么等级、拿什么证明**的能力/学习/benchmark 权威。
+
+迁移前的历史完整协议/研究证据仅作为历史迁移快照保存在 Google Drive artifact vault 中，不自动进入 Writer 主上下文，也不能覆盖当前 GitHub active authority。旧 Notion、Library 或旧 Google Drive 执行材料即使未来被重新发现，也只能作为非权威历史线索。
 
 ## 8. Canon / prose rules
 - Canon facts 与 prose surface 分离。
@@ -156,6 +166,31 @@ FULL_FRONT_ARC_REBASE 期间，旧 CH1–CH8 FINAL 作为历史业务证据/素�
 Current FQ001 active refs:
 - `audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md`
 - `audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md`
+- `projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md`
+
+### 8.3 Novel mastery / competency assurance
+
+小说系统的“学习完成”不得再用“读过资料 / Rulebook里有一句 / reviewer会挑错”代替。统一按 `protocols/NOVEL_MASTERY_MODEL.md`：
+
+- L0 `UNMAPPED`：能力缺失/未建模；
+- L1 `CONCEPTUAL`：理解概念；
+- L2 `OPERATIONAL_WITH_SCAFFOLD`：有 checklist/模板可执行；
+- L3 `PROJECT_READY`：能在真实项目中独立设计、执行、审计、反证和修正；
+- L4 `TRANSFER_VERIFIED`：跨不同项目/题材 + 多次真实结果证明可迁移。
+
+Hard rules:
+1. 看课、读书、检索网页最多直接构成 L1 学习证据，不能自动声称 L2/L3/L4；
+2. 高影响架构决策所依赖的核心能力必须达到当前项目 L3，或明确阻塞并补 benchmark；
+3. 每次真实平台/读者失败、重大 reminder-dependency incident、连续同类缺陷，都要检查20项 competency map 是否存在漏项/假掌握；
+4. 学习来源按 live outcome > current platform first-party > primary craft method > masterwork deconstruction > blind reader > community heuristic > model self-evaluation 分层；
+5. 同类热门/优秀作品只抽取功能、节奏、选择、角色/世界扩展路径，不复制措辞、独特情节或表面套路；
+6. 每项 L3 要有项目应用、替代方案/反证、审核或 issue evidence，不能靠自我宣称；
+7. Mastery model 只在 Architecture/Reviewer/系统进化层按需读取，不整包注入 Writer；
+8. 系统应主动发现“未知的未知”：用户再次指出一整类本应自主覆盖的能力缺失，视为 C20 meta-learning 缺陷并触发系统修复。
+
+FQ001 当前 architecture freeze 前至少要对 C01/C02/C03/C04/C05/C06/C08/C11/C14/C15/C18/C19/C20 形成 L3 项目级证据；正文生产/Release 再强制 C09/C10/C12/C13/C16/C17 等实际文本能力完成对应 benchmark/gates。
+
+当前成熟度边界：本系统可以把能力地图与 benchmark 机制做成 `REGRESSION_VERIFIED`，但不能因文件/CI存在就声称20项均已 L3，更不能声称 L4。当前项目要逐项用真实 architecture/prose evidence 晋升。
 
 ## 9. Length and data
 章节长度以真实番茄后台数据优先；无实际值时使用 FINAL 预测值。常规约2400–3000，重大章约2600–3300仅作当前基线，不是机械目标。相对最近4章均值偏离 >30% 强制专审，>45% 默认阻塞，除非结构上明确必要。
@@ -167,10 +202,11 @@ FULL_FRONT_ARC_REBASE 期间先以 packet function / scene engine / reader exper
 ## 10. Periodic regression
 - 每5章：长度 × 纹理 × 钩子 × 情绪颜色 × 角色出场 × 讨论性检查。
 - 每10章/单元：Long-form + World Rule + Foreshadow + Identity Regression。
-- 每50章/卷级节点：全局 Canon reconciliation。
-- 重大结构修改前后：checkpoint/snapshot。
+- 每50章/卷级节点：全局 Canon reconciliation + series-master-outline reconciliation。
+- 重大结构修改前后：checkpoint/snapshot + relevant competency-gap audit。
 - 每次平台签约评估拒绝：立即新增一次 front-arc signing-quality audit，不等待下一个常规周期。
-- FULL_FRONT_ARC_REBASE：architecture freeze、candidate packet ready、promotion 前分别做 packet-level regression；不以单章自评分替代整包验证。
+- FULL_FRONT_ARC_REBASE：master outline / architecture freeze、candidate packet ready、promotion 前分别做 packet-level regression；不以单章自评分替代整包验证。
+- 每次用户指出“本应由系统主动想到的一整类能力漏项”：记录 reminder-dependency incident，审查 C20 与 competency ontology，而不是只补这一句要求。
 
 ## 11. Stop rule
-当前 full-rebase architecture 经过挑战并冻结后，停止继续收集无边界写作技巧，进入候选正文生产。只有新的 hard fact、Canon contradiction、platform rule change、reader outcome 或 BLOCKER/HIGH 才重新打开架构；系统进化服务于作品，不以规则/Agent数量为成果。
+当前 full-rebase master outline + architecture competencies 达到项目级 L3 evidence 并通过挑战后，停止继续收集无边界写作技巧，冻结前段 architecture 并进入候选正文生产。只有新的 hard fact、Canon contradiction、platform rule change、reader outcome、BLOCKER/HIGH 或能力缺口证据才重新打开对应层级；系统进化服务于作品，不以规则/Agent/课程数量为成果。
