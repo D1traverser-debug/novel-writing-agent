@@ -1,5 +1,17 @@
 # NOVEL_OS Changelog
 
+## 2026-10-10 — v2.1 execution-evidence hardening / evidence-before-claim
+- 按 Universal Continuity `operational_hygiene@1.0 + evolution@1.0` 对小说系统执行挑刺、候选反证、最小修复与回归，不把用户建议或 assistant 第一方案直接当架构权威；完整决策证据见 `audits/NOVEL_SYSTEM_EVOLUTION_AUDIT_2026-10-10.md`。
+- 根因确认：GitHub cutover 已完整迁移业务真值和流程规则，但“角色执行证据”压缩过度；此前 `CH0008_ACCEPTANCE.md` 可汇总多个 reviewer PASS，却没有 per-role invocation receipt / frozen Context Pack receipt / immutable chapter-contract snapshot 的机械强制。
+- 拒绝“新增更多永久 Reviewer Agent”“强制伪造 ATTESTED_ISOLATED”“重做 CH8 补历史收据”“新建平行 CANON_SNAPSHOT/policy”等方案；采用最小可验证方案：release execution-evidence contract v1。
+- 从 CH9 起新增硬门：不可变 `contracts/CHxxxx_CONTRACT.md`、冻结 `execution/CHxxxx_CONTEXT_PACK.json`、角色级 `reviews/CHxxxx_EXECUTION_EVIDENCE.json`、issue ledger、FINAL hash 与 Acceptance 双向绑定；`runtime/release_evidence_guard.py` fail closed。
+- 正常 reviewer 继续允许 `CHAT_BRIDGED` 角色分离，但必须记录 blind-first-pass 可见性并明确 `ROLE_SEPARATED_NOT_ATTESTED_ISOLATED`；只有独立 execution identity + trace 才能声称 `ATTESTED_ISOLATED`。
+- CH8 不重放、不补造历史证据；保留原 `FINAL_ACCEPTED / PUBLISH_READY` 业务状态，同时标记 `LEGACY_AGGREGATE_MIGRATED / role_receipts=NOT_AVAILABLE / isolated_reviewer_attestation=NOT_CLAIMED`。
+- 修复 `SKILL.md` 对不存在 `CANON_SNAPSHOT.json` 的悬空权威引用；当前 Canon 继续由项目 `canon/` ledgers 共同定义，不新增重复 Canon authority。
+- 修复 Active Rulebook 仍指向 Library backup evidence 的 post-cutover 漂移；旧 Notion/Library/legacy Drive 继续保持非权威历史线索身份。
+- owner CI 现在运行 `recovery_guard.py + release_evidence_guard.py + 全量 pytest`；synthetic negative tests 覆盖“CH9 无执行证据”“CHAT_BRIDGED 假称 ATTESTED_ISOLATED”等失败场景。
+- owner 元数据收敛到 `domain_contract=2.1-github / Skill=2.1.0-github / runtime=github-owner-2.2 / release_evidence_contract=1.0`；不改变 CH8/CH9 业务 stage、Canon v12、外部发布事实、Universal `resume_epoch=2` 或 active lease。
+
 ## 2026-10-10 — Post-cutover source cleanup and artifact-vault hardening
 - 完成 GitHub primary 切换后的旧源审计与清理：GitHub `main` 保持唯一小说业务/系统权威，Universal Continuity 仅负责路由与 single-writer lease。
 - 将当前 CH1–CH8 DOCX、封面/平台证据和迁移前 recovery ZIP 快照迁入 Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档`；Google Drive 明确为非权威 artifact vault，不参与 Canon/checkpoint/Skill/恢复真值判定。
