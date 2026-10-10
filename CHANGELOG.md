@@ -1,5 +1,22 @@
 # NOVEL_OS Changelog
 
+## 2026-10-11 — v2.3 full-front-arc rebase / complete Universal evolution pass
+- 用户明确允许当前小说前段整体退回重改；系统将该消息分类为“放宽迁移/替换成本约束 + 授权影响边界”，而不是把“全部重写”直接当成架构权威。
+- 重新读取并应用 Universal Continuity 当前与本任务相关的完整进化权威：Continuous Learning、System Maintenance M0–M11、Media Distillation、Orchestration、Execution Readiness、Artifact Governance、Version Lifecycle；补齐上一轮尚未完整落地的候选反证、复杂度预算、负空间/逃逸路径、证据重放、supersession 与 claim-calibration。
+- 对上一轮 `CH4 > CH2 > CH3 > CH1` 定向修复计划进行二阶挑战：该计划在“已发布正文替换成本高”时合理；用户解除该约束后，它可能局部改善章节却保留旧CH5才完成第一次重大payoff、旧CH8/CH9才建立持续关系引擎的宏观节奏，因此不再是 active 最优方案。
+- 拒绝两个极端：一是原文不动继续堆到5万；二是 blank-slate 删除所有旧Canon/强场景。接受 `CONTROLLED_FULL_FRONT_ARC_REBASE`：保留旧CH1–CH8 FINAL/hashes为不可变历史基线，旧章节边界不再绑定，新前约2万字作为一个 acquisition/signing packet 先重构再整包重写。
+- 新增 `audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md`：记录用户信号分类、证据来源/等级、接受原则、拒绝候选、旧方案为何失效、证据保证上限和 stop rule。原始课程/外部方法仅为 LEARNING_EVIDENCE，不直接成为执行权威。
+- 新增 `audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md`：按 M0–M11 固化完整影响图、候选比较、复杂度预算、active surface、目标前段架构、packet-level QA、跨子系统传播、二阶挑战、rollback/promotion 边界。
+- `audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md` 正式标记 `SUPERSEDED_FOR_ACTIVE_EXECUTION`，保留为历史学习证据，防止两套 active 修复路径共存。
+- 项目目标架构改为：首单死亡线第一次重大payoff目标前移至新CH3附近；钥匙/秦朗线压缩后承接；许知微持续验证关系前移至新CH6–CH7附近；旧CH9的优质 precommit-verification 设计迁入新前段，而不是丢弃。
+- `PROJECT_PROFILE.md` 将旧 FROZEN_BASELINE 降为 `HISTORICAL_SUPERSEDED_BY_FULL_FRONT_ARC_REBASE`；Story/Style Bible 同步“选择与后果”主轴、precision page-cost、full-rebase hard-failure exception，并明确当前结构目标不是所有小说的固定“黄金三章”公式。
+- 旧 `NEXT_CHAPTER_CONTRACT.md` 从 READY 改为 `SUPERSEDED_BY_FULL_FRONT_ARC_REBASE`；禁止直接续写旧CH9，但保留其关系/验证设计作为迁移源。
+- 任务状态切换为 `FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE`；CH9进入 `HELD_DURING_FULL_FRONT_ARC_REBASE`。CH1–CH7历史发布事实、CH8发布未知、Canon v12、旧正文 hashes 均保持不变。
+- `SKILL.md` 升级至 2.3.0、`ACTIVE_RULEBOOK.md` / `PROTOCOL.md` 升级至 2.3，新增 learning-to-authority、whole-packet promotion、full-unit rebase lifecycle、CI≠文学/签约结果等硬边界。
+- `continuity/EXECUTION_CAPABILITIES.json` 增加 `REBASE_ARCHITECTURE / SIGNING_READINESS` execution scope；deterministic guard scope增加 rebase state/supersession，仍不虚构 `ATTESTED_ISOLATED`。
+- `runtime/recovery_guard.py` 和 recovery tests 改为机械验证：旧CH1–CH8历史hash不变、旧CH9必须HOLD、full-rebase plan/evidence存在、旧定向矩阵已退役、task/index/Skill/Rulebook/capabilities 同步、二签gate持续存在。
+- 当前系统只能在最终CI后声称“rebase机制/恢复 wiring 已验证”；实际新前段是否更好仍需真实候选包 role review、读者数据和未来平台签约结果证明，禁止把CI自证升级成 live-quality 结论。
+
 ## 2026-10-11 — v2.2 platform-signing feedback loop / front-arc repair activation
 - 用户提供番茄平台首轮签约未通过通知；系统按外部平台事实记录为 `REJECTED_QUALITY_EVALUATION`，只接受可见的泛化“签约质量要求未达到”，不擅自推断为 AI 检测、安全审核、抄袭、侵权或单一编辑原因。
 - 结合当前番茄官方签约规则确认：长篇作品通常在约2万/5万/8万字拥有签约评估机会，签约评估重点包含开篇、节奏、人物设定、代入感、主线等；二签前不得把“继续堆字数”当成质量修复。
