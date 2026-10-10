@@ -29,11 +29,11 @@ Continuation routing:
 System evolution and project execution are therefore **logically coupled but state-layered**: system-level rules may change how subsequent project work is executed, while project chapter/Canon/publication state must not be overwritten by system-maintenance metadata.
 
 ## Authority
-After cutover acceptance, this repository `main` is the authoritative business home for novel system rules, Canon, prose, contracts, QA state and project checkpoints.
+After cutover acceptance, this repository `main` is the sole authoritative business home for novel system rules, Canon, prose, contracts, QA state and project checkpoints.
 
 Universal Continuity owns discovery, routing, compatibility and the single-writer `resume_epoch / active_lease`. The novel owner owns system-to-project routing semantics and project business truth.
 
-ChatGPT Library is a backup / derived-artifact store after cutover. DOCX, render images and ZIP snapshots may remain there, but never override repo Markdown/JSON.
+Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档` is a non-authoritative vault for derived DOCX, cover/platform evidence and historical migration ZIP snapshots only. The old ChatGPT Library novel execution tree has been removed. Notion and any legacy Google Drive novel materials are decommissioned as execution/recovery sources and must never override or reconstruct GitHub business truth.
 
 Chat history and model memory are never execution authority.
 
