@@ -1,6 +1,6 @@
 ---
 name: novel-writing-agent
-version: 2.1.0-github
+version: 2.1.1-github
 scope: 独立长篇网络小说生产、连载、审计、恢复
 primary_platform: 番茄小说
 source_system_version: NOVEL_OS 1.9.0
@@ -21,6 +21,7 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 7. 已发布 Canon 不得静默覆盖；事实变化必须走 Retcon。
 8. `REBASE/REPAIR/RECOVERY_AUDIT` 等维护模式下禁止仅按章节号误开新章。
 9. 聚合式“某角色 PASS”文字本身不是角色已执行的充分证据；从 CH9 起必须满足 execution-evidence contract v1。
+10. `CHAT_BRIDGED` 角色 receipt 是结构化自证记录，不是独立执行 attestation；不得把可校验的文件/hash 绑定描述成对模型认知过程或执行时序的独立证明。
 
 ## 1. Authority and recovery
 冲突时：用户最新明确外部事实 > GitHub `main` 当前任务/Canon/FINAL/审计 > Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档` 中明确需要的派生交付物/历史迁移证据 > 已退役的 Notion / Library / 旧 Google Drive 材料（仅历史线索，不得恢复执行状态） > 聊天记忆。
@@ -65,11 +66,13 @@ Reviewer 首轮必须在输入层隔离彼此结论；禁止用多数票覆盖 B
 从 CH9 起，任何 `FINAL_ACCEPTED / PUBLISH_READY` 必须存在并通过 `runtime/release_evidence_guard.py`：
 
 1. `projects/<task>/contracts/CHxxxx_CONTRACT.md`：当前 `NEXT_CHAPTER_CONTRACT.md` 在开始执行前形成的不可变章节合同快照；
-2. `projects/<task>/execution/CHxxxx_CONTEXT_PACK.json`：冻结输入收据，至少记录 owner commit、合同快照 hash、Project Profile hash、相关 Canon refs、最近最多3章 FINAL refs、最多2–4个 rule slices；
-3. `projects/<task>/reviews/CHxxxx_EXECUTION_EVIDENCE.json`：角色级执行收据、正文 source hash、Context Pack hash、issue ledger、reviewer 首轮 peer-visibility；
+2. `projects/<task>/execution/CHxxxx_CONTEXT_PACK.json`：冻结输入收据，至少记录 owner commit、合同快照 hash、Project Profile hash、相关 Canon refs、最近最多3章 FINAL refs、最多2–4个 rule slices；所有本地 Project Profile / Canon / recent FINAL ref 都必须存在且与记录 hash 一致；
+3. `projects/<task>/reviews/CHxxxx_EXECUTION_EVIDENCE.json`：角色级执行收据、正文 source hash、Context Pack hash、issue ledger、reviewer 首轮 peer-visibility；每个 receipt 必须有唯一 id、Context Pack 绑定与非空结果摘要，最终终校/制品/Canon 提交类角色必须绑定 FINAL source hash；
 4. `CHxxxx_ACCEPTANCE.md` 必须 hash-bind 上述 Context Pack 与 execution evidence。
 
 聚合 Acceptance 只能汇总已存在的证据，不能替代证据。正文 hash 改变后，所有 body-dependent review receipts 失效并必须重新绑定/重审。
+
+`CHAT_BRIDGED` receipt 的保证等级只能是 `ROLE_SEPARATED_NOT_ATTESTED_ISOLATED`。确定性 guard 能验证文件存在、hash、输入绑定、角色字段和内部一致性，但不能独立证明同一模型的认知过程，也不能证明所有 receipt 不是在同一 session 事后补写；真正的执行 attestation / chronological provenance 只能由不同 execution identity、provider trace 或其他独立可验证执行面提供。禁止通过增加角色名、文件数量或自填 timestamp 来伪装更高 assurance。
 
 CH8 是迁移前已完成业务事实：保留其 `FINAL_ACCEPTED / PUBLISH_READY` 状态，但明确标记为 `LEGACY_AGGREGATE_MIGRATED`，不得为了补历史收据而重放 CH8，也不得把其旧格式当成 CH9+ 的证据标准。
 
