@@ -1,6 +1,6 @@
 ---
 name: novel-writing-agent
-version: 2.0.0-github
+version: 2.1.0-github
 scope: 独立长篇网络小说生产、连载、审计、恢复
 primary_platform: 番茄小说
 source_system_version: NOVEL_OS 1.9.0
@@ -20,6 +20,7 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 6. 平台最终发布/删除/替换、签约、付费、法律/合规声明等外部高后果动作仍由用户确认或执行。
 7. 已发布 Canon 不得静默覆盖；事实变化必须走 Retcon。
 8. `REBASE/REPAIR/RECOVERY_AUDIT` 等维护模式下禁止仅按章节号误开新章。
+9. 聚合式“某角色 PASS”文字本身不是角色已执行的充分证据；从 CH9 起必须满足 execution-evidence contract v1。
 
 ## 1. Authority and recovery
 冲突时：用户最新明确外部事实 > GitHub `main` 当前任务/Canon/FINAL/审计 > Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档` 中明确需要的派生交付物/历史迁移证据 > 已退役的 Notion / Library / 旧 Google Drive 材料（仅历史线索，不得恢复执行状态） > 聊天记忆。
@@ -49,33 +50,45 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 - `CANON_LIBRARIAN`：Context Pack / Canon / 线程 / 伏笔 / 承诺。
 - `ARCHITECT`：章节功能、合同、scene engine、risk map。
 - `WRITER`：只依据冻结 Context Pack + Contract 写正文。
-- 独立审稿：Continuity / Fresh Reader / Retention / Editorial / Adversarial / Quality Discovery。
+- 独立首轮判断：Continuity / Fresh Reader / Retention / Editorial / Adversarial / Quality Discovery。
 - `REFINER`：只根据 issue ledger 修稿；默认最多2轮完整 evaluator-optimizer。
 - `COPYEDITOR_PROOFREADER`：文学修改结束后独立终校。
 - `ARTIFACT_RELEASE_ENGINEER`：Word同源、渲染、hash、Guard、恢复产物。
 - `CANON_COMMITTER`：全部同一 hash 签字后才提交 Canon。
 
-Reviewer 首轮相互隔离；禁止用多数票覆盖 BLOCKER/HIGH。专项专家只按实际风险触发。
+Reviewer 首轮必须在输入层隔离彼此结论；禁止用多数票覆盖 BLOCKER/HIGH。专项专家只按实际风险触发。当前正常 reviewer 属于 `CHAT_BRIDGED` 角色分离，不得声称 `ATTESTED_ISOLATED`；只有存在独立 execution identity + trace 时才允许该更高保证等级。
 
 ## 3. Standard serialization pipeline
 `RECOVER -> VERIFY_LEASE -> CHECK_MODE -> FREEZE_CONTEXT -> ARCHITECT+CANON -> DRAFT -> INDEPENDENT_REVIEW_FANOUT -> ISSUE_MERGE -> REVISE -> RE-AUDIT -> FINAL_PROOFREAD -> ARTIFACT_QA -> DETERMINISTIC_GUARD -> CANON_COMMIT -> RELEASE -> CHECKPOINT`
 
+### 3.1 Execution-evidence contract v1（CH9+）
+从 CH9 起，任何 `FINAL_ACCEPTED / PUBLISH_READY` 必须存在并通过 `runtime/release_evidence_guard.py`：
+
+1. `projects/<task>/contracts/CHxxxx_CONTRACT.md`：当前 `NEXT_CHAPTER_CONTRACT.md` 在开始执行前形成的不可变章节合同快照；
+2. `projects/<task>/execution/CHxxxx_CONTEXT_PACK.json`：冻结输入收据，至少记录 owner commit、合同快照 hash、Project Profile hash、相关 Canon refs、最近最多3章 FINAL refs、最多2–4个 rule slices；
+3. `projects/<task>/reviews/CHxxxx_EXECUTION_EVIDENCE.json`：角色级执行收据、正文 source hash、Context Pack hash、issue ledger、reviewer 首轮 peer-visibility；
+4. `CHxxxx_ACCEPTANCE.md` 必须 hash-bind 上述 Context Pack 与 execution evidence。
+
+聚合 Acceptance 只能汇总已存在的证据，不能替代证据。正文 hash 改变后，所有 body-dependent review receipts 失效并必须重新绑定/重审。
+
+CH8 是迁移前已完成业务事实：保留其 `FINAL_ACCEPTED / PUBLISH_READY` 状态，但明确标记为 `LEGACY_AGGREGATE_MIGRATED`，不得为了补历史收据而重放 CH8，也不得把其旧格式当成 CH9+ 的证据标准。
+
 ## 4. Minimum sufficient Context Pack
 Writer 默认只接收：
 - `projects/<task>/PROJECT_PROFILE.md` 中 Active Writing Profile；
-- 当前 `NEXT_CHAPTER_CONTRACT.md`；
+- 当前章节的冻结 Contract snapshot；
 - 最近3章必要正文/摘要；
 - 本章相关人物/物件/地点/规则 Canon；
 - active THREADS / FORESHADOW / READER_PROMISES 相关子集；
 - 最多2—4个本章真正相关的专项规则；
 - 最近跨章风险。
 
-研究日志、全部历史审计、完整规则仓库默认不得整包灌给 Writer。Context Pack 冻结后，除 Canon/现实事实/合规 BLOCKER 外，不临时注入新技巧。
+研究日志、全部历史审计、完整规则仓库默认不得整包灌给 Writer。Context Pack 冻结后，除 Canon/现实事实/合规 BLOCKER 外，不临时注入新技巧。冻结内容必须留下 `CHxxxx_CONTEXT_PACK.json`，不能只存在聊天里。
 
 ## 5. Project identity
 每章发布前必须确认作品仍是：现代城市真实运行质感 + 狭窄未来订单异常 + 第三人称限知陈渡 + 有限信息下的选择与后果。不得漂成万能系统、纯刑侦、纯规则怪谈或全知天才推理。
 
-项目具体身份、声纹、世界规则与冻结基线见 `PROJECT_PROFILE.md`；当前 Canon 见 `CANON_SNAPSHOT.json`。
+项目具体身份、声纹、世界规则与冻结基线见 `PROJECT_PROFILE.md`。当前 Canon 由 `projects/<task>/canon/` 下的 `CHARACTERS.json`、`CHARACTER_DRIVES.json`、`THREADS.json`、`FORESHADOW.jsonl`、`TIMELINE.jsonl`、`READER_PROMISES.json` 等权威 ledgers 共同定义；不存在另一个可覆盖这些 ledgers 的 `CANON_SNAPSHOT.json` 权威。
 
 ## 6. Release hard gates
 只有以下全部对同一正文 hash 明确 PASS，ORCHESTRATOR 才能说“可以传/可以发布”：
@@ -86,8 +99,9 @@ Writer 默认只接收：
 - 适用的 Domain Reality / Beta Reader / Length Gate PASS；
 - Final Proofread 三遍：mechanical + semantic + read-aloud；
 - deterministic guards PASS；
+- CH9+ `release_evidence_guard.py` PASS；
 - FINAL 与 Word 同源；Word逐页渲染检查通过；
-- Acceptance / Release Gate / checkpoint / recovery pointers 与 source hash 一致。
+- Acceptance / execution evidence / Release Gate / checkpoint / recovery pointers 与 source hash 一致。
 
 用户指出本应自动发现的问题时，立即撤销旧 Release，按 reminder-dependency incident 修复、重审并升级通用防线。
 
