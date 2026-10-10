@@ -1,6 +1,6 @@
 # Novel Writing Agent — Active Rulebook
 
-version: 2.1-github
+version: 2.2-github
 status: ACTIVE
 scope: NOVEL
 source: distilled from NOVEL_OS 1.9.0 active protocols plus accepted GitHub-owner evolution; legacy protocol/research snapshots are archived in the Google Drive artifact vault as non-authoritative historical evidence.
@@ -280,11 +280,25 @@ If user finds a responsibility defect only after “可以发布”, immediately
 7. model self-evaluation.
 Research does not count as evolution unless it changes a rule/process/benchmark/reviewer/script/data field and passes the relevant regression/evidence gate.
 
+### 24.1 Fanqie signing-readiness
+A signing attempt is a high-value external evaluation event, not a word-count milestone to consume automatically.
+
+Before each application:
+- refresh current official Fanqie signing thresholds and evaluation guidance;
+- run a signing-readiness audit on at least opening, pacing, character setup, immersion and mainline;
+- treat real platform rejection as stronger evidence than model self-score;
+- never infer AI detection, safety failure, plagiarism or another hidden reason from a generic quality rejection unless the platform explicitly says so;
+- after a rejection, do not simply continue unchanged to the next threshold; first diagnose the visible front arc and create a bounded repair plan;
+- a previously frozen baseline may be reopened when the rejection is a genuine external hard-quality signal, but changes must remain traceable and dependency-audited;
+- replacing already-published platform chapters remains user-controlled even when internal candidate revisions are prepared;
+- the next signing attempt is blocked until its project-specific readiness gate passes.
+
 ## 25. Checkpoint cadence
 - every material stage/next_action/constraint/artifact/blocker/authority change: checkpoint;
 - every chapter: immutable FINAL + immutable chapter contract snapshot + frozen Context Pack + role execution evidence + acceptance + derived delivery artifact;
 - every 5 chapters: lightweight checkpoint + cross-chapter texture scan;
 - every 10 chapters: full project snapshot + independent longform review;
 - every 50 chapters: global Canon reconciliation;
-- major rebase/structural change: pre/post snapshot.
+- major rebase/structural change: pre/post snapshot;
+- every signing evaluation result: persist exact platform fact, inference boundary, next threshold/gate and any resulting front-arc repair state.
 Store execution truth, not chat transcript.
