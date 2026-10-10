@@ -22,7 +22,7 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 8. `REBASE/REPAIR/RECOVERY_AUDIT` 等维护模式下禁止仅按章节号误开新章。
 
 ## 1. Authority and recovery
-冲突时：用户最新明确外部事实 > GitHub `main` 当前任务/Canon/FINAL/审计 > Library 派生交付物/备份 > 历史镜像 > 聊天记忆。
+冲突时：用户最新明确外部事实 > GitHub `main` 当前任务/Canon/FINAL/审计 > Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档` 中明确需要的派生交付物/历史迁移证据 > 已退役的 Notion / Library / 旧 Google Drive 材料（仅历史线索，不得恢复执行状态） > 聊天记忆。
 
 写入任何 material checkpoint 前，必须重读 Universal task manifest，确认当前 `active_lease.lease_id + resume_epoch`；旧聊天失去 lease 后必须 fail closed。
 
@@ -96,7 +96,7 @@ Writer 默认只接收：
 
 `protocols/ACTIVE_RULEBOOK.md`
 
-历史完整协议和研究证据仍保留在迁移前 Library 备份中，但不自动进入 Writer 主上下文，也不能覆盖当前 GitHub active rulebook。
+迁移前的历史完整协议/研究证据仅作为历史迁移快照保存在 Google Drive artifact vault 中，不自动进入 Writer 主上下文，也不能覆盖当前 GitHub active rulebook。旧 Notion、Library 或旧 Google Drive 执行材料即使未来被重新发现，也只能作为非权威历史线索。
 
 ## 8. Canon / prose rules
 - Canon facts 与 prose surface 分离。
