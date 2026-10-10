@@ -86,7 +86,9 @@ def test_release_evidence_contract_is_bound_and_not_just_prose():
     high=next(c for c in caps["capabilities"] if c["capability_id"]=="high_judgment_serialization_pipeline")
     det=next(c for c in caps["capabilities"] if c["capability_id"]=="deterministic_guards")
     assert high["release_enforcement"]=="runtime/release_evidence_guard.py for CH9+"
-    assert "role-specific execution/review receipts" in high["evidence_contract"]
+    assert any("role-specific structured self-attested execution/review receipts" in item for item in high["evidence_contract"])
+    assert any("Project Profile, Canon and recent-FINAL Context Pack ref" in item for item in high["evidence_contract"])
+    assert any("structured self-attested execution records" in item for item in caps["owner_notes"])
     assert "release_evidence_guard.py" in det["invocation_path"]
     assert (ROOT/"runtime/release_evidence_guard.py").exists()
 
