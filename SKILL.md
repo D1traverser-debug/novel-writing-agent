@@ -28,6 +28,21 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 
 恢复入口与读取顺序见 `ENTRYPOINT.md`。
 
+### 1.1 NOVEL_OS system/project topology
+`NOVEL_OS` 是小说生产系统；`NOVEL_WRITING_AGENT` 是其 GitHub domain owner；具体作品是该系统管理的 project task。
+
+当前 active project：`FQ001_MINGRI_ORDER` / 《凌晨零点，我接到明天的订单》。
+
+系统和项目必须联动但分层：
+- 系统层保存写作方法、质量门、Agent/工作流、学习与进化规则；
+- 项目层保存本书 Canon、人物、章节、发布状态、伏笔、合同与 checkpoint；
+- 系统规则可以改变后续项目工作的执行方式，但不得覆盖项目事实；
+- 项目章节推进不得抹掉系统级学习/治理规则。
+
+`继承小说系统`、`继续小说系统`、`恢复小说系统`、`NOVEL_OS`、`Novel Writing Agent` 必须先路由到本 owner，再读取 `continuity/TASK_INDEX.json#system.active_project_task_id` 自动恢复当前 active project。只有一个 authoritative active project 时，不要求用户再次选择项目；未来存在多个 active project 时，必须按明确项目提示路由或展示项目候选，禁止合并状态。
+
+不得为了让“小说系统”可继承而复制出一个与同一 active project 平行、重复承载相同业务进度的 durable task。
+
 ## 2. Production organization
 采用最小足够复杂度的编辑部式编排：
 - `EXECUTIVE_ORCHESTRATOR`：恢复、调度、冲突裁决、最终放行；不得自写自批。
