@@ -1,13 +1,32 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "status": "GITHUB_PRIMARY",
   "repository": "D1traverser-debug/novel-writing-agent",
   "branch": "main",
   "business_authority": true,
   "previous_authority": "ChatGPT Library /NOVEL_OS_小说系统",
+  "legacy_source_provenance": [
+    "ChatGPT Library /NOVEL_OS_小说系统 (immediate cutover source)",
+    "Notion legacy novel materials (user-confirmed historical source surface)",
+    "Google Drive legacy novel materials (user-confirmed historical source surface)"
+  ],
   "continuity_protocol": "3.7",
   "universal_continuity_role": "ROUTER_PROGRESS_OBSERVABILITY_AND_SINGLE_WRITER_LEASE_AUTHORITY",
-  "library_post_cutover_role": "BACKUP_HISTORICAL_EVIDENCE_AND_DERIVED_ARTIFACT_STORE",
+  "library_post_cutover_role": "REMOVED_NO_NOVEL_EXECUTION_TREE",
+  "artifact_vault": {
+    "provider": "Google Drive",
+    "path": "/Google Drive/ChatGPT/NOVEL_OS_小说系统_交付归档",
+    "folder_url": "https://drive.google.com/drive/folders/1Hi4UmnomNAjANgY9g8NApueI_ToKixw6",
+    "role": "DERIVED_ARTIFACTS_AND_HISTORICAL_MIGRATION_SNAPSHOTS_ONLY",
+    "business_authority": false,
+    "contains": ["current chapter DOCX deliverables", "cover/platform evidence", "historical migration ZIP snapshots"]
+  },
+  "source_cleanup_audit": {
+    "audited_at": "2026-10-10T07:26:30Z",
+    "notion_live_competing_novel_pages": "NONE_FOUND_IN_ACCESSIBLE_LIVE_WORKSPACE",
+    "google_drive_competing_novel_system": "NONE_FOUND_BEFORE_ARTIFACT_VAULT_CREATION_USING_DISTINCTIVE_NOVEL_IDENTIFIERS",
+    "chatgpt_library_novel_tree": "REMOVED_AFTER_VERIFIED_ARTIFACT_COPY"
+  },
   "cutover_acceptance": "PASS",
   "task_id": "FQ001_MINGRI_ORDER",
   "migration_semantics": "storage/home and additive continuity-protocol migration only; no chapter/Canon/release replay",
