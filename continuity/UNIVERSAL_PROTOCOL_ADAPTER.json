@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.5",
+  "schema_version": "1.6",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
   "observed_source_protocol": "3.3",
@@ -8,18 +8,19 @@
   "reconciliation_status": "RECONCILED_V37",
   "strategy": "ADDITIVE_PROTOCOL_OVERLAY_DURING_GITHUB_OWNER_CUTOVER",
   "user_migration_required": false,
-  "business_state_rewrite": false,
+  "business_state_rewrite": true,
+  "business_state_rewrite_reason": "The active project legitimately changed strategy after a real Fanqie signing-quality rejection and the user's explicit authorization removed the previous high migration-cost constraint. Historical prose/publication facts remain preserved; the active next_action changed to a controlled full-front-arc rebase.",
   "same_chat_preserve_resume_epoch": true,
   "same_chat_preserve_active_lease": true,
   "task_id_preserved": "FQ001_MINGRI_ORDER",
   "migration_stage_preserved": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
   "current_stage_source": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
   "next_action_source": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
-  "external_publication_fact_preserved": "CH1-CH7 confirmed published; CH8 not confirmed published",
+  "external_publication_fact_preserved": "CH1-CH7 confirmed published historically; CH8 publication remains unconfirmed; internal rebase does not infer withdrawal/replacement.",
   "current_contract_version": "3.7",
   "domain_contract_version": "2.1-github",
-  "skill_version": "Novel Writing Agent 2.2.0-github",
-  "runtime_version": "github-owner-2.3",
+  "skill_version": "Novel Writing Agent 2.3.0-github",
+  "runtime_version": "github-owner-2.4",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strength": "STRUCTURED_SELF_ATTESTED_CHAT_BRIDGED_UNLESS_EXTERNAL_TRACE_PRESENT",
   "platform_signing_feedback": {
@@ -29,9 +30,23 @@
     "third_application_threshold_if_needed": 80000,
     "second_application_gate": "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS",
     "quality_diagnosis_ref": "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md",
-    "front_arc_repair_matrix_ref": "audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md",
-    "canon_effect": "NONE",
+    "active_rebase_plan_ref": "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
+    "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
+    "superseded_targeted_matrix_ref": "audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md",
+    "canon_effect": "NONE_UNLESS_EXPLICIT_RETCON_DURING_REBASE",
     "external_platform_replacement_user_controlled": true
+  },
+  "full_front_arc_rebase": {
+    "status_source": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json#rebase",
+    "mode": "CONTROLLED_FULL_FRONT_ARC_REBASE",
+    "scope": "CH1-CH8_FRONT_ARC",
+    "old_finals_role": "IMMUTABLE_HISTORICAL_BASELINE",
+    "old_chapter_boundaries_binding": false,
+    "old_ch9_contract_status": "SUPERSEDED_BY_FULL_FRONT_ARC_REBASE",
+    "active_plan_ref": "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
+    "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
+    "candidate_promotion_gate": "WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT",
+    "evidence_ceiling_before_real_packet_and_outcome": "REGRESSION_VERIFIED_OWNER_WIRING_ONLY"
   },
   "owner_adapter_ref": "CONTINUITY_ADAPTER.json",
   "short_checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
@@ -46,18 +61,18 @@
     "profile_applicability": {
       "artifact_io": {
         "status": "APPLIES",
-        "reason": "Novel Writing persists canonical project/checkpoint state, Canon/prose/review artifacts, publication/signing facts and migration references whose identity, freshness, invalidation and retention are governed explicitly.",
+        "reason": "Novel Writing persists canonical project/checkpoint state, Canon/prose/review artifacts, publication/signing facts, historical baselines and replacement candidates whose identity, freshness, invalidation and retention are governed explicitly.",
         "evidence_refs": ["continuity/ARTIFACT_CONTEXT_GOVERNANCE.json","projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json","SKILL.md"]
       },
       "operational_hygiene": {
         "status": "APPLIES",
-        "reason": "The owner has release hard gates, reminder-dependency repair, signing-feedback recovery, incident/review evidence, stale-dependent-hash handling, deterministic release-evidence validation and periodic regression before release/promotion.",
-        "evidence_refs": ["SKILL.md","runtime/recovery_guard.py","runtime/release_evidence_guard.py","CHANGELOG.md"]
+        "reason": "The owner has release hard gates, reminder-dependency repair, signing-feedback recovery, full-rebase supersession rules, stale-dependent-hash handling, deterministic release-evidence validation and periodic regression before release/promotion.",
+        "evidence_refs": ["SKILL.md","protocols/ACTIVE_RULEBOOK.md","runtime/recovery_guard.py","runtime/release_evidence_guard.py","CHANGELOG.md"]
       },
       "evolution": {
         "status": "APPLIES",
-        "reason": "The owner performs durable system learning from user feedback, platform signing outcomes, accepted/rejected review evidence and reader/platform evidence, and records non-trivial system evolution with candidate critique, regression evidence and explicit inference boundaries.",
-        "evidence_refs": ["SKILL.md","audits/","projects/FQ001_MINGRI_ORDER/reviews/","CHANGELOG.md"]
+        "reason": "The owner now explicitly applies the Universal candidate-adoption and M0-M11 evolution method to material user/platform failure signals: goal/mechanism separation, evidence scout, alternatives/falsification, complexity budget, supersession, second-order challenge and calibrated assurance.",
+        "evidence_refs": ["audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md","audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md","SKILL.md","protocols/ACTIVE_RULEBOOK.md","CHANGELOG.md"]
       }
     },
     "hook_bindings": {
@@ -73,28 +88,23 @@
       "delete_and_retention_rules": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#delete_and_retention_rules",
       "superseded_artifact_cleanup_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule",
       "external_artifact_vault_if_any": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#external_artifact_vault_if_any",
-      "observability_or_incident_evidence_location": "hash-bound project reviews/acceptance/execution-evidence/checkpoints plus platform-signing audits, audits/ and CHANGELOG.md",
-      "self_maintenance_trigger_path": "SKILL.md release-hard-gate reminder-dependency rule plus platform signing-feedback loop: user/platform quality failure triggers bounded diagnosis, repair and regression without requiring the user to enumerate the internal maintenance steps",
-      "garbage_collection_owner_and_dependency_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule with published FINAL/Canon retention and dependency checks",
-      "reliability_or_change_freeze_guard": "SKILL.md release hard gates plus runtime/recovery_guard.py, runtime/release_evidence_guard.py and signing-readiness gates: no release/signing promotion on missing evidence, stale dependent hashes, unresolved BLOCKER/HIGH findings, false isolation claims, unverified local Context Pack hashes, or an ungated retry after a signing rejection",
-      "learning_evidence_location": "audits/ for non-trivial system-learning passes plus project reviews/platform evidence referenced by the active project",
-      "eval_or_regression_promotion_path": "SKILL.md release/signing gates + runtime/recovery_guard.py + runtime/release_evidence_guard.py + owner CI; system learning is promoted only after relevant regression/evidence and must not overwrite project facts",
-      "superseded_mechanism_cleanup_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule; old Library/Notion/Drive executable material remains retired and cannot regain authority by presence"
+      "observability_or_incident_evidence_location": "hash-bound project reviews/acceptance/execution-evidence/checkpoints plus platform-signing/rebase learning audits and CHANGELOG.md",
+      "self_maintenance_trigger_path": "SKILL.md platform signing-feedback loop + full front-arc rebase/evolution section: a user/platform hard signal triggers classification, evidence scout, candidate comparison, falsification, bounded repair/evolution, supersession and regression without requiring the user to operate the process",
+      "garbage_collection_owner_and_dependency_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule with historical FINAL/Canon retention and dependency checks",
+      "reliability_or_change_freeze_guard": "SKILL.md release/rebase hard gates plus runtime/recovery_guard.py and runtime/release_evidence_guard.py: no CH9 continuation, replacement promotion or second-signing attempt while the full-rebase state or required packet evidence/readiness is unresolved",
+      "learning_evidence_location": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md plus project reviews/platform evidence; raw learning is not execution authority",
+      "eval_or_regression_promotion_path": "SKILL.md + protocols/ACTIVE_RULEBOOK.md + recovery/release-evidence guards + owner CI; full-rebase learning is promoted only after candidate comparison and regression wiring, while literary/outcome claims remain open until action/live evidence",
+      "superseded_mechanism_cleanup_rule": "The old targeted front-arc matrix and old CH9 READY contract are explicitly superseded/held; retired Library/Notion/legacy Drive executable material remains non-authoritative"
     },
     "overrides": {
-      "evaluator_selection": "Novel evolution is judged through chapter/project-specific role-separated review, identity regression, platform signing/reader evidence, periodic long-form/Canon checks and real reader/platform evidence when available; normal same-session review does not claim ATTESTED_ISOLATED assurance"
+      "evaluator_selection": "Novel evolution is judged through packet/chapter-specific role-separated review, identity regression, platform signing/reader evidence, periodic long-form/Canon checks and real reader/platform evidence when available; normal same-session review does not claim ATTESTED_ISOLATED assurance"
     }
   },
   "methodology_assurance": {
-    "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__APPLICABILITY_EVIDENCE_RECORDED",
-    "owner_regression_status": "PASS",
-    "owner_regression_evidence": {
-      "validated_behavioral_head": "fb97395df5d7028360edf7138d161ab190390ae8",
-      "github_actions_run_id": 38075873129,
-      "job_id": 114282590528,
-      "result": "PASS_RECOVERY_GUARD_RELEASE_EVIDENCE_GUARD_ALL_OWNER_TESTS_WITH_SIGNING_FEEDBACK_RECOVERY"
-    },
-    "operational_status": "ACTION_LEVEL_PROFILE_RUN_AND_EVIDENCE_RECEIPT_REQUIRED__CHAT_BRIDGED_SELF_ATTESTED",
-    "boundary": "Repository regression proves signing-feedback state, repair gates and deterministic recovery are wired. It does not prove the repaired front arc will pass Fanqie signing. The generic rejection does not establish a hidden AI/safety/plagiarism cause. CH9+ still requires per-chapter execution evidence, and ATTESTED_ISOLATED remains unavailable without a distinct execution identity/provider trace."
+    "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__FULL_REBASE_EVOLUTION_MAPPED",
+    "owner_regression_status": "PENDING_FINAL_HEAD_VALIDATION",
+    "owner_regression_evidence": null,
+    "operational_status": "OWNER_EVOLUTION_WIRING_PENDING_FINAL_CI__ACTION_LEVEL_PACKET_EVIDENCE_NOT_YET_AVAILABLE",
+    "boundary": "The repository may prove recovery, supersession and full-rebase methodology wiring after final CI. That will not prove the replacement packet is literarily better, improve retention, or pass Fanqie signing. Those higher claims require real candidate-packet reviews and ultimately reader/platform/live-signing outcome evidence. CHAT_BRIDGED receipts remain self-attested, and ATTESTED_ISOLATED remains unavailable without a distinct execution identity/provider trace."
   }
 }
