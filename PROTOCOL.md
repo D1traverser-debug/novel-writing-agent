@@ -11,8 +11,8 @@ This repository owns NOVEL domain business state: story Canon, chapter prose, co
 ## 2. Authority order
 1. User's latest explicit external fact (for example, “第8章已发布”).
 2. This repository `main`: task manifest, current checkpoint/state, Canon, FINAL prose and valid hash-bound audits.
-3. Derived/binary artifacts in ChatGPT Library.
-4. Historical mirrors/recovery archives.
+3. Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档` only for explicitly needed derived/binary artifacts or historical migration evidence.
+4. Decommissioned Notion / ChatGPT Library / legacy Google Drive novel materials, if encountered, as non-authoritative historical clues only.
 5. Chat/model memory.
 
 If authority is unknown or inconsistent: fail closed; do not reconstruct executable state by guess.
@@ -47,7 +47,7 @@ Writer receives a minimum sufficient Context Pack, not the entire knowledge base
 Checkpoint material stage/next-action/constraint/artifact/blocker changes. Store execution truth, not transcript summaries.
 
 ## 9. Binary artifacts
-DOCX, rendered page images and recovery ZIPs are derived deliverables. They may be stored outside GitHub. The authoritative source text remains repo Markdown.
+DOCX, rendered page images, cover/platform evidence and recovery ZIPs are derived or historical artifacts. The designated external vault is Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档`. These artifacts never become business authority; the authoritative source text and execution state remain repo Markdown/JSON. ChatGPT Library is not a novel execution or recovery store after the 2026-10-10 cleanup.
 
 ## 10. Current task
 Task identity: `FQ001_MINGRI_ORDER`.
