@@ -7,12 +7,7 @@
     "system_id": "NOVEL_OS",
     "display_name_zh": "小说系统",
     "owner_role": "SYSTEM_OWNER_ACTIVE_PROJECT_ROUTER",
-    "resume_aliases": [
-      "小说系统",
-      "NOVEL_OS",
-      "Novel Writing Agent",
-      "novel-writing-agent"
-    ],
+    "resume_aliases": ["小说系统","NOVEL_OS","Novel Writing Agent","novel-writing-agent"],
     "resume_behavior": "ROUTE_TO_ACTIVE_PROJECT",
     "active_project_task_id": "FQ001_MINGRI_ORDER",
     "active_project_ref": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
@@ -34,26 +29,17 @@
       "resume_eligible": true,
       "resume_visibility": "DEFAULT",
       "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-10T02:13:00Z",
+      "updated_at": "2026-10-10T15:33:35Z",
       "current_stage": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
       "next_action": "Wait for user confirmation that CH8 was published; then record CH8 as externally published and continue CH9 from the existing READY contract without replaying CH8.",
       "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
       "contract_version": "3.7",
       "continuity_protocol_version": "3.7",
-      "domain_contract_version": "2.0-github",
-      "skill_version": "Novel Writing Agent 2.0.0-github",
-      "runtime_version": "github-owner-2.1",
-      "keywords": [
-        "小说",
-        "小说系统",
-        "NOVEL_OS",
-        "Novel Writing Agent",
-        "明日订单",
-        "凌晨零点",
-        "番茄小说",
-        "FQ001",
-        "NOVEL_WRITING_AGENT"
-      ]
+      "domain_contract_version": "2.1-github",
+      "skill_version": "Novel Writing Agent 2.1.0-github",
+      "runtime_version": "github-owner-2.2",
+      "release_evidence_contract_version": "1.0",
+      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","凌晨零点","番茄小说","FQ001","NOVEL_WRITING_AGENT"]
     }
   ]
 }
