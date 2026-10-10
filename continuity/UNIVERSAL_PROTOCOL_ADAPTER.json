@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
   "observed_source_protocol": "3.3",
@@ -17,9 +17,10 @@
   "external_publication_fact_preserved": "CH1-CH7 confirmed published; CH8 not confirmed published",
   "current_contract_version": "3.7",
   "domain_contract_version": "2.1-github",
-  "skill_version": "Novel Writing Agent 2.1.0-github",
-  "runtime_version": "github-owner-2.2",
+  "skill_version": "Novel Writing Agent 2.1.1-github",
+  "runtime_version": "github-owner-2.2.1",
   "release_evidence_contract_version": "1.0",
+  "release_evidence_strength": "STRUCTURED_SELF_ATTESTED_CHAT_BRIDGED_UNLESS_EXTERNAL_TRACE_PRESENT",
   "owner_adapter_ref": "CONTINUITY_ADAPTER.json",
   "short_checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
   "artifact_governance_ref": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
@@ -43,7 +44,7 @@
       },
       "evolution": {
         "status": "APPLIES",
-        "reason": "The owner performs durable system learning from user feedback, accepted/rejected review evidence and reader/platform evidence, and now records non-trivial system evolution with candidate critique, regression evidence and explicit remaining-risk boundaries.",
+        "reason": "The owner performs durable system learning from user feedback, accepted/rejected review evidence and reader/platform evidence, and records non-trivial system evolution with candidate critique, regression evidence and explicit remaining-risk boundaries.",
         "evidence_refs": ["SKILL.md","audits/","projects/FQ001_MINGRI_ORDER/reviews/","CHANGELOG.md"]
       }
     },
@@ -63,7 +64,7 @@
       "observability_or_incident_evidence_location": "hash-bound project reviews/acceptance/execution-evidence/checkpoints plus audits/ and CHANGELOG.md",
       "self_maintenance_trigger_path": "SKILL.md release-hard-gate reminder-dependency rule: when the user identifies a defect the system should have caught, revoke stale release evidence, repair, re-audit and upgrade the general defense",
       "garbage_collection_owner_and_dependency_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule with published FINAL/Canon retention and dependency checks",
-      "reliability_or_change_freeze_guard": "SKILL.md release hard gates plus runtime/release_evidence_guard.py and periodic regression: no release promotion on missing receipts, failed quality evidence, stale dependent hashes, unresolved BLOCKER/HIGH findings, or false isolation claims",
+      "reliability_or_change_freeze_guard": "SKILL.md release hard gates plus runtime/release_evidence_guard.py and periodic regression: no release promotion on missing receipts, failed quality evidence, stale dependent hashes, unresolved BLOCKER/HIGH findings, false isolation claims, or unverified local Context Pack hashes",
       "learning_evidence_location": "audits/ for non-trivial system-learning passes plus project reviews/platform evidence referenced by the active project",
       "eval_or_regression_promotion_path": "SKILL.md release hard gates + runtime/recovery_guard.py + runtime/release_evidence_guard.py + owner CI; system learning is promoted only after relevant regression/evidence and must not overwrite project facts",
       "superseded_mechanism_cleanup_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule; old Library/Notion/Drive executable material remains retired and cannot regain authority by presence"
@@ -76,12 +77,12 @@
     "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__APPLICABILITY_EVIDENCE_RECORDED",
     "owner_regression_status": "PASS",
     "owner_regression_evidence": {
-      "validated_behavioral_head": "738625da998ad530a3af1d04e22b39cf3c1b5d16",
-      "github_actions_run_id": 38064234066,
-      "job_id": 114248515612,
-      "result": "PASS_RECOVERY_GUARD_RELEASE_EVIDENCE_GUARD_ALL_OWNER_TESTS"
+      "validated_behavioral_head": "ced06cec1a2201135d32c7f9d8c8c32c43b83507",
+      "github_actions_run_id": 38065144178,
+      "job_id": 114251164978,
+      "result": "PASS_RECOVERY_GUARD_RELEASE_EVIDENCE_GUARD_ALL_OWNER_TESTS_WITH_STRONGER_BINDING_NEGATIVES"
     },
-    "operational_status": "ACTION_LEVEL_PROFILE_RUN_AND_EVIDENCE_RECEIPT_REQUIRED",
-    "boundary": "Repository declaration, applicability evidence and owner regression prove the owner contract and deterministic enforcement surfaces are wired; they do not prove a future chapter's reviewers executed. CH9+ must produce per-chapter frozen-context and role receipts before release, and normal CHAT_BRIDGED role separation must not be represented as ATTESTED_ISOLATED."
+    "operational_status": "ACTION_LEVEL_PROFILE_RUN_AND_EVIDENCE_RECEIPT_REQUIRED__CHAT_BRIDGED_SELF_ATTESTED",
+    "boundary": "Repository declaration, applicability evidence and owner regression prove owner wiring and deterministic evidence-binding enforcement. CH9+ must produce per-chapter frozen-context and role receipts before release. CHAT_BRIDGED receipts are structured self-attested records: the guard verifies local file/hash/context/source bindings and internal consistency, but does not independently attest model cognition or prove non-post-hoc chronology. ATTESTED_ISOLATED remains unavailable without a distinct execution identity/provider trace."
   }
 }
