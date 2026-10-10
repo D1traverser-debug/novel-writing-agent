@@ -178,12 +178,16 @@ def test_signing_rejection_is_durable_and_second_attempt_is_gated():
     assert "平台签约拒绝" in (ROOT/"SKILL.md").read_text(encoding="utf-8")
 
 
-def test_universal_methodology_adapter_calibrates_claims_for_full_rebase():
+def test_universal_methodology_adapter_records_regression_without_overclaiming_outcome():
     a=json.loads((ROOT/"continuity/UNIVERSAL_PROTOCOL_ADAPTER.json").read_text())
     assert a["skill_version"]=="Novel Writing Agent 2.3.0-github"
     assert a["runtime_version"]=="github-owner-2.4"
     assert a["full_front_arc_rebase"]["mode"]=="CONTROLLED_FULL_FRONT_ARC_REBASE"
     assert a["methodology"]["profile_applicability"]["evolution"]["status"]=="APPLIES"
     assert "FULL_REBASE_LEARNING_EVIDENCE" in a["methodology"]["hook_bindings"]["learning_evidence_location"]
-    assert a["methodology_assurance"]["owner_regression_status"]=="PENDING_FINAL_HEAD_VALIDATION"
-    assert "will not prove" in a["methodology_assurance"]["boundary"]
+    assurance=a["methodology_assurance"]
+    assert assurance["owner_regression_status"]=="PASS"
+    assert assurance["owner_regression_evidence"]["validated_behavioral_head"]=="779de49898b4450b21ec2e62a737b1f91ec4c05d"
+    assert assurance["owner_regression_evidence"]["github_actions_run_id"]==38083956011
+    assert assurance["owner_regression_evidence"]["job_id"]==114306430298
+    assert "does not prove" in assurance["boundary"]
