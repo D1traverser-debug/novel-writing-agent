@@ -1,20 +1,20 @@
 {
   "schema_version": "2.1-github",
-  "checkpoint_version": 8,
+  "checkpoint_version": 9,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
   "display_name_zh": "《凌晨零点，我接到明天的订单》",
   "status": "ACTIVE",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-10T20:04:00Z",
-  "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE",
-  "next_action": "Freeze CH1-CH8 old FINALs as immutable historical baseline evidence; finalize and validate the new front-arc signing-packet architecture, then rewrite candidate CH1-CH8 as a coherent unit under rebase and execution-evidence gates. Keep platform withdrawal/replacement and any CH8 publication fact user-controlled; hold old CH9 execution; do not consume the 50k second-signing attempt until the replacement packet passes signing-readiness audit.",
+  "updated_at": "2026-10-10T21:06:00Z",
+  "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY",
+  "next_action": "Draft replacement candidate CH1-CH8 coherently from outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md, preserving old FINALs as immutable historical baseline. For the new bodies, create the applicable frozen contracts/context packs and prove the deferred prose competencies (scene/chapter execution, dialogue/subtext, POV/immersion, domain reality, revision) through role-separated reviews and whole-packet gates before any replacement promotion. Keep old CH9 held and do not consume the 50k second-signing attempt before SIGNING_READINESS_AUDIT_PASS.",
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.1-github",
-  "skill_version": "Novel Writing Agent 2.3.0-github",
-  "runtime_version": "github-owner-2.4",
+  "skill_version": "Novel Writing Agent 2.4.0-github",
+  "runtime_version": "github-owner-2.5",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strict_from_chapter": 9,
   "canon_version": 12,
@@ -32,7 +32,20 @@
     "second_application_gate": "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS",
     "quality_diagnosis_ref": "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md",
     "active_rebase_plan_ref": "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
-    "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md"
+    "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
+    "mastery_evolution_ref": "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
+    "architecture_mastery_benchmark_ref": "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md"
+  },
+  "mastery": {
+    "system_model_ref": "protocols/NOVEL_MASTERY_MODEL.md",
+    "series_master_outline_ref": "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
+    "front_arc_frozen_architecture_ref": "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
+    "project_benchmark_ref": "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
+    "architecture_gate": "PASS_WITH_SCOPED_DEFERRALS",
+    "architecture_project_ready_competencies": ["C01","C02","C03","C04","C05","C06","C07","C08_FRONT_ARC","C11_ACQUISITION_VOL1","C14_ARCHITECTURE","C15","C17","C18","C19","C20"],
+    "deferred_to_candidate_prose": ["C09","C10","C12","C13","C16"],
+    "late_series_partial": ["C08_LATE_SENDER_ONTOLOGY"],
+    "maximum_current_claim": "PROJECT_LEVEL_L3_WHERE_LISTED__NO_L4_TRANSFER_OR_LIVE_OUTCOME_CLAIM"
   },
   "rebase": {
     "authorized_by_user": true,
@@ -40,6 +53,8 @@
     "mode": "CONTROLLED_FULL_FRONT_ARC_REBASE",
     "old_finals_role": "IMMUTABLE_HISTORICAL_BASELINE",
     "old_chapter_boundaries_binding": false,
+    "series_master_outline_ref": "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
+    "frozen_architecture_ref": "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
     "old_ch9_contract_status": "SUPERSEDED_BY_FULL_FRONT_ARC_REBASE",
     "candidate_promotion": "WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT",
     "platform_replacement_user_controlled": true
@@ -50,7 +65,9 @@
     "OLD_FINALS_NOT_ACTIVE_REPLACEMENT_UNTIL_PACKET_ACCEPTED",
     "CH9_EXECUTION_HELD_DURING_FULL_REBASE",
     "PUBLISHED_CHAPTER_PLATFORM_REPLACEMENT_REMAINS_USER_CONTROLLED",
-    "CI_OR_SELF_REVIEW_MUST_NOT_BE_CLAIMED_AS_LIVE_QUALITY_OUTCOME"
+    "CI_OR_SELF_REVIEW_MUST_NOT_BE_CLAIMED_AS_LIVE_QUALITY_OUTCOME",
+    "MASTERY_FILES_OR_RESEARCH_DO_NOT_PROVE_L3_L4_WITHOUT_APPLIED_BENCHMARK",
+    "SUPERSEDED_ARC_001_NOT_EXECUTABLE"
   ],
   "blockers": [],
   "waiting_on": [],
@@ -62,8 +79,14 @@
   ],
   "authority_refs": [
     "ENTRYPOINT.md",
+    "SKILL.md",
+    "protocols/ACTIVE_RULEBOOK.md",
+    "protocols/NOVEL_MASTERY_MODEL.md",
     "projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
     "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
+    "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
+    "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
+    "projects/FQ001_MINGRI_ORDER/outline/ARC_001.md",
     "projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
     "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md",
     "projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
@@ -75,6 +98,8 @@
     "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
     "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
     "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md",
+    "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
+    "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
     "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
     "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
     "audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md"
@@ -93,6 +118,6 @@
     "business_semantics_replayed": false,
     "same_chat_lease_preserved": true,
     "post_cutover_artifact_vault": "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档",
-    "owner_evolution": "Novel Writing Agent 2.3 / runtime 2.4 activates a controlled full-front-arc rebase after the platform signing failure and user authorization changed the migration-cost boundary. Historical FINAL bodies/hashes, Canon v12, external publication facts, Universal resume_epoch and active lease remain preserved."
+    "owner_evolution": "Novel Writing Agent 2.4 / runtime 2.5 adds a complete craft competency/mastery model, project-level mastery benchmark and series master outline; front-arc architecture is frozen for coherent candidate drafting while historical FINAL bodies/hashes, Canon v12, external publication facts, Universal resume_epoch and active lease remain preserved."
   }
 }
