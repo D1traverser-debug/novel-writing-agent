@@ -10,7 +10,7 @@ def need(rel):
     return p
 for rel in [
  "ENTRYPOINT.md","PROTOCOL.md","SKILL.md","AUTHORITY_STATUS.json","CONTINUITY_ADAPTER.json","TASK_INDEX.json",
- "continuity/TASK_INDEX.json","continuity/EXECUTION_CAPABILITIES.json",
+ "continuity/TASK_INDEX.json","continuity/EXECUTION_CAPABILITIES.json","continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
  "protocols/ACTIVE_RULEBOOK.md","projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json","projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
  "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json","projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
  "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md","projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
@@ -63,6 +63,26 @@ if topology.get("system_id")!="NOVEL_OS": problems.append("adapter-system-id")
 if topology.get("routing_rule")!="SYSTEM_ALIAS_RESOLVES_OWNER_THEN_ACTIVE_PROJECT": problems.append("adapter-system-routing")
 if topology.get("single_active_project_behavior")!="AUTO_BIND_WITHOUT_SECOND_USER_SELECTION": problems.append("adapter-single-project-autobind")
 
-result={"status":"PASS" if not problems else "FAIL","task_id":m["task_id"],"system_id":system.get("system_id"),"active_project_task_id":system.get("active_project_task_id"),"stage":m["current_stage"],"next_action":m["next_action"],"failures":problems}
+# Post-cutover storage governance guard. GitHub is the only execution authority;
+# Google Drive is artifact vault only; Library/Notion/legacy Drive cannot become recovery sources.
+auth=json.loads((ROOT/"AUTHORITY_STATUS.json").read_text(encoding="utf-8"))
+gov=json.loads((ROOT/"continuity/ARTIFACT_CONTEXT_GOVERNANCE.json").read_text(encoding="utf-8"))
+if auth.get("status")!="GITHUB_PRIMARY" or auth.get("business_authority") is not True: problems.append("authority-not-github-primary")
+if auth.get("library_post_cutover_role")!="REMOVED_NO_NOVEL_EXECUTION_TREE": problems.append("library-role-regression")
+vault=auth.get("artifact_vault",{})
+if vault.get("provider")!="Google Drive" or vault.get("business_authority") is not False: problems.append("artifact-vault-authority")
+if vault.get("path")!="/Google Drive/ChatGPT/NOVEL_OS_小说系统_交付归档": problems.append("artifact-vault-path")
+if "ChatGPT Library" in gov.get("external_artifact_vault_if_any",""): problems.append("governance-library-vault-regression")
+refs=cp.get("derived_artifact_refs",[])
+if any("ChatGPT Library" in r for r in refs): problems.append("checkpoint-library-derived-ref")
+if not any("Google Drive" in r for r in refs): problems.append("checkpoint-missing-drive-derived-ref")
+entry=(ROOT/"ENTRYPOINT.md").read_text(encoding="utf-8")
+skill=(ROOT/"SKILL.md").read_text(encoding="utf-8")
+protocol=(ROOT/"PROTOCOL.md").read_text(encoding="utf-8")
+for label,text in (("entrypoint",entry),("skill",skill),("protocol",protocol)):
+    if "ChatGPT Library is a backup / derived-artifact store" in text or "Library 派生交付物/备份" in text or "Derived/binary artifacts in ChatGPT Library" in text:
+        problems.append(f"legacy-storage-wording:{label}")
+
+result={"status":"PASS" if not problems else "FAIL","task_id":m["task_id"],"system_id":system.get("system_id"),"active_project_task_id":system.get("active_project_task_id"),"stage":m["current_stage"],"next_action":m["next_action"],"artifact_vault":vault.get("path"),"failures":problems}
 print(json.dumps(result,ensure_ascii=False,indent=2))
 sys.exit(1 if problems else 0)
