@@ -1,6 +1,6 @@
 {
   "schema_version": "3.7",
-  "adapter_version": "2.1",
+  "adapter_version": "2.2",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.0-github",
   "owner": "NOVEL_WRITING_AGENT",
@@ -13,8 +13,28 @@
   "protocol_adapter_ref": "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json",
   "execution_capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
   "artifact_context_governance_ref": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
+  "system_project_topology": {
+    "system_id": "NOVEL_OS",
+    "system_display_name_zh": "小说系统",
+    "system_resume_aliases": [
+      "小说系统",
+      "NOVEL_OS",
+      "Novel Writing Agent",
+      "novel-writing-agent"
+    ],
+    "routing_rule": "SYSTEM_ALIAS_RESOLVES_OWNER_THEN_ACTIVE_PROJECT",
+    "active_project_source": "continuity/TASK_INDEX.json#system.active_project_task_id",
+    "single_active_project_behavior": "AUTO_BIND_WITHOUT_SECOND_USER_SELECTION",
+    "multiple_active_projects_behavior": "RESOLVE_EXPLICIT_PROJECT_HINT_OR_PRESENT_PROJECT_CHOICES_WITHOUT_MERGING_STATE",
+    "state_model": "SYSTEM_RULES_AND_PROJECT_STATE_COUPLED_BUT_LAYERED",
+    "duplicate_task_for_system_and_same_project": false
+  },
   "capabilities": {
     "list_resumable_tasks_metadata_only": {"source": "continuity/TASK_INDEX.json"},
+    "resolve_system_resume_alias": {
+      "source": "continuity/TASK_INDEX.json#system",
+      "behavior": "Route system alias to NOVEL_WRITING_AGENT and authoritative active_project_task_id before normal project recovery."
+    },
     "get_task_checkpoint_by_id": {"manifest_pattern": "projects/<task_id>/TASK_MANIFEST.json", "checkpoint_field": "checkpoint_ref"},
     "compatibility_check": {"current_contract_version": "3.7", "supported_migrations_from": ["3.3", "NOVEL_OS_LIBRARY_1.9.0"], "unknown_behavior": "FAIL_CLOSED"},
     "resume_or_migrate_or_block": {
@@ -43,5 +63,5 @@
     "Library backup/derived artifacts",
     "chat memory"
   ],
-  "updated_at": "2026-10-10T02:13:00Z"
+  "updated_at": "2026-10-10"
 }
