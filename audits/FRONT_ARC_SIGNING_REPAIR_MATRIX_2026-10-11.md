@@ -1,5 +1,10 @@
 # FQ001 Front-Arc Signing Repair Matrix
 
+status: `SUPERSEDED_FOR_ACTIVE_EXECUTION`
+superseded_by: `audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md`
+superseded_on: 2026-10-11
+reason: The original matrix optimized expected quality gain against high migration/replacement cost for already-published chapters. The user subsequently authorized the whole front arc to be withdrawn/reworked; after Universal M0–M11 candidate challenge, controlled full-front-arc rebase became the better active strategy. This file remains historical learning evidence and must not drive current next_action.
+
 Date: 2026-10-11
 Trigger: first Fanqie signing evaluation rejected for generic quality reasons
 Scope: CH1–CH8 authoritative FINALs
