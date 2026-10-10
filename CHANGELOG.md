@@ -1,5 +1,20 @@
 # NOVEL_OS Changelog
 
+## 2026-10-11 — v2.4 novel mastery model / series master outline / self-auditing craft capability
+- 用户指出第二阶系统缺陷：上一轮已经进化 full-rebase、证据、Guard 和候选反证，但仍主要是“流程会学习”；Novel Writing Agent 并没有一个完整可验收的“小说能力总图”，也没有回答每项能力从哪学、学到什么等级、用什么证据证明。该问题被记录为 reminder-dependency / meta-learning incident，而不是只追加一句用户要求。
+- 新增 `protocols/NOVEL_MASTERY_MODEL.md`，建立20项核心能力：卖点/读者契约、系列总纲、世界观/系统、人物弧、关系、主题、对抗、谜团信息架构、场景、章节/钩子、长篇节奏、对白/潜台词、POV/文风、情绪黏性、伏笔/回收/读者记忆、专业真实性、改稿诊断、平台/获客、Canon/连续性、meta-learning。
+- 明确 L0–L4 掌握等级：`UNMAPPED → CONCEPTUAL → OPERATIONAL_WITH_SCAFFOLD → PROJECT_READY → TRANSFER_VERIFIED`。看课/读书/检索最多直接构成 L1 学习证据；项目 L3 必须有实际设计/文本 + 反证/候选比较 + 审核/issue evidence；L4 必须跨项目并由真实读者/编辑/平台结果重复验证，禁止凭文件/CI自封“精通”。
+- 学习来源正式分层：真实项目结果 > 当前平台一方规则/课程 > 原始高信号 craft 方法 > 优秀作品功能拆解 > blind reader > 社区启发式 > 模型自评。热门作品只抽取功能/结构/节奏/角色扩展路径，不复制措辞、独特情节或表面套路。
+- 新增 `audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md`，按 M0–M11 记录本次能力缺口、候选解法、为什么不新增一堆 Reviewer/不把所有课程灌进 Writer、不建立巨型万能公式书，以及 mastery model + series master outline 的采用理由。
+- 新增 `projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md`：从开篇反推终局，将读者契约、终局道德选择、陈渡全局人物弧、许知微/顾行舟/老马关系功能、明日达世界规则 reveal ladder、谜团层级、六卷功能路线、前30章方向和当前 CH1–CH8 acquisition packet 放进同一架构；用 `LOCKED / PLANNED / FLEX / HYPOTHESIS` 明确“计划不是Canon”。
+- 原 `outline/ARC_001.md` 正式改为 `SUPERSEDED_BY_SERIES_MASTER_OUTLINE_FOR_ACTIVE_REBASE / HISTORICAL_PLANNING_EVIDENCE`。旧 CH1–CH10 编号不得作为执行恢复入口，避免全重构后又按旧30章节拍续写。
+- 新增 `audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md`，逐项判断当前项目学到哪：C01/C02/C03/C04/C05/C06/C07/C08前段/C11前段与Vol1/C14/C15/C17/C18/C19/C20已有项目级 L3 架构证据；C09/C10/C12/C13/C16必须等新正文实际写出后再证明；长线 sender ontology 的 C08 保持 L2/HYPOTHESIS，拒绝为了“世界观完整”提前伪造终极答案。
+- 新增 `outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md` 并冻结为 `FROZEN_FOR_CANDIDATE_DRAFT`：明确 CH1–CH8 每章功能、人物/信息状态、历史材料可复用/禁保留项、跨章发动机、谜团 payment 与 whole-packet promotion gates。当前结果为 `READY_FOR_COHERENT_CANDIDATE_DRAFT`。
+- `SKILL.md` 升级至 2.4.0：用户不再承担提醒“还缺大纲/世界观/人物/审核”的职责；重大失败自动跑 competency-gap check；Mastery Model 与 Active Rulebook 分工，前者回答“掌握什么/学到哪/怎么证明”，后者回答“生产时怎么写/怎么审”；完整 mastery model 不灌入 Writer context。
+- `continuity/EXECUTION_CAPABILITIES.json` 扩展 SERIES_ARCHITECTURE / WORLDBUILDING / CHARACTER_ARC / RELATIONSHIP_ARCHITECTURE / THEME / MYSTERY_ARCHITECTURE / MASTERY_BENCHMARK 等 scope；仍只允许 `SESSION_EXECUTABLE / CHAT_BRIDGED` 对应保证，不把自填 benchmark 冒充独立 attestation。
+- `ENTRYPOINT.md`、task/checkpoint/index、`runtime/recovery_guard.py` 和 recovery tests 已接入 mastery model、series master outline、旧 ARC_001 退役、architecture benchmark 和 frozen architecture；未来恢复必须机械拒绝“能力模型丢失 / 旧大纲复活 / mastery 文件存在即冒充L3/L4”。
+- 当前任务推进到 `FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY`。下一步不再继续无边界学习，而是按冻结架构统一重写 CH1–CH8 candidate，并用实际正文证明 C09/C10/C12/C13/C16 等延后能力；整包通过前不替换历史 FINAL、不执行旧 CH9、不消耗5万字二签。
+
 ## 2026-10-11 — v2.3 full-front-arc rebase / complete Universal evolution pass
 - 用户明确允许当前小说前段整体退回重改；系统将该消息分类为“放宽迁移/替换成本约束 + 授权影响边界”，而不是把“全部重写”直接当成架构权威。
 - 重新读取并应用 Universal Continuity 当前与本任务相关的完整进化权威：Continuous Learning、System Maintenance M0–M11、Media Distillation、Orchestration、Execution Readiness、Artifact Governance、Version Lifecycle；补齐上一轮尚未完整落地的候选反证、复杂度预算、负空间/逃逸路径、证据重放、supersession 与 claim-calibration。
