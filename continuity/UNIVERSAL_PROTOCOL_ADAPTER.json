@@ -121,9 +121,14 @@
   },
   "methodology_assurance": {
     "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__NOVEL_MASTERY_AND_FULL_REBASE_MAPPED",
-    "owner_regression_status": "PENDING_FINAL_HEAD_VALIDATION",
-    "owner_regression_evidence": null,
-    "operational_status": "MASTERY_AND_SERIES_ARCHITECTURE_WIRING_PENDING_FINAL_CI__CANDIDATE_PROSE_EVIDENCE_NOT_YET_AVAILABLE",
-    "boundary": "Repository regression can prove that the mastery model, series master outline, supersession rules, architecture freeze and recovery wiring are present and internally consistent. It does not prove deferred prose competencies, cross-project L4 mastery, better reader retention, or Fanqie signing success. Those higher claims require actual replacement prose, role-separated reviews and ultimately reader/platform/live-signing outcome evidence."
+    "owner_regression_status": "PASS",
+    "owner_regression_evidence": {
+      "validated_behavioral_head": "4cafb0ec1240f19f44e442d3b74f173173865555",
+      "github_actions_run_id": 38087533724,
+      "job_id": 114317060310,
+      "result": "PASS_RECOVERY_GUARD_RELEASE_EVIDENCE_GUARD_ALL_OWNER_TESTS_NOVEL_MASTERY_SERIES_OUTLINE"
+    },
+    "operational_status": "REGRESSION_VERIFIED_MASTERY_AND_SERIES_ARCHITECTURE__CANDIDATE_PROSE_EVIDENCE_NOT_YET_AVAILABLE",
+    "boundary": "Repository regression proves that the mastery model, series master outline, supersession rules, architecture freeze and recovery wiring are present and internally consistent. It does not prove deferred prose competencies, cross-project L4 mastery, better reader retention, or Fanqie signing success. Those higher claims require actual replacement prose, role-separated reviews and ultimately reader/platform/live-signing outcome evidence."
   }
 }
