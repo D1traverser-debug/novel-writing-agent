@@ -1,30 +1,47 @@
 {
-  "schema_version": "3.3",
-  "adapter_version": "2.0",
+  "schema_version": "3.7",
+  "adapter_version": "2.1",
+  "continuity_protocol_version": "3.7",
+  "domain_contract_version": "2.0-github",
   "owner": "NOVEL_WRITING_AGENT",
   "domain": "NOVEL",
-  "status": "READY",
+  "status": "READY_V37_NATIVE",
   "repository": "D1traverser-debug/novel-writing-agent",
   "branch": "main",
-  "business_authority": "GitHub owner repository main",
-  "continuity_scope": "discovery_routing_compatibility_checkpoint_pointer_takeover_only",
-  "task_index_ref": "TASK_INDEX.json",
+  "business_authority": "D1traverser-debug/novel-writing-agent@main",
+  "task_index_ref": "continuity/TASK_INDEX.json",
+  "protocol_adapter_ref": "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json",
+  "execution_capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
+  "artifact_context_governance_ref": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
   "capabilities": {
-    "list_resumable_tasks_metadata_only": {"source": "TASK_INDEX.json"},
-    "get_task_checkpoint_by_id": {"manifest_pattern": "projects/<task_id>/TASK_MANIFEST.json", "checkpoint_field": "current_checkpoint_ref"},
-    "compatibility_check": {"current_contract_version": "3.3", "supported_migrations_from": ["legacy-novel-os-recovery-v2.0", "NOVEL_OS_LIBRARY_1.9.0"], "unknown_behavior": "FAIL_CLOSED"},
+    "list_resumable_tasks_metadata_only": {"source": "continuity/TASK_INDEX.json"},
+    "get_task_checkpoint_by_id": {"manifest_pattern": "projects/<task_id>/TASK_MANIFEST.json", "checkpoint_field": "checkpoint_ref"},
+    "compatibility_check": {"current_contract_version": "3.7", "supported_migrations_from": ["3.3", "NOVEL_OS_LIBRARY_1.9.0"], "unknown_behavior": "FAIL_CLOSED"},
     "resume_or_migrate_or_block": {
-      "COMPATIBLE": "Load owner task manifest/checkpoint and follow ENTRYPOINT.",
-      "MIGRATABLE": "Migrate continuity/storage wrapper only; preserve business state and exact stage.",
-      "INCOMPATIBLE": "Do not replay stale execution semantics; retain valid user requirements/evidence/artifacts and reconstruct only from current owner authority.",
+      "COMPATIBLE": "Read short owner checkpoint, exact next-action artifact refs, verify Universal lease, then continue.",
+      "MIGRATABLE": "Apply additive continuity metadata only; preserve business state, stage and lease in same chat.",
+      "INCOMPATIBLE": "Do not replay stale execution semantics; retain valid requirements/evidence/artifacts and rebuild executable stage only from current owner authority.",
       "UNKNOWN": "FAIL_CLOSED"
-    }
+    },
+    "provide_short_handoff_or_equivalent_checkpoint": "projects/<task_id>/checkpoints/CURRENT_CHECKPOINT.json",
+    "provide_stable_artifact_refs_for_next_action": true,
+    "provide_pre_takeover_progress_state": true,
+    "persist_material_progress_with_owner_version_guard": "GitHub blob-SHA / branch-head CAS plus Universal active lease guard",
+    "reread_authoritative_state_after_write": true,
+    "reconcile_supported_older_continuity_protocol_without_user_migration": true
   },
-  "authority_order": ["GitHub owner current checkpoint/state", "GitHub owner task manifest", "Universal routing manifest/cache", "Library mirror/history", "chat memory"],
   "single_writer": {
     "lease_authority": "D1traverser-debug/universal-continuity-agent@main/tasks/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
-    "checkpoint_write_rule": "Re-read Universal task manifest and require matching active_lease.lease_id + resume_epoch before material checkpoint writes.",
-    "takeover": "New chat increments resume_epoch and replaces Universal active_lease; old chat retires."
+    "same_chat_protocol_upgrade_preserves_resume_epoch": true,
+    "same_chat_protocol_upgrade_preserves_active_lease": true,
+    "checkpoint_write_rule": "Re-read Universal task manifest; require matching active_lease.lease_id + top-level resume_epoch before any material business-state write."
   },
-  "does_not_own": ["Universal task lease", "external Fanqie actions performed by user"]
+  "authority_order": [
+    "GitHub owner current checkpoint/business artifacts",
+    "GitHub owner task manifest",
+    "Universal routing/lease manifest",
+    "Library backup/derived artifacts",
+    "chat memory"
+  ],
+  "updated_at": "2026-10-10T02:13:00Z"
 }

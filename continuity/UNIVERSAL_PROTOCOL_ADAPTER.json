@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "owner": "NOVEL_WRITING_AGENT",
+  "repository": "D1traverser-debug/novel-writing-agent",
+  "observed_source_protocol": "3.3",
+  "current_universal_protocol": "3.7",
+  "classification": "MIGRATABLE",
+  "reconciliation_status": "RECONCILED_V37",
+  "strategy": "ADDITIVE_PROTOCOL_OVERLAY_DURING_GITHUB_OWNER_CUTOVER",
+  "user_migration_required": false,
+  "business_state_rewrite": false,
+  "same_chat_preserve_resume_epoch": true,
+  "same_chat_preserve_active_lease": true,
+  "task_id_preserved": "FQ001_MINGRI_ORDER",
+  "stage_preserved": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
+  "next_action_preserved": true,
+  "external_publication_fact_preserved": "CH1-CH7 confirmed published; CH8 not confirmed published",
+  "current_contract_version": "3.7",
+  "owner_adapter_ref": "CONTINUITY_ADAPTER.json",
+  "short_checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+  "artifact_governance_ref": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
+  "execution_capabilities_ref": "continuity/EXECUTION_CAPABILITIES.json"
+}

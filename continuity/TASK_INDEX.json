@@ -1,0 +1,29 @@
+{
+  "schema_version": "3.7",
+  "owner": "NOVEL_WRITING_AGENT",
+  "repository": "D1traverser-debug/novel-writing-agent",
+  "updated_at": "2026-10-10T02:13:00Z",
+  "tasks": [
+    {
+      "task_id": "FQ001_MINGRI_ORDER",
+      "task_class": "USER",
+      "domain": "NOVEL",
+      "title": "FQ001_MINGRI_ORDER_SERIALIZATION",
+      "display_name_zh": "《凌晨零点，我接到明天的订单》",
+      "status": "WAITING",
+      "resume_eligible": true,
+      "resume_visibility": "DEFAULT",
+      "recovery_owner": "NOVEL_WRITING_AGENT",
+      "updated_at": "2026-10-10T02:13:00Z",
+      "current_stage": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
+      "next_action": "Wait for user confirmation that CH8 was published; then record CH8 as externally published and continue CH9 from the existing READY contract without replaying CH8.",
+      "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+      "contract_version": "3.7",
+      "continuity_protocol_version": "3.7",
+      "domain_contract_version": "2.0-github",
+      "skill_version": "Novel Writing Agent 2.0.0-github",
+      "runtime_version": "github-owner-2.1",
+      "keywords": ["小说", "明日订单", "凌晨零点", "番茄小说", "FQ001", "NOVEL_WRITING_AGENT"]
+    }
+  ]
+}

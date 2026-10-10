@@ -1,11 +1,12 @@
 {
-  "schema_version": "1.0",
-  "tested_at": "2026-10-10T03:50:00Z",
+  "schema_version": "1.1",
+  "tested_at": "2026-10-10T02:13:00Z",
   "task_id": "FQ001_MINGRI_ORDER",
   "result": "PASS",
   "source": "ChatGPT Library /NOVEL_OS_小说系统",
   "target": "D1traverser-debug/novel-writing-agent@main",
-  "compatibility": {"before":"MIGRATABLE","after":"COMPATIBLE"},
+  "storage_compatibility": {"before":"MIGRATABLE","after":"COMPATIBLE"},
+  "continuity_protocol_reconciliation": {"before":"3.3","current":"3.7","classification":"MIGRATABLE","status":"RECONCILED_V37","same_chat_lease_preserved":true},
   "checks": [
     {"name":"task_identity_stable","status":"PASS","evidence":"task_id remains FQ001_MINGRI_ORDER; display_name_zh preserved"},
     {"name":"stage_preserved","status":"PASS","evidence":"CH8 FINAL_ACCEPTED/PUBLISH_READY; publication unconfirmed; CH9 READY"},
@@ -16,9 +17,11 @@
     {"name":"ch9_contract","status":"PASS","evidence":"chapter_no 9, status READY, previous_final_hash bound to CH8"},
     {"name":"recovery_guard","status":"PASS","evidence":"runtime/recovery_guard.py returned PASS with failures=[] on migration snapshot"},
     {"name":"tests","status":"PASS","evidence":"pytest tests/test_recovery_contract.py: 3 passed"},
-    {"name":"single_writer_lease_preserved","status":"PASS","evidence":"Universal resume_epoch=1 and active lease 41f8ef0a-9d9b-4288-b377-813d2488d32d remained unchanged during same-chat migration"},
-    {"name":"completed_work_not_replayed","status":"PASS","evidence":"migration changes storage/authority only; no chapter, Canon event or QA gate was rerun as business execution"},
-    {"name":"owner_only_recovery","status":"PASS","evidence":"GitHub owner contains entrypoint, task manifest, checkpoint, Canon ledgers, CH1-CH8 FINAL, CH8 acceptance and CH9 contract; execution stage can be recovered without chat history or Library"}
+    {"name":"single_writer_lease_preserved","status":"PASS","evidence":"same-chat v3.3->v3.7/storage migration preserves resume_epoch=1 and current active lease"},
+    {"name":"completed_work_not_replayed","status":"PASS","evidence":"migration changes storage/authority/protocol metadata only; no chapter, Canon event or QA gate was replayed as business execution"},
+    {"name":"owner_only_recovery","status":"PASS","evidence":"GitHub owner contains entrypoint, short checkpoint, Canon ledgers, CH1-CH8 FINAL, CH8 acceptance and CH9 contract; execution state does not require chat history or Library"},
+    {"name":"artifact_governance","status":"PASS","evidence":"canonical/cache/derived stores, stable identity, CAS, invalidation and post-write verification are explicitly classified"},
+    {"name":"execution_readiness_surface","status":"PASS","evidence":"continuity/EXECUTION_CAPABILITIES.json exists; normal role-separated review does not claim ATTESTED_ISOLATED"}
   ],
   "post_cutover_global_routing": "PENDING_UNIVERSAL_POINTER_UPDATE",
   "library_demotion": "PENDING_AFTER_GITHUB_AND_UNIVERSAL_CUTOVER"

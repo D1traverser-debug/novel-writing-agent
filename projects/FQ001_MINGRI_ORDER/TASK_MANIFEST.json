@@ -1,5 +1,6 @@
 {
-  "schema_version": "2.0-github",
+  "schema_version": "2.1-github",
+  "manifest_version": 2,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -9,19 +10,33 @@
   "resume_eligible": true,
   "resume_visibility": "DEFAULT",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "business_authority": "D1traverser-debug/novel-writing-agent@main",
-  "universal_lease_authority": "D1traverser-debug/universal-continuity-agent@main/tasks/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
+  "updated_at": "2026-10-10T02:13:00Z",
   "current_stage": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
   "next_action": "Wait for user confirmation that CH8 was published; then record CH8 as externally published and continue CH9 from the existing READY contract without replaying CH8.",
-  "current_checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+  "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+  "contract_version": "3.7",
+  "continuity_protocol_version": "3.7",
+  "domain_contract_version": "2.0-github",
+  "skill_version": "Novel Writing Agent 2.0.0-github",
+  "runtime_version": "github-owner-2.1",
+  "manifest_ref": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
+  "business_authority": "D1traverser-debug/novel-writing-agent@main",
+  "universal_lease_authority": "D1traverser-debug/universal-continuity-agent@main/tasks/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
   "canon_version": 12,
   "last_final_chapter": 8,
   "last_final_hash": "fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14",
   "next_serial_chapter": 9,
   "next_serial_status": "READY",
-  "external_publication": {
-    "confirmed_published_through": 7,
-    "chapter_8": "PUBLISH_READY_NOT_CONFIRMED_PUBLISHED"
-  },
-  "updated_at": "2026-10-10T03:20:00Z"
+  "external_publication": {"confirmed_published_through":7,"chapter_8":"PUBLISH_READY_NOT_CONFIRMED_PUBLISHED"},
+  "blockers": [],
+  "waiting_on": ["USER_EXTERNAL_ACTION_CONFIRMATION: Fanqie publication of CH8"],
+  "artifact_refs": [
+    "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
+    "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
+    "projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
+    "projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
+    "projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
+    "projects/FQ001_MINGRI_ORDER/canon/THREADS.json",
+    "projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json"
+  ]
 }

@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "owner": "NOVEL_WRITING_AGENT",
+  "durable_task_state_location": "projects/<task_id>/TASK_MANIFEST.json + projects/<task_id>/checkpoints/CURRENT_CHECKPOINT.json",
+  "authoritative_business_evidence_classes": ["Canon ledgers", "FINAL chapter Markdown", "chapter contracts", "hash-bound reviews/acceptance", "publication log", "current task/checkpoint state"],
+  "canonical_artifact_or_file_stores": ["D1traverser-debug/novel-writing-agent@main"],
+  "cache_or_reference_only_stores": ["Universal Continuity owner/task registries", "ChatGPT Library post-cutover mirrors", "chat/model memory"],
+  "stable_identity_strategy": "stable task_id + canonical repo path + source SHA256 for FINAL prose + Git blob SHA/version for mutations",
+  "read_freshness_requirements": "Read owner main on resume; re-read exact task/checkpoint and Universal lease immediately before material writes.",
+  "mutation_conflict_strategy": "GitHub blob-SHA or branch-head compare-and-swap; fail closed on mismatch; additionally require current Universal writer lease.",
+  "post_write_verification_method": "Re-read authoritative owner file(s) from main and compare intended stage/next_action/hash/publication facts before reporting COMMITTED.",
+  "upstream_to_downstream_invalidation_rule": "Any FINAL prose body hash change invalidates dependent reviews, acceptance, derived DOCX parity and downstream checkpoint references until re-run/rebound.",
+  "delete_and_retention_rules": "Do not delete published FINAL/Canon history as cleanup. Destructive mutation requires stable identity and dependency check. External publication deletion/replacement remains user-controlled.",
+  "superseded_artifact_cleanup_rule": "Demote superseded Library active pointers to backup/reference; do not let them remain active competing authorities. Historical evidence may be retained.",
+  "external_artifact_vault_if_any": "ChatGPT Library stores derived DOCX/render images/recovery ZIPs and historical migration evidence; presence alone never overrides GitHub business authority."
+}

@@ -1,16 +1,17 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "GITHUB_PRIMARY",
   "repository": "D1traverser-debug/novel-writing-agent",
   "branch": "main",
   "business_authority": true,
   "previous_authority": "ChatGPT Library /NOVEL_OS_小说系统",
-  "universal_continuity_role": "ROUTER_AND_SINGLE_WRITER_LEASE_AUTHORITY",
+  "continuity_protocol": "3.7",
+  "universal_continuity_role": "ROUTER_PROGRESS_OBSERVABILITY_AND_SINGLE_WRITER_LEASE_AUTHORITY",
   "library_post_cutover_role": "BACKUP_HISTORICAL_EVIDENCE_AND_DERIVED_ARTIFACT_STORE",
   "cutover_acceptance": "PASS",
   "task_id": "FQ001_MINGRI_ORDER",
-  "migration_semantics": "storage/home migration only; no chapter/Canon/release replay",
+  "migration_semantics": "storage/home and additive continuity-protocol migration only; no chapter/Canon/release replay",
   "current_stage": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
   "next_action": "Wait for user confirmation that CH8 was published; then sync publication state and continue CH9 from the existing READY contract.",
-  "cutover_at": "2026-10-10T03:50:00Z"
+  "cutover_at": "2026-10-10T02:13:00Z"
 }

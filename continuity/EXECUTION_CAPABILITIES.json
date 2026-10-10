@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "execution_readiness_contract": "1.0",
+  "owner": "NOVEL_WRITING_AGENT",
+  "repository": "D1traverser-debug/novel-writing-agent",
+  "profile_version": 1,
+  "purpose": "Execution routing metadata for the novel domain owner. Repository declarations are ceilings; the current ChatGPT session must still handshake the exact capability needed by next_action.",
+  "capabilities": [
+    {
+      "capability_id": "high_judgment_serialization_pipeline",
+      "scope": "ARCHITECT,WRITER,CONTINUITY,FRESH_READER,RETENTION,EDITORIAL,ADVERSARIAL,QUALITY_DISCOVERY,REFINER,PROOFREAD,CANON_COMMIT",
+      "assurance_ceiling": "SESSION_EXECUTABLE",
+      "invocation_path": "CHAT_BRIDGED current model session governed by SKILL.md + protocols/ACTIVE_RULEBOOK.md + exact GitHub task artifacts",
+      "executor_type": "CHAT_BRIDGED_LLM",
+      "executor_ref": "SKILL.md",
+      "required_tools": ["model_runtime", "GitHub_owner_read_write"],
+      "evidence_contract": ["frozen input refs", "source hash", "role-specific review artifact/receipt", "issue ledger where applicable", "updated owner checkpoint after material stage change"],
+      "side_channel_allowed": true,
+      "safe_degraded_modes": []
+    },
+    {
+      "capability_id": "deterministic_guards",
+      "scope": "RECOVERY,LENGTH,PROOFREAD,PROSE_TEXTURE,MECHANICAL_RELEASE_GATES",
+      "assurance_ceiling": "SESSION_EXECUTABLE",
+      "invocation_path": "runtime/recovery_guard.py + runtime/fanqie_wordcount_guard.py + runtime/final_proofread_guard.py + runtime/prose_texture_guard.py",
+      "executor_type": "DETERMINISTIC_PYTHON",
+      "executor_ref": "runtime/",
+      "required_tools": ["python_runtime_or_equivalent"],
+      "evidence_contract": ["command/result receipt", "input artifact/hash", "PASS/FAIL output"],
+      "side_channel_allowed": false,
+      "safe_degraded_modes": []
+    },
+    {
+      "capability_id": "docx_delivery_and_render_qa",
+      "scope": "FINAL_ARTIFACT_DELIVERY",
+      "assurance_ceiling": "SESSION_EXECUTABLE",
+      "invocation_path": "CHAT_BRIDGED document skill + Python/docx tooling + full-page render inspection; GitHub FINAL remains source authority",
+      "executor_type": "CHAT_BRIDGED_ARTIFACT_PIPELINE",
+      "executor_ref": "SKILL.md#release-hard-gates",
+      "required_tools": ["docx_tooling", "python_runtime", "page_render_inspection"],
+      "evidence_contract": ["FINAL source hash", "paragraph parity result", "rendered page count", "visual inspection receipt", "derived artifact ref"],
+      "side_channel_allowed": true,
+      "safe_degraded_modes": []
+    },
+    {
+      "capability_id": "strict_attested_isolated_reviewer",
+      "scope": "OPTIONAL_IF_A_FUTURE_GATE_REQUIRES_TRUE_EXTERNAL_ISOLATION",
+      "assurance_ceiling": "DECLARED_ONLY",
+      "invocation_path": "UNAVAILABLE_UNTIL_DISTINCT_EXECUTION_IDENTITY_OR_PROVIDER_TRACE_EXISTS",
+      "executor_type": "UNAVAILABLE",
+      "executor_ref": null,
+      "required_tools": ["attested_isolated_executor_if_future_policy_requires_it"],
+      "evidence_contract": ["distinct execution identity", "context/trace proof", "artifact/hash binding"],
+      "side_channel_allowed": false,
+      "safe_degraded_modes": []
+    }
+  ],
+  "owner_notes": [
+    "Normal role-separated novel reviews do not claim ATTESTED_ISOLATED assurance.",
+    "The current-session dispatcher must not claim a specialist executed unless the required capability handshake is AVAILABLE at the required assurance.",
+    "Business state remains in GitHub owner main; execution receipts support but do not replace task/checkpoint authority."
+  ]
+}
