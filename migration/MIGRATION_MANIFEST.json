@@ -1,7 +1,12 @@
 {
-  "schema_version": "2.2",
+  "schema_version": "2.3",
   "generated_at": "2026-10-10T03:45:00Z",
-  "source": "ChatGPT Library /NOVEL_OS_小说系统",
+  "direct_cutover_source": "ChatGPT Library /NOVEL_OS_小说系统",
+  "legacy_source_provenance": [
+    "Notion legacy novel materials (historical source surface; exact live competing pages not found in current accessible workspace audit)",
+    "Google Drive legacy novel materials (historical source surface; no competing live NOVEL_OS execution tree found before artifact-vault creation)",
+    "ChatGPT Library /NOVEL_OS_小说系统 (immediate GitHub cutover source; execution tree removed after verified post-cutover artifact copy)"
+  ],
   "target": "D1traverser-debug/novel-writing-agent@main",
   "migration_branch": "migration/github-primary-cutover",
   "task_id": "FQ001_MINGRI_ORDER",
@@ -23,6 +28,9 @@
   "ch8_final_sha256": "fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14",
   "canon_ledgers": ["CHARACTERS.json","CHARACTER_DRIVES.json","THREADS.json","FORESHADOW.jsonl","TIMELINE.jsonl","READER_PROMISES.json"],
   "validation_required": ["task identity/stage/next_action","CH1-CH8 source hashes","Canon v12 recovery facts","CH9 READY contract","external publication through CH7 only","single-writer lease unchanged during same-chat migration","new-chat recovery using Universal + GitHub owner only"],
-  "library_post_cutover_role": "backup, historical evidence, binary derived artifacts",
+  "post_cutover_business_authority": "D1traverser-debug/novel-writing-agent@main",
+  "post_cutover_artifact_vault": "/Google Drive/ChatGPT/NOVEL_OS_小说系统_交付归档",
+  "chatgpt_library_post_cutover_role": "DECOMMISSIONED_FOR_NOVEL_EXECUTION_TREE_REMOVED",
+  "notion_post_cutover_role": "DECOMMISSIONED_NOT_A_RECOVERY_OR_BUSINESS_AUTHORITY",
   "cutover_rule": "Do not declare GitHub primary until MIGRATION_ACCEPTANCE=PASS and AUTHORITY_STATUS=GITHUB_PRIMARY."
 }
