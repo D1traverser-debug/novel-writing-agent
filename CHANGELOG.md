@@ -1,5 +1,13 @@
 # NOVEL_OS Changelog
 
+## 2026-10-10 — System/project continuity routing hardening
+- 修复“小说系统”与具体小说项目在 Continuity 发现/恢复语义中被误当作平行任务或只暴露项目、丢失系统语境的问题。
+- 明确 `NOVEL_OS` 为小说生产系统、`NOVEL_WRITING_AGENT` 为 domain owner，`FQ001_MINGRI_ORDER` 为当前 authoritative active project；系统与项目逻辑联动、状态分层。
+- `继承小说系统 / 继续小说系统 / 恢复小说系统 / NOVEL_OS / Novel Writing Agent` 现在由 owner 语义解析到 `active_project_task_id`；单一 active project 时自动绑定，不再要求用户二次选择。
+- 保留具体项目唯一 USER durable task，不复制一个承载相同章节进度的“系统任务”；裸继承仍按 Universal USER 候选规则工作，但 owner 提供 `小说系统｜《凌晨零点，我接到明天的订单》` 的系统语境候选标签。
+- 将 owner `ENTRYPOINT.md` 的 Continuity 标记从旧 v3.3 收敛到当前 v3.7，并把 system/project route 放进恢复顺序。
+- `runtime/recovery_guard.py` 与 `tests/test_recovery_contract.py` 新增 system/project topology、alias、active-project binding 与 compatibility-index 同步回归；不修改 CH8/CH9 业务 checkpoint、Canon 或发布事实。
+
 ## 1.3.0｜2026-10-08
 - 用户将“随时中断/新会话/删除旧聊天后无损继承”提升为小说系统最高硬要求。
 - 建立永久稳定恢复入口 `99_RECOVERY/START_HERE.md` 与机器可读 `HANDOFF_MANIFEST.json`；恢复不再依赖带日期的入口或聊天记忆。
