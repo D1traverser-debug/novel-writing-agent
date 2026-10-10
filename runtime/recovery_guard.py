@@ -16,16 +16,19 @@ def need(rel):
 for rel in [
  "ENTRYPOINT.md","PROTOCOL.md","SKILL.md","AUTHORITY_STATUS.json","CONTINUITY_ADAPTER.json","TASK_INDEX.json",
  "continuity/TASK_INDEX.json","continuity/EXECUTION_CAPABILITIES.json","continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
- "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json","protocols/ACTIVE_RULEBOOK.md","runtime/release_evidence_guard.py",
+ "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json","protocols/ACTIVE_RULEBOOK.md","protocols/NOVEL_MASTERY_MODEL.md","runtime/release_evidence_guard.py",
  "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json","projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
  "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json","projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
  "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md","projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md",
+ "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md","projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
+ "projects/FQ001_MINGRI_ORDER/outline/ARC_001.md",
  "projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json","projects/FQ001_MINGRI_ORDER/canon/CHARACTER_DRIVES.json",
  "projects/FQ001_MINGRI_ORDER/canon/THREADS.json","projects/FQ001_MINGRI_ORDER/canon/FORESHADOW.jsonl",
  "projects/FQ001_MINGRI_ORDER/canon/TIMELINE.jsonl","projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json",
  "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md","projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
  "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md","audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md",
- "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md","audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md"]: need(rel)
+ "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md","audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
+ "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md","audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md"]: need(rel)
 
 m=json.loads((TASK/"TASK_MANIFEST.json").read_text(encoding="utf-8"))
 cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text(encoding="utf-8"))
@@ -33,7 +36,7 @@ for f in ("task_id","current_stage","next_action","canon_version","last_final_ch
     if m.get(f)!=cp.get(f): problems.append("checkpoint-drift:"+f)
 if m.get("task_id")!="FQ001_MINGRI_ORDER": problems.append("task-id")
 if m.get("status")!="ACTIVE" or cp.get("status")!="ACTIVE": problems.append("task-not-active")
-if m.get("current_stage")!="FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE": problems.append("rebase-stage")
+if m.get("current_stage")!="FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY": problems.append("rebase-stage")
 if m.get("next_serial_status")!="HELD_DURING_FULL_FRONT_ARC_REBASE": problems.append("rebase-next-serial-status")
 if cp.get("production_mode")!="FULL_FRONT_ARC_REBASE": problems.append("rebase-production-mode")
 if hashlib.sha256((TASK/"manuscript/CH0008_FINAL.md").read_bytes()).hexdigest()!=m.get("last_final_hash"): problems.append("ch8-hash")
@@ -47,7 +50,7 @@ for n,h in expected.items():
 
 state=(TASK/"CURRENT_STATE.md").read_text(encoding="utf-8")
 if "canon_version: 12" not in state or "last_final_chapter: 8" not in state or "next_serial_chapter: 9" not in state: problems.append("current-state")
-if "production_mode: FULL_FRONT_ARC_REBASE" not in state or "FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE" not in state: problems.append("current-state-rebase")
+if "production_mode: FULL_FRONT_ARC_REBASE" not in state or "FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY" not in state: problems.append("current-state-rebase")
 if "CH8" not in state or "仍未确认" not in state: problems.append("publication-state")
 
 # Old CH9 is deliberately held/superseded, while its relationship-engine design remains available as source material.
@@ -67,9 +70,9 @@ if rebase.get("old_finals_role")!="IMMUTABLE_HISTORICAL_BASELINE": problems.appe
 if rebase.get("old_chapter_boundaries_binding") is not False: problems.append("rebase-old-boundary-binding")
 if rebase.get("old_ch9_contract_status")!="SUPERSEDED_BY_FULL_FRONT_ARC_REBASE": problems.append("rebase-ch9-status")
 if rebase.get("candidate_promotion")!="WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT": problems.append("rebase-promotion-gate")
-for f in ("authorized_by_user","scope","mode","old_finals_role","old_chapter_boundaries_binding","old_ch9_contract_status","candidate_promotion"):
+for f in ("authorized_by_user","scope","mode","old_finals_role","old_chapter_boundaries_binding","old_ch9_contract_status","candidate_promotion","series_master_outline_ref","frozen_architecture_ref"):
     if cp_rebase.get(f)!=rebase.get(f): problems.append("rebase-checkpoint-drift:"+f)
-for ref_key in ("plan_ref","learning_evidence_ref"):
+for ref_key in ("plan_ref","learning_evidence_ref","series_master_outline_ref","frozen_architecture_ref"):
     ref=rebase.get(ref_key)
     if not ref or not (ROOT/ref).exists(): problems.append("rebase-ref:"+ref_key)
 old_matrix=(ROOT/"audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md").read_text(encoding="utf-8")
@@ -82,6 +85,35 @@ profile=(TASK/"PROJECT_PROFILE.md").read_text(encoding="utf-8")
 if "production_mode: FULL_FRONT_ARC_REBASE" not in profile: problems.append("profile-rebase-mode")
 if "next_serial_status: HELD_DURING_FULL_FRONT_ARC_REBASE" not in profile: problems.append("profile-ch9-hold")
 if "Full front-arc rebase objective" not in profile: problems.append("profile-rebase-objective")
+
+# Novel mastery model and active series architecture are durable, not chat-only.
+mastery=(ROOT/"protocols/NOVEL_MASTERY_MODEL.md").read_text(encoding="utf-8")
+master_outline=(TASK/"outline/SERIES_MASTER_OUTLINE.md").read_text(encoding="utf-8")
+frozen_arch=(TASK/"outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md").read_text(encoding="utf-8")
+legacy_arc=(TASK/"outline/ARC_001.md").read_text(encoding="utf-8")
+mastery_audit=(ROOT/"audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md").read_text(encoding="utf-8")
+project_benchmark=(ROOT/"audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md").read_text(encoding="utf-8")
+for token in ("C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20"):
+    if token not in mastery: problems.append("mastery-competency-missing:"+token)
+for level in ("L0", "L1", "L2", "L3", "L4"):
+    if level not in mastery: problems.append("mastery-level-missing:"+level)
+if "reading a course can move knowledge toward L1" not in mastery: problems.append("mastery-research-not-evidence-bound")
+if "Series architecture / master outline" not in mastery or "Worldbuilding / system design" not in mastery: problems.append("mastery-core-architecture-missing")
+if "status: ACTIVE_ARCHITECTURE_AUTHORITY_DURING_FULL_REBASE" not in master_outline: problems.append("series-master-outline-not-active")
+for heading in ("Terminal constraints / ending design","Global protagonist arc","Relationship architecture","World / Mingrida architecture","Mystery architecture","Series / volume roadmap"):
+    if heading not in master_outline: problems.append("series-master-outline-section:"+heading)
+if "Planned architecture is not Canon" not in master_outline: problems.append("series-master-outline-canon-boundary")
+if "SUPERSEDED_BY_SERIES_MASTER_OUTLINE_FOR_ACTIVE_REBASE" not in legacy_arc: problems.append("legacy-arc-not-superseded")
+if "FROZEN_FOR_CANDIDATE_DRAFT" not in frozen_arch or "READY_FOR_COHERENT_CANDIDATE_DRAFT" not in frozen_arch: problems.append("front-arc-architecture-not-frozen")
+if "PROJECT_LEVEL_MASTERY_EVIDENCE" not in project_benchmark or "PASS_WITH_SCOPED_DEFERRALS" not in project_benchmark: problems.append("project-mastery-benchmark")
+if "SYSTEM_EVOLUTION_AUDIT" not in mastery_audit or "reminder" not in mastery_audit.lower(): problems.append("mastery-evolution-audit")
+mastery_state=m.get("mastery",{})
+cp_mastery=cp.get("mastery",{})
+if mastery_state.get("system_model_ref")!="protocols/NOVEL_MASTERY_MODEL.md": problems.append("task-mastery-model-ref")
+if mastery_state.get("architecture_gate")!="PASS_WITH_SCOPED_DEFERRALS": problems.append("task-mastery-architecture-gate")
+if mastery_state.get("maximum_current_claim")!="PROJECT_LEVEL_L3_WHERE_LISTED__NO_L4_TRANSFER_OR_LIVE_OUTCOME_CLAIM": problems.append("task-mastery-claim-boundary")
+for f in ("system_model_ref","series_master_outline_ref","front_arc_frozen_architecture_ref","project_benchmark_ref","architecture_gate","maximum_current_claim"):
+    if cp_mastery.get(f)!=mastery_state.get(f): problems.append("mastery-checkpoint-drift:"+f)
 
 chars=json.loads((TASK/"canon/CHARACTERS.json").read_text(encoding="utf-8"))
 threads=json.loads((TASK/"canon/THREADS.json").read_text(encoding="utf-8"))
@@ -107,7 +139,7 @@ if active.get("candidate_label_zh")!="小说系统｜《凌晨零点，我接到
 if active.get("current_stage")!=m.get("current_stage") or active.get("next_action")!=m.get("next_action"): problems.append("task-index-state-drift")
 if alias.get("canonical_ref")!="continuity/TASK_INDEX.json": problems.append("task-index-alias-canonical")
 if alias.get("system",{}).get("active_project_task_id")!="FQ001_MINGRI_ORDER": problems.append("task-index-alias-active-project")
-if alias.get("tasks",[{}])[0].get("current_stage")!=m.get("current_stage"): problems.append("compat-index-stage-drift")
+if alias.get("tasks",[{}])[0].get("current_stage")!=m.get("current_stage") or alias.get("tasks",[{}])[0].get("next_action")!=m.get("next_action"): problems.append("compat-index-state-drift")
 topology=adapter.get("system_project_topology",{})
 if topology.get("system_id")!="NOVEL_OS": problems.append("adapter-system-id")
 if topology.get("routing_rule")!="SYSTEM_ALIAS_RESOLVES_OWNER_THEN_ACTIVE_PROJECT": problems.append("adapter-system-routing")
@@ -136,6 +168,8 @@ for label,text in (("entrypoint",entry),("skill",skill),("protocol",protocol),("
 if "CANON_SNAPSHOT.json" in skill and "不存在另一个可覆盖这些 ledgers 的 `CANON_SNAPSHOT.json` 权威" not in skill:
     problems.append("dangling-canon-snapshot-authority")
 if "Full front-arc rebase / learning-to-authority promotion" not in skill: problems.append("skill-full-rebase")
+if "NOVEL_MASTERY_MODEL.md" not in skill or "Novel mastery / competency assurance" not in skill: problems.append("skill-mastery-model-not-bound")
+if "SERIES_MASTER_OUTLINE.md" not in entry: problems.append("entrypoint-master-outline-not-bound")
 if "Full-unit rebase / owner evolution" not in rulebook: problems.append("rulebook-full-rebase")
 
 # Release-evidence contract must remain enforceable, not merely declared.
@@ -146,7 +180,8 @@ if cap.get("release_evidence_contract_version")!="1.0": problems.append("release
 if not any(c.get("capability_id")=="deterministic_guards" and "release_evidence_guard.py" in c.get("invocation_path","") for c in cap.get("capabilities",[])):
     problems.append("release-evidence-guard-not-bound")
 high=next((c for c in cap.get("capabilities",[]) if c.get("capability_id")=="high_judgment_serialization_pipeline"),{})
-if "REBASE_ARCHITECTURE" not in high.get("scope","") or "SIGNING_READINESS" not in high.get("scope",""): problems.append("rebase-capability-not-bound")
+for required_scope in ("SERIES_ARCHITECTURE","REBASE_ARCHITECTURE","WORLDBUILDING","CHARACTER_ARC","MYSTERY_ARCHITECTURE","MASTERY_BENCHMARK","SIGNING_READINESS"):
+    if required_scope not in high.get("scope",""): problems.append("capability-scope-not-bound:"+required_scope)
 
 # Fanqie signing rejection is durable platform evidence and must not be forgotten on resume.
 signing=m.get("platform_signing",{})
@@ -157,10 +192,12 @@ if signing.get("third_application_threshold_if_needed")!=80000: problems.append(
 if signing.get("second_application_gate")!="SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS": problems.append("signing-second-gate")
 for f in ("attempt_1","next_application_threshold","third_application_threshold_if_needed","second_application_gate"):
     if cp_signing.get(f)!=signing.get(f): problems.append("signing-checkpoint-drift:"+f)
-for ref_key in ("quality_diagnosis_ref","active_rebase_plan_ref","learning_evidence_ref"):
+for ref_key in ("quality_diagnosis_ref","active_rebase_plan_ref","learning_evidence_ref","mastery_evolution_ref","architecture_mastery_benchmark_ref"):
     ref=signing.get(ref_key)
     if not ref or not (ROOT/ref).exists(): problems.append("signing-evidence-ref:"+ref_key)
 if "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REBASE" not in m.get("strategic_constraints",[]): problems.append("signing-blind-retry-guard")
+if "MASTERY_FILES_OR_RESEARCH_DO_NOT_PROVE_L3_L4_WITHOUT_APPLIED_BENCHMARK" not in m.get("strategic_constraints",[]): problems.append("mastery-false-claim-guard")
+if "SUPERSEDED_ARC_001_NOT_EXECUTABLE" not in m.get("strategic_constraints",[]): problems.append("legacy-outline-execution-guard")
 if "平台签约拒绝" not in skill or "Platform signing-feedback loop" not in skill: problems.append("skill-signing-feedback-loop")
 platform_log=(TASK/"PLATFORM_PUBLICATION_LOG.md").read_text(encoding="utf-8")
 if "首次签约申请：`NOT_APPROVED / 签约评估未通过`" not in platform_log: problems.append("platform-log-signing-result")
@@ -173,6 +210,8 @@ result={
  "stage":m.get("current_stage"),
  "next_action":m.get("next_action"),
  "rebase_mode":rebase.get("mode"),
+ "architecture_gate":mastery_state.get("architecture_gate"),
+ "mastery_claim":mastery_state.get("maximum_current_claim"),
  "old_ch9_status":rebase.get("old_ch9_contract_status"),
  "artifact_vault":vault.get("path"),
  "release_evidence_contract":cap.get("release_evidence_contract_version"),
