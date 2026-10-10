@@ -1,17 +1,18 @@
 # Novel Writing Agent — Active Rulebook
 
-version: 2.0-github
+version: 2.1-github
 status: ACTIVE
 scope: NOVEL
-source: distilled from NOVEL_OS 1.9.0 active protocols; historical protocol files/research remain Library backup evidence.
+source: distilled from NOVEL_OS 1.9.0 active protocols plus accepted GitHub-owner evolution; legacy protocol/research snapshots are archived in the Google Drive artifact vault as non-authoritative historical evidence.
 
 ## 1. Non-negotiable authority
-- Business authority after cutover: `D1traverser-debug/novel-writing-agent@main`.
+- Business authority: `D1traverser-debug/novel-writing-agent@main`.
 - Global discovery/routing/single-writer lease: `D1traverser-debug/universal-continuity-agent@main`.
 - Chat/model memory is never Canon or executable state.
 - Before any material checkpoint write, re-read Universal task manifest and verify this chat owns `active_lease + resume_epoch`.
 - External publication/delete/payment/sign/compliance declarations remain user-controlled. Never infer publication.
 - User is not QA manager. QA may not depend on user prompting.
+- Google Drive is derived-artifact/history vault only; retired Notion/Library/legacy Drive material cannot regain execution authority by presence.
 
 ## 2. Production organization
 Use minimum sufficient specialization, not “one micro-check = one permanent agent”.
@@ -32,7 +33,17 @@ Core roles:
 - CANON_COMMITTER: commits only after release gates pass.
 Risk-triggered specialists: domain reality, dialogue/subtext, spatial staging, suspense fairness, longform, world rules, theme, foreshadow/payoff, reader memory, transition bridge, opposition/counter-agency.
 
-Independent reviewers form first judgments without seeing each other’s conclusions. No open-ended group debate and no majority vote overriding hard facts. Two+ independent reviewers finding the same defect escalates severity.
+Independent first judgments mean input-level separation from peer conclusions. Normal same-session role separation is `CHAT_BRIDGED` and must be labeled `ROLE_SEPARATED_NOT_ATTESTED_ISOLATED`; do not claim distinct independent executor identity unless an external/isolated trace proves it. No open-ended group debate and no majority vote overriding hard facts. Two+ role-separated reviewers finding the same defect escalates severity but does not magically increase assurance level.
+
+### 2.1 Execution evidence contract（CH9+）
+A release pipeline is not proven by a checklist saying every role PASS. From CH9 onward:
+- snapshot the chapter contract to `projects/<task>/contracts/CHxxxx_CONTRACT.md` before execution;
+- freeze `projects/<task>/execution/CHxxxx_CONTEXT_PACK.json` with owner commit and exact input refs/hashes;
+- persist `projects/<task>/reviews/CHxxxx_EXECUTION_EVIDENCE.json` with role receipts, source hash, peer-visibility and issue ledger;
+- bind Acceptance to the Context Pack and execution-evidence hashes;
+- run `runtime/release_evidence_guard.py` before `FINAL_ACCEPTED / PUBLISH_READY`.
+
+CH8 is a pre-v1 legacy aggregate acceptance. Preserve its accepted business state, disclose the missing receipt assurance, and never replay completed work merely to manufacture historical evidence.
 
 ## 3. Revision hierarchy
 Fix in this order:
@@ -61,13 +72,15 @@ Reject drift toward pure detective fiction, rule-horror, mindless system power f
 ## 5. Context budget / drift control
 Writer receives:
 - ACTIVE project identity/profile;
-- current chapter contract;
+- frozen current chapter contract snapshot;
 - minimum relevant Canon;
 - recent 3 FINAL chapters;
 - at most 2–4 relevant specialist rule slices.
 Do not load all research/history into Writer.
 New learning enters REFERENCE/EXPERIMENTAL quarantine first. Promote only if repeated defects, new story phase, platform change, or evidence shows meaningful gain. Context Pack freezes when a chapter starts; new craft tips do not rewrite the current chapter unless they reveal a hard fact/compliance/blocker issue.
 Profile structural upgrade: at most every 10 chapters absent a hard failure.
+
+The frozen Context Pack must be durable from CH9 onward; chat-only recollection is not evidence of what the Writer or reviewers actually received.
 
 ## 6. Scene engine
 A major scene must have:
@@ -218,7 +231,7 @@ Fixed personas:
 - mystery fair-play reader;
 - character-first reader;
 - skim reader.
-If 2+ independently identify the same defect, escalate severity. If target + casual both DROP, default HIGH.
+If 2+ role-separated personas identify the same defect, escalate severity. If target + casual both DROP, default HIGH. Persona simulation remains `CHAT_BRIDGED` unless a distinct external execution identity proves otherwise.
 
 ## 22. Final proofread hard gate
 After literary edits stop, run:
@@ -248,11 +261,12 @@ Before saying “可以传/可以发布”, ORCHESTRATOR must verify on the same
 16. Domain Reality when applicable;
 17. Project Identity Regression;
 18. Final Proofread;
-19. deterministic guard;
-20. same-source DOCX;
-21. render every page visually;
-22. text parity.
-BLOCKER=0 and HIGH=0. Numerical average scores never override a hard gate.
+19. deterministic guards;
+20. CH9+ release evidence guard + hash-bound role receipts;
+21. same-source DOCX;
+22. render every page visually;
+23. text parity.
+BLOCKER=0 and HIGH=0. Numerical average scores never override a hard gate. Aggregate PASS prose cannot substitute for the evidence contract.
 
 If user finds a responsibility defect only after “可以发布”, immediately revoke release, mark REMINDER_DEPENDENCY_INCIDENT, fix, invalidate stale audits, diagnose gate miss, upgrade guard/reviewer/rubric, and only re-release after full applicable gates pass.
 
@@ -264,11 +278,11 @@ If user finds a responsibility defect only after “可以发布”, immediately
 5. blind readers;
 6. community heuristics;
 7. model self-evaluation.
-Research does not count as evolution unless it changes a rule/process/benchmark/reviewer/script/data field.
+Research does not count as evolution unless it changes a rule/process/benchmark/reviewer/script/data field and passes the relevant regression/evidence gate.
 
 ## 25. Checkpoint cadence
 - every material stage/next_action/constraint/artifact/blocker/authority change: checkpoint;
-- every chapter: immutable FINAL + release evidence + derived delivery artifact;
+- every chapter: immutable FINAL + immutable chapter contract snapshot + frozen Context Pack + role execution evidence + acceptance + derived delivery artifact;
 - every 5 chapters: lightweight checkpoint + cross-chapter texture scan;
 - every 10 chapters: full project snapshot + independent longform review;
 - every 50 chapters: global Canon reconciliation;
