@@ -1,8 +1,9 @@
 {
   "schema_version": "3.7",
-  "adapter_version": "2.3",
+  "adapter_version": "2.4",
   "continuity_protocol_version": "3.7",
-  "domain_contract_version": "2.0-github",
+  "domain_contract_version": "2.1-github",
+  "release_evidence_contract_version": "1.0",
   "owner": "NOVEL_WRITING_AGENT",
   "domain": "NOVEL",
   "status": "READY_V37_NATIVE",
@@ -40,7 +41,13 @@
     "provide_pre_takeover_progress_state": true,
     "persist_material_progress_with_owner_version_guard": "GitHub blob-SHA / branch-head CAS plus Universal active lease guard",
     "reread_authoritative_state_after_write": true,
-    "reconcile_supported_older_continuity_protocol_without_user_migration": true
+    "reconcile_supported_older_continuity_protocol_without_user_migration": true,
+    "validate_release_execution_evidence": {
+      "contract_version": "1.0",
+      "strict_from_chapter": 9,
+      "guard": "runtime/release_evidence_guard.py",
+      "legacy_before_strict_boundary": "PRESERVE_ACCEPTED_BUSINESS_STATE_WITH_EXPLICIT_EVIDENCE_LIMITATION_NO_REPLAY"
+    }
   },
   "single_writer": {
     "lease_authority": "D1traverser-debug/universal-continuity-agent@main/tasks/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
