@@ -8,15 +8,15 @@ title: 凌晨零点，我接到明天的订单
 genre: 都市脑洞 / 悬疑脑洞
 platform: fanqie
 channel: 男频
-status: SERIALIZING
+status: SERIALIZING_REBASE_ACTIVE
 target_length: 1200000
 canon_version: 12
 current_volume: 1
 last_final_chapter: 8
-production_mode: SERIALIZATION
-baseline: FROZEN_CH01_CH04
+production_mode: FULL_FRONT_ARC_REBASE
+baseline: HISTORICAL_FINAL_CH01_CH08__REBASE_AUTHORIZED
 next_serial_chapter: 9
-next_serial_status: READY
+next_serial_status: HELD_DURING_FULL_FRONT_ARC_REBASE
 created_at: 2026-10-07
 ```
 
@@ -24,15 +24,16 @@ created_at: 2026-10-07
 
 # ACTIVE WRITING PROFILE｜FQ001《凌晨零点，我接到明天的订单》
 
-version: 1.0
-updated: 2026-10-09
-status: ACTIVE
-purpose: Writer最小稳定身份胶囊；防上下文膨胀与长期漂移。
+version: 1.1
+updated: 2026-10-11
+status: ACTIVE_REBASE
+purpose: Writer最小稳定身份胶囊；防上下文膨胀与长期漂移。当前额外目标：在不丢失作品身份与Canon骨架的前提下，重构首个签约阅读包。
 
 ## 1. Core identity
 - 类型：都市脑洞 × 悬疑单元剧 × 城市群像；不是纯刑侦、规则怪谈、灵异、无脑系统爽文。
 - 核心承诺：每个订单都是“未来已发生、现在未发生”的谜题；读者持续追三层——本单真相、改写代价、订单来源。
 - 世界质感：现代城市真实运转；夜班、医院、道路、物业、司机、跑腿、制度摩擦都应像现实。超常只开一扇小口。
+- 人物价值轴：小人物在不完整未来信息下做选择并承担后果；不是以社会地位/财富跃迁为主要“逆袭”承诺。
 
 ## 2. POV / protagonist
 - 第三人称限知陈渡，不越过他的认知。
@@ -77,9 +78,20 @@ purpose: Writer最小稳定身份胶囊；防上下文膨胀与长期漂移。
 - 作者替读者解释已经看懂的因果。
 
 ## 8. Evolution rule
-新技巧默认不能改本Profile。先经 Drift Control 学习隔离与回归测试；只有持续真实问题/数据证明有必要，才在10章节点蒸馏更新。
+新技巧默认不能改本Profile。先经 Drift Control 学习隔离与回归测试；通常只有持续真实问题/数据证明有必要，才在10章节点蒸馏更新。
 
-Reference authority: Story Bible + Style Bible + Frozen Baseline + current Canon.
+**Hard-failure exception:** 当前番茄首轮签约质量评估拒绝 + 用户允许整段退回重改，构成真实外部硬质量信号，允许本次跳过常规10章升级节奏并启动受控 `FULL_FRONT_ARC_REBASE`。外部课程/研究仍先作为 LEARNING_EVIDENCE，经候选比较与反证后才能进入 Active 规则。
+
+## 9. Full front-arc rebase objective（2026-10-11）
+- 将旧CH1–CH8视作不可变历史基线/素材库，而不是必须保留的章节边界。
+- 先重构前约2万字整体签约阅读包，再整包写候选正文；禁止先逐章润色再拼接。
+- 当前项目目标：第一单“死亡时间/能否改未来”的第一次重大承诺兑现前移到目标CH3附近；这是本项目结构目标，不是通用“黄金三章公式”。
+- 许知微/验证关系的持续人物引擎目标前移到CH6–CH7附近；旧CH9的高价值设计允许迁入前段。
+- 精确路线/时间/机构验证只有在改变选择、后果、关系、fair-play或动作清晰度时才占用正文带宽。
+- 新候选包通过 packet-level signing-readiness/continuity/identity gates 前，不覆盖旧FINAL、不静默改Canon、不触发平台替换。
+- 实际撤回/替换番茄已发布章节属于外部动作，仍由用户执行/确认。
+
+Reference authority: current Canon + Story Bible + Style Bible + `audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md`. Historical old FINALs are evidence, not current rebase architecture authority.
 
 ---
 
@@ -92,7 +104,7 @@ Reference authority: Story Bible + Style Bible + Frozen Baseline + current Canon
 每个订单都是一个“未来已经发生、现在尚未发生”的谜题。陈渡必须在不知道完整因果的情况下决定送不送、怎么送，并承担改写未来后的连锁后果。读者持续获得三层期待：本单真相、本次改写代价、订单来源终极谜团。
 
 ## 题材定位
-都市脑洞 × 悬疑单元剧 × 小人物逆袭 × 城市群像。爽点来自信息差、临场决策、反转验证和能力升级，不依赖无脑打脸。
+都市脑洞 × 悬疑单元剧 × 城市群像 × 小人物选择与后果。爽感来自信息差、临场决策、反转验证、关系博弈和能力/认知升级，不依赖无脑打脸，也不把财富/地位跃迁当核心阅读承诺。
 
 ## 主角发动机
 - 主角：陈渡，28岁，夜间跑腿员，曾做即时配送调度。
@@ -120,6 +132,8 @@ Reference authority: Story Bible + Style Bible + Frozen Baseline + current Canon
 ## 升级循环
 订单出现 → 识别异常 → 查找因果 → 选择介入方式 → 现实偏移 → 签收/失败 → 得到新规则或新线索 → 更高难度订单。
 
+注意：这个循环是宏观诊断，不得机械映射成每章“调查→验证→总结”的同构流程。
+
 ## 防重复约束
 - 连续3个单元不得使用同一种危机类型。
 - 订单功能轮换：递送 / 取回 / 转交 / 延迟 / 无接触投递 / 护送。
@@ -134,8 +148,8 @@ Reference authority: Story Bible + Style Bible + Frozen Baseline + current Canon
 
 # Style Bible｜FQ001
 
-version: 2.0
-updated: 2026-10-08
+version: 2.1
+updated: 2026-10-11
 
 ## 1. 基调
 现代城市、夜色与白昼的运行系统、真实职业质感、克制悬疑。超常只开一扇小口，周围世界必须像真实城市一样有噪声、有疲惫、有利益、有误差。
@@ -186,6 +200,8 @@ updated: 2026-10-08
 - 制造现实摩擦。
 否则删/压缩。
 
+精确时间、路线、车位、机构流程另加一层预算：只有在读者需要它做行动理解、公平推理或它直接改变后果时才保留精确值；否则优先自然化、概括或藏进动作。
+
 ## 7. 对话
 ### 陈渡
 话少、问题准，但不能每句话都是审讯。
@@ -235,17 +251,28 @@ updated: 2026-10-08
 - 新钩子不能只靠再加一个未知名词；
 - 真正平台数据一旦有，优先看章节读完率、跟读与评论。
 
-## 12. FROZEN_BASELINE
-CH1-CH4重基线一旦冻结，本Bible后续升级默认只作用于CH5以后；不得因为文风偏好变化追溯返工冻结文本。
+## 12. HISTORICAL BASELINE / FULL REBASE OVERRIDE
+旧CH1–CH4曾为 `FROZEN_BASELINE`；在当时缺乏更强外部反证时，该冻结规则用于阻止审美漂移造成无限返工。
+
+2026-10-11 出现两个改变决策边界的新证据：
+1. Fanqie 首轮签约质量评估拒绝；
+2. 用户明确允许整段前文退回重改。
+
+因此旧冻结**不再约束当前 active architecture**。但旧CH1–CH8 FINAL及hash仍是不可变历史业务证据，禁止为了重构而删除或改写历史记录。
+
+普通后续技巧/审美学习仍不能任意触发二次重构；本次 override 仅由已记录的 hard-failure/rebase plan 驱动。
 
 ---
 
-# FROZEN BASELINE — CH0001-CH0004
+# HISTORICAL BASELINE — CH0001-CH0004
 
-status: FROZEN
+status: HISTORICAL_SUPERSEDED_BY_FULL_FRONT_ARC_REBASE
 created: 2026-10-08
+superseded_for_active_execution: 2026-10-11
 project_id: FQ001_MINGRI_ORDER
-canon_version: 6
+canon_version_at_freeze: 6
+current_canon_version: 12
+superseded_by: `audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md`
 
 ## Final hashes
 - CH0001: 79f1a1778c4023fe185606f0493d2019938b61f6cc8e5697408453302e0d0043
@@ -253,17 +280,16 @@ canon_version: 6
 - CH0003: b586faa1643fa92f9c4b528b1f94e11f7d80fbad4a133d02ea1feb8006911b58
 - CH0004: 636b88301bbfdd2d9a7b150afef69192879cc26109da5c95c898e271188bc853
 
-## Freeze decision
-FRONT_ARC_REBASE完成。四章均通过 Continuity / Fresh Reader Blind / Reader Retention / Editorial / Adversarial Release，BLOCKER=0、HIGH=0；跨章连读和纹理扫描通过；CH4 Release Gate解除；deterministic Guard=PASS（failures=[], warnings=[]）。
+## Historical freeze decision
+当时的 FRONT_ARC_REBASE 完成后，四章均通过当时的 Continuity / Fresh Reader Blind / Reader Retention / Editorial / Adversarial Release，BLOCKER=0、HIGH=0；跨章连读和纹理扫描通过；CH4 Release Gate解除；deterministic Guard=PASS。
 
-## What changed
+这些记录只证明当时 gate 下的历史验收，不得被重放为当前签约质量证明。2026-10-11 的真实平台拒签是更高价值的新外部质量反证，因此当前系统允许更高结构层级的重构。
+
+## What changed historically
 - CH1：中度重写，异常前移、debug压缩、增加身体/现实反馈。
 - CH2：大幅压缩按钮测试/验证表；现实机构有摩擦；168预约提前进入并成为选择压力。
 - CH3：以近失事故、顺驰司机和现场养护冲突替代多层查询；因果迁移通过现实车位/入口变化展示。
 - CH4：完全重写；维护路径通过现场冲突获得；第二次干预保留；新增陌生来电主动维持“不提前收货”的时间约束，作为不同于CH3的新章末压力。
 
-## Non-retroactive learning rule
-从本文件生效后，未来关于去AI粗制、留存、句式、平台偏好、agent/skill等学习默认只影响CH5及以后。除非出现硬Canon矛盾、平台强制合规问题或用户明确要求Retcon，不再因审美升级返修CH1-CH4。
-
-## External publication status
-Historical caveat resolved: user later confirmed CH1-CH4 on Fanqie were updated/published to match this frozen baseline. Current publication facts are governed by `PLATFORM_PUBLICATION_LOG.md`.
+## Historical publication status
+User later confirmed CH1-CH4 on Fanqie were updated/published to match this historical baseline. Current publication facts remain governed by `PLATFORM_PUBLICATION_LOG.md`; future withdrawal/replacement is not inferred from the internal rebase.
