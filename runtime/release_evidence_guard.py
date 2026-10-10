@@ -28,6 +28,11 @@ REQUIRED_PIPELINE_ROLES = {
     "ARTIFACT_RELEASE_ENGINEER",
     "CANON_COMMITTER",
 }
+FINAL_BODY_BOUND_PIPELINE_ROLES = {
+    "COPYEDITOR_PROOFREADER",
+    "ARTIFACT_RELEASE_ENGINEER",
+    "CANON_COMMITTER",
+}
 ALLOWED_EXECUTOR_MODES = {"CHAT_BRIDGED", "ISOLATED_EXTERNAL"}
 
 
@@ -56,6 +61,57 @@ def _resolve(root: Path, ref: str) -> Path:
 
 def _receipt_by_role(receipts: list[dict[str, Any]], role: str) -> list[dict[str, Any]]:
     return [r for r in receipts if r.get("role_id") == role]
+
+
+def _valid_sha256(value: Any) -> bool:
+    return isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
+
+
+def _verify_ref_hash(
+    root: Path,
+    *,
+    ref: Any,
+    expected_sha: Any,
+    label: str,
+    problems: list[str],
+) -> None:
+    if not isinstance(ref, str) or not ref.strip():
+        problems.append(f"{label}:ref-missing")
+        return
+    if not _valid_sha256(expected_sha):
+        problems.append(f"{label}:sha256-invalid")
+        return
+    path = _resolve(root, ref)
+    if not path.exists() or not path.is_file():
+        problems.append(f"{label}:ref-missing")
+        return
+    if sha256_file(path) != expected_sha:
+        problems.append(f"{label}:hash-mismatch")
+
+
+def _verify_ref_list(
+    root: Path,
+    *,
+    items: Any,
+    label: str,
+    min_items: int,
+    max_items: int | None,
+    problems: list[str],
+) -> None:
+    if not isinstance(items, list) or len(items) < min_items or (max_items is not None and len(items) > max_items):
+        problems.append(f"{label}:invalid-list")
+        return
+    for index, item in enumerate(items):
+        if not isinstance(item, dict):
+            problems.append(f"{label}:{index}:invalid-entry")
+            continue
+        _verify_ref_hash(
+            root,
+            ref=item.get("ref"),
+            expected_sha=item.get("sha256"),
+            label=f"{label}:{index}",
+            problems=problems,
+        )
 
 
 def validate_chapter(root: Path, task: Path, chapter_no: int) -> list[str]:
@@ -123,26 +179,41 @@ def validate_chapter(root: Path, task: Path, chapter_no: int) -> list[str]:
     authority_commit = str(context.get("authority_commit", ""))
     if not re.fullmatch(r"[0-9a-f]{40}", authority_commit):
         problems.append(f"{cid}:context-authority-commit")
+
     contract_ref = context.get("contract_snapshot_ref")
     contract_sha = context.get("contract_snapshot_sha256")
-    if not contract_ref or not contract_sha:
-        problems.append(f"{cid}:contract-snapshot-pointer")
-    else:
-        contract_path = _resolve(root, str(contract_ref))
-        if not contract_path.exists():
-            problems.append(f"{cid}:contract-snapshot-missing")
-        elif sha256_file(contract_path) != contract_sha:
-            problems.append(f"{cid}:contract-snapshot-hash-mismatch")
-    if context.get("project_profile_ref") in (None, "") or context.get("project_profile_sha256") in (None, ""):
-        problems.append(f"{cid}:project-profile-pointer")
-    canon_refs = context.get("canon_refs")
-    recent_refs = context.get("recent_final_refs")
+    _verify_ref_hash(
+        root,
+        ref=contract_ref,
+        expected_sha=contract_sha,
+        label=f"{cid}:contract-snapshot",
+        problems=problems,
+    )
+    _verify_ref_hash(
+        root,
+        ref=context.get("project_profile_ref"),
+        expected_sha=context.get("project_profile_sha256"),
+        label=f"{cid}:project-profile",
+        problems=problems,
+    )
+    _verify_ref_list(
+        root,
+        items=context.get("canon_refs"),
+        label=f"{cid}:canon-ref",
+        min_items=1,
+        max_items=None,
+        problems=problems,
+    )
+    _verify_ref_list(
+        root,
+        items=context.get("recent_final_refs"),
+        label=f"{cid}:recent-final-ref",
+        min_items=1,
+        max_items=3,
+        problems=problems,
+    )
     rule_slices = context.get("rule_slices")
-    if not isinstance(canon_refs, list) or not canon_refs:
-        problems.append(f"{cid}:context-canon-refs")
-    if not isinstance(recent_refs, list) or not 1 <= len(recent_refs) <= 3:
-        problems.append(f"{cid}:context-recent-final-refs")
-    if not isinstance(rule_slices, list) or len(rule_slices) > 4:
+    if not isinstance(rule_slices, list) or len(rule_slices) > 4 or any(not isinstance(item, str) or not item.strip() for item in rule_slices):
         problems.append(f"{cid}:context-rule-slices")
 
     if evidence.get("schema_version") != "1.0":
@@ -161,14 +232,32 @@ def validate_chapter(root: Path, task: Path, chapter_no: int) -> list[str]:
         problems.append(f"{cid}:role-receipts-not-list")
         return problems
 
+    seen_receipt_ids: set[str] = set()
     for receipt in receipts:
+        receipt_id = receipt.get("receipt_id")
+        role_id = receipt.get("role_id")
+        if not isinstance(receipt_id, str) or not receipt_id.strip():
+            problems.append(f"{cid}:receipt-id-missing:{role_id}")
+        elif receipt_id in seen_receipt_ids:
+            problems.append(f"{cid}:duplicate-receipt-id:{receipt_id}")
+        else:
+            seen_receipt_ids.add(receipt_id)
+
+        if not isinstance(receipt.get("result_summary"), str) or not receipt.get("result_summary", "").strip():
+            problems.append(f"{cid}:receipt-result-summary-missing:{role_id}")
+
         mode = receipt.get("executor_mode")
         if mode not in ALLOWED_EXECUTOR_MODES:
-            problems.append(f"{cid}:invalid-executor-mode:{receipt.get('role_id')}")
+            problems.append(f"{cid}:invalid-executor-mode:{role_id}")
         if mode == "ISOLATED_EXTERNAL" and not (receipt.get("execution_identity") and receipt.get("trace_ref")):
-            problems.append(f"{cid}:isolated-receipt-without-attestation:{receipt.get('role_id')}")
+            problems.append(f"{cid}:isolated-receipt-without-attestation:{role_id}")
         if str(receipt.get("assurance", "")).upper() == "ATTESTED_ISOLATED" and mode != "ISOLATED_EXTERNAL":
-            problems.append(f"{cid}:false-isolated-claim:{receipt.get('role_id')}")
+            problems.append(f"{cid}:false-isolated-claim:{role_id}")
+        if mode == "CHAT_BRIDGED" and receipt.get("input_hash") != context_sha:
+            problems.append(f"{cid}:chat-bridged-context-binding:{role_id}")
+
+        if role_id in FINAL_BODY_BOUND_PIPELINE_ROLES and receipt.get("source_hash") != final_hash:
+            problems.append(f"{cid}:pipeline-final-source-binding:{role_id}")
 
     for role in REQUIRED_PIPELINE_ROLES:
         rows = _receipt_by_role(receipts, role)
@@ -177,10 +266,21 @@ def validate_chapter(root: Path, task: Path, chapter_no: int) -> list[str]:
 
     for role in REQUIRED_REVIEW_ROLES:
         rows = _receipt_by_role(receipts, role)
-        final_rows = [r for r in rows if r.get("source_hash") == final_hash and r.get("status") in {"PASS", "RELEASE"}]
+        final_rows = [
+            r for r in rows
+            if r.get("source_hash") == final_hash
+            and r.get("input_hash") == context_sha
+            and r.get("status") in {"PASS", "RELEASE"}
+        ]
         if not final_rows:
             problems.append(f"{cid}:missing-final-review-receipt:{role}")
-        if not any(r.get("peer_review_visibility") == "BLINDED_FROM_PEER_CONCLUSIONS" for r in rows):
+        blinded_rows = [
+            r for r in rows
+            if r.get("peer_review_visibility") == "BLINDED_FROM_PEER_CONCLUSIONS"
+            and _valid_sha256(r.get("source_hash"))
+            and r.get("input_hash") == context_sha
+        ]
+        if not blinded_rows:
             problems.append(f"{cid}:review-blinding-receipt-missing:{role}")
 
     issue_ledger = evidence.get("issue_ledger")
@@ -221,6 +321,7 @@ def main() -> int:
         "status": "PASS" if not problems else "FAIL",
         "strict_from_chapter": STRICT_FROM_CHAPTER,
         "assurance": "ROLE_SEPARATED_NOT_ATTESTED_ISOLATED",
+        "evidence_strength": "STRUCTURED_SELF_ATTESTED_CHAT_BRIDGED_UNLESS_EXTERNAL_TRACE_PRESENT",
         "failures": problems,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
