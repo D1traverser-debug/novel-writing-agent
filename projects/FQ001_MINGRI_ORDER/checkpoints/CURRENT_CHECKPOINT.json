@@ -1,6 +1,6 @@
 {
   "schema_version": "2.1-github",
-  "checkpoint_version": 6,
+  "checkpoint_version": 7,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -13,6 +13,8 @@
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.1-github",
+  "skill_version": "Novel Writing Agent 2.2.0-github",
+  "runtime_version": "github-owner-2.3",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strict_from_chapter": 9,
   "canon_version": 12,
@@ -73,6 +75,6 @@
     "business_semantics_replayed": false,
     "same_chat_lease_preserved": true,
     "post_cutover_artifact_vault": "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档",
-    "owner_evolution": "Novel Writing Agent 2.1 evidence hardening remains active. The 2026-10-11 platform signing rejection adds a front-arc quality-repair objective without changing Canon v12, CH8 body/hash, CH8 publication truth, or CH9 READY contract."
+    "owner_evolution": "Novel Writing Agent 2.2 adds a platform-signing feedback loop and controlled baseline-unfreeze rule; runtime 2.3 makes the signing rejection and second-attempt gate recoverable. Canon v12, CH8 body/hash, CH8 publication truth, and CH9 READY contract remain unchanged."
   }
 }
