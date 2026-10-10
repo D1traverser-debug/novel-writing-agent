@@ -9,6 +9,10 @@ canon_version_after_commit: 12
 predicted_fanqie_chars: 2503
 trailing_4_avg: 2621.8
 deviation_pct: -4.5%
+evidence_assurance: LEGACY_AGGREGATE_MIGRATED
+role_receipts: NOT_AVAILABLE
+execution_evidence_contract: PRE_V1_LEGACY
+isolated_reviewer_attestation: NOT_CLAIMED
 
 ## Gates
 - Continuity: PASS
@@ -28,6 +32,11 @@ deviation_pct: -4.5%
 - Word render QA: PASS (7/7 pages visually inspected)
 - BLOCKER: 0
 - HIGH: 0
+
+## Evidence limitation
+This acceptance predates the v1 per-role execution-evidence contract introduced after the GitHub owner cutover audit. The aggregate gate outcomes are preserved as historical accepted state, but role-level invocation receipts, frozen Context Pack receipts, and distinct executor identities are not available. Do not infer ATTESTED_ISOLATED execution or use this legacy aggregate format as the evidence standard for CH9+.
+
+The system must not replay CH8 merely to manufacture missing historical receipts. CH9 and later releases must satisfy the current execution-evidence contract before FINAL_ACCEPTED / PUBLISH_READY can be asserted.
 
 ## External publication
 NOT_CONFIRMED. Only the user may confirm the platform publication state.
