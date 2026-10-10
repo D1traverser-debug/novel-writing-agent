@@ -49,3 +49,21 @@ def test_compatibility_task_index_mirrors_system_route():
     assert alias["canonical_ref"]=="continuity/TASK_INDEX.json"
     assert alias["system"]["system_id"]==canonical["system"]["system_id"]
     assert alias["system"]["active_project_task_id"]==canonical["system"]["active_project_task_id"]
+
+def test_post_cutover_storage_governance():
+    auth=json.loads((ROOT/"AUTHORITY_STATUS.json").read_text())
+    gov=json.loads((ROOT/"continuity/ARTIFACT_CONTEXT_GOVERNANCE.json").read_text())
+    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
+    adapter=json.loads((ROOT/"CONTINUITY_ADAPTER.json").read_text())
+    assert auth["status"]=="GITHUB_PRIMARY"
+    assert auth["business_authority"] is True
+    assert auth["library_post_cutover_role"]=="REMOVED_NO_NOVEL_EXECUTION_TREE"
+    assert auth["artifact_vault"]["provider"]=="Google Drive"
+    assert auth["artifact_vault"]["business_authority"] is False
+    assert auth["artifact_vault"]["path"]=="/Google Drive/ChatGPT/NOVEL_OS_小说系统_交付归档"
+    assert "Google Drive" in gov["external_artifact_vault_if_any"]
+    assert "ChatGPT Library" not in gov["external_artifact_vault_if_any"]
+    assert any("Google Drive" in r for r in cp["derived_artifact_refs"])
+    assert not any("ChatGPT Library" in r for r in cp["derived_artifact_refs"])
+    assert adapter["external_artifact_vault"]["business_authority"] is False
+    assert adapter["external_artifact_vault"]["recovery_state_source"] is False
