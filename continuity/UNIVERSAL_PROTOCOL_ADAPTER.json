@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.6",
+  "schema_version": "1.7",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
   "observed_source_protocol": "3.3",
@@ -9,7 +9,7 @@
   "strategy": "ADDITIVE_PROTOCOL_OVERLAY_DURING_GITHUB_OWNER_CUTOVER",
   "user_migration_required": false,
   "business_state_rewrite": true,
-  "business_state_rewrite_reason": "The active project legitimately changed strategy after a real Fanqie signing-quality rejection and the user's explicit authorization removed the previous high migration-cost constraint. Historical prose/publication facts remain preserved; the active next_action changed to a controlled full-front-arc rebase.",
+  "business_state_rewrite_reason": "The active project legitimately changed strategy after a real Fanqie signing-quality rejection and the user's explicit authorization removed the previous high migration-cost constraint. The user then exposed a second-order craft-mastery gap: orchestration/rebase controls were stronger than the explicit system model for what novel skills must be mastered, where to learn them, how deeply, and how to prove that mastery. Historical prose/publication facts remain preserved while the owner adds a mastery model, series master outline and project benchmark before candidate rewriting.",
   "same_chat_preserve_resume_epoch": true,
   "same_chat_preserve_active_lease": true,
   "task_id_preserved": "FQ001_MINGRI_ORDER",
@@ -19,8 +19,8 @@
   "external_publication_fact_preserved": "CH1-CH7 confirmed published historically; CH8 publication remains unconfirmed; internal rebase does not infer withdrawal/replacement.",
   "current_contract_version": "3.7",
   "domain_contract_version": "2.1-github",
-  "skill_version": "Novel Writing Agent 2.3.0-github",
-  "runtime_version": "github-owner-2.4",
+  "skill_version": "Novel Writing Agent 2.4.0-github",
+  "runtime_version": "github-owner-2.5",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strength": "STRUCTURED_SELF_ATTESTED_CHAT_BRIDGED_UNLESS_EXTERNAL_TRACE_PRESENT",
   "platform_signing_feedback": {
@@ -32,6 +32,8 @@
     "quality_diagnosis_ref": "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md",
     "active_rebase_plan_ref": "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
     "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
+    "mastery_evolution_ref": "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
+    "architecture_mastery_benchmark_ref": "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
     "superseded_targeted_matrix_ref": "audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md",
     "canon_effect": "NONE_UNLESS_EXPLICIT_RETCON_DURING_REBASE",
     "external_platform_replacement_user_controlled": true
@@ -44,9 +46,26 @@
     "old_chapter_boundaries_binding": false,
     "old_ch9_contract_status": "SUPERSEDED_BY_FULL_FRONT_ARC_REBASE",
     "active_plan_ref": "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
+    "series_master_outline_ref": "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
+    "frozen_architecture_ref": "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
     "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
     "candidate_promotion_gate": "WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT",
     "evidence_ceiling_before_real_packet_and_outcome": "REGRESSION_VERIFIED_OWNER_WIRING_ONLY"
+  },
+  "novel_mastery": {
+    "system_model_ref": "protocols/NOVEL_MASTERY_MODEL.md",
+    "mastery_evolution_ref": "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
+    "series_master_outline_ref": "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
+    "front_arc_frozen_architecture_ref": "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
+    "project_benchmark_ref": "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
+    "competency_count": 20,
+    "mastery_levels": ["L0_UNMAPPED","L1_CONCEPTUAL","L2_OPERATIONAL_WITH_SCAFFOLD","L3_PROJECT_READY","L4_TRANSFER_VERIFIED"],
+    "architecture_gate": "PASS_WITH_SCOPED_DEFERRALS",
+    "architecture_project_ready_scope": ["C01","C02","C03","C04","C05","C06","C07","C08_FRONT_ARC","C11_ACQUISITION_VOL1","C14_ARCHITECTURE","C15","C17","C18","C19","C20"],
+    "deferred_to_candidate_prose": ["C09","C10","C12","C13","C16"],
+    "partial_long_range": ["C08_LATE_SENDER_ONTOLOGY"],
+    "claim_ceiling": "PROJECT_LEVEL_L3_WHERE_LISTED__NO_L4_TRANSFER_OR_LIVE_OUTCOME_CLAIM",
+    "legacy_outline_status": "outline/ARC_001.md=SUPERSEDED_BY_SERIES_MASTER_OUTLINE_FOR_ACTIVE_REBASE"
   },
   "owner_adapter_ref": "CONTINUITY_ADAPTER.json",
   "short_checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
@@ -61,18 +80,18 @@
     "profile_applicability": {
       "artifact_io": {
         "status": "APPLIES",
-        "reason": "Novel Writing persists canonical project/checkpoint state, Canon/prose/review artifacts, publication/signing facts, historical baselines and replacement candidates whose identity, freshness, invalidation and retention are governed explicitly.",
+        "reason": "Novel Writing persists canonical project/checkpoint state, Canon/prose/review artifacts, publication/signing facts, historical baselines, master-outline/rebase architecture and replacement candidates whose identity, freshness, invalidation and retention are governed explicitly.",
         "evidence_refs": ["continuity/ARTIFACT_CONTEXT_GOVERNANCE.json","projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json","SKILL.md"]
       },
       "operational_hygiene": {
         "status": "APPLIES",
-        "reason": "The owner has release hard gates, reminder-dependency repair, signing-feedback recovery, full-rebase supersession rules, stale-dependent-hash handling, deterministic release-evidence validation and periodic regression before release/promotion.",
-        "evidence_refs": ["SKILL.md","protocols/ACTIVE_RULEBOOK.md","runtime/recovery_guard.py","runtime/release_evidence_guard.py","CHANGELOG.md"]
+        "reason": "The owner has release hard gates, reminder-dependency repair, signing-feedback recovery, mastery-gap recovery, outline/rebase supersession rules, stale-dependent-hash handling, deterministic release-evidence validation and periodic regression before release/promotion.",
+        "evidence_refs": ["SKILL.md","protocols/ACTIVE_RULEBOOK.md","protocols/NOVEL_MASTERY_MODEL.md","runtime/recovery_guard.py","runtime/release_evidence_guard.py","CHANGELOG.md"]
       },
       "evolution": {
         "status": "APPLIES",
-        "reason": "The owner explicitly applies the Universal candidate-adoption and M0-M11 evolution method to material user/platform failure signals: goal/mechanism separation, evidence scout, alternatives/falsification, complexity budget, supersession, second-order challenge and calibrated assurance.",
-        "evidence_refs": ["audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md","audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md","SKILL.md","protocols/ACTIVE_RULEBOOK.md","CHANGELOG.md"]
+        "reason": "The owner applies the Universal candidate-adoption and M0-M11 evolution method to material user/platform failure signals, and now explicitly adds competency ontology, learning-source hierarchy, L0-L4 evidence boundaries, project benchmarks and series architecture so the user does not need to enumerate missing novel disciplines.",
+        "evidence_refs": ["audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md","protocols/NOVEL_MASTERY_MODEL.md","audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md","projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md","audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md","SKILL.md","CHANGELOG.md"]
       }
     },
     "hook_bindings": {
@@ -88,28 +107,23 @@
       "delete_and_retention_rules": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#delete_and_retention_rules",
       "superseded_artifact_cleanup_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule",
       "external_artifact_vault_if_any": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#external_artifact_vault_if_any",
-      "observability_or_incident_evidence_location": "hash-bound project reviews/acceptance/execution-evidence/checkpoints plus platform-signing/rebase learning audits and CHANGELOG.md",
-      "self_maintenance_trigger_path": "SKILL.md platform signing-feedback loop + full front-arc rebase/evolution section: a user/platform hard signal triggers classification, evidence scout, candidate comparison, falsification, bounded repair/evolution, supersession and regression without requiring the user to operate the process",
+      "observability_or_incident_evidence_location": "hash-bound project reviews/acceptance/execution-evidence/checkpoints plus platform-signing/rebase/mastery learning audits and CHANGELOG.md",
+      "self_maintenance_trigger_path": "SKILL.md platform signing-feedback + full-rebase + mastery sections: a user/platform hard signal or reminder-dependency incident triggers failure classification, capability-gap check, evidence scout, candidate comparison, benchmark, supersession and regression without requiring the user to enumerate internal craft disciplines",
       "garbage_collection_owner_and_dependency_rule": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#superseded_artifact_cleanup_rule with historical FINAL/Canon retention and dependency checks",
-      "reliability_or_change_freeze_guard": "SKILL.md release/rebase hard gates plus runtime/recovery_guard.py and runtime/release_evidence_guard.py: no CH9 continuation, replacement promotion or second-signing attempt while the full-rebase state or required packet evidence/readiness is unresolved",
-      "learning_evidence_location": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md plus project reviews/platform evidence; raw learning is not execution authority",
-      "eval_or_regression_promotion_path": "SKILL.md + protocols/ACTIVE_RULEBOOK.md + recovery/release-evidence guards + owner CI; full-rebase learning is promoted only after candidate comparison and regression wiring, while literary/outcome claims remain open until action/live evidence",
-      "superseded_mechanism_cleanup_rule": "The old targeted front-arc matrix and old CH9 READY contract are explicitly superseded/held; retired Library/Notion/legacy Drive executable material remains non-authoritative"
+      "reliability_or_change_freeze_guard": "SKILL.md release/rebase/mastery gates plus runtime/recovery_guard.py and runtime/release_evidence_guard.py: no old ARC_001 resume, CH9 continuation, replacement promotion or second-signing attempt while the current mastery/rebase/packet evidence requirements are unresolved",
+      "learning_evidence_location": "protocols/NOVEL_MASTERY_MODEL.md defines evidence classes; audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md and project mastery/rebase audits record applied learning; raw research is not execution authority",
+      "eval_or_regression_promotion_path": "SKILL.md + protocols/ACTIVE_RULEBOOK.md + protocols/NOVEL_MASTERY_MODEL.md + project benchmarks + recovery/release-evidence guards + owner CI; research can produce L1 evidence, project L3 requires applied benchmark, and L4 requires repeated cross-project external outcomes",
+      "superseded_mechanism_cleanup_rule": "The old targeted front-arc matrix, old CH9 READY contract and old ARC_001 executable numbering are explicitly superseded/held; retired Library/Notion/legacy Drive executable material remains non-authoritative"
     },
     "overrides": {
-      "evaluator_selection": "Novel evolution is judged through packet/chapter-specific role-separated review, identity regression, platform signing/reader evidence, periodic long-form/Canon checks and real reader/platform evidence when available; normal same-session review does not claim ATTESTED_ISOLATED assurance"
+      "evaluator_selection": "Novel evolution is judged through competency-appropriate project benchmarks plus packet/chapter-specific role-separated review, identity regression, platform signing/reader evidence, periodic long-form/Canon checks and real reader/platform evidence when available; normal same-session review does not claim ATTESTED_ISOLATED assurance"
     }
   },
   "methodology_assurance": {
-    "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__FULL_REBASE_EVOLUTION_MAPPED",
-    "owner_regression_status": "PASS",
-    "owner_regression_evidence": {
-      "validated_behavioral_head": "779de49898b4450b21ec2e62a737b1f91ec4c05d",
-      "github_actions_run_id": 38083956011,
-      "job_id": 114306430298,
-      "result": "PASS_RECOVERY_GUARD_RELEASE_EVIDENCE_GUARD_ALL_OWNER_TESTS_FULL_FRONT_ARC_REBASE"
-    },
-    "operational_status": "REGRESSION_VERIFIED_OWNER_WIRING__ACTION_LEVEL_PACKET_EVIDENCE_NOT_YET_AVAILABLE",
-    "boundary": "Repository regression proves recovery, supersession and full-rebase methodology wiring. It does not prove the replacement packet is literarily better, improve retention, or pass Fanqie signing. Those higher claims require real candidate-packet reviews and ultimately reader/platform/live-signing outcome evidence. CHAT_BRIDGED receipts remain self-attested, and ATTESTED_ISOLATED remains unavailable without a distinct execution identity/provider trace."
+    "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__NOVEL_MASTERY_AND_FULL_REBASE_MAPPED",
+    "owner_regression_status": "PENDING_FINAL_HEAD_VALIDATION",
+    "owner_regression_evidence": null,
+    "operational_status": "MASTERY_AND_SERIES_ARCHITECTURE_WIRING_PENDING_FINAL_CI__CANDIDATE_PROSE_EVIDENCE_NOT_YET_AVAILABLE",
+    "boundary": "Repository regression can prove that the mastery model, series master outline, supersession rules, architecture freeze and recovery wiring are present and internally consistent. It does not prove deferred prose competencies, cross-project L4 mastery, better reader retention, or Fanqie signing success. Those higher claims require actual replacement prose, role-separated reviews and ultimately reader/platform/live-signing outcome evidence."
   }
 }
