@@ -1,9 +1,10 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "execution_readiness_contract": "1.0",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
-  "profile_version": 1,
+  "profile_version": 2,
+  "release_evidence_contract_version": "1.0",
   "purpose": "Execution routing metadata for the novel domain owner. Repository declarations are ceilings; the current ChatGPT session must still handshake the exact capability needed by next_action.",
   "capabilities": [
     {
@@ -14,15 +15,24 @@
       "executor_type": "CHAT_BRIDGED_LLM",
       "executor_ref": "SKILL.md",
       "required_tools": ["model_runtime", "GitHub_owner_read_write"],
-      "evidence_contract": ["frozen input refs", "source hash", "role-specific review artifact/receipt", "issue ledger where applicable", "updated owner checkpoint after material stage change"],
+      "evidence_contract": [
+        "immutable chapter contract snapshot",
+        "frozen Context Pack receipt with owner commit and exact input refs/hashes",
+        "source hash",
+        "role-specific execution/review receipts",
+        "blind-first-pass peer-visibility receipt for core reviewers",
+        "issue ledger with unresolved BLOCKER/HIGH = 0",
+        "updated owner checkpoint after material stage change"
+      ],
+      "release_enforcement": "runtime/release_evidence_guard.py for CH9+",
       "side_channel_allowed": true,
       "safe_degraded_modes": []
     },
     {
       "capability_id": "deterministic_guards",
-      "scope": "RECOVERY,LENGTH,PROOFREAD,PROSE_TEXTURE,MECHANICAL_RELEASE_GATES",
+      "scope": "RECOVERY,LENGTH,PROOFREAD,PROSE_TEXTURE,RELEASE_EVIDENCE,MECHANICAL_RELEASE_GATES",
       "assurance_ceiling": "SESSION_EXECUTABLE",
-      "invocation_path": "runtime/recovery_guard.py + runtime/fanqie_wordcount_guard.py + runtime/final_proofread_guard.py + runtime/prose_texture_guard.py",
+      "invocation_path": "runtime/recovery_guard.py + runtime/fanqie_wordcount_guard.py + runtime/final_proofread_guard.py + runtime/prose_texture_guard.py + runtime/release_evidence_guard.py",
       "executor_type": "DETERMINISTIC_PYTHON",
       "executor_ref": "runtime/",
       "required_tools": ["python_runtime_or_equivalent"],
@@ -57,6 +67,8 @@
   ],
   "owner_notes": [
     "Normal role-separated novel reviews do not claim ATTESTED_ISOLATED assurance.",
+    "Role-separated CHAT_BRIDGED review may satisfy the normal serialization pipeline only when the per-role evidence contract and blind-first-pass visibility receipt are present.",
+    "An aggregate Acceptance statement is not a substitute for role receipts from CH9 onward.",
     "The current-session dispatcher must not claim a specialist executed unless the required capability handshake is AVAILABLE at the required assurance.",
     "Business state remains in GitHub owner main; execution receipts support but do not replace task/checkpoint authority."
   ]
