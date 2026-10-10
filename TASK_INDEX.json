@@ -26,14 +26,14 @@
       "resume_eligible": true,
       "resume_visibility": "DEFAULT",
       "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-10T18:17:00Z",
-      "current_stage": "FRONT_ARC_SIGNING_REPAIR_ACTIVE__CH8_PUBLISH_READY_NOT_CONFIRMED__CH9_READY",
-      "next_action": "Execute the targeted CH1-CH8 signing-repair matrix and prepare only high-value candidate revisions before the 50k second signing application; if the user confirms CH8 publication, record that external fact separately; keep CH9 READY and continue it under the evidence contract without consuming the second signing attempt until a signing-readiness audit passes.",
+      "updated_at": "2026-10-10T20:04:00Z",
+      "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE",
+      "next_action": "Freeze CH1-CH8 old FINALs as immutable historical baseline evidence; finalize and validate the new front-arc signing-packet architecture, then rewrite candidate CH1-CH8 as a coherent unit. Hold old CH9 execution and the 50k second-signing attempt until packet-level readiness passes.",
       "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
       "contract_version": "3.7",
       "domain_contract_version": "2.1-github",
-      "skill_version": "Novel Writing Agent 2.2.0-github",
-      "runtime_version": "github-owner-2.3",
+      "skill_version": "Novel Writing Agent 2.3.0-github",
+      "runtime_version": "github-owner-2.4",
       "release_evidence_contract_version": "1.0"
     }
   ]
