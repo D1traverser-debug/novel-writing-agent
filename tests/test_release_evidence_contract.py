@@ -1,5 +1,4 @@
 from pathlib import Path
-import hashlib
 import json
 
 from runtime.release_evidence_guard import (
@@ -24,8 +23,20 @@ def test_current_legacy_acceptance_is_explicit_and_guarded():
 
 def _build_future_fixture(root: Path, *, include_evidence: bool = True) -> tuple[Path, Path]:
     task = root / "projects/FQ001_MINGRI_ORDER"
-    for sub in ("manuscript", "reviews", "execution", "contracts"):
+    for sub in ("manuscript", "reviews", "execution", "contracts", "canon"):
         (task / sub).mkdir(parents=True, exist_ok=True)
+
+    profile_path = task / "PROJECT_PROFILE.md"
+    profile_path.write_text("# Project profile\nActive Writing Profile\n", encoding="utf-8")
+    profile_hash = sha256_file(profile_path)
+
+    canon_path = task / "canon/THREADS.json"
+    canon_path.write_text('{"threads": []}\n', encoding="utf-8")
+    canon_hash = sha256_file(canon_path)
+
+    previous_final = task / "manuscript/CH0008_FINAL.md"
+    previous_final.write_text("第八章\n用于测试的上一章。\n", encoding="utf-8")
+    previous_final_hash = sha256_file(previous_final)
 
     final_path = task / "manuscript/CH0009_FINAL.md"
     final_path.write_text("第九章\n这是用于契约测试的最终正文。\n", encoding="utf-8")
@@ -44,9 +55,19 @@ def _build_future_fixture(root: Path, *, include_evidence: bool = True) -> tuple
         "contract_snapshot_ref": "projects/FQ001_MINGRI_ORDER/contracts/CH0009_CONTRACT.md",
         "contract_snapshot_sha256": contract_hash,
         "project_profile_ref": "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
-        "project_profile_sha256": "b" * 64,
-        "canon_refs": [{"ref": "canon/THREADS.json", "sha256": "c" * 64}],
-        "recent_final_refs": [{"ref": "manuscript/CH0008_FINAL.md", "sha256": "d" * 64}],
+        "project_profile_sha256": profile_hash,
+        "canon_refs": [
+            {
+                "ref": "projects/FQ001_MINGRI_ORDER/canon/THREADS.json",
+                "sha256": canon_hash,
+            }
+        ],
+        "recent_final_refs": [
+            {
+                "ref": "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
+                "sha256": previous_final_hash,
+            }
+        ],
         "rule_slices": ["Scene engine", "Dialogue / relationship"],
         "frozen_at": "2026-10-10T15:01:00Z",
     }
@@ -59,14 +80,18 @@ def _build_future_fixture(root: Path, *, include_evidence: bool = True) -> tuple
     if include_evidence:
         receipts = []
         for role in sorted(REQUIRED_PIPELINE_ROLES):
-            receipts.append({
+            receipt = {
                 "receipt_id": f"pipeline-{role}",
                 "role_id": role,
                 "status": "PASS",
                 "executor_mode": "CHAT_BRIDGED",
                 "assurance": "ROLE_SEPARATED_NOT_ATTESTED_ISOLATED",
                 "input_hash": context_hash,
-            })
+                "result_summary": f"{role} completed its bounded chapter-stage responsibility.",
+            }
+            if role in {"COPYEDITOR_PROOFREADER", "ARTIFACT_RELEASE_ENGINEER", "CANON_COMMITTER"}:
+                receipt["source_hash"] = final_hash
+            receipts.append(receipt)
         for role in sorted(REQUIRED_REVIEW_ROLES):
             receipts.append({
                 "receipt_id": f"review-{role}",
@@ -77,6 +102,7 @@ def _build_future_fixture(root: Path, *, include_evidence: bool = True) -> tuple
                 "peer_review_visibility": "BLINDED_FROM_PEER_CONCLUSIONS",
                 "source_hash": final_hash,
                 "input_hash": context_hash,
+                "result_summary": f"{role} found no unresolved release-blocking issue on this source hash.",
             })
         evidence = {
             "schema_version": "1.0",
@@ -142,3 +168,47 @@ def test_false_isolated_claim_is_rejected(tmp_path):
     acceptance_path.write_text(text, encoding="utf-8")
     problems = validate_chapter(root, task, 9)
     assert any(p.startswith("CH0009:false-isolated-claim:") for p in problems)
+
+
+def test_context_pack_rejects_unverified_canon_hash(tmp_path):
+    root, task = _build_future_fixture(tmp_path, include_evidence=True)
+    context_path = task / "execution/CH0009_CONTEXT_PACK.json"
+    context = json.loads(context_path.read_text(encoding="utf-8"))
+    context["canon_refs"][0]["sha256"] = "0" * 64
+    context_path.write_text(json.dumps(context, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    problems = validate_chapter(root, task, 9)
+    assert "CH0009:canon-ref:0:hash-mismatch" in problems
+
+
+def test_chat_bridged_receipt_must_bind_context_and_have_result_summary(tmp_path):
+    root, task = _build_future_fixture(tmp_path, include_evidence=True)
+    evidence_path = task / "reviews/CH0009_EXECUTION_EVIDENCE.json"
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    receipt = evidence["role_receipts"][0]
+    receipt["input_hash"] = "0" * 64
+    receipt["result_summary"] = ""
+    evidence_path.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    acceptance_path = task / "reviews/CH0009_ACCEPTANCE.md"
+    text = acceptance_path.read_text(encoding="utf-8")
+    old = next(line.split(": ", 1)[1] for line in text.splitlines() if line.startswith("execution_evidence_sha256:"))
+    text = text.replace(old, sha256_file(evidence_path))
+    acceptance_path.write_text(text, encoding="utf-8")
+    problems = validate_chapter(root, task, 9)
+    assert any(p.startswith("CH0009:chat-bridged-context-binding:") for p in problems)
+    assert any(p.startswith("CH0009:receipt-result-summary-missing:") for p in problems)
+
+
+def test_final_pipeline_receipt_must_bind_final_source(tmp_path):
+    root, task = _build_future_fixture(tmp_path, include_evidence=True)
+    evidence_path = task / "reviews/CH0009_EXECUTION_EVIDENCE.json"
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    receipt = next(r for r in evidence["role_receipts"] if r["role_id"] == "CANON_COMMITTER")
+    receipt["source_hash"] = "0" * 64
+    evidence_path.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    acceptance_path = task / "reviews/CH0009_ACCEPTANCE.md"
+    text = acceptance_path.read_text(encoding="utf-8")
+    old = next(line.split(": ", 1)[1] for line in text.splitlines() if line.startswith("execution_evidence_sha256:"))
+    text = text.replace(old, sha256_file(evidence_path))
+    acceptance_path.write_text(text, encoding="utf-8")
+    problems = validate_chapter(root, task, 9)
+    assert "CH0009:pipeline-final-source-binding:CANON_COMMITTER" in problems
