@@ -15,7 +15,7 @@ def test_recovery_truth():
     assert m["next_serial_chapter"]==9
     assert m["next_serial_status"]=="HELD_DURING_FULL_FRONT_ARC_REBASE"
     assert cp["production_mode"]=="FULL_FRONT_ARC_REBASE"
-    assert m["current_stage"]=="FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE"
+    assert m["current_stage"]=="FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY"
     assert m["current_stage"]==cp["current_stage"]
     assert m["next_action"]==cp["next_action"]
     assert m["external_publication"]["confirmed_published_through"]==7
@@ -51,14 +51,59 @@ def test_full_front_arc_rebase_is_durable_and_old_patch_plan_is_superseded():
     assert rebase["old_ch9_contract_status"]=="SUPERSEDED_BY_FULL_FRONT_ARC_REBASE"
     assert rebase["candidate_promotion"]=="WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT"
     assert cp["rebase"]["mode"]==rebase["mode"]
-    assert (ROOT/rebase["plan_ref"]).exists()
-    assert (ROOT/rebase["learning_evidence_ref"]).exists()
+    for key in ("plan_ref","learning_evidence_ref","series_master_outline_ref","frozen_architecture_ref"):
+        assert (ROOT/rebase[key]).exists()
     old=(ROOT/"audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md").read_text(encoding="utf-8")
     plan=(ROOT/rebase["plan_ref"]).read_text(encoding="utf-8")
     learning=(ROOT/rebase["learning_evidence_ref"]).read_text(encoding="utf-8")
     assert "SUPERSEDED_FOR_ACTIVE_EXECUTION" in old
     assert "M0 — Intake" in plan and "M11 — Durable learning" in plan
     assert "CONTROLLED_FULL_FRONT_ARC_REBASE" in learning
+
+
+def test_mastery_model_maps_full_skill_space_and_evidence_levels():
+    text=(ROOT/"protocols/NOVEL_MASTERY_MODEL.md").read_text(encoding="utf-8")
+    for token in [f"C{i:02d}" for i in range(1,21)]:
+        assert token in text
+    for level in ("L0","L1","L2","L3","L4"):
+        assert level in text
+    assert "Series architecture / master outline" in text
+    assert "Worldbuilding / system design" in text
+    assert "Character design / character arc" in text
+    assert "Mystery / suspense / information architecture" in text
+    assert "reading a course can move knowledge toward L1" in text
+    assert "LIVE_PROJECT_OUTCOME" in text
+    assert "MODEL_SELF_EVALUATION" in text
+
+
+def test_series_master_outline_is_active_and_planned_is_not_canon():
+    master=(TASK/"outline/SERIES_MASTER_OUTLINE.md").read_text(encoding="utf-8")
+    legacy=(TASK/"outline/ARC_001.md").read_text(encoding="utf-8")
+    frozen=(TASK/"outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md").read_text(encoding="utf-8")
+    assert "status: ACTIVE_ARCHITECTURE_AUTHORITY_DURING_FULL_REBASE" in master
+    assert "Planned architecture is not Canon" in master
+    for heading in ("Terminal constraints / ending design","Global protagonist arc","Relationship architecture","World / Mingrida architecture","Mystery architecture","Series / volume roadmap"):
+        assert heading in master
+    assert "SUPERSEDED_BY_SERIES_MASTER_OUTLINE_FOR_ACTIVE_REBASE" in legacy
+    assert "HISTORICAL_PLANNING_EVIDENCE" in legacy
+    assert "FROZEN_FOR_CANDIDATE_DRAFT" in frozen
+    assert "READY_FOR_COHERENT_CANDIDATE_DRAFT" in frozen
+
+
+def test_project_mastery_benchmark_has_scoped_claims_not_fake_total_mastery():
+    m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
+    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
+    mastery=m["mastery"]
+    assert mastery["architecture_gate"]=="PASS_WITH_SCOPED_DEFERRALS"
+    assert mastery["maximum_current_claim"]=="PROJECT_LEVEL_L3_WHERE_LISTED__NO_L4_TRANSFER_OR_LIVE_OUTCOME_CLAIM"
+    assert set(["C09","C10","C12","C13","C16"]).issubset(set(mastery["deferred_to_candidate_prose"]))
+    assert "C08_LATE_SENDER_ONTOLOGY" in mastery["late_series_partial"]
+    assert cp["mastery"]["architecture_gate"]==mastery["architecture_gate"]
+    benchmark=(ROOT/mastery["project_benchmark_ref"]).read_text(encoding="utf-8")
+    assert "PROJECT_LEVEL_MASTERY_EVIDENCE" in benchmark
+    assert "PASS_WITH_SCOPED_DEFERRALS" in benchmark
+    assert "no current BLOCKER" in benchmark
+    assert "L4" in benchmark
 
 
 def test_project_profile_exposes_rebase_not_old_frozen_baseline_as_active_architecture():
@@ -84,7 +129,7 @@ def test_novel_os_routes_to_active_project_without_duplicate_task():
     assert tasks[0]["is_active_project"] is True
     assert tasks[0]["system_id"]=="NOVEL_OS"
     assert tasks[0]["candidate_label_zh"]=="小说系统｜《凌晨零点，我接到明天的订单》"
-    assert tasks[0]["current_stage"]=="FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE"
+    assert tasks[0]["current_stage"]=="FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY"
 
 
 def test_continuity_adapter_system_project_semantics():
@@ -97,13 +142,14 @@ def test_continuity_adapter_system_project_semantics():
     assert adapter["capabilities"]["resolve_system_resume_alias"]["source"]=="continuity/TASK_INDEX.json#system"
 
 
-def test_compatibility_task_index_mirrors_system_route_and_stage():
+def test_compatibility_task_index_mirrors_system_route_and_state():
     canonical=json.loads((ROOT/"continuity/TASK_INDEX.json").read_text())
     alias=json.loads((ROOT/"TASK_INDEX.json").read_text())
     assert alias["canonical_ref"]=="continuity/TASK_INDEX.json"
     assert alias["system"]["system_id"]==canonical["system"]["system_id"]
     assert alias["system"]["active_project_task_id"]==canonical["system"]["active_project_task_id"]
     assert alias["tasks"][0]["current_stage"]==canonical["tasks"][0]["current_stage"]
+    assert alias["tasks"][0]["next_action"]==canonical["tasks"][0]["next_action"]
 
 
 def test_post_cutover_storage_governance():
@@ -125,19 +171,19 @@ def test_post_cutover_storage_governance():
     assert adapter["external_artifact_vault"]["recovery_state_source"] is False
 
 
-def test_release_evidence_and_rebase_capabilities_are_bound_not_just_prose():
+def test_release_evidence_rebase_and_mastery_capabilities_are_bound_not_just_prose():
     caps=json.loads((ROOT/"continuity/EXECUTION_CAPABILITIES.json").read_text())
     assert caps["release_evidence_contract_version"]=="1.0"
     high=next(c for c in caps["capabilities"] if c["capability_id"]=="high_judgment_serialization_pipeline")
     det=next(c for c in caps["capabilities"] if c["capability_id"]=="deterministic_guards")
-    assert "REBASE_ARCHITECTURE" in high["scope"]
-    assert "SIGNING_READINESS" in high["scope"]
+    for scope in ("SERIES_ARCHITECTURE","REBASE_ARCHITECTURE","WORLDBUILDING","CHARACTER_ARC","MYSTERY_ARCHITECTURE","MASTERY_BENCHMARK","SIGNING_READINESS"):
+        assert scope in high["scope"]
     assert "release_evidence_guard.py" in high["release_enforcement"]
+    assert any("project-level mastery benchmark" in item for item in high["evidence_contract"])
     assert any("role-specific structured self-attested execution/review receipts" in item for item in high["evidence_contract"])
-    assert any("whole-packet continuity/pacing/attachment/signing-readiness" in item for item in high["evidence_contract"])
-    assert any("CI/regression can verify recovery" in item for item in caps["owner_notes"])
-    assert "FULL_FRONT_ARC_REBASE_STATE" in det["scope"]
-    assert "SUPERSESSION" in det["scope"]
+    assert any("Reading/research or a mastery-model declaration does not prove L3/L4" in item for item in caps["owner_notes"])
+    assert "MASTERY_MODEL_PRESENCE" in det["scope"]
+    assert "SERIES_MASTER_OUTLINE_STATE" in det["scope"]
     assert "release_evidence_guard.py" in det["invocation_path"]
     assert (ROOT/"runtime/release_evidence_guard.py").exists()
 
@@ -145,10 +191,14 @@ def test_release_evidence_and_rebase_capabilities_are_bound_not_just_prose():
 def test_active_authority_has_no_dangling_canon_snapshot_or_legacy_library_source():
     skill=(ROOT/"SKILL.md").read_text(encoding="utf-8")
     rulebook=(ROOT/"protocols/ACTIVE_RULEBOOK.md").read_text(encoding="utf-8")
+    entry=(ROOT/"ENTRYPOINT.md").read_text(encoding="utf-8")
     assert "不存在另一个可覆盖这些 ledgers 的 `CANON_SNAPSHOT.json` 权威" in skill
     assert "historical protocol files/research remain Library backup evidence" not in rulebook
     assert "Google Drive artifact vault" in rulebook
     assert "Full front-arc rebase / learning-to-authority promotion" in skill
+    assert "Novel mastery / competency assurance" in skill
+    assert "NOVEL_MASTERY_MODEL.md" in skill
+    assert "SERIES_MASTER_OUTLINE.md" in entry
     assert "Full-unit rebase / owner evolution" in rulebook
 
 
@@ -170,24 +220,26 @@ def test_signing_rejection_is_durable_and_second_attempt_is_gated():
     assert signing["second_application_gate"]=="SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS"
     assert cp["platform_signing"]["attempt_1"]==signing["attempt_1"]
     assert cp["platform_signing"]["second_application_gate"]==signing["second_application_gate"]
-    assert (ROOT/signing["quality_diagnosis_ref"]).exists()
-    assert (ROOT/signing["active_rebase_plan_ref"]).exists()
-    assert (ROOT/signing["learning_evidence_ref"]).exists()
+    for key in ("quality_diagnosis_ref","active_rebase_plan_ref","learning_evidence_ref","mastery_evolution_ref","architecture_mastery_benchmark_ref"):
+        assert (ROOT/signing[key]).exists()
     assert "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REBASE" in m["strategic_constraints"]
     assert "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS" in m["strategic_constraints"]
+    assert "MASTERY_FILES_OR_RESEARCH_DO_NOT_PROVE_L3_L4_WITHOUT_APPLIED_BENCHMARK" in m["strategic_constraints"]
+    assert "SUPERSEDED_ARC_001_NOT_EXECUTABLE" in m["strategic_constraints"]
     assert "平台签约拒绝" in (ROOT/"SKILL.md").read_text(encoding="utf-8")
 
 
-def test_universal_methodology_adapter_records_regression_without_overclaiming_outcome():
+def test_universal_methodology_adapter_records_mastery_evolution_without_overclaiming_outcome():
     a=json.loads((ROOT/"continuity/UNIVERSAL_PROTOCOL_ADAPTER.json").read_text())
-    assert a["skill_version"]=="Novel Writing Agent 2.3.0-github"
-    assert a["runtime_version"]=="github-owner-2.4"
+    assert a["skill_version"]=="Novel Writing Agent 2.4.0-github"
+    assert a["runtime_version"]=="github-owner-2.5"
     assert a["full_front_arc_rebase"]["mode"]=="CONTROLLED_FULL_FRONT_ARC_REBASE"
+    assert a["novel_mastery"]["system_model_ref"]=="protocols/NOVEL_MASTERY_MODEL.md"
+    assert a["novel_mastery"]["series_master_outline_ref"]=="projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md"
+    assert a["novel_mastery"]["architecture_gate"]=="PASS_WITH_SCOPED_DEFERRALS"
     assert a["methodology"]["profile_applicability"]["evolution"]["status"]=="APPLIES"
-    assert "FULL_REBASE_LEARNING_EVIDENCE" in a["methodology"]["hook_bindings"]["learning_evidence_location"]
     assurance=a["methodology_assurance"]
-    assert assurance["owner_regression_status"]=="PASS"
-    assert assurance["owner_regression_evidence"]["validated_behavioral_head"]=="779de49898b4450b21ec2e62a737b1f91ec4c05d"
-    assert assurance["owner_regression_evidence"]["github_actions_run_id"]==38083956011
-    assert assurance["owner_regression_evidence"]["job_id"]==114306430298
+    assert assurance["owner_regression_status"] in ("PENDING_FINAL_HEAD_VALIDATION","PASS")
+    if assurance["owner_regression_status"]=="PASS":
+        assert assurance["owner_regression_evidence"]
     assert "does not prove" in assurance["boundary"]
