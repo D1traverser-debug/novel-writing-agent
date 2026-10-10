@@ -1,5 +1,17 @@
 # NOVEL_OS Changelog
 
+## 2026-10-11 — v2.2 platform-signing feedback loop / front-arc repair activation
+- 用户提供番茄平台首轮签约未通过通知；系统按外部平台事实记录为 `REJECTED_QUALITY_EVALUATION`，只接受可见的泛化“签约质量要求未达到”，不擅自推断为 AI 检测、安全审核、抄袭、侵权或单一编辑原因。
+- 结合当前番茄官方签约规则确认：长篇作品通常在约2万/5万/8万字拥有签约评估机会，签约评估重点包含开篇、节奏、人物设定、代入感、主线等；二签前不得把“继续堆字数”当成质量修复。
+- 对 CH1–CH8 当前 FINAL 做签约维度审计，根因归纳为前2万字对逻辑验证、现实权限、时间/空间精度优化过强，挤占了开篇压缩、关系黏性、情绪投入和场景升级；完整证据见 `audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md`。
+- 建立 `audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md`：修复优先级 CH4 > CH2 > CH3 > CH1；CH5–CH7中等修复；CH8轻触，不做全书无差别重写。
+- 任务从单纯等待 CH8 外部发布确认切换为 `FRONT_ARC_SIGNING_REPAIR_ACTIVE__CH8_PUBLISH_READY_NOT_CONFIRMED__CH9_READY`；CH8发布事实仍待用户确认，CH9合同仍 READY，Canon v12 与正文 hash 未改。
+- 新增硬约束 `SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS` 和 `DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REPAIR`；第二次签约申请不得自动触发。
+- `SKILL.md` 升级至 2.2.0：平台签约拒绝/真实读者数据崩塌/事实合规缺陷被定义为可受控解冻 FROZEN_BASELINE 的硬证据；新增 platform signing-feedback loop，普通审美学习仍不得无限返工旧章。
+- `protocols/ACTIVE_RULEBOOK.md` 升级至 2.2-github，蒸馏当前官方签约维度与签约反馈处理规则；平台结果属于商业/分发状态，不改变故事 Canon。
+- `runtime/recovery_guard.py` 与 `tests/test_recovery_contract.py` 新增签约状态恢复回归，确保首轮拒签、5万二签阈值、8万第三次阈值、二签 readiness gate 与诊断/修复证据在新会话恢复时不会丢失。
+- owner runtime 元数据收敛到 `Skill=2.2.0-github / runtime=github-owner-2.3`；Universal task manifest 同步 stage/next_action/version，但保持 `resume_epoch=2` 与 active lease 不变。
+
 ## 2026-10-10 — v2.1 execution-evidence hardening / evidence-before-claim
 - 按 Universal Continuity `operational_hygiene@1.0 + evolution@1.0` 对小说系统执行挑刺、候选反证、最小修复与回归，不把用户建议或 assistant 第一方案直接当架构权威；完整决策证据见 `audits/NOVEL_SYSTEM_EVOLUTION_AUDIT_2026-10-10.md`。
 - 根因确认：GitHub cutover 已完整迁移业务真值和流程规则，但“角色执行证据”压缩过度；此前 `CH0008_ACCEPTANCE.md` 可汇总多个 reviewer PASS，却没有 per-role invocation receipt / frozen Context Pack receipt / immutable chapter-contract snapshot 的机械强制。
