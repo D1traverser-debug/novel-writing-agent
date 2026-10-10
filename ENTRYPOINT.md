@@ -13,13 +13,11 @@ Active project task: `FQ001_MINGRI_ORDER`
 `NOVEL_OS` is the durable novel-production system and `NOVEL_WRITING_AGENT` is its domain owner. Concrete novels are project tasks owned by this system; they are not parallel substitutes for the system.
 
 Current topology:
-
 - system: `NOVEL_OS` / 小说系统
 - active project: `FQ001_MINGRI_ORDER` / 《凌晨零点，我接到明天的订单》
 - relationship: system rules, QA, orchestration and evolution apply to the active project; project Canon, chapter, publication and story state remain project-scoped.
 
 Continuation routing:
-
 - `继承小说系统` / `继续小说系统` / `恢复小说系统` / `NOVEL_OS` / `Novel Writing Agent` route to this owner and then automatically recover the current `active_project_task_id`.
 - A user should not be forced to select the active project again when exactly one authoritative active project is bound.
 - Explicit project continuation still routes directly to that project.
@@ -42,18 +40,25 @@ Chat history and model memory are never execution authority.
 2. Read Universal task manifest `D1traverser-debug/universal-continuity-agent@main/tasks/FQ001_MINGRI_ORDER/TASK_MANIFEST.json`.
 3. Verify this chat owns the current `active_lease` and `resume_epoch` before any material project-state write.
 4. Read `AUTHORITY_STATUS.json`.
-5. Read `PROTOCOL.md`, `SKILL.md`, `CONTINUITY_ADAPTER.json` and `continuity/EXECUTION_CAPABILITIES.json`.
+5. Read `PROTOCOL.md`, `SKILL.md`, `CONTINUITY_ADAPTER.json`, `continuity/UNIVERSAL_PROTOCOL_ADAPTER.json` and `continuity/EXECUTION_CAPABILITIES.json`.
 6. Read `projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json`.
 7. Read `projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md`.
 8. Read `projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json`.
 9. Read `projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md`.
-10. Read `projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md`.
-11. Load only relevant ledgers under `projects/FQ001_MINGRI_ORDER/canon/`, recent FINAL chapters and valid reviews.
-12. Run `runtime/recovery_guard.py`.
-13. Continue exact project `current_stage / next_action`; never replay completed chapter work.
+10. If `production_mode=FULL_FRONT_ARC_REBASE`, read `audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md` and `audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md` before any prose work; treat `audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md` as superseded history only.
+11. Read `projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md`; if it is superseded/held, do not execute it as the next chapter.
+12. Load only relevant Canon ledgers and the old FINAL/scenes explicitly selected by the active rebase architecture. Do not preload all historical prose/research simply because it exists.
+13. Run `runtime/recovery_guard.py`.
+14. Continue the exact project `current_stage / next_action`; never silently fall back to old CH9 or the superseded targeted-patch plan.
 
 ## Current execution truth
-- CH1–CH7: user-confirmed published on Fanqie.
-- CH8: FINAL_ACCEPTED / PUBLISH_READY; external publication NOT_CONFIRMED.
-- CH9: READY.
-- Current project status: WAITING for the user's external publication confirmation of CH8.
+- Project status: ACTIVE.
+- Production mode: `FULL_FRONT_ARC_REBASE`.
+- Current stage: `FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE`.
+- CH1–CH7: historically user-confirmed published on Fanqie; internal rebase does not infer withdrawal/replacement.
+- CH8: historical FINAL_ACCEPTED / PUBLISH_READY; external publication remains NOT_CONFIRMED.
+- CH1–CH8 old FINALs/hashes: `IMMUTABLE_HISTORICAL_BASELINE`; preserved as business evidence/source material, not binding active chapter architecture.
+- Old CH9 contract: `SUPERSEDED_BY_FULL_FRONT_ARC_REBASE`; do not write it next. Its strongest Xu Zhiwei verification-relationship design is migration source for the new front arc.
+- First Fanqie signing attempt: rejected for generic signing-quality insufficiency; do not infer a hidden AI/safety/plagiarism cause.
+- Second signing attempt: blocked until the replacement packet passes `SIGNING_READINESS_AUDIT`.
+- Current next action: finish/challenge the new signing-packet architecture, then rewrite candidate CH1–CH8 coherently as one front-arc unit; do not promote individual replacements or consume the 50k second-signing attempt before whole-packet gates pass.
