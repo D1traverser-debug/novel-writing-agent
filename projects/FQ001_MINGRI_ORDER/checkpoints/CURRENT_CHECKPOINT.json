@@ -1,28 +1,28 @@
 {
   "schema_version": "2.1-github",
-  "checkpoint_version": 7,
+  "checkpoint_version": 8,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
   "display_name_zh": "《凌晨零点，我接到明天的订单》",
   "status": "ACTIVE",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-10T18:17:00Z",
-  "current_stage": "FRONT_ARC_SIGNING_REPAIR_ACTIVE__CH8_PUBLISH_READY_NOT_CONFIRMED__CH9_READY",
-  "next_action": "Execute the targeted CH1-CH8 signing-repair matrix and prepare only high-value candidate revisions before the 50k second signing application; if the user confirms CH8 publication, record that external fact separately; keep CH9 READY and continue it under the evidence contract without consuming the second signing attempt until a signing-readiness audit passes.",
+  "updated_at": "2026-10-10T20:04:00Z",
+  "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE",
+  "next_action": "Freeze CH1-CH8 old FINALs as immutable historical baseline evidence; finalize and validate the new front-arc signing-packet architecture, then rewrite candidate CH1-CH8 as a coherent unit under rebase and execution-evidence gates. Keep platform withdrawal/replacement and any CH8 publication fact user-controlled; hold old CH9 execution; do not consume the 50k second-signing attempt until the replacement packet passes signing-readiness audit.",
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.1-github",
-  "skill_version": "Novel Writing Agent 2.2.0-github",
-  "runtime_version": "github-owner-2.3",
+  "skill_version": "Novel Writing Agent 2.3.0-github",
+  "runtime_version": "github-owner-2.4",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strict_from_chapter": 9,
   "canon_version": 12,
   "last_final_chapter": 8,
   "last_final_hash": "fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14",
   "next_serial_chapter": 9,
-  "next_serial_status": "READY",
-  "production_mode": "SERIALIZATION_WITH_FRONT_ARC_SIGNING_REPAIR",
+  "next_serial_status": "HELD_DURING_FULL_FRONT_ARC_REBASE",
+  "production_mode": "FULL_FRONT_ARC_REBASE",
   "story_time": "10月8日 01:47",
   "platform_signing": {
     "attempt_1": "REJECTED_QUALITY_EVALUATION",
@@ -31,23 +31,39 @@
     "third_application_threshold_if_needed": 80000,
     "second_application_gate": "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS",
     "quality_diagnosis_ref": "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md",
-    "front_arc_repair_matrix_ref": "audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md"
+    "active_rebase_plan_ref": "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
+    "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md"
+  },
+  "rebase": {
+    "authorized_by_user": true,
+    "scope": "CH1-CH8_FRONT_ARC",
+    "mode": "CONTROLLED_FULL_FRONT_ARC_REBASE",
+    "old_finals_role": "IMMUTABLE_HISTORICAL_BASELINE",
+    "old_chapter_boundaries_binding": false,
+    "old_ch9_contract_status": "SUPERSEDED_BY_FULL_FRONT_ARC_REBASE",
+    "candidate_promotion": "WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT",
+    "platform_replacement_user_controlled": true
   },
   "strategic_constraints": [
-    "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REPAIR",
+    "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REBASE",
     "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS",
-    "PUBLISHED_CHAPTER_PLATFORM_REPLACEMENT_REMAINS_USER_CONTROLLED"
+    "OLD_FINALS_NOT_ACTIVE_REPLACEMENT_UNTIL_PACKET_ACCEPTED",
+    "CH9_EXECUTION_HELD_DURING_FULL_REBASE",
+    "PUBLISHED_CHAPTER_PLATFORM_REPLACEMENT_REMAINS_USER_CONTROLLED",
+    "CI_OR_SELF_REVIEW_MUST_NOT_BE_CLAIMED_AS_LIVE_QUALITY_OUTCOME"
   ],
   "blockers": [],
-  "waiting_on": [
+  "waiting_on": [],
+  "external_fact_pending": [
     {
-      "type": "USER_EXTERNAL_ACTION_CONFIRMATION",
-      "detail": "CH8 Fanqie publication must be performed/confirmed by the user before the system records it as published. This does not block internal front-arc signing repair."
+      "type": "USER_EXTERNAL_FACT_NOT_REQUIRED_FOR_INTERNAL_REBASE",
+      "detail": "CH8 Fanqie publication status remains unconfirmed. Do not infer published/withdrawn/replaced state."
     }
   ],
   "authority_refs": [
     "ENTRYPOINT.md",
     "projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
+    "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
     "projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
     "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md",
     "projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
@@ -59,6 +75,8 @@
     "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
     "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
     "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md",
+    "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
+    "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
     "audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md"
   ],
   "derived_artifact_refs": [
@@ -75,6 +93,6 @@
     "business_semantics_replayed": false,
     "same_chat_lease_preserved": true,
     "post_cutover_artifact_vault": "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档",
-    "owner_evolution": "Novel Writing Agent 2.2 adds a platform-signing feedback loop and controlled baseline-unfreeze rule; runtime 2.3 makes the signing rejection and second-attempt gate recoverable. Canon v12, CH8 body/hash, CH8 publication truth, and CH9 READY contract remain unchanged."
+    "owner_evolution": "Novel Writing Agent 2.3 / runtime 2.4 activates a controlled full-front-arc rebase after the platform signing failure and user authorization changed the migration-cost boundary. Historical FINAL bodies/hashes, Canon v12, external publication facts, Universal resume_epoch and active lease remain preserved."
   }
 }
