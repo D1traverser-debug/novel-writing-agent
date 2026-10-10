@@ -1,13 +1,13 @@
 {
   "schema_version": "2.1-github",
-  "checkpoint_version": 3,
+  "checkpoint_version": 4,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
   "display_name_zh": "《凌晨零点，我接到明天的订单》",
   "status": "WAITING",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-10T02:13:00Z",
+  "updated_at": "2026-10-10T07:32:00Z",
   "current_stage": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
   "next_action": "Wait for user confirmation that CH8 was published; then record CH8 as externally published and continue CH9 from the existing READY contract without replaying CH8.",
   "contract_version": "3.7",
@@ -35,15 +35,19 @@
     "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
     "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md"
   ],
-  "derived_artifact_refs": ["ChatGPT Library deliverable: CH0008_第8章_药盒上的名字.docx"],
+  "derived_artifact_refs": [
+    "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档/章节DOCX/CH0008_第8章_药盒上的名字.docx",
+    "https://docs.google.com/document/d/1OtBWEt7GrLaGU2cZOJcH1G-wWPIsBy8H/edit?usp=drivesdk"
+  ],
   "compatibility": {
-    "source_storage": "NOVEL_OS Library 1.9.0",
+    "source_storage": "NOVEL_OS Library 1.9.0 (historical direct cutover source)",
     "source_continuity_protocol": "3.3",
     "current_continuity_protocol": "3.7",
     "result": "COMPATIBLE",
     "protocol_reconciliation_ref": "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json",
     "migration_acceptance_ref": "migration/MIGRATION_ACCEPTANCE.json",
     "business_semantics_replayed": false,
-    "same_chat_lease_preserved": true
+    "same_chat_lease_preserved": true,
+    "post_cutover_artifact_vault": "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档"
   }
 }
