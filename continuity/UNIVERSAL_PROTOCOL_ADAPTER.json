@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
   "observed_source_protocol": "3.3",
@@ -25,6 +25,35 @@
       "artifact_io": "1.0",
       "operational_hygiene": "1.0",
       "evolution": "1.0"
+    },
+    "profile_applicability": {
+      "artifact_io": {
+        "status": "APPLIES",
+        "reason": "Novel Writing persists canonical project/checkpoint state, Canon/prose/review artifacts, publication facts and migration references whose identity, freshness, invalidation and retention are governed explicitly.",
+        "evidence_refs": [
+          "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
+          "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+          "SKILL.md"
+        ]
+      },
+      "operational_hygiene": {
+        "status": "APPLIES",
+        "reason": "The owner has release hard gates, reminder-dependency repair, incident/review evidence, stale-dependent-hash handling and periodic regression before release/promotion.",
+        "evidence_refs": [
+          "SKILL.md",
+          "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json",
+          "CHANGELOG.md"
+        ]
+      },
+      "evolution": {
+        "status": "APPLIES",
+        "reason": "The owner performs durable system learning from user feedback, accepted/rejected review evidence and reader/platform evidence, with independent review/regression before promotion.",
+        "evidence_refs": [
+          "SKILL.md",
+          "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+          "CHANGELOG.md"
+        ]
+      }
     },
     "hook_bindings": {
       "durable_task_state_location": "continuity/ARTIFACT_CONTEXT_GOVERNANCE.json#durable_task_state_location",
@@ -52,7 +81,7 @@
     }
   },
   "methodology_assurance": {
-    "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE",
+    "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__APPLICABILITY_EVIDENCE_RECORDED",
     "owner_regression_status": "PASS",
     "owner_regression_evidence": {
       "validated_behavioral_head": "92dcb86f01046e830f39605bace48cda4eb5f270",
@@ -61,6 +90,6 @@
       "result": "PASS_RECOVERY_GUARD_CONTRACT_TESTS"
     },
     "operational_status": "ACTION_LEVEL_PROFILE_RUN_AND_INDEPENDENT_EVIDENCE_RECEIPT_REQUIRED",
-    "boundary": "Repository declaration and owner regression do not prove a live chapter methodology profile executed; action-level profile activation remains evidence-gated and this binding does not modify Canon, prose, publication facts, task stage or writer lease."
+    "boundary": "Repository declaration, applicability evidence and owner regression do not prove a live chapter methodology profile executed; action-level profile activation remains evidence-gated and this binding does not modify Canon, prose, publication facts, task stage or writer lease."
   }
 }
