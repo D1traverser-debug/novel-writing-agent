@@ -1,5 +1,14 @@
 # NOVEL_OS Changelog
 
+## 2026-10-10 — Post-cutover source cleanup and artifact-vault hardening
+- 完成 GitHub primary 切换后的旧源审计与清理：GitHub `main` 保持唯一小说业务/系统权威，Universal Continuity 仅负责路由与 single-writer lease。
+- 将当前 CH1–CH8 DOCX、封面/平台证据和迁移前 recovery ZIP 快照迁入 Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档`；Google Drive 明确为非权威 artifact vault，不参与 Canon/checkpoint/Skill/恢复真值判定。
+- 在验证 Google Drive 归档可读后删除 ChatGPT Library `/NOVEL_OS_小说系统` 完整旧执行树，避免旧 `00_SYSTEM / 01_PROJECTS / 99_RECOVERY` 与 GitHub 形成竞争权威。
+- 审计当前可访问 Notion 与 Google Drive：未发现仍可与 GitHub 竞争的 live 小说执行入口；历史 Notion / legacy Google Drive 材料即使未来重新出现，也只能作为非权威历史线索。
+- 修正 `AUTHORITY_STATUS.json`、`ARTIFACT_CONTEXT_GOVERNANCE.json`、`ENTRYPOINT.md`、`SKILL.md`、`PROTOCOL.md`、`README.md`、迁移 manifest/acceptance、Continuity adapter 与当前 checkpoint 的 post-cutover 存储语义。
+- CH8 派生 DOCX 引用改为 Google Drive artifact vault；Universal task manifest 同步该引用但不改变业务 `current_stage / next_action`、active lease 或 `resume_epoch`。
+- `runtime/recovery_guard.py` 与 `tests/test_recovery_contract.py` 新增存储治理回归：Library 重新成为执行/交付权威、Drive 被误标为业务权威、checkpoint 派生引用退回 Library 等情况均 fail closed。
+
 ## 2026-10-10 — System/project continuity routing hardening
 - 修复“小说系统”与具体小说项目在 Continuity 发现/恢复语义中被误当作平行任务或只暴露项目、丢失系统语境的问题。
 - 明确 `NOVEL_OS` 为小说生产系统、`NOVEL_WRITING_AGENT` 为 domain owner，`FQ001_MINGRI_ORDER` 为当前 authoritative active project；系统与项目逻辑联动、状态分层。
