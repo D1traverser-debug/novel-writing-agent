@@ -1,6 +1,6 @@
 ---
 name: novel-writing-agent
-version: 2.1.1-github
+version: 2.2.0-github
 scope: 独立长篇网络小说生产、连载、审计、恢复
 primary_platform: 番茄小说
 source_system_version: NOVEL_OS 1.9.0
@@ -22,6 +22,7 @@ Global cross-chat routing / single-writer lease authority: `D1traverser-debug/un
 8. `REBASE/REPAIR/RECOVERY_AUDIT` 等维护模式下禁止仅按章节号误开新章。
 9. 聚合式“某角色 PASS”文字本身不是角色已执行的充分证据；从 CH9 起必须满足 execution-evidence contract v1。
 10. `CHAT_BRIDGED` 角色 receipt 是结构化自证记录，不是独立执行 attestation；不得把可校验的文件/hash 绑定描述成对模型认知过程或执行时序的独立证明。
+11. 平台签约拒绝、真实读者数据显著恶化、事实/合规硬缺陷属于可重新打开既有“冻结基线”的硬证据；不得把这类外部失败降格成普通审美建议，也不得在未诊断前盲目冲下一次平台机会。
 
 ## 1. Authority and recovery
 冲突时：用户最新明确外部事实 > GitHub `main` 当前任务/Canon/FINAL/审计 > Google Drive `/ChatGPT/NOVEL_OS_小说系统_交付归档` 中明确需要的派生交付物/历史迁移证据 > 已退役的 Notion / Library / 旧 Google Drive 材料（仅历史线索，不得恢复执行状态） > 聊天记忆。
@@ -66,7 +67,7 @@ Reviewer 首轮必须在输入层隔离彼此结论；禁止用多数票覆盖 B
 从 CH9 起，任何 `FINAL_ACCEPTED / PUBLISH_READY` 必须存在并通过 `runtime/release_evidence_guard.py`：
 
 1. `projects/<task>/contracts/CHxxxx_CONTRACT.md`：当前 `NEXT_CHAPTER_CONTRACT.md` 在开始执行前形成的不可变章节合同快照；
-2. `projects/<task>/execution/CHxxxx_CONTEXT_PACK.json`：冻结输入收据，至少记录 owner commit、合同快照 hash、Project Profile hash、相关 Canon refs、最近最多3章 FINAL refs、最多2–4个 rule slices；所有本地 Project Profile / Canon / recent FINAL ref 都必须存在且与记录 hash 一致；
+2. `projects/<task>/execution/CHxxxx_CONTEXT_PACK.json`：冻结输入收据，至少记录 owner commit、合同快照 hash、Project Profile hash、相关 Canon refs、最近最多3章 FINAL refs、最多2—4个 rule slices；所有本地 Project Profile / Canon / recent FINAL ref 都必须存在且与记录 hash 一致；
 3. `projects/<task>/reviews/CHxxxx_EXECUTION_EVIDENCE.json`：角色级执行收据、正文 source hash、Context Pack hash、issue ledger、reviewer 首轮 peer-visibility；每个 receipt 必须有唯一 id、Context Pack 绑定与非空结果摘要，最终终校/制品/Canon 提交类角色必须绑定 FINAL source hash；
 4. `CHxxxx_ACCEPTANCE.md` 必须 hash-bind 上述 Context Pack 与 execution evidence。
 
@@ -119,18 +120,31 @@ Writer 默认只接收：
 - Canon facts 与 prose surface 分离。
 - 纯措辞/节奏/场景呈现优化且事实不变可走 `PROSE_REBASE`。
 - 改变人物已知事实、事件结果、系统规则、时间线必须正式 Retcon + 影响分析 + 新 Canon version + 重审。
-- CH1–CH4 FROZEN_BASELINE 不因后续审美/技巧学习反复返工。
+- CH1–CH4 `FROZEN_BASELINE` 默认不因后续审美/技巧学习反复返工；但平台签约拒绝、真实读者数据显著恶化、事实/合规硬缺陷等外部硬失败可触发受控解冻。受控解冻必须先留下失败证据、影响分析和修复矩阵，并保持旧 FINAL 可追溯，不得静默覆盖。
+
+### 8.1 Platform signing-feedback loop
+番茄签约申请属于高价值外部评估事件。每次申请前后执行：
+
+1. 申请前读取当前番茄官方签约规则与评估维度，不把历史阈值/旧攻略当永久规则；
+2. 申请结果只记录平台实际可见事实，明确区分 `安全审核失败`、`签约评估拒绝`、`签约通过`；
+3. 泛化“质量未达标”不能被擅自解释成 AI、抄袭、违规或某一单点写作缺陷；
+4. 签约评估拒绝后，先对当前可见前段做 opening / pacing / character setup / immersion / mainline 诊断，再决定继续写、局部 rebase 或结构修复；
+5. 禁止“原文不动，只堆字数到下一阈值再试”；下一次申请必须有 durable signing-readiness gate；
+6. 已发布章节可在内部生成候选修订，但平台正文替换仍属于用户控制的外部高影响动作；
+7. 任何修订造成正文 hash 变化，旧 body-dependent 审计失效，必须按现有 release/rebase 规则重审；
+8. 签约结果是平台/商业状态，不改变故事 Canon，但可以改变生产优先级和质量修复策略。
 
 ## 9. Length and data
 章节长度以真实番茄后台数据优先；无实际值时使用 FINAL 预测值。常规约2400–3000，重大章约2600–3300仅作当前基线，不是机械目标。相对最近4章均值偏离 >30% 强制专审，>45% 默认阻塞，除非结构上明确必要。
 
-平台读完率、跟读率、评论聚类等真实数据高于模型自评分。不得为更新量或字数目标水文。
+平台读完率、跟读率、评论聚类、签约评估等真实平台信号高于模型自评分。不得为更新量、字数门槛或下一次签约机会水文。
 
 ## 10. Periodic regression
 - 每5章：长度 × 纹理 × 钩子 × 情绪颜色 × 角色出场 × 讨论性检查。
 - 每10章/单元：Long-form + World Rule + Foreshadow + Identity Regression。
 - 每50章/卷级节点：全局 Canon reconciliation。
 - 重大结构修改前后：checkpoint/snapshot。
+- 每次平台签约评估拒绝：立即新增一次 front-arc signing-quality audit，不等待下一个常规周期。
 
 ## 11. Stop rule
 当前身份回归 PASS、硬门全过、没有重复数据证据要求改规则时，停止系统改造并继续正文。系统进化服务于作品，不以规则/Agent数量为成果。
