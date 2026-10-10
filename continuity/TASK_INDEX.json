@@ -29,17 +29,17 @@
       "resume_eligible": true,
       "resume_visibility": "DEFAULT",
       "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-10T20:04:00Z",
-      "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__SIGNING_PACKET_REARCHITECTURE",
-      "next_action": "Freeze CH1-CH8 old FINALs as immutable historical baseline evidence; finalize and validate the new front-arc signing-packet architecture, then rewrite candidate CH1-CH8 as a coherent unit under rebase and execution-evidence gates. Keep platform withdrawal/replacement and any CH8 publication fact user-controlled; hold old CH9 execution; do not consume the 50k second-signing attempt until the replacement packet passes signing-readiness audit.",
+      "updated_at": "2026-10-10T21:06:00Z",
+      "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY",
+      "next_action": "Draft replacement candidate CH1-CH8 coherently from outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md, preserving old FINALs as immutable historical baseline. For the new bodies, create the applicable frozen contracts/context packs and prove the deferred prose competencies (scene/chapter execution, dialogue/subtext, POV/immersion, domain reality, revision) through role-separated reviews and whole-packet gates before any replacement promotion. Keep old CH9 held and do not consume the 50k second-signing attempt before SIGNING_READINESS_AUDIT_PASS.",
       "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
       "contract_version": "3.7",
       "continuity_protocol_version": "3.7",
       "domain_contract_version": "2.1-github",
-      "skill_version": "Novel Writing Agent 2.3.0-github",
-      "runtime_version": "github-owner-2.4",
+      "skill_version": "Novel Writing Agent 2.4.0-github",
+      "runtime_version": "github-owner-2.5",
       "release_evidence_contract_version": "1.0",
-      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","凌晨零点","番茄小说","FQ001","NOVEL_WRITING_AGENT","全前段重构","FULL_FRONT_ARC_REBASE","签约修复","二签"]
+      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","凌晨零点","番茄小说","FQ001","NOVEL_WRITING_AGENT","全前段重构","FULL_FRONT_ARC_REBASE","小说技能","能力掌握","系列总纲","签约修复","二签"]
     }
   ]
 }
