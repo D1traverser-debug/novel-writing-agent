@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "tested_at": "2026-10-10T03:50:00Z",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "result": "PASS",
+  "source": "ChatGPT Library /NOVEL_OS_小说系统",
+  "target": "D1traverser-debug/novel-writing-agent@main",
+  "compatibility": {"before":"MIGRATABLE","after":"COMPATIBLE"},
+  "checks": [
+    {"name":"task_identity_stable","status":"PASS","evidence":"task_id remains FQ001_MINGRI_ORDER; display_name_zh preserved"},
+    {"name":"stage_preserved","status":"PASS","evidence":"CH8 FINAL_ACCEPTED/PUBLISH_READY; publication unconfirmed; CH9 READY"},
+    {"name":"external_publication_fail_closed","status":"PASS","evidence":"confirmed published through CH7 only"},
+    {"name":"chapter_source_identity","status":"PASS","evidence":"remote Git blob identities for CH1-CH8 match migration source snapshots; SHA256 contract retained in MIGRATION_MANIFEST"},
+    {"name":"ch8_hash_binding","status":"PASS","evidence":"CH8 FINAL SHA256 fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14 matches task/checkpoint/acceptance"},
+    {"name":"canon_v12_recovery","status":"PASS","evidence":"characters, drives, threads, foreshadow, timeline and reader promises migrated; CH8 state present"},
+    {"name":"ch9_contract","status":"PASS","evidence":"chapter_no 9, status READY, previous_final_hash bound to CH8"},
+    {"name":"recovery_guard","status":"PASS","evidence":"runtime/recovery_guard.py returned PASS with failures=[] on migration snapshot"},
+    {"name":"tests","status":"PASS","evidence":"pytest tests/test_recovery_contract.py: 3 passed"},
+    {"name":"single_writer_lease_preserved","status":"PASS","evidence":"Universal resume_epoch=1 and active lease 41f8ef0a-9d9b-4288-b377-813d2488d32d remained unchanged during same-chat migration"},
+    {"name":"completed_work_not_replayed","status":"PASS","evidence":"migration changes storage/authority only; no chapter, Canon event or QA gate was rerun as business execution"},
+    {"name":"owner_only_recovery","status":"PASS","evidence":"GitHub owner contains entrypoint, task manifest, checkpoint, Canon ledgers, CH1-CH8 FINAL, CH8 acceptance and CH9 contract; execution stage can be recovered without chat history or Library"}
+  ],
+  "post_cutover_global_routing": "PENDING_UNIVERSAL_POINTER_UPDATE",
+  "library_demotion": "PENDING_AFTER_GITHUB_AND_UNIVERSAL_CUTOVER"
+}

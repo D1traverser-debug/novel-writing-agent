@@ -1,0 +1,22 @@
+name: validate-novel-owner
+
+on:
+  push:
+    branches: [main, migration/github-primary-cutover]
+  pull_request:
+    branches: [main]
+
+jobs:
+  recovery-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run recovery guard
+        run: python runtime/recovery_guard.py
+      - name: Run contract tests
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_recovery_contract.py

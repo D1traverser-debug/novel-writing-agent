@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-github",
-  "checkpoint_version": 1,
+  "checkpoint_version": 2,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -32,6 +32,11 @@
     "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md"
   ],
   "derived_artifact_refs": ["ChatGPT Library deliverable: CH0008_第8章_药盒上的名字.docx"],
-  "compatibility": {"source":"NOVEL_OS Library 1.9.0","result":"MIGRATABLE_TO_GITHUB","business_semantics_replayed":false},
-  "updated_at": "2026-10-10T03:45:00Z"
+  "compatibility": {
+    "source": "NOVEL_OS Library 1.9.0",
+    "result": "COMPATIBLE",
+    "migration_acceptance_ref": "migration/MIGRATION_ACCEPTANCE.json",
+    "business_semantics_replayed": false
+  },
+  "updated_at": "2026-10-10T03:50:00Z"
 }
