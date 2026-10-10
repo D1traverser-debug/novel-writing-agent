@@ -1,6 +1,6 @@
 {
   "schema_version": "2.1-github",
-  "manifest_version": 4,
+  "manifest_version": 5,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -17,8 +17,8 @@
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.1-github",
-  "skill_version": "Novel Writing Agent 2.1.0-github",
-  "runtime_version": "github-owner-2.2",
+  "skill_version": "Novel Writing Agent 2.2.0-github",
+  "runtime_version": "github-owner-2.3",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strict_from_chapter": 9,
   "manifest_ref": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
