@@ -19,11 +19,12 @@ for rel in [
  "protocols/ACTIVE_RULEBOOK.md","runtime/release_evidence_guard.py",
  "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json","projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
  "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json","projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
- "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md","projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
- "projects/FQ001_MINGRI_ORDER/canon/CHARACTER_DRIVES.json","projects/FQ001_MINGRI_ORDER/canon/THREADS.json",
- "projects/FQ001_MINGRI_ORDER/canon/FORESHADOW.jsonl","projects/FQ001_MINGRI_ORDER/canon/TIMELINE.jsonl",
- "projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json","projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
- "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md"]: need(rel)
+ "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md","projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md",
+ "projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json","projects/FQ001_MINGRI_ORDER/canon/CHARACTER_DRIVES.json",
+ "projects/FQ001_MINGRI_ORDER/canon/THREADS.json","projects/FQ001_MINGRI_ORDER/canon/FORESHADOW.jsonl",
+ "projects/FQ001_MINGRI_ORDER/canon/TIMELINE.jsonl","projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json",
+ "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md","projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
+ "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md","audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md"]: need(rel)
 
 m=json.loads((TASK/"TASK_MANIFEST.json").read_text(encoding="utf-8"))
 cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text(encoding="utf-8"))
@@ -103,6 +104,23 @@ if cap.get("release_evidence_contract_version")!="1.0": problems.append("release
 if not any(c.get("capability_id")=="deterministic_guards" and "release_evidence_guard.py" in c.get("invocation_path","") for c in cap.get("capabilities",[])):
     problems.append("release-evidence-guard-not-bound")
 
-result={"status":"PASS" if not problems else "FAIL","task_id":m["task_id"],"system_id":system.get("system_id"),"active_project_task_id":system.get("active_project_task_id"),"stage":m["current_stage"],"next_action":m["next_action"],"artifact_vault":vault.get("path"),"release_evidence_contract":cap.get("release_evidence_contract_version"),"failures":problems}
+# Fanqie signing rejection is durable platform evidence and must not be forgotten on resume.
+signing=m.get("platform_signing",{})
+cp_signing=cp.get("platform_signing",{})
+if signing.get("attempt_1")!="REJECTED_QUALITY_EVALUATION": problems.append("signing-attempt1-state")
+if signing.get("next_application_threshold")!=50000: problems.append("signing-next-threshold")
+if signing.get("third_application_threshold_if_needed")!=80000: problems.append("signing-third-threshold")
+if signing.get("second_application_gate")!="SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS": problems.append("signing-second-gate")
+for f in ("attempt_1","next_application_threshold","third_application_threshold_if_needed","second_application_gate"):
+    if cp_signing.get(f)!=signing.get(f): problems.append("signing-checkpoint-drift:"+f)
+for ref_key in ("quality_diagnosis_ref","front_arc_repair_matrix_ref"):
+    ref=signing.get(ref_key)
+    if not ref or not (ROOT/ref).exists(): problems.append("signing-evidence-ref:"+ref_key)
+if "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REPAIR" not in m.get("strategic_constraints",[]): problems.append("signing-blind-retry-guard")
+if "平台签约拒绝" not in skill or "Platform signing-feedback loop" not in skill: problems.append("skill-signing-feedback-loop")
+platform_log=(TASK/"PLATFORM_PUBLICATION_LOG.md").read_text(encoding="utf-8")
+if "首次签约申请：`NOT_APPROVED / 签约评估未通过`" not in platform_log: problems.append("platform-log-signing-result")
+
+result={"status":"PASS" if not problems else "FAIL","task_id":m["task_id"],"system_id":system.get("system_id"),"active_project_task_id":system.get("active_project_task_id"),"stage":m["current_stage"],"next_action":m["next_action"],"artifact_vault":vault.get("path"),"release_evidence_contract":cap.get("release_evidence_contract_version"),"signing_attempt_1":signing.get("attempt_1"),"signing_next_threshold":signing.get("next_application_threshold"),"failures":problems}
 print(json.dumps(result,ensure_ascii=False,indent=2))
 sys.exit(1 if problems else 0)
