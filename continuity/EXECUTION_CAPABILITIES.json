@@ -3,7 +3,7 @@
   "execution_readiness_contract": "1.0",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
-  "profile_version": 3,
+  "profile_version": 4,
   "release_evidence_contract_version": "1.0",
   "purpose": "Execution routing metadata for the novel domain owner. Repository declarations are ceilings; the current ChatGPT session must still handshake the exact capability needed by next_action.",
   "capabilities": [
@@ -32,7 +32,7 @@
     },
     {
       "capability_id": "deterministic_guards",
-      "scope": "RECOVERY,LENGTH,PROOFREAD,PROSE_TEXTURE,RELEASE_EVIDENCE,MECHANICAL_RELEASE_GATES",
+      "scope": "RECOVERY,PLATFORM_SIGNING_STATE,LENGTH,PROOFREAD,PROSE_TEXTURE,RELEASE_EVIDENCE,MECHANICAL_RELEASE_GATES",
       "assurance_ceiling": "SESSION_EXECUTABLE",
       "invocation_path": "runtime/recovery_guard.py + runtime/fanqie_wordcount_guard.py + runtime/final_proofread_guard.py + runtime/prose_texture_guard.py + runtime/release_evidence_guard.py",
       "executor_type": "DETERMINISTIC_PYTHON",
@@ -73,6 +73,7 @@
     "Role-separated CHAT_BRIDGED review may satisfy the normal serialization pipeline only when the per-role evidence contract and blind-first-pass visibility receipt are present; describe the assurance as ROLE_SEPARATED_NOT_ATTESTED_ISOLATED, never as independent execution proof.",
     "An aggregate Acceptance statement is not a substitute for role receipts from CH9 onward.",
     "True execution attestation or chronological provenance requires a distinct execution identity/provider trace or another independently verifiable execution surface; do not simulate that assurance with extra files or role names.",
+    "The recovery guard now treats the first signing rejection, 50k next threshold, 80k final standard threshold and second-application readiness gate as durable project state; platform presence alone never changes Canon.",
     "The current-session dispatcher must not claim a specialist executed unless the required capability handshake is AVAILABLE at the required assurance.",
     "Business state remains in GitHub owner main; execution receipts support but do not replace task/checkpoint authority."
   ]
