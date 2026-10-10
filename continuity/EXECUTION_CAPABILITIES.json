@@ -3,7 +3,7 @@
   "execution_readiness_contract": "1.0",
   "owner": "NOVEL_WRITING_AGENT",
   "repository": "D1traverser-debug/novel-writing-agent",
-  "profile_version": 2,
+  "profile_version": 3,
   "release_evidence_contract_version": "1.0",
   "purpose": "Execution routing metadata for the novel domain owner. Repository declarations are ceilings; the current ChatGPT session must still handshake the exact capability needed by next_action.",
   "capabilities": [
@@ -18,9 +18,11 @@
       "evidence_contract": [
         "immutable chapter contract snapshot",
         "frozen Context Pack receipt with owner commit and exact input refs/hashes",
+        "every local Project Profile, Canon and recent-FINAL Context Pack ref must exist and match its recorded sha256",
         "source hash",
-        "role-specific execution/review receipts",
-        "blind-first-pass peer-visibility receipt for core reviewers",
+        "role-specific structured self-attested execution/review receipts with unique receipt ids, context binding and non-empty result summaries",
+        "final-body pipeline roles bind the FINAL source hash",
+        "blind-first-pass peer-visibility receipt for core reviewers with source/context binding",
         "issue ledger with unresolved BLOCKER/HIGH = 0",
         "updated owner checkpoint after material stage change"
       ],
@@ -67,8 +69,10 @@
   ],
   "owner_notes": [
     "Normal role-separated novel reviews do not claim ATTESTED_ISOLATED assurance.",
-    "Role-separated CHAT_BRIDGED review may satisfy the normal serialization pipeline only when the per-role evidence contract and blind-first-pass visibility receipt are present.",
+    "CHAT_BRIDGED role receipts are structured self-attested execution records. Deterministic guards can verify their artifact/hash/context bindings and internal consistency, but cannot independently attest the model's cognition or prove that all receipts were not authored post hoc in the same session.",
+    "Role-separated CHAT_BRIDGED review may satisfy the normal serialization pipeline only when the per-role evidence contract and blind-first-pass visibility receipt are present; describe the assurance as ROLE_SEPARATED_NOT_ATTESTED_ISOLATED, never as independent execution proof.",
     "An aggregate Acceptance statement is not a substitute for role receipts from CH9 onward.",
+    "True execution attestation or chronological provenance requires a distinct execution identity/provider trace or another independently verifiable execution surface; do not simulate that assurance with extra files or role names.",
     "The current-session dispatcher must not claim a specialist executed unless the required capability handshake is AVAILABLE at the required assurance.",
     "Business state remains in GitHub owner main; execution receipts support but do not replace task/checkpoint authority."
   ]
