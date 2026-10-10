@@ -71,7 +71,7 @@
       },
       "evolution": {
         "status": "APPLIES",
-        "reason": "The owner now explicitly applies the Universal candidate-adoption and M0-M11 evolution method to material user/platform failure signals: goal/mechanism separation, evidence scout, alternatives/falsification, complexity budget, supersession, second-order challenge and calibrated assurance.",
+        "reason": "The owner explicitly applies the Universal candidate-adoption and M0-M11 evolution method to material user/platform failure signals: goal/mechanism separation, evidence scout, alternatives/falsification, complexity budget, supersession, second-order challenge and calibrated assurance.",
         "evidence_refs": ["audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md","audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md","SKILL.md","protocols/ACTIVE_RULEBOOK.md","CHANGELOG.md"]
       }
     },
@@ -102,9 +102,14 @@
   },
   "methodology_assurance": {
     "declaration_status": "BOUND_EXACT_VERSION__HOOK_COMPLETE__FULL_REBASE_EVOLUTION_MAPPED",
-    "owner_regression_status": "PENDING_FINAL_HEAD_VALIDATION",
-    "owner_regression_evidence": null,
-    "operational_status": "OWNER_EVOLUTION_WIRING_PENDING_FINAL_CI__ACTION_LEVEL_PACKET_EVIDENCE_NOT_YET_AVAILABLE",
-    "boundary": "The repository may prove recovery, supersession and full-rebase methodology wiring after final CI. That will not prove the replacement packet is literarily better, improve retention, or pass Fanqie signing. Those higher claims require real candidate-packet reviews and ultimately reader/platform/live-signing outcome evidence. CHAT_BRIDGED receipts remain self-attested, and ATTESTED_ISOLATED remains unavailable without a distinct execution identity/provider trace."
+    "owner_regression_status": "PASS",
+    "owner_regression_evidence": {
+      "validated_behavioral_head": "779de49898b4450b21ec2e62a737b1f91ec4c05d",
+      "github_actions_run_id": 38083956011,
+      "job_id": 114306430298,
+      "result": "PASS_RECOVERY_GUARD_RELEASE_EVIDENCE_GUARD_ALL_OWNER_TESTS_FULL_FRONT_ARC_REBASE"
+    },
+    "operational_status": "REGRESSION_VERIFIED_OWNER_WIRING__ACTION_LEVEL_PACKET_EVIDENCE_NOT_YET_AVAILABLE",
+    "boundary": "Repository regression proves recovery, supersession and full-rebase methodology wiring. It does not prove the replacement packet is literarily better, improve retention, or pass Fanqie signing. Those higher claims require real candidate-packet reviews and ultimately reader/platform/live-signing outcome evidence. CHAT_BRIDGED receipts remain self-attested, and ATTESTED_ISOLATED remains unavailable without a distinct execution identity/provider trace."
   }
 }
