@@ -1,0 +1,15 @@
+{
+  "version": 6,
+  "updated": "2026-10-09",
+  "promises": [
+    {"id":"RP001","question":"陈渡在10月7日23:46会不会死，能否改写未来？","opened_chapter":1,"status":"PAID_CH5","payoff_horizon":"首单单元结束","payoff_chapter":5,"payoff":"陈渡在23:46仍存活；现实链条已被改写。"},
+    {"id":"RP002","question":"如果陈渡23:46死亡，为什么10月8日00:06还能以寄件人身份下单？","opened_chapter":1,"status":"LONG_TERM_ACTIVE","payoff_horizon":"长线谜团"},
+    {"id":"RP003","question":"普通168预约是谁下的，为什么要求23:40前送到七号高架且不能提前？","opened_chapter":2,"status":"ACTIVE","payoff_horizon":"首单/后续关联逐步兑现","progress_ch4":"顺驰司机收到陌生本地号码来电，对方要求小行李箱不得提前收货，必须按订单时间执行；身份与目的仍未知。","progress_ch5":"匿名来电和“不提前送达”备注实际迫使顺驰延迟收货，168预约确实把陈渡留在23:40附近；下单人与来电者身份仍未知。"},
+    {"id":"RP004","question":"干预未来为什么会把风险迁移到新的路线和变量？","opened_chapter":3,"status":"PAID_FIRST_ARC_SERIES_ACTIVE","payoff_horizon":"持续系列规则体验","progress_ch4":"第二次安全干预降低维护口盲区风险，却把材料平板当前进场时间推迟到23:35以后，更贴近23:40窗口。","progress_ch5":"两次安全干预在真实夜间运行中改变车辆位置与进场控制，陈渡因此避开旧驻点事故链；因果迁移作为系列体验继续有效。"},
+    {"id":"RP005","question":"已签收但待结算的第一单在10月8日00:06后会显示什么？","opened_chapter":2,"status":"PAID_CH5","payoff_horizon":"CH5","payoff_chapter":5,"payoff":"00:06结算完成，偏差率6.8%，首次出现未来信用1。"},
+    {"id":"RP006","question":"为什么秦朗明确拒收一把明日达要求送给他的汽车钥匙？","opened_chapter":5,"status":"ACTIVE_PROGRESS_CH8","payoff_horizon":"CH6-10第二单单元","progress_ch6":"秦朗本人当面确认拒收；承认四个月前曾开过该车但已交回，现不归他。拒收不是系统字段误读，但原因仍未知。","progress_ch7":"临A·6Q73当前另有现实驾驶/使用人且不认识秦朗，进一步证明拒收不是简单归还纠纷；但秦朗为何四个月前交车、为何未来仍被指定收钥匙尚未解释。","progress_ch8":"6Q73储物格出现约四个月前、姓名为秦朗的旧药盒；秦朗与车辆的旧关系不仅留在备用钥匙上，也残留在车内物品链中，但拒收原因仍未知。"},
+    {"id":"RP007","question":"为什么钥匙放在B2-214、对应车辆却停在B2-219，而且秦朗明明已交回车辆四个月？","opened_chapter":6,"status":"ACTIVE_PROGRESS_CH8","payoff_horizon":"CH7-10第二单单元","progress_ch7":"巡逻员确认6Q73先停214后移至219，钥匙袋却在车移走后仍被放到214；错位不是随机停车造成，但放置者与目的仍未知。","progress_ch8":"214/219错位目的仍未知；但疑似备用钥匙若在01:30前交给秦朗，会让一个已退出当前车辆控制链的人重新获得进入6Q73的能力。"},
+    {"id":"RP008","question":"急诊患者发作前在6Q73上吃过什么药，车内药盒为什么会把第二单从钥匙归属问题推进到医疗事实？","opened_chapter":7,"status":"ACTIVE_PROGRESS_CH8","payoff_horizon":"CH8-10第二单单元","progress_ch8":"药盒已取回：旧标签姓名为秦朗、日期约四个月前，药名格列美脲；患者称半个月前曾把自己的药落在同一储物格并误以为当前盒是自己的，具体谁留下/更换尚未证明。"},
+    {"id":"RP009","question":"患者在第二单出现前就已发作入院，那么明日达为什么仍要求在01:30前把6Q73备用钥匙送给秦朗？它真正想改变的是服药之后的什么？","opened_chapter":8,"status":"ACTIVE","payoff_horizon":"CH9-10第二单单元"}
+  ]
+}

@@ -1,9 +1,15 @@
 # Novel Writing Agent
 
-Dedicated GitHub authority for the user's long-form novel production system.
+Dedicated domain owner for long-form novel production.
 
-Migration source: ChatGPT Library `/NOVEL_OS_小说系统/`.
+- Repository: `D1traverser-debug/novel-writing-agent`
+- Branch authority: `main`
+- Domain: `NOVEL`
+- Active task: `FQ001_MINGRI_ORDER`
+- Display name: 《凌晨零点，我接到明天的订单》
+- Global router / single-writer lease authority: `D1traverser-debug/universal-continuity-agent@main`
+- Binary delivery artifacts (DOCX/render images/recovery ZIP) may live in ChatGPT Library; they never override authoritative Markdown/JSON in this repository.
 
-Current migration status: `MIGRATION_IN_PROGRESS`.
+Read `ENTRYPOINT.md` first.
 
-Do not treat this repository as business authority until `AUTHORITY_STATUS.json` says `GITHUB_PRIMARY` and migration acceptance is `PASS`.
+Current business state at migration: CH1–CH7 confirmed published; CH8 FINAL_ACCEPTED/PUBLISH_READY but publication NOT_CONFIRMED; CH9 READY.

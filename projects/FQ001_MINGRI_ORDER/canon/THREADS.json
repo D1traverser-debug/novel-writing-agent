@@ -1,0 +1,7 @@
+{
+  "T001": {"type":"main_mystery","opened_chapter":1,"objective":"查明明日达来源","stakes":"主角与城市未来被未知来源干预","status":"active","next_pressure_point":5,"related_chars":["C001","C003"],"last_progress_chapter":5,"current_clue":"第一单已在来源未来时点00:06结算，出现偏差率6.8%与未来信用1，但明日达来源仍未知。"},
+  "T002": {"type":"survival","opened_chapter":1,"objective":"活过死亡证明时间","stakes":"陈渡本人死亡","status":"resolved_ch5","next_pressure_point":null,"related_chars":["C001"],"last_progress_chapter":5,"current_clue":"陈渡活过10月7日23:46；现实事故链被干预改变，但原未来完整死亡因果未被锁定。"},
+  "T003": {"type":"rule_mystery","opened_chapter":5,"objective":"理解偏差率与未来信用","stakes":"错误理解规则会导致错误干预","status":"active","next_pressure_point":15,"related_chars":["C001","C002"],"last_progress_chapter":5,"current_clue":"第一单结算显示偏差率6.8%、未来信用1；数值意义与升级条件尚未完全理解。"},
+  "T004": {"type":"rival","opened_chapter":21,"objective":"确认第二收单人立场","stakes":"两个未来分支直接冲突","status":"planned","next_pressure_point":30,"related_chars":["C001","C003"]},
+  "T005": {"type":"order_conflict","opened_chapter":5,"objective":"处理收件人明确拒收的第二单车钥匙","stakes":"错误送达可能伤害具体的人；拒绝送达也可能改变未知未来","status":"active","next_pressure_point":9,"related_chars":["C001","C005","C006"],"last_progress_chapter":8,"current_clue":"CH8从6Q73储物格取出一盒约四个月前、姓名为秦朗的格列美脲片；当前患者却称半个月前曾把自己的药落在同一位置。患者零点前已发作入院，而第二单00:06后才出现，因此钥匙订单从时间上更像瞄准“服药之后的车辆控制/后续动作”，而不是阻止此前服药。许知微注意到陈渡在看到标签前就说出秦朗，要求追问信息来源与时间顺序。"}
+}

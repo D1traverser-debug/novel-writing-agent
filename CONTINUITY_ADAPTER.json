@@ -1,0 +1,30 @@
+{
+  "schema_version": "3.3",
+  "adapter_version": "2.0",
+  "owner": "NOVEL_WRITING_AGENT",
+  "domain": "NOVEL",
+  "status": "READY",
+  "repository": "D1traverser-debug/novel-writing-agent",
+  "branch": "main",
+  "business_authority": "GitHub owner repository main",
+  "continuity_scope": "discovery_routing_compatibility_checkpoint_pointer_takeover_only",
+  "task_index_ref": "TASK_INDEX.json",
+  "capabilities": {
+    "list_resumable_tasks_metadata_only": {"source": "TASK_INDEX.json"},
+    "get_task_checkpoint_by_id": {"manifest_pattern": "projects/<task_id>/TASK_MANIFEST.json", "checkpoint_field": "current_checkpoint_ref"},
+    "compatibility_check": {"current_contract_version": "3.3", "supported_migrations_from": ["legacy-novel-os-recovery-v2.0", "NOVEL_OS_LIBRARY_1.9.0"], "unknown_behavior": "FAIL_CLOSED"},
+    "resume_or_migrate_or_block": {
+      "COMPATIBLE": "Load owner task manifest/checkpoint and follow ENTRYPOINT.",
+      "MIGRATABLE": "Migrate continuity/storage wrapper only; preserve business state and exact stage.",
+      "INCOMPATIBLE": "Do not replay stale execution semantics; retain valid user requirements/evidence/artifacts and reconstruct only from current owner authority.",
+      "UNKNOWN": "FAIL_CLOSED"
+    }
+  },
+  "authority_order": ["GitHub owner current checkpoint/state", "GitHub owner task manifest", "Universal routing manifest/cache", "Library mirror/history", "chat memory"],
+  "single_writer": {
+    "lease_authority": "D1traverser-debug/universal-continuity-agent@main/tasks/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
+    "checkpoint_write_rule": "Re-read Universal task manifest and require matching active_lease.lease_id + resume_epoch before material checkpoint writes.",
+    "takeover": "New chat increments resume_epoch and replaces Universal active_lease; old chat retires."
+  },
+  "does_not_own": ["Universal task lease", "external Fanqie actions performed by user"]
+}

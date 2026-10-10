@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "updated": "2026-10-09",
+  "counting_method": "fanqie后台实际优先；无实际值时用FINAL去空白预测值",
+  "chapters": [
+    {"chapter":1,"actual_fanqie_chars":2550,"predicted_fanqie_chars":2550,"published":true},
+    {"chapter":2,"actual_fanqie_chars":2394,"predicted_fanqie_chars":2393,"published":true},
+    {"chapter":3,"actual_fanqie_chars":2630,"predicted_fanqie_chars":2630,"published":true},
+    {"chapter":4,"actual_fanqie_chars":2840,"predicted_fanqie_chars":2840,"published":true},
+    {"chapter":5,"actual_fanqie_chars":null,"predicted_fanqie_chars":2614,"published":true,"note":"用户已确认发布，实际后台字数待回填"},
+    {"chapter":6,"actual_fanqie_chars":null,"predicted_fanqie_chars":2490,"published":true,"note":"用户已确认发布；实际后台字数待回填"},
+    {"chapter":7,"actual_fanqie_chars":null,"predicted_fanqie_chars":2543,"published":true,"note":"用户已确认发布；实际后台字数待回填"},
+    {"chapter":8,"actual_fanqie_chars":null,"predicted_fanqie_chars":2503,"published":false,"note":"FINAL_ACCEPTED/PUBLISH_READY；实际后台字数待发布后回填"}
+  ]
+}

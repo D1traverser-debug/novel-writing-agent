@@ -1,0 +1,28 @@
+{
+  "schema_version": "2.2",
+  "generated_at": "2026-10-10T03:45:00Z",
+  "source": "ChatGPT Library /NOVEL_OS_小说系统",
+  "target": "D1traverser-debug/novel-writing-agent@main",
+  "migration_branch": "migration/github-primary-cutover",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "display_name_zh": "《凌晨零点，我接到明天的订单》",
+  "compatibility_before": "MIGRATABLE",
+  "compatibility_after_acceptance": "COMPATIBLE",
+  "business_stage_preserved": true,
+  "chapter_work_replayed": false,
+  "source_business_state": {"canon_version":12,"last_final_chapter":8,"published_through":7,"chapter_8":"FINAL_ACCEPTED_PUBLISH_READY_NOT_CONFIRMED_PUBLISHED","next_chapter":9,"next_chapter_status":"READY"},
+  "published_chapter_sha256": {
+    "CH0001":"79f1a1778c4023fe185606f0493d2019938b61f6cc8e5697408453302e0d0043",
+    "CH0002":"2b77d75aabebda658023a9ad570d56337d9391ed8d39fd85bbdcfd89a7d382bb",
+    "CH0003":"b586faa1643fa92f9c4b528b1f94e11f7d80fbad4a133d02ea1feb8006911b58",
+    "CH0004":"636b88301bbfdd2d9a7b150afef69192879cc26109da5c95c898e271188bc853",
+    "CH0005":"d18a02c0bbc51e5585179ae096e3f2452e1f48085b4d188ed37b6ada8fc2e507",
+    "CH0006":"9207c149ec8a8acb50dff22dc53cf9e0c4f6b53f63f4bcef6b4f8487332c0810",
+    "CH0007":"e7d1ef881b042a70fd699817763cb07c055b06fd7cf9412cc98209739fd539f8"
+  },
+  "ch8_final_sha256": "fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14",
+  "canon_ledgers": ["CHARACTERS.json","CHARACTER_DRIVES.json","THREADS.json","FORESHADOW.jsonl","TIMELINE.jsonl","READER_PROMISES.json"],
+  "validation_required": ["task identity/stage/next_action","CH1-CH8 source hashes","Canon v12 recovery facts","CH9 READY contract","external publication through CH7 only","single-writer lease unchanged during same-chat migration","new-chat recovery using Universal + GitHub owner only"],
+  "library_post_cutover_role": "backup, historical evidence, binary derived artifacts",
+  "cutover_rule": "Do not declare GitHub primary until MIGRATION_ACCEPTANCE=PASS and AUTHORITY_STATUS=GITHUB_PRIMARY."
+}

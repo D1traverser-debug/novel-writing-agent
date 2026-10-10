@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "status": "MIGRATION_IN_PROGRESS",
+  "repository": "D1traverser-debug/novel-writing-agent",
+  "branch": "main",
+  "business_authority": false,
+  "source_authority_during_migration": "ChatGPT Library /NOVEL_OS_小说系统",
+  "target_role": "NOVEL domain business authority",
+  "universal_continuity_role": "ROUTER_AND_SINGLE_WRITER_LEASE_AUTHORITY",
+  "library_post_cutover_role": "BACKUP_AND_DERIVED_ARTIFACT_STORE",
+  "cutover_acceptance": "PENDING",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "migration_semantics": "storage/home migration only; no chapter/Canon/release replay"
+}

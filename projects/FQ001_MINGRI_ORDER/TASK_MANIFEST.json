@@ -1,0 +1,27 @@
+{
+  "schema_version": "2.0-github",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "task_class": "USER",
+  "domain": "NOVEL",
+  "title": "FQ001_MINGRI_ORDER_SERIALIZATION",
+  "display_name_zh": "《凌晨零点，我接到明天的订单》",
+  "status": "WAITING",
+  "resume_eligible": true,
+  "resume_visibility": "DEFAULT",
+  "recovery_owner": "NOVEL_WRITING_AGENT",
+  "business_authority": "D1traverser-debug/novel-writing-agent@main",
+  "universal_lease_authority": "D1traverser-debug/universal-continuity-agent@main/tasks/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
+  "current_stage": "CH0008_FINAL_ACCEPTED_PUBLISH_READY_AWAITING_EXTERNAL_PUBLICATION_CONFIRMATION",
+  "next_action": "Wait for user confirmation that CH8 was published; then record CH8 as externally published and continue CH9 from the existing READY contract without replaying CH8.",
+  "current_checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+  "canon_version": 12,
+  "last_final_chapter": 8,
+  "last_final_hash": "fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14",
+  "next_serial_chapter": 9,
+  "next_serial_status": "READY",
+  "external_publication": {
+    "confirmed_published_through": 7,
+    "chapter_8": "PUBLISH_READY_NOT_CONFIRMED_PUBLISHED"
+  },
+  "updated_at": "2026-10-10T03:20:00Z"
+}
