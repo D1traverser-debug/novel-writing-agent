@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "work_id": "DAO_MU_BI_JI",
+  "title": "盗墓笔记全集",
+  "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+  "study_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY",
+  "source": {
+    "file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
+    "sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
+    "size_bytes": 4324861,
+    "total_lines": 30839,
+    "full_book_end_verified": true,
+    "full_book_end_marker": "【全书完】",
+    "final_line": 30839
+  },
+  "coverage": {
+    "sequential_completed": "ENTIRE_USER_STANDARDIZED_SOURCE__FIRST_LINE_THROUGH_PHYSICAL_END",
+    "completed_sections": [
+      "《七星鲁王宫》",
+      "《怒海潜沙》",
+      "《秦岭神树》",
+      "《云顶天宫篇》",
+      "《蛇沼鬼城篇》",
+      "《谜海归巢》",
+      "《阴山古楼》",
+      "《邛笼石影》",
+      "《盗墓笔记8（大结局）上册》",
+      "《盗墓笔记8（大结局）下册》"
+    ],
+    "source_numbering_policy": "SOURCE_ORDER_AUTHORITATIVE__SPLIT_REPEATED_RESET_AND_SKIPPED_HEADINGS_PRESERVED__NO_FABRICATED_UNIFIED_LOGICAL_CHAPTER_COUNT"
+  },
+  "rolling_ledger": {
+    "file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
+    "path": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
+    "sha256": "55a914a10166167e0cb4a1632e7a5378dc037bb548f73bea24b12d8a88e3b5c8",
+    "size_bytes": 140554
+  },
+  "distillation": {
+    "single_book_complete": true,
+    "macro_meso_micro_complete": true,
+    "positive_negative_diff_complete": true,
+    "counterfactual_and_anti_overfit_complete": true,
+    "cross_work_promotion": "NONE__PENDING_TRIANGULATION"
+  },
+  "next": {
+    "next_pass": "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED",
+    "next_pending_work": "GUI_CHUI_DENG",
+    "next_pending_title": "鬼吹灯全集",
+    "next_pending_status": "PENDING"
+  },
+  "project_effect": {
+    "fq001_prose_mutation": "NONE",
+    "cross_work_synthesis": "PENDING_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
+  },
+  "completed_at": "2026-10-11T17:50:00Z"
+}
