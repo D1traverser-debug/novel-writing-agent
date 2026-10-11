@@ -6,12 +6,7 @@
   "system": {
     "system_id": "NOVEL_OS",
     "display_name_zh": "小说系统",
-    "resume_aliases": [
-      "小说系统",
-      "NOVEL_OS",
-      "Novel Writing Agent",
-      "novel-writing-agent"
-    ],
+    "resume_aliases": ["小说系统","NOVEL_OS","Novel Writing Agent","novel-writing-agent"],
     "resume_behavior": "ROUTE_TO_ACTIVE_PROJECT",
     "active_project_task_id": "FQ001_MINGRI_ORDER",
     "candidate_presentation_zh": "小说系统｜《凌晨零点，我接到明天的订单》",
@@ -20,17 +15,11 @@
       "registry_ref": "research/masterworks/INDEX.json",
       "study_state_ref": "research/masterworks/STUDY_STATE.json",
       "authority_role": "LEARNING_EVIDENCE_NOT_EXECUTION_AUTHORITY",
-      "active_study": "GUI_MI_ZHI_ZHU",
+      "active_study": "DAO_MU_BI_JI",
       "active_study_ref": "research/masterworks/STUDY_STATE.json",
-      "active_study_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
-      "active_study_binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
-      "completed_studies": [
-        "SHIRI_ZHONGYAN",
-        "GUI_MI_ZHI_ZHU"
-      ],
-      "next_pending_study": "DAO_MU_BI_JI",
-      "stop_after_current_work": true,
-      "coverage_state": "SHIRI_COMPLETE__GUI_MI_COMPLETE__STOPPED_BEFORE_DAO_MU_BI_JI"
+      "active_study_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+      "completed_studies": ["SHIRI_ZHONGYAN","GUI_MI_ZHI_ZHU"],
+      "coverage_state": "SHIRI_COMPLETE__GUI_MI_COMPLETE__DAO_QIXING_LUWANGGONG_CH1_CH29_COMPLETE__NUHAI_QIANSHA_CH1_NEXT"
     }
   },
   "tasks": [
@@ -48,9 +37,9 @@
       "resume_eligible": true,
       "resume_visibility": "DEFAULT",
       "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-11T14:20:00Z",
+      "updated_at": "2026-10-11T16:14:00Z",
       "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-      "next_action": "GUI_MI_ZHI_ZHU (《诡秘之主》) has completed full sequential study through the user-provided end marker and whole-book single-work distillation. Stop after this completed work exactly as the user requested; do not begin DAO_MU_BI_JI in this run. Keep the masterwork queue and current focus binding durable. On a later explicit continue, activate DAO_MU_BI_JI from its beginning and continue one book at a time. Do not draft the existing FQ001 replacement CH1-CH8 while the masterwork study queue is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+      "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《怒海潜沙》第一章《蛇眉铜鱼》. 《七星鲁王宫》CH1-CH29 is complete and checkpointed in the single rolling ledger. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete; do not draft existing FQ001 replacement prose during the masterwork queue.",
       "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
       "contract_version": "3.7",
       "domain_contract_version": "2.1-github",
