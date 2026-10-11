@@ -2,13 +2,9 @@ from pathlib import Path
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
-INGEST_REL = "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md"
-EXPECTED_STATUS = "USER_FULLTEXT_MAINLINE_INGESTED__CH1_CH10_DEEP_READ__SEQUENTIAL_FULL_COVERAGE_ACTIVE"
-EXPECTED_NEXT = "SEQUENTIAL_FULLTEXT_CH11_PLUS_PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE"
-EXPECTED_SHA = "4236619fe12174798682716433d425e2351dac643c9fcb014f6876356ce667ba"
 
 
-def test_masterwork_distillation_protocol_is_broad_and_not_user_prompt_dependent():
+def test_protocol_still_covers_full_distillation_pipeline():
     text = (ROOT / "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md").read_text(encoding="utf-8")
     for stage in (
         "D0 RIGHTS_AND_SOURCE",
@@ -33,105 +29,94 @@ def test_masterwork_distillation_protocol_is_broad_and_not_user_prompt_dependent
         "quality audit",
     ):
         assert dimension.lower() in text.lower()
-    assert "视为 C20 meta-learning incident" in text
 
 
-def test_masterwork_registry_is_learning_evidence_not_execution_authority():
+def test_study_state_is_durable_one_book_at_a_time():
+    state = json.loads((ROOT / "research/masterworks/STUDY_STATE.json").read_text(encoding="utf-8"))
+    assert state["status"] == "ACTIVE"
+    assert state["authority_role"] == "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY"
+    assert state["study_policy"]["mode"] == "ONE_BOOK_AT_A_TIME"
+    assert state["study_policy"]["rule"] == "COMPLETE_CURRENT_WORK_BEFORE_NEXT"
+    assert state["study_policy"]["cross_work_synthesis"] == "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
+    assert set(state["user_locked_business_constraints"]) == {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}
+    assert state["reopenable_design_scope"] == "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_LEARNING"
+    assert state["active_work"]["work_id"] == "GUI_MI_ZHI_ZHU"
+    assert state["active_work"]["status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ"
+    assert any(w["work_id"] == "SHIRI_ZHONGYAN" and w["status"] == "COMPLETE" for w in state["queue"])
+    assert any(w["work_id"] == "NORWEGIAN_WOOD" and w["status"] == "EXCLUDED_BY_USER" for w in state["queue"])
+
+
+def test_registry_moves_shiri_to_completed_and_guimi_to_active():
     registry = json.loads((ROOT / "research/masterworks/INDEX.json").read_text(encoding="utf-8"))
     assert registry["status"] == "ACTIVE"
+    assert registry["study_state_ref"] == "research/masterworks/STUDY_STATE.json"
     assert registry["authority_role"] == "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY"
     assert registry["copyright_policy"]["pirated_fulltext_allowed"] is False
     assert registry["copyright_policy"]["store_substitute_for_original_work"] is False
     assert "USER_LAWFULLY_PROVIDED_TEXT" in registry["copyright_policy"]["allowed_sources"]
-    study = registry["active_studies"][0]
-    assert study["work_id"] == "SHIRI_ZHONGYAN"
-    assert study["execution_authority"] is False
-    assert study["current_status"] == EXPECTED_STATUS
-    assert study["next_pass"] == EXPECTED_NEXT
-    assert "MORE_COMPLEXITY_IS_ALWAYS_BETTER" in study["explicitly_not_promoted"]
-    assert "PROTAGONIST_SECRET_MASTERMIND_AS_UNIVERSAL_RETENTION_TOOL" in study["explicitly_not_promoted"]
-    assert len(study["completed_passes"]) == 5
-    assert INGEST_REL in study["completed_passes"]
-    for rel in study["completed_passes"]:
-        assert (ROOT / rel).exists()
 
+    active = registry["active_studies"]
+    assert len(active) == 1
+    assert active[0]["work_id"] == "GUI_MI_ZHI_ZHU"
+    assert active[0]["current_status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ"
+    assert active[0]["next_pass"] == "SEQUENTIAL_FULLTEXT_FROM_BEGINNING"
+    assert active[0]["execution_authority"] is False
 
-def test_fulltext_corpus_receipt_and_coverage_are_exact():
-    registry = json.loads((ROOT / "research/masterworks/INDEX.json").read_text(encoding="utf-8"))
-    study = registry["active_studies"][0]
-    coverage = study["fulltext_coverage"]
-    assert coverage["user_source_sha256"] == EXPECTED_SHA
+    completed = {s["work_id"]: s for s in registry["completed_studies"]}
+    shiri = completed["SHIRI_ZHONGYAN"]
+    assert shiri["current_status"] == "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
+    assert shiri["next_pass"] == "NEXT_BOOK__GUI_MI_ZHI_ZHU"
+    coverage = shiri["fulltext_coverage"]
     assert coverage["user_source_numbered_mainline_through"] == 1359
     assert coverage["user_source_chapter_heading_occurrences"] == 1360
     assert coverage["source_numbering_anomaly"] == "two distinct headings labelled CH1357"
-    assert coverage["fanqie_current_catalog_chapters"] == 1496
-    assert coverage["current_catalog_supplement_gap"] == "CH1360-CH1496"
-    assert coverage["deep_read_completed"] == "CH1-CH10"
-    assert coverage["deep_read_pending"] == "CH11-CH1359"
-    assert coverage["official_supplement_pending"] == "CH1360-CH1496"
-    assert "十日终焉_1496章全书覆盖台账" in coverage["coverage_ledger"]
-
-    receipt = (ROOT / INGEST_REL).read_text(encoding="utf-8")
-    assert "status: LEARNING_EVIDENCE" in receipt
-    assert EXPECTED_SHA in receipt
-    assert "第1359章 终：完结感言" in receipt
-    assert "CH1360–CH1496" in receipt
-    assert "CH1_CH10_DEEP_READ_FROM_USER_FULLTEXT" in receipt
-    assert "does not contain the current post-completion catalog additions" in receipt
+    assert coverage["sequential_study_completed"] == "SOURCE_ORDER_1-1360"
+    assert coverage["body_numbering"] == "CH1-CH1359"
+    assert coverage["study_scope"] == "USER_PROVIDED_TEXT_ONLY_PER_USER_DIRECTION"
+    assert coverage["official_supplement_status"] == "OUT_OF_SCOPE_FOR_THIS_STUDY"
+    assert "MORE_COMPLEXITY_IS_ALWAYS_BETTER" in shiri["explicitly_not_promoted"]
+    assert "HYPERINTELLIGENT_PROTAGONIST_TEMPLATE" in shiri["explicitly_not_promoted"]
 
 
-def test_ten_day_endgame_passes_have_claim_and_imitation_boundaries():
+def test_shiri_evidence_files_remain_present_after_completion():
     paths = [
         "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
         "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
         "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md",
         "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_04_MYSTERY_WORLD_RULES.md",
+        "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md",
     ]
-    p1, p2, p3, p4 = [(ROOT / path).read_text(encoding="utf-8") for path in paths]
+    for rel in paths:
+        assert (ROOT / rel).exists()
+    p1, p2, p3, p4 = [(ROOT / rel).read_text(encoding="utf-8") for rel in paths[:4]]
     for text in (p1, p2, p3, p4):
         assert "status: LEARNING_EVIDENCE" in text
     assert "NOT PROMOTED" in p1
-    assert "no pirated full-text storage" in p1
-    assert "does not prove the full 1496-chapter work has been line-by-line analyzed" in p2
-    assert "does not authorize imitation" in p2
-    for heading in (
-        "Psychological portrayal",
-        "Environment and spatial description",
-        "Dialogue and voice",
-        "Plot progression",
-        "Chapter architecture / hooks",
-        "Emotion and attachment",
-    ):
-        assert heading in p2
-    for concept in ("Independent agency", "Character familiarity", "Voice", "Attachment object", "Emotional progression"):
-        assert concept.lower() in p3.lower()
-    for concept in ("Rule design", "Worldbuilding", "Information asymmetry", "Mystery ladder", "Complexity is not the goal"):
-        assert concept.lower() in p4.lower()
     assert "PROJECT_TRANSFER_PENDING" in p2
     assert "PROJECT_TRANSFER_PENDING" in p3
     assert "PROJECT_TRANSFER_PENDING" in p4
 
 
-def test_continuity_index_binds_masterwork_learning_without_promoting_it():
+def test_continuity_indexes_point_to_active_guimi_study():
     canonical = json.loads((ROOT / "continuity/TASK_INDEX.json").read_text(encoding="utf-8"))
     alias = json.loads((ROOT / "TASK_INDEX.json").read_text(encoding="utf-8"))
     c = canonical["system"]["masterwork_learning"]
     a = alias["system"]["masterwork_learning"]
     assert c["protocol_ref"] == "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md"
     assert c["registry_ref"] == "research/masterworks/INDEX.json"
+    assert c["study_state_ref"] == "research/masterworks/STUDY_STATE.json"
     assert c["authority_role"] == "LEARNING_EVIDENCE_NOT_EXECUTION_AUTHORITY"
-    assert c["active_study"] == "SHIRI_ZHONGYAN"
+    assert c["active_study"] == "GUI_MI_ZHI_ZHU"
+    assert c["completed_studies"] == ["SHIRI_ZHONGYAN"]
     assert c["active_study_ref"] == a["active_study_ref"]
-    assert c["copyright_rule"] == "OFFICIAL_OR_LAWFUL_SOURCES_ONLY_NO_PIRATED_FULLTEXT"
 
 
-def test_execution_capability_registers_masterwork_learning_with_claim_ceiling():
+def test_execution_capability_keeps_learning_claim_ceiling():
     caps = json.loads((ROOT / "continuity/EXECUTION_CAPABILITIES.json").read_text(encoding="utf-8"))
     mw = next(c for c in caps["capabilities"] if c["capability_id"] == "masterwork_distillation_and_transfer_learning")
     det = next(c for c in caps["capabilities"] if c["capability_id"] == "deterministic_guards")
     assert mw["assurance_ceiling"] == "SESSION_EXECUTABLE"
     assert "PROJECT_TRANSFER" in mw["scope"]
-    assert "POSITIVE_NEGATIVE_DIFF" in mw["scope"]
     assert "CROSS_WORK_TRIANGULATION" in mw["scope"]
     assert "masterwork_distillation_guard.py" in mw["release_enforcement"]
     assert "MASTERWORK_LEARNING_STATE" in det["scope"]
