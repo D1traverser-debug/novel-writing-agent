@@ -22,7 +22,11 @@
       "active_study_ref": "research/masterworks/STUDY_STATE.json",
       "active_study_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
       "completed_studies": ["SHIRI_ZHONGYAN","GUI_MI_ZHI_ZHU"],
-      "coverage_state": "SHIRI_COMPLETE__GUI_MI_COMPLETE__DAO_QIXING_LUWANGGONG_AND_NUHAI_QIANSHA_COMPLETE__QINLING_SHENSHU_CH1_NEXT",
+      "next_pending_study": "GUI_CHUI_DENG",
+      "stop_after_current_work": false,
+      "coverage_state": "SHIRI_COMPLETE__GUI_MI_COMPLETE__DAO_QIXING_NUHAI_QINLING_COMPLETE__YUNDING_TIANGONG_CH1_NEXT",
+      "active_study_next_location": "《云顶天宫篇》第一章《新的消息》",
+      "rolling_ledger_sha256": "0d0f6ea68d1a6227bf69c99fae2a0da832a2e7195e6d24b05c272673f7920c9f",
       "study_policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT__CROSS_WORK_SYNTHESIS_DEFERRED",
       "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"],
       "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_LEARNING",
@@ -44,9 +48,9 @@
     "resume_eligible": true,
     "resume_visibility": "DEFAULT",
     "recovery_owner": "NOVEL_WRITING_AGENT",
-    "updated_at": "2026-10-11T16:22:00Z",
+    "updated_at": "2026-10-11T16:38:00Z",
     "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-    "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《秦岭神树》第一章《老痒出狱》. 《七星鲁王宫》CH1-CH29 and 《怒海潜沙》CH1-CH46 have completed sequential study and volume-level distillation in the single rolling ledger. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+    "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《云顶天宫篇》第一章《新的消息》. 《七星鲁王宫》CH1-CH29, 《怒海潜沙》CH1-CH46, and 《秦岭神树》CH1-CH42 are checkpointed complete. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Do not draft existing FQ001 replacement prose while the masterwork queue is active.",
     "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
     "contract_version": "3.7",
     "continuity_protocol_version": "3.7",
@@ -54,6 +58,6 @@
     "skill_version": "Novel Writing Agent 2.4.0-github",
     "runtime_version": "github-owner-2.5",
     "release_evidence_contract_version": "1.0",
-    "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","番茄小说","FQ001","NOVEL_WRITING_AGENT","名作蒸馏","逐本学习","十日终焉","诡秘之主","盗墓笔记","故事重选"]
+    "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","番茄小说","FQ001","NOVEL_WRITING_AGENT","名作蒸馏","逐本学习","十日终焉","诡秘之主","盗墓笔记","秦岭神树","云顶天宫","故事重选"]
   }]
 }
