@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T14:02:00Z",
+  "updated_at": "2026-10-11T14:18:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -10,10 +10,7 @@
     "single_work_output": "ONE_ROLLING_LEDGER_PER_WORK__OVERWRITE_NOT_VERSION_PILE",
     "source_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_UNLESS_USER_EXPLICITLY_EXPANDS_SCOPE"
   },
-  "user_locked_business_constraints": [
-    "SIGNING_MODE_IMMUTABLE",
-    "SERIALIZATION_MODE_IMMUTABLE"
-  ],
+  "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"],
   "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_LEARNING",
   "project_execution_effect": "DO_NOT_DRAFT_CURRENT_FQ001_REPLACEMENT_PACKET_WHILE_THIS_STUDY_STAGE_IS_ACTIVE__POST_STUDY_STORY_RESELECTION_REQUIRED",
   "drive_corpus_root": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料",
@@ -22,24 +19,28 @@
     "queue_no": 2,
     "work_id": "GUI_MI_ZHI_ZHU",
     "title": "诡秘之主",
-    "status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+    "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+    "binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
     "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/诡秘之主.txt",
     "source_file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
     "source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
     "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
     "rolling_ledger_file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
-    "rolling_ledger_sha256": "f0ee715b5d7d4710e3591448a76901bf4e9f0a9da34bf310c97c809bc935af1a",
+    "rolling_ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe",
     "coverage": {
-      "sequential_completed": "VOLUME_01_XIAO_CHOU__CH1-CH213_PLUS_VOLUME_SUMMARY__VOLUME_02_WU_MIAN_REN__CH1-CH269_PLUS_VOLUME_SUMMARY",
-      "completed_volumes": ["第一部《小丑》", "第二部《无面人》"],
-      "completed_body_chapters_total": 482,
-      "author_volume_summaries_included": 2,
-      "current_volume": "第三部《旅行家》",
-      "current_volume_completed_body_chapters": 0,
-      "next_location": "第三部《旅行家》CH1"
+      "sequential_completed": "ALL_8_VOLUMES__THROUGH_FULL_BOOK_END",
+      "completed_volumes": ["第一部《小丑》","第二部《无面人》","第三部《旅行家》","第四部《不死者》","第五部《红祭司》","第六部《逐光者》","第七卷《倒吊人》","第八卷《愚者》"],
+      "chapter_heading_count": 1394,
+      "source_total_lines": 117803,
+      "author_volume_summaries_included": ["VOLUME_01","VOLUME_02","VOLUME_03","VOLUME_04","VOLUME_07"],
+      "author_volume_summaries_absent_in_user_source": ["VOLUME_05","VOLUME_06","VOLUME_08"],
+      "full_book_end_verified": true,
+      "full_book_end_marker": "（全书完）",
+      "next_location": "STOP_AFTER_GUI_MI_COMPLETION__DO_NOT_BEGIN_NEXT_BOOK"
     },
-    "next_pass": "SEQUENTIAL_CONTINUE__VOLUME_03_LV_XING_JIA_CH1",
-    "next_action": "Continue the user-provided standardized text sequentially from 第三部《旅行家》CH1, keep updating the single rolling ledger, and do not switch books until the single-work distillation is complete."
+    "next_pass": "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED",
+    "next_pending_work": "DAO_MU_BI_JI",
+    "next_action": "Stop after completing GUI_MI_ZHI_ZHU exactly as the user requested. Do not begin DAO_MU_BI_JI in this turn. When the user later explicitly continues the queue, start DAO_MU_BI_JI sequentially from its beginning."
   },
   "completed_works": [
     {
@@ -49,11 +50,20 @@
       "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
       "coverage": "SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED",
       "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"
+    },
+    {
+      "queue_no": 2,
+      "work_id": "GUI_MI_ZHI_ZHU",
+      "title": "诡秘之主",
+      "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+      "coverage": "ALL_8_VOLUMES__1394_CHAPTER_HEADINGS__THROUGH_FULL_BOOK_END",
+      "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
+      "ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe"
     }
   ],
   "queue": [
     {"no":1,"work_id":"SHIRI_ZHONGYAN","title":"十日终焉","status":"COMPLETE"},
-    {"no":2,"work_id":"GUI_MI_ZHI_ZHU","title":"诡秘之主","status":"ACTIVE"},
+    {"no":2,"work_id":"GUI_MI_ZHI_ZHU","title":"诡秘之主","status":"COMPLETE"},
     {"no":3,"work_id":"DAO_MU_BI_JI","title":"盗墓笔记全集","status":"PENDING"},
     {"no":4,"work_id":"GUI_CHUI_DENG","title":"鬼吹灯全集","status":"PENDING"},
     {"no":5,"work_id":"QING_YU_NIAN","title":"庆余年","status":"PENDING"},
@@ -75,5 +85,5 @@
     {"no":21,"work_id":"THE_STRANGER","title":"局外人","status":"PENDING"},
     {"no":22,"work_id":"OLD_MAN_AND_SEA","title":"老人与海","status":"PENDING"}
   ],
-  "resume_rule": "On resume, read this file first for the learning substream. Continue active_work exactly. Never regress to a completed location or advance past an incomplete active work."
+  "resume_rule": "On resume, read this file first for the learning substream. GUI_MI_ZHI_ZHU is complete and intentionally remains the current focus binding until a later explicit continue activates DAO_MU_BI_JI. Never infer that the next pending book has started."
 }
