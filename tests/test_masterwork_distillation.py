@@ -40,14 +40,25 @@ def test_study_state_is_durable_one_book_at_a_time():
     assert state["study_policy"]["cross_work_synthesis"] == "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
     assert set(state["user_locked_business_constraints"]) == {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}
     assert state["reopenable_design_scope"] == "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_LEARNING"
-    assert state["active_work"]["work_id"] == "GUI_MI_ZHI_ZHU"
-    assert state["active_work"]["status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ"
+    active = state["active_work"]
+    assert active["work_id"] == "GUI_MI_ZHI_ZHU"
+    assert active["status"] in {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS"}
+    if active["status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
+        assert active["next_pass"] == "SEQUENTIAL_FULLTEXT_FROM_BEGINNING"
+    else:
+        assert active["next_pass"].startswith("SEQUENTIAL_CONTINUE__")
+        assert len(active["source_sha256"]) == 64
+        assert active["coverage"]["sequential_completed"]
+        assert active["coverage"]["next_location"]
+        assert active["rolling_ledger"]
     assert any(w["work_id"] == "SHIRI_ZHONGYAN" and w["status"] == "COMPLETE" for w in state["queue"])
+    assert any(w["work_id"] == "GUI_MI_ZHI_ZHU" and w["status"] == "ACTIVE" for w in state["queue"])
     assert any(w["work_id"] == "NORWEGIAN_WOOD" and w["status"] == "EXCLUDED_BY_USER" for w in state["queue"])
 
 
 def test_registry_moves_shiri_to_completed_and_guimi_to_active():
     registry = json.loads((ROOT / "research/masterworks/INDEX.json").read_text(encoding="utf-8"))
+    state = json.loads((ROOT / "research/masterworks/STUDY_STATE.json").read_text(encoding="utf-8"))
     assert registry["status"] == "ACTIVE"
     assert registry["study_state_ref"] == "research/masterworks/STUDY_STATE.json"
     assert registry["authority_role"] == "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY"
@@ -58,8 +69,8 @@ def test_registry_moves_shiri_to_completed_and_guimi_to_active():
     active = registry["active_studies"]
     assert len(active) == 1
     assert active[0]["work_id"] == "GUI_MI_ZHI_ZHU"
-    assert active[0]["current_status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ"
-    assert active[0]["next_pass"] == "SEQUENTIAL_FULLTEXT_FROM_BEGINNING"
+    assert active[0]["current_status"] == state["active_work"]["status"]
+    assert active[0]["next_pass"] == state["active_work"]["next_pass"]
     assert active[0]["execution_authority"] is False
 
     completed = {s["work_id"]: s for s in registry["completed_studies"]}
