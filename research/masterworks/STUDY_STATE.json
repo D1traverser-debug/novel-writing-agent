@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "status": "ACTIVE",
+  "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
+  "updated_at": "2026-10-11T12:05:00Z",
+  "study_policy": {
+    "mode": "ONE_BOOK_AT_A_TIME",
+    "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
+    "cross_work_synthesis": "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE",
+    "single_work_output": "ONE_ROLLING_LEDGER_PER_WORK__OVERWRITE_NOT_VERSION_PILE",
+    "source_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_UNLESS_USER_EXPLICITLY_EXPANDS_SCOPE"
+  },
+  "user_locked_business_constraints": [
+    "SIGNING_MODE_IMMUTABLE",
+    "SERIALIZATION_MODE_IMMUTABLE"
+  ],
+  "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_LEARNING",
+  "project_execution_effect": "DO_NOT_DRAFT_CURRENT_FQ001_REPLACEMENT_PACKET_WHILE_THIS_STUDY_STAGE_IS_ACTIVE__POST_STUDY_STORY_RESELECTION_REQUIRED",
+  "drive_corpus_root": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料",
+  "drive_learning_root": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习",
+  "active_work": {
+    "queue_no": 2,
+    "work_id": "GUI_MI_ZHI_ZHU",
+    "title": "诡秘之主",
+    "status": "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ",
+    "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/诡秘之主.txt",
+    "next_action": "Read the user-provided standardized text sequentially from the beginning, maintain one rolling work ledger, and do not switch books until the single-work distillation is complete."
+  },
+  "completed_works": [
+    {
+      "queue_no": 1,
+      "work_id": "SHIRI_ZHONGYAN",
+      "title": "十日终焉",
+      "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+      "coverage": "SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED",
+      "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"
+    }
+  ],
+  "queue": [
+    {"no":1,"work_id":"SHIRI_ZHONGYAN","title":"十日终焉","status":"COMPLETE"},
+    {"no":2,"work_id":"GUI_MI_ZHI_ZHU","title":"诡秘之主","status":"ACTIVE"},
+    {"no":3,"work_id":"DAO_MU_BI_JI","title":"盗墓笔记全集","status":"PENDING"},
+    {"no":4,"work_id":"GUI_CHUI_DENG","title":"鬼吹灯全集","status":"PENDING"},
+    {"no":5,"work_id":"QING_YU_NIAN","title":"庆余年","status":"PENDING"},
+    {"no":6,"work_id":"HARRY_POTTER","title":"哈利·波特全集","status":"PENDING"},
+    {"no":7,"work_id":"DUNE_01","title":"沙丘01_沙丘","status":"PENDING"},
+    {"no":8,"work_id":"DUNE_02","title":"沙丘02_沙丘救世主","status":"PENDING"},
+    {"no":9,"work_id":"DUNE_03","title":"沙丘03_沙丘之子","status":"PENDING"},
+    {"no":10,"work_id":"DEVOTION_OF_SUSPECT_X","title":"嫌疑人X的献身","status":"PENDING"},
+    {"no":11,"work_id":"MALICE","title":"恶意","status":"PENDING"},
+    {"no":12,"work_id":"BYAKUYAKO","title":"白夜行","status":"PENDING"},
+    {"no":13,"work_id":"KITE_RUNNER","title":"追风筝的人","status":"PENDING"},
+    {"no":14,"work_id":"TO_LIVE","title":"活着","status":"PENDING"},
+    {"no":15,"work_id":"XU_SANGUAN","title":"许三观卖血记","status":"PENDING"},
+    {"no":16,"work_id":"ORDINARY_WORLD","title":"平凡的世界","status":"PENDING"},
+    {"no":17,"work_id":"NORWEGIAN_WOOD","title":"挪威的森林","status":"EXCLUDED_BY_USER"},
+    {"no":18,"work_id":"ONE_HUNDRED_YEARS","title":"百年孤独","status":"PENDING"},
+    {"no":19,"work_id":"NINETEEN_EIGHTY_FOUR","title":"1984","status":"PENDING"},
+    {"no":20,"work_id":"ANIMAL_FARM","title":"动物庄园","status":"PENDING"},
+    {"no":21,"work_id":"THE_STRANGER","title":"局外人","status":"PENDING"},
+    {"no":22,"work_id":"OLD_MAN_AND_SEA","title":"老人与海","status":"PENDING"}
+  ],
+  "resume_rule": "On resume, read this file first for the learning substream. Continue active_work exactly. Never regress to a completed work or advance past an incomplete active work."
+}
