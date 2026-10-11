@@ -24,7 +24,12 @@ def test_recovery_truth_points_to_masterwork_study_before_story_reselection():
     assert set(m["user_locked_business_constraints"]) == {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}
     assert m["reopenable_design_scope"] == "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_MASTERWORK_DISTILLATION"
     assert m["masterwork_learning"]["active_work"] == "GUI_MI_ZHI_ZHU"
-    assert m["masterwork_learning"]["completed_work"] == "SHIRI_ZHONGYAN"
+    if m["masterwork_learning"]["active_work_status"] == TERMINAL:
+        assert m["masterwork_learning"]["completed_works"] == ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU"]
+        assert m["masterwork_learning"]["next_pending_work"] == "DAO_MU_BI_JI"
+        assert m["masterwork_learning"]["stop_after_current_work"] is True
+    else:
+        assert m["masterwork_learning"]["completed_work"] == "SHIRI_ZHONGYAN"
 
 
 def test_historical_final_hashes_are_preserved():
