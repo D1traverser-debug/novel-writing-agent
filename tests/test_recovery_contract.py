@@ -91,10 +91,10 @@ def test_current_dao_resume_point_is_exact():
     state = load_json("research/masterworks/STUDY_STATE.json")
     current = state["active_work"]
     assert current["work_id"] == "DAO_MU_BI_JI"
-    assert current["coverage"]["sequential_completed"] == "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE"
-    assert current["coverage"]["next_location"] == "《怒海潜沙》第一章《蛇眉铜鱼》"
+    assert current["coverage"]["sequential_completed"] == "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE"
+    assert current["coverage"]["next_location"] == "《秦岭神树》第一章《老痒出狱》"
     assert current["source_sha256"] == "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768"
-    assert current["rolling_ledger_sha256"] == "efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a"
+    assert current["rolling_ledger_sha256"] == "133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc"
 
 
 def test_mastery_model_and_historical_architecture_evidence_remain_present():
@@ -153,5 +153,5 @@ def test_current_state_text_explicitly_points_to_dao_not_old_resume_path():
     assert "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING" in text
     assert "不执行旧 CH9" in text
     assert "active_masterwork_id: DAO_MU_BI_JI" in text
-    assert "《怒海潜沙》第一章《蛇眉铜鱼》" in text
+    assert "《秦岭神树》第一章《老痒出狱》" in text
     assert "《挪威的森林》" in text and "EXCLUDED_BY_USER" in text
