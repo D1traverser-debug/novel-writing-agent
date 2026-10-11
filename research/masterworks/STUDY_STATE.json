@@ -2,12 +2,14 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T16:57:12Z",
+  "updated_at": "2026-10-11T16:59:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
     "cross_work_synthesis": "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE",
     "single_work_output": "ONE_ROLLING_LEDGER_PER_WORK__OVERWRITE_NOT_VERSION_PILE",
+    "per_work_storage_rule": "EACH_NOVEL_KEEPS_SOURCE_BINDING__ROLLING_LEDGER__STAGE_DISTILLATION__EVIDENCE_AND_EXECUTION_RECEIPTS_COLOCATED_IN_ITS_OWN_WORK_RESEARCH_SCOPE__INTERNAL_VOLUMES_DO_NOT_CREATE_SEPARATE_RESEARCH_SILOS",
+    "cross_work_storage_rule": "CROSS_WORK_SYNTHESIS_LIVES_IN_A_SEPARATE_CROSS_WORK_LAYER_AFTER_SINGLE_BOOK_QUEUE_COMPLETION__DO_NOT_MIX_CROSS_WORK_CONCLUSIONS_INTO_SINGLE_WORK_EVIDENCE",
     "source_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_UNLESS_USER_EXPLICITLY_EXPANDS_SCOPE"
   },
   "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"],
@@ -40,23 +42,8 @@
     "next_action": "Continue the user-provided standardized text sequentially from 《蛇沼鬼城篇》第一章, update the same rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
   },
   "completed_works": [
-    {
-      "queue_no": 1,
-      "work_id": "SHIRI_ZHONGYAN",
-      "title": "十日终焉",
-      "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
-      "coverage": "SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED",
-      "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"
-    },
-    {
-      "queue_no": 2,
-      "work_id": "GUI_MI_ZHI_ZHU",
-      "title": "诡秘之主",
-      "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
-      "coverage": "ALL_8_VOLUMES__1394_CHAPTER_HEADINGS__THROUGH_FULL_BOOK_END",
-      "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
-      "ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe"
-    }
+    {"queue_no": 1, "work_id": "SHIRI_ZHONGYAN", "title": "十日终焉", "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING", "coverage": "SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED", "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"},
+    {"queue_no": 2, "work_id": "GUI_MI_ZHI_ZHU", "title": "诡秘之主", "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING", "coverage": "ALL_8_VOLUMES__1394_CHAPTER_HEADINGS__THROUGH_FULL_BOOK_END", "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md", "ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe"}
   ],
   "queue": [
     {"no": 1, "work_id": "SHIRI_ZHONGYAN", "title": "十日终焉", "status": "COMPLETE"},
