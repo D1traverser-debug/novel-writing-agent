@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "work_id": "GUI_MI_ZHI_ZHU",
+  "title": "诡秘之主",
+  "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+  "completed_at": "2026-10-11T14:20:00Z",
+  "source": {
+    "scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY",
+    "file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
+    "sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
+    "source_total_lines": 117803,
+    "chapter_heading_count": 1394,
+    "full_book_end_verified": true,
+    "full_book_end_marker": "（全书完）"
+  },
+  "coverage": {
+    "sequential_completed": "ALL_8_VOLUMES__THROUGH_FULL_BOOK_END",
+    "volumes": [
+      "第一部《小丑》",
+      "第二部《无面人》",
+      "第三部《旅行家》",
+      "第四部《不死者》",
+      "第五部《红祭司》",
+      "第六部《逐光者》",
+      "第七卷《倒吊人》",
+      "第八卷《愚者》"
+    ],
+    "author_volume_summaries_included": ["VOLUME_01","VOLUME_02","VOLUME_03","VOLUME_04","VOLUME_07"],
+    "author_volume_summaries_absent_in_user_source": ["VOLUME_05","VOLUME_06","VOLUME_08"]
+  },
+  "rolling_ledger": {
+    "provider": "Google Drive",
+    "file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
+    "path": "/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
+    "sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe",
+    "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
+  },
+  "boundary": {
+    "next_pass": "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED",
+    "next_pending_work": "DAO_MU_BI_JI",
+    "next_pending_status": "PENDING_NOT_STARTED",
+    "binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
+    "user_direction": "Finish this book, then stop."
+  },
+  "promotion_boundary": "SINGLE_WORK_EVIDENCE_ONLY__CROSS_WORK_TRIANGULATION_PENDING",
+  "explicit_non_actions": [
+    "DAO_MU_BI_JI_NOT_STARTED",
+    "NO_CROSS_WORK_PROMOTION",
+    "NO_FQ001_REPLACEMENT_PROSE_DRAFTED"
+  ]
+}
