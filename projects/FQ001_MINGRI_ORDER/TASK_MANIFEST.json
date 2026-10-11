@@ -1,6 +1,6 @@
 {
   "schema_version": "2.1-github",
-  "manifest_version": 16,
+  "manifest_version": 17,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -10,9 +10,9 @@
   "resume_eligible": true,
   "resume_visibility": "DEFAULT",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-11T16:59:00Z",
+  "updated_at": "2026-10-11T17:12:00Z",
   "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-  "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《蛇沼鬼城篇》第一章. 《七星鲁王宫》CH1-CH29, 《怒海潜沙》CH1-CH46, 《秦岭神树》CH1-CH42, and 《云顶天宫篇》logical CH1-CH56 are completed and distilled in the same rolling ledger. Source split/repeated heading variants inside 《云顶天宫篇》 are preserved as source anomalies and do not inflate the logical chapter count. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Per-work storage is mandatory: source binding, rolling ledger, stage distillation, evidence, and receipts stay colocated under the novel's own research scope; cross-work synthesis remains separate until all single-book studies finish. Do not draft existing FQ001 replacement prose while this learning stage is active.",
+  "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《谜海归巢》第一章《集结号》. 《七星鲁王宫》, 《怒海潜沙》, 《秦岭神树》, 《云顶天宫篇》, and 《蛇沼鬼城篇》 are now fully covered to their verified section-end markers and distilled in the same rolling ledger. 《蛇沼鬼城篇》 contains source numbering resets, so completion is recorded by full source-order coverage through '（蛇沼鬼城完）' rather than a fabricated unified logical chapter count. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Per-work storage remains binding: source binding, rolling ledger, stage distillation, evidence, and receipts stay colocated under this novel's own research scope; cross-work synthesis remains separate. Do not draft existing FQ001 replacement prose while this learning stage is active.",
   "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
@@ -42,15 +42,16 @@
     "completed_works": ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU"],
     "active_work": "DAO_MU_BI_JI",
     "active_work_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
-    "active_work_coverage": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE__QINLING_SHENSHU__CH1-CH42__VOLUME_03_COMPLETE__YUNDING_TIANGONG__LOGICAL_CH1-CH56__VOLUME_04_COMPLETE__SOURCE_SPLIT_HEADING_VARIANTS_RECORDED",
-    "logical_body_chapters_completed_total": 173,
-    "active_work_next_location": "《蛇沼鬼城篇》第一章",
-    "next_pass": "SEQUENTIAL_CONTINUE__SHEZHAO_GUICHENG_CH1",
+    "active_work_coverage": "QIXING_LUWANGGONG__COMPLETE__NUHAI_QIANSHA__COMPLETE__QINLING_SHENSHU__COMPLETE__YUNDING_TIANGONG__COMPLETE__SHEZHAO_GUICHENG__FULL_SOURCE_ORDER_THROUGH_SECTION_END__SOURCE_NUMBERING_RESETS_RECORDED",
+    "active_work_next_location": "《谜海归巢》第一章《集结号》",
+    "next_pass": "SEQUENTIAL_CONTINUE__MIHAI_GUICAO_CH1",
     "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
     "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
     "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
     "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
-    "rolling_ledger_sha256": "f5b63dda298654f850482669a5f7b24d8ec600346a80bcdfaf35bbf66cb64c61",
+    "rolling_ledger_sha256": "9689a8d96774ca2c190ee536180060600fc8b9be5b9d2178c7eb1c567996cd6c",
+    "rolling_ledger_size_bytes": 95464,
+    "snake_swamp_counting_policy": "FULL_SOURCE_ORDER_SECTION_COVERAGE__NO_FABRICATED_UNIFIED_LOGICAL_CHAPTER_COUNT_AFTER_SOURCE_NUMBERING_RESET",
     "cross_work_synthesis": "DEFERRED_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
   },
   "platform_signing": {
@@ -114,6 +115,7 @@
     "research/masterworks/DAO_MU_BI_JI/EXECUTION_RECEIPT_2026-10-11_QIXING_LUWANGGONG_CH1_CH29.json",
     "research/masterworks/DAO_MU_BI_JI/EXECUTION_RECEIPT_2026-10-11_NUHAI_QIANSHA_CH1_CH46.json",
     "research/masterworks/DAO_MU_BI_JI/EXECUTION_RECEIPT_2026-10-11_QINLING_SHENSHU_CH1_CH42.json",
-    "research/masterworks/DAO_MU_BI_JI/EXECUTION_RECEIPT_2026-10-12_YUNDING_TIANGONG_CH1_CH56.json"
+    "research/masterworks/DAO_MU_BI_JI/EXECUTION_RECEIPT_2026-10-12_YUNDING_TIANGONG_CH1_CH56.json",
+    "research/masterworks/DAO_MU_BI_JI/EXECUTION_RECEIPT_2026-10-12_SHEZHAO_GUICHENG_FULL_SECTION.json"
   ]
 }
