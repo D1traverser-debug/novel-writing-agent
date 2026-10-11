@@ -39,7 +39,7 @@ active_masterwork_status: ACTIVE__SEQUENTIAL_READ_IN_PROGRESS
 当前队列状态：
 - 《十日终焉》：`COMPLETE`。
 - 《诡秘之主》：`COMPLETE`。用户提供标准化主文本已顺序覆盖到“（全书完）”；整本单书蒸馏完成。
-- 《盗墓笔记全集》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`。标准化语料 file id `1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG`，SHA-256 `7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768`。第一卷《七星鲁王宫》CH1–CH29 已顺序学习并完成卷级蒸馏；唯一滚动总账 file id `17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4`，当前 SHA-256 `efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a`。
+- 《盗墓笔记全集》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`。标准化语料 file id `1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG`，SHA-256 `7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768`。第一卷《七星鲁王宫》CH1–CH29、第二卷《怒海潜沙》CH1–CH46 已顺序学习并完成卷级蒸馏；唯一滚动总账 file id `17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4`，当前 SHA-256 `133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc`。
 - 《鬼吹灯全集》：`PENDING`，不得提前切换。
 - 《挪威的森林》：`EXCLUDED_BY_USER`，不读、不蒸馏、不进入跨作品能力结论。
 
@@ -60,4 +60,4 @@ active_masterwork_status: ACTIVE__SEQUENTIAL_READ_IN_PROGRESS
 
 ## 下一步
 
-从《怒海潜沙》第一章《蛇眉铜鱼》继续按用户提供标准化全文顺序学习，持续覆盖同一份《盗墓笔记全集_学习总账.md》。完成《盗墓笔记全集》前，不切换《鬼吹灯全集》，不做跨作品规则晋升，也不起草现有 FQ001 replacement CH1–CH8。
+从《秦岭神树》第一章《老痒出狱》继续按用户提供标准化全文顺序学习，持续覆盖同一份《盗墓笔记全集_学习总账.md》。完成《盗墓笔记全集》前，不切换《鬼吹灯全集》，不做跨作品规则晋升，也不起草现有 FQ001 replacement CH1–CH8。
