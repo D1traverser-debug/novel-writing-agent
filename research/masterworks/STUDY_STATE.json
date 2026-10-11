@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T16:22:00Z",
+  "updated_at": "2026-10-11T16:38:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -27,17 +27,17 @@
     "source_total_lines": 30839,
     "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
     "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
-    "rolling_ledger_sha256": "133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc",
+    "rolling_ledger_sha256": "0d0f6ea68d1a6227bf69c99fae2a0da832a2e7195e6d24b05c272673f7920c9f",
     "coverage": {
-      "sequential_completed": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE",
-      "completed_sections": ["《七星鲁王宫》","《怒海潜沙》"],
-      "current_section": "《秦岭神树》",
+      "sequential_completed": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE__QINLING_SHENSHU__CH1-CH42__VOLUME_03_COMPLETE",
+      "completed_sections": ["《七星鲁王宫》","《怒海潜沙》","《秦岭神树》"],
+      "current_section": "《云顶天宫篇》",
       "current_section_completed_body_chapters": 0,
-      "completed_body_chapters_total": 75,
-      "next_location": "《秦岭神树》第一章《老痒出狱》"
+      "completed_body_chapters_total": 117,
+      "next_location": "《云顶天宫篇》第一章《新的消息》"
     },
-    "next_pass": "SEQUENTIAL_CONTINUE__QINLING_SHENSHU_CH1",
-    "next_action": "Continue the user-provided standardized text sequentially from 《秦岭神树》第一章《老痒出狱》, update the single rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
+    "next_pass": "SEQUENTIAL_CONTINUE__YUNDING_TIANGONG_CH1",
+    "next_action": "Continue the user-provided standardized text sequentially from 《云顶天宫篇》第一章《新的消息》, update the same rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
   },
   "completed_works": [
     {"queue_no":1,"work_id":"SHIRI_ZHONGYAN","title":"十日终焉","status":"SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING","coverage":"SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED","ledger":"/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"},
