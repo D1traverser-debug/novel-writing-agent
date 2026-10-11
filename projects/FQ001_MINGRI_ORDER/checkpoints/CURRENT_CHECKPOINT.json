@@ -1,15 +1,15 @@
 {
   "schema_version": "2.1-github",
-  "checkpoint_version": 14,
+  "checkpoint_version": 15,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
   "display_name_zh": "《凌晨零点，我接到明天的订单》",
   "status": "ACTIVE",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-11T14:20:00Z",
+  "updated_at": "2026-10-11T16:14:00Z",
   "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-  "next_action": "GUI_MI_ZHI_ZHU (《诡秘之主》) has completed full sequential study through the user-provided end marker and whole-book single-work distillation. Stop after this completed work exactly as the user requested; do not begin DAO_MU_BI_JI in this run. Keep the masterwork queue and current focus binding durable. On a later explicit continue, activate DAO_MU_BI_JI from its beginning and continue one book at a time. Do not draft the existing FQ001 replacement CH1-CH8 while the masterwork study queue is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+  "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《怒海潜沙》第一章《蛇眉铜鱼》. 《七星鲁王宫》CH1-CH29 has completed sequential study and volume-level distillation in the single rolling ledger. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.1-github",
@@ -24,35 +24,25 @@
   "next_serial_status": "HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION",
   "production_mode": "FULL_FRONT_ARC_REBASE",
   "story_time": "10月8日 01:47",
-  "user_locked_business_constraints": [
-    "SIGNING_MODE_IMMUTABLE",
-    "SERIALIZATION_MODE_IMMUTABLE"
-  ],
+  "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"],
   "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_MASTERWORK_DISTILLATION",
   "masterwork_learning": {
     "study_state_ref": "research/masterworks/STUDY_STATE.json",
     "registry_ref": "research/masterworks/INDEX.json",
     "policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT",
     "completed_work": "GUI_MI_ZHI_ZHU",
-    "completed_works": [
-      "SHIRI_ZHONGYAN",
-      "GUI_MI_ZHI_ZHU"
-    ],
-    "active_work": "GUI_MI_ZHI_ZHU",
-    "active_work_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
-    "active_work_binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
-    "active_work_coverage": "ALL_8_VOLUMES__1394_CHAPTER_HEADINGS__THROUGH_FULL_BOOK_END",
-    "active_work_next_location": "STOP_AFTER_GUI_MI_COMPLETION__DO_NOT_BEGIN_NEXT_BOOK",
-    "next_pass": "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED",
-    "next_pending_work": "DAO_MU_BI_JI",
-    "next_pending_status": "PENDING_NOT_STARTED",
-    "source_file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
-    "source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
-    "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
-    "rolling_ledger_file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
-    "rolling_ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe",
-    "cross_work_synthesis": "DEFERRED_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE",
-    "stop_after_current_work": true
+    "completed_works": ["SHIRI_ZHONGYAN","GUI_MI_ZHI_ZHU"],
+    "active_work": "DAO_MU_BI_JI",
+    "active_work_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+    "active_work_coverage": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE",
+    "active_work_next_location": "《怒海潜沙》第一章《蛇眉铜鱼》",
+    "next_pass": "SEQUENTIAL_CONTINUE__NUHAI_QIANSHA_CH1",
+    "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
+    "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
+    "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
+    "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
+    "rolling_ledger_sha256": "efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a",
+    "cross_work_synthesis": "DEFERRED_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
   },
   "platform_signing": {
     "attempt_1": "REJECTED_QUALITY_EVALUATION",
@@ -72,33 +62,9 @@
     "front_arc_frozen_architecture_ref": "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
     "project_benchmark_ref": "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
     "architecture_gate": "PASS_WITH_SCOPED_DEFERRALS",
-    "architecture_project_ready_competencies": [
-      "C01",
-      "C02",
-      "C03",
-      "C04",
-      "C05",
-      "C06",
-      "C07",
-      "C08_FRONT_ARC",
-      "C11_ACQUISITION_VOL1",
-      "C14_ARCHITECTURE",
-      "C15",
-      "C17",
-      "C18",
-      "C19",
-      "C20"
-    ],
-    "deferred_to_candidate_prose": [
-      "C09",
-      "C10",
-      "C12",
-      "C13",
-      "C16"
-    ],
-    "late_series_partial": [
-      "C08_LATE_SENDER_ONTOLOGY"
-    ],
+    "architecture_project_ready_competencies": ["C01","C02","C03","C04","C05","C06","C07","C08_FRONT_ARC","C11_ACQUISITION_VOL1","C14_ARCHITECTURE","C15","C17","C18","C19","C20"],
+    "deferred_to_candidate_prose": ["C09","C10","C12","C13","C16"],
+    "late_series_partial": ["C08_LATE_SENDER_ONTOLOGY"],
     "maximum_current_claim": "PROJECT_LEVEL_L3_WHERE_LISTED__NO_L4_TRANSFER_OR_LIVE_OUTCOME_CLAIM"
   },
   "rebase": {
@@ -130,30 +96,14 @@
   ],
   "blockers": [],
   "waiting_on": [],
-  "external_fact_pending": [
-    {
-      "type": "USER_EXTERNAL_FACT_NOT_REQUIRED_FOR_INTERNAL_LEARNING_OR_RESELECTION",
-      "detail": "CH8 Fanqie publication status remains unconfirmed. Do not infer published/withdrawn/replaced state."
-    }
-  ],
+  "external_fact_pending": [{"type":"USER_EXTERNAL_FACT_NOT_REQUIRED_FOR_INTERNAL_LEARNING_OR_RESELECTION","detail":"CH8 Fanqie publication status remains unconfirmed. Do not infer published/withdrawn/replaced state."}],
   "authority_refs": [
-    "ENTRYPOINT.md",
-    "SKILL.md",
-    "protocols/ACTIVE_RULEBOOK.md",
-    "protocols/NOVEL_MASTERY_MODEL.md",
-    "research/masterworks/STUDY_STATE.json",
-    "research/masterworks/INDEX.json",
-    "projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
-    "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
-    "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
-    "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
-    "projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
-    "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md"
+    "ENTRYPOINT.md","SKILL.md","protocols/ACTIVE_RULEBOOK.md","protocols/NOVEL_MASTERY_MODEL.md","research/masterworks/STUDY_STATE.json","research/masterworks/INDEX.json","projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md","projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md","projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md","projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md","projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md","projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md"
   ],
   "derived_artifact_refs": [
     "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档/章节DOCX/CH0008_第8章_药盒上的名字.docx",
     "https://docs.google.com/document/d/1OtBWEt7GrLaGU2cZOJcH1G-wWPIsBy8H/edit?usp=drivesdk",
-    "Google Drive file 1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md#sha256=4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe"
+    "Google Drive file 17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4 /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md#sha256=efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a"
   ],
   "compatibility": {
     "source_storage": "NOVEL_OS Library 1.9.0 (historical direct cutover source)",
@@ -162,6 +112,6 @@
     "result": "COMPATIBLE",
     "business_semantics_replayed": false,
     "same_chat_lease_preserved": true,
-    "owner_evolution": "GUI_MI_ZHI_ZHU is now complete through the full user-provided source and whole-book distillation. The current focus remains bound to GUI_MI_ZHI_ZHU as a completed stop point; DAO_MU_BI_JI remains pending and unstarted until a later explicit continue."
+    "owner_evolution": "DAO_MU_BI_JI is now the active one-book-at-a-time study. 《七星鲁王宫》 is checkpointed complete and 《怒海潜沙》第一章 is the next sequential location."
   }
 }
