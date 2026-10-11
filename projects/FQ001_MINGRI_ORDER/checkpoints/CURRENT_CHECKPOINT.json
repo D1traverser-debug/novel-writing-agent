@@ -1,15 +1,15 @@
 {
   "schema_version": "2.1-github",
-  "checkpoint_version": 15,
+  "checkpoint_version": 16,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
   "display_name_zh": "《凌晨零点，我接到明天的订单》",
   "status": "ACTIVE",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-11T16:14:00Z",
+  "updated_at": "2026-10-11T16:22:00Z",
   "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-  "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《怒海潜沙》第一章《蛇眉铜鱼》. 《七星鲁王宫》CH1-CH29 has completed sequential study and volume-level distillation in the single rolling ledger. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+  "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《秦岭神树》第一章《老痒出狱》. 《七星鲁王宫》CH1-CH29 and 《怒海潜沙》CH1-CH46 have completed sequential study and volume-level distillation in the single rolling ledger. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.1-github",
@@ -34,14 +34,14 @@
     "completed_works": ["SHIRI_ZHONGYAN","GUI_MI_ZHI_ZHU"],
     "active_work": "DAO_MU_BI_JI",
     "active_work_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
-    "active_work_coverage": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE",
-    "active_work_next_location": "《怒海潜沙》第一章《蛇眉铜鱼》",
-    "next_pass": "SEQUENTIAL_CONTINUE__NUHAI_QIANSHA_CH1",
+    "active_work_coverage": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE",
+    "active_work_next_location": "《秦岭神树》第一章《老痒出狱》",
+    "next_pass": "SEQUENTIAL_CONTINUE__QINLING_SHENSHU_CH1",
     "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
     "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
     "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
     "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
-    "rolling_ledger_sha256": "efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a",
+    "rolling_ledger_sha256": "133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc",
     "cross_work_synthesis": "DEFERRED_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
   },
   "platform_signing": {
@@ -103,7 +103,7 @@
   "derived_artifact_refs": [
     "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档/章节DOCX/CH0008_第8章_药盒上的名字.docx",
     "https://docs.google.com/document/d/1OtBWEt7GrLaGU2cZOJcH1G-wWPIsBy8H/edit?usp=drivesdk",
-    "Google Drive file 17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4 /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md#sha256=efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a"
+    "Google Drive file 17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4 /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md#sha256=133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc"
   ],
   "compatibility": {
     "source_storage": "NOVEL_OS Library 1.9.0 (historical direct cutover source)",
@@ -112,6 +112,6 @@
     "result": "COMPATIBLE",
     "business_semantics_replayed": false,
     "same_chat_lease_preserved": true,
-    "owner_evolution": "DAO_MU_BI_JI is now the active one-book-at-a-time study. 《七星鲁王宫》 is checkpointed complete and 《怒海潜沙》第一章 is the next sequential location."
+    "owner_evolution": "DAO_MU_BI_JI is the active one-book-at-a-time study. 《七星鲁王宫》 and 《怒海潜沙》 are checkpointed complete; 《秦岭神树》第一章 is the next sequential location."
   }
 }
