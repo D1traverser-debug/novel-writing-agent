@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T12:18:00Z",
+  "updated_at": "2026-10-11T12:37:40Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -24,18 +24,22 @@
     "title": "诡秘之主",
     "status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
     "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/诡秘之主.txt",
+    "source_file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
     "source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
     "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
-    "rolling_ledger_sha256": "f398a4522575ae11a9cd64595481fcd0885dd439dead9bcb9894c49280e249a1",
+    "rolling_ledger_file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
+    "rolling_ledger_sha256": "4da3cdf81fb55a3bad06abce492b84f9893b661db5a142e83099b06eaf31dac8",
     "coverage": {
-      "sequential_completed": "VOLUME_01_XIAO_CHOU__CH1-CH213_PLUS_VOLUME_SUMMARY",
+      "sequential_completed": "VOLUME_01_XIAO_CHOU__CH1-CH213_PLUS_VOLUME_SUMMARY__VOLUME_02_WU_MIAN_REN__CH1-CH60",
       "completed_volume": "第一部《小丑》",
       "completed_body_chapters": 213,
       "author_volume_summary_included": true,
-      "next_location": "第二部《无面人》CH1"
+      "current_volume": "第二部《无面人》",
+      "current_volume_completed_body_chapters": 60,
+      "next_location": "第二部《无面人》CH61"
     },
-    "next_pass": "SEQUENTIAL_CONTINUE__VOLUME_02_WU_MIAN_REN_CH1",
-    "next_action": "Continue the user-provided standardized text sequentially from 第二部《无面人》CH1, keep updating the single rolling ledger, and do not switch books until the single-work distillation is complete."
+    "next_pass": "SEQUENTIAL_CONTINUE__VOLUME_02_WU_MIAN_REN_CH61",
+    "next_action": "Continue the user-provided standardized text sequentially from 第二部《无面人》CH61, keep updating the single rolling ledger, and do not switch books until the single-work distillation is complete."
   },
   "completed_works": [
     {
