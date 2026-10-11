@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "owner": "NOVEL_WRITING_AGENT",
   "durable_task_state_location": "projects/<task_id>/TASK_MANIFEST.json + projects/<task_id>/checkpoints/CURRENT_CHECKPOINT.json",
   "authoritative_business_evidence_classes": ["Canon ledgers", "FINAL chapter Markdown", "chapter contracts", "hash-bound reviews/acceptance", "publication log", "current task/checkpoint state"],
@@ -7,16 +7,27 @@
   "cache_or_reference_only_stores": [
     "Universal Continuity owner/task registries",
     "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档 (derived artifact vault only)",
+    "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库 (explicit user-source and learning-evidence reference only; never task-state or rule authority)",
     "Notion legacy source surfaces if encountered; never execution authority",
     "chat/model memory"
   ],
-  "stable_identity_strategy": "stable task_id + canonical repo path + source SHA256 for FINAL prose + Git blob SHA/version for mutations",
-  "read_freshness_requirements": "Read owner main on resume; re-read exact task/checkpoint and Universal lease immediately before material writes. Google Drive is read only for an explicitly needed derived artifact, never to resolve business truth.",
-  "mutation_conflict_strategy": "GitHub blob-SHA or branch-head compare-and-swap; fail closed on mismatch; additionally require current Universal writer lease.",
-  "post_write_verification_method": "Re-read authoritative owner file(s) from main and compare intended stage/next_action/hash/publication facts before reporting COMMITTED. Derived artifact copies must be separately read back from the artifact vault when created or moved.",
-  "upstream_to_downstream_invalidation_rule": "Any FINAL prose body hash change invalidates dependent reviews, acceptance, derived DOCX parity and downstream checkpoint references until re-run/rebound.",
-  "delete_and_retention_rules": "Do not delete published FINAL/Canon history as cleanup. Destructive mutation requires stable identity and dependency check. External publication deletion/replacement remains user-controlled. Current derived DOCX/cover/platform evidence and historical migration ZIP snapshots may be retained in the Google Drive artifact vault; superseded executable copies must not remain active outside GitHub.",
-  "superseded_artifact_cleanup_rule": "The old ChatGPT Library /NOVEL_OS_小说系统 executable tree was removed after verified artifact copy. Notion or Google Drive legacy material must never remain an active recovery/checkpoint/Skill/Canon authority; retain only clearly isolated historical snapshots or derived artifacts.",
+  "stable_identity_strategy": "stable task_id + canonical repo path + source SHA256 for FINAL prose or masterwork source + Git blob SHA/version for mutations + provider file ID for explicitly referenced external source/learning artifacts",
+  "read_freshness_requirements": "Read owner main on resume; re-read exact task/checkpoint and Universal lease immediately before material writes. Google Drive may be read only when the current owner state explicitly designates an exact source or learning-evidence artifact with stable provider identity and provenance; Drive never resolves task stage, next_action, Canon, release or rule authority.",
+  "mutation_conflict_strategy": "GitHub blob-SHA or branch-head compare-and-swap; fail closed on mismatch; additionally require current Universal writer lease. For explicitly designated Drive learning-evidence files, preserve stable provider file ID and verify replacement bytes/metadata by reread before binding the new hash into GitHub state.",
+  "post_write_verification_method": "Re-read authoritative owner file(s) from main and compare intended stage/next_action/hash/publication facts before reporting COMMITTED. Derived artifact or explicitly designated external learning-evidence mutations must be separately read back from the provider and hash/metadata verified before the owner checkpoint references the new version.",
+  "upstream_to_downstream_invalidation_rule": "Any FINAL prose body hash change invalidates dependent reviews, acceptance, derived DOCX parity and downstream checkpoint references until re-run/rebound. Any designated masterwork source hash change invalidates unverified downstream learning coverage; a rolling-ledger hash change must be rebound into STUDY_STATE before future recovery relies on that ledger version.",
+  "delete_and_retention_rules": "Do not delete published FINAL/Canon history as cleanup. Destructive mutation requires stable identity and dependency check. External publication deletion/replacement remains user-controlled. Current derived DOCX/cover/platform evidence and historical migration ZIP snapshots may be retained in the Google Drive artifact vault. User-provided masterwork source files and their single rolling learning ledger may remain in the explicitly designated research library; they are source/learning evidence, not executable business authority. Superseded executable copies must not remain active outside GitHub.",
+  "superseded_artifact_cleanup_rule": "The old ChatGPT Library /NOVEL_OS_小说系统 executable tree was removed after verified artifact copy. Notion or Google Drive legacy material must never remain an active recovery/checkpoint/Skill/Canon authority; retain only clearly isolated historical snapshots, derived artifacts, or explicitly designated source/learning evidence with GitHub provenance pointers.",
   "external_artifact_vault_if_any": "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档 (folder 1Hi4UmnomNAjANgY9g8NApueI_ToKixw6) stores current chapter DOCX deliverables, cover/platform evidence, and historical migration ZIP snapshots. Presence alone never overrides GitHub business authority.",
+  "external_learning_evidence_if_any": {
+    "provider": "Google Drive",
+    "root": "/ChatGPT/NOVEL_OS_名作蒸馏研究库",
+    "role": "EXPLICIT_USER_SOURCE_AND_LEARNING_EVIDENCE_ONLY",
+    "business_authority": false,
+    "task_state_authority": false,
+    "rule_authority": false,
+    "activation": "Only when research/masterworks/STUDY_STATE.json or another current owner authority explicitly names the exact source/ledger with stable provider identity/provenance.",
+    "required_bindings": ["provider file ID or canonical URL", "source/ledger SHA256 when material", "work_id", "coverage/next-location binding in GitHub STUDY_STATE"]
+  },
   "library_post_cutover_state": "NOVEL_OS executable tree removed; no novel recovery authority remains in ChatGPT Library."
 }
