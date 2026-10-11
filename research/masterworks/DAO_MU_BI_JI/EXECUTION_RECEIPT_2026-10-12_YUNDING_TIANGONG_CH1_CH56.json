@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "SINGLE_WORK_SEQUENTIAL_STUDY_STAGE_EXECUTION",
+  "work_id": "DAO_MU_BI_JI",
+  "title": "盗墓笔记全集",
+  "section": "《云顶天宫篇》",
+  "status": "VOLUME_LEVEL_DISTILLATION_COMPLETE__SINGLE_WORK_STAGE_EVIDENCE_ONLY",
+  "executed_at_utc": "2026-10-11T16:59:00Z",
+  "executed_at_asia_tokyo": "2026-10-12T01:59:00+09:00",
+  "source": {
+    "file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
+    "sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
+    "size_bytes": 4324861,
+    "total_lines": 30839,
+    "scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY"
+  },
+  "coverage": {
+    "logical_chapters": "CH1-CH56",
+    "logical_chapter_count": 56,
+    "source_heading_anomalies": "SPLIT_OR_REPEATED_HEADING_VARIANTS_PRESENT__PRESERVED_AS_SOURCE_ANOMALY__NOT_COUNTED_AS_EXTRA_LOGICAL_CHAPTERS",
+    "end_marker_verified": true,
+    "end_marker": "云顶天宫完",
+    "next_section_marker_verified": true,
+    "next_section": "《蛇沼鬼城篇》",
+    "next_location": "《蛇沼鬼城篇》第一章",
+    "cumulative_logical_body_chapters_completed": 173
+  },
+  "rolling_ledger": {
+    "drive_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
+    "path": "/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
+    "sha256": "f5b63dda298654f850482669a5f7b24d8ec600346a80bcdfaf35bbf66cb64c61",
+    "size_bytes": 69329,
+    "update_mode": "IN_PLACE_SAME_FILE_ID__ONE_ROLLING_LEDGER_PER_WORK"
+  },
+  "storage_policy": {
+    "per_work_colocation": true,
+    "rule": "SOURCE_BINDING__ROLLING_LEDGER__STAGE_DISTILLATION__EVIDENCE_AND_EXECUTION_RECEIPTS_STAY_IN_THIS_NOVEL_WORK_SCOPE",
+    "internal_volume_rule": "INTERNAL_VOLUMES_SHARE_THE_BOOK_LEVEL_ROLLING_LEDGER__DO_NOT_CREATE_SEPARATE_RESEARCH_SILOS",
+    "cross_work_rule": "CROSS_WORK_SYNTHESIS_REMAINS_SEPARATE_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
+  },
+  "distillation_boundary": {
+    "evidence_level": "SINGLE_WORK_STAGE_EVIDENCE_ONLY",
+    "active_rule_promotion": false,
+    "cross_work_synthesis": "DEFERRED",
+    "next_book_started": false,
+    "gui_chui_deng_status": "PENDING",
+    "fq001_replacement_prose_written": false
+  },
+  "resume": {
+    "active_work": "DAO_MU_BI_JI",
+    "next_pass": "SEQUENTIAL_CONTINUE__SHEZHAO_GUICHENG_CH1",
+    "next_location": "《蛇沼鬼城篇》第一章"
+  }
+}
