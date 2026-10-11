@@ -10,27 +10,22 @@
     "allowed_sources": ["OFFICIAL_OR_AUTHORIZED_FREE_READING","USER_LAWFULLY_PROVIDED_TEXT","AUTHOR_INTERVIEW_OR_CREATION_ESSAY","LAWFUL_CRITICISM_AND_READER_FEEDBACK"],
     "persisted_material": "ABSTRACTED_MECHANISMS_LOCATION_REFS_MINIMAL_QUOTES_ONLY__USER_PROVIDED_SOURCE_MAY_REMAIN_IN_USER_RESEARCH_STORAGE"
   },
-  "active_studies": [
-    {
-      "work_id": "DAO_MU_BI_JI",
-      "title": "盗墓笔记全集",
-      "source_status": "USER_LAWFULLY_PROVIDED_STANDARDIZED_TEXT",
-      "execution_authority": false,
-      "current_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
-      "completed_passes": [
-        "QIXING_LUWANGGONG__CH1_CH29__VOLUME_01_COMPLETE",
-        "NUHAI_QIANSHA__CH1_CH46__VOLUME_02_COMPLETE"
-      ],
-      "next_pass": "SEQUENTIAL_CONTINUE__QINLING_SHENSHU_CH1",
-      "progress_ref": "research/masterworks/STUDY_STATE.json",
-      "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
-      "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
-      "rolling_ledger_sha256": "133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc",
-      "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
-      "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
-      "queue_ref": "research/masterworks/STUDY_STATE.json"
-    }
-  ],
+  "active_studies": [{
+    "work_id": "DAO_MU_BI_JI",
+    "title": "盗墓笔记全集",
+    "source_status": "USER_LAWFULLY_PROVIDED_STANDARDIZED_TEXT",
+    "execution_authority": false,
+    "current_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+    "completed_passes": ["QIXING_LUWANGGONG__CH1_CH29__VOLUME_01_COMPLETE","NUHAI_QIANSHA__CH1_CH46__VOLUME_02_COMPLETE","QINLING_SHENSHU__CH1_CH42__VOLUME_03_COMPLETE"],
+    "next_pass": "SEQUENTIAL_CONTINUE__YUNDING_TIANGONG_CH1",
+    "progress_ref": "research/masterworks/STUDY_STATE.json",
+    "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
+    "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
+    "rolling_ledger_sha256": "0d0f6ea68d1a6227bf69c99fae2a0da832a2e7195e6d24b05c272673f7920c9f",
+    "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
+    "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
+    "queue_ref": "research/masterworks/STUDY_STATE.json"
+  }],
   "completed_studies": [
     {
       "work_id": "SHIRI_ZHONGYAN",
@@ -39,24 +34,8 @@
       "source_status": "USER_LAWFULLY_PROVIDED_STANDARDIZED_TEXT",
       "execution_authority": false,
       "target_competencies": ["C02","C03","C04","C05","C07","C08","C09","C10","C11","C12","C13","C14","C15","C16","C17","C20"],
-      "completed_passes": [
-        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
-        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
-        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md",
-        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_04_MYSTERY_WORLD_RULES.md",
-        "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md"
-      ],
-      "fulltext_coverage": {
-        "user_source_sha256": "4236619fe12174798682716433d425e2351dac643c9fcb014f6876356ce667ba",
-        "user_source_numbered_mainline_through": 1359,
-        "user_source_chapter_heading_occurrences": 1360,
-        "source_numbering_anomaly": "two distinct headings labelled CH1357",
-        "sequential_study_completed": "SOURCE_ORDER_1-1360",
-        "body_numbering": "CH1-CH1359",
-        "study_scope": "USER_PROVIDED_TEXT_ONLY_PER_USER_DIRECTION",
-        "official_supplement_status": "OUT_OF_SCOPE_FOR_THIS_STUDY",
-        "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"
-      },
+      "completed_passes": ["research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md","research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md","research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md","research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_04_MYSTERY_WORLD_RULES.md","research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md"],
+      "fulltext_coverage": {"user_source_sha256":"4236619fe12174798682716433d425e2351dac643c9fcb014f6876356ce667ba","user_source_numbered_mainline_through":1359,"user_source_chapter_heading_occurrences":1360,"source_numbering_anomaly":"two distinct headings labelled CH1357","sequential_study_completed":"SOURCE_ORDER_1-1360","body_numbering":"CH1-CH1359","study_scope":"USER_PROVIDED_TEXT_ONLY_PER_USER_DIRECTION","official_supplement_status":"OUT_OF_SCOPE_FOR_THIS_STUDY","rolling_ledger":"Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"},
       "current_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
       "next_pass": "NEXT_BOOK__GUI_MI_ZHI_ZHU",
       "promoted_reference_mechanisms": ["ANSWER_AWARE_MYSTERY_OUTLINING","READER_FEEDBACK_CLUSTERING","DOMAIN_RESEARCH_TRIGGERED_BY_DRAMA","FINITE_MAINLINE_UNDER_EPISODIC_SURFACE","RETROSPECTIVE_CHARACTER_RECONTEXTUALIZATION","FOCALIZED_FUNCTIONAL_ENVIRONMENT","CHARACTER_PRIVATE_DECISION_MODEL","INDEPENDENT_ENSEMBLE_AGENCY","VIEWPOINT_BOUND_TERMINOLOGY_WITH_FAIR_RECONTEXTUALIZATION","RULE_MAKER_PARTICIPANT_ADVERSARIAL_SIMULATION","LOCAL_UNIT_TO_MAINLINE_ANCHOR"],
@@ -71,21 +50,7 @@
       "execution_authority": false,
       "target_competencies": ["C01","C02","C03","C04","C05","C06","C07","C08","C09","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20"],
       "completed_passes": ["VOLUME_01_XIAO_CHOU","VOLUME_02_WU_MIAN_REN","VOLUME_03_LV_XING_JIA","VOLUME_04_BU_SI_ZHE","VOLUME_05_HONG_JI_SI","VOLUME_06_ZHU_GUANG_ZHE","VOLUME_07_DAO_DIAO_REN","VOLUME_08_YU_ZHE","WHOLE_BOOK_SINGLE_WORK_DISTILLATION"],
-      "fulltext_coverage": {
-        "user_source_file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
-        "user_source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
-        "source_total_lines": 117803,
-        "chapter_heading_count": 1394,
-        "sequential_study_completed": "ALL_8_VOLUMES__THROUGH_FULL_BOOK_END",
-        "full_book_end_verified": true,
-        "full_book_end_marker": "（全书完）",
-        "study_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_PER_USER_DIRECTION",
-        "author_volume_summaries_included": ["VOLUME_01","VOLUME_02","VOLUME_03","VOLUME_04","VOLUME_07"],
-        "author_volume_summaries_absent_in_user_source": ["VOLUME_05","VOLUME_06","VOLUME_08"],
-        "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
-        "rolling_ledger_file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
-        "rolling_ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe"
-      },
+      "fulltext_coverage": {"user_source_file_id":"1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC","user_source_sha256":"25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489","source_total_lines":117803,"chapter_heading_count":1394,"sequential_study_completed":"ALL_8_VOLUMES__THROUGH_FULL_BOOK_END","full_book_end_verified":true,"full_book_end_marker":"（全书完）","study_scope":"USER_PROVIDED_STANDARDIZED_TEXT_ONLY_PER_USER_DIRECTION","author_volume_summaries_included":["VOLUME_01","VOLUME_02","VOLUME_03","VOLUME_04","VOLUME_07"],"author_volume_summaries_absent_in_user_source":["VOLUME_05","VOLUME_06","VOLUME_08"],"rolling_ledger":"Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md","rolling_ledger_file_id":"1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo","rolling_ledger_sha256":"4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe"},
       "current_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
       "next_pass": "NEXT_BOOK__DAO_MU_BI_JI",
       "cross_work_status": "PENDING_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE",
