@@ -11,6 +11,7 @@ production_mode: FULL_FRONT_ARC_REBASE
 production_status: MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING
 next_serial_chapter: 9
 next_serial_status: HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION
+active_masterwork_id: GUI_MI_ZHI_ZHU
 
 ## 当前用户锁定约束
 
@@ -20,7 +21,7 @@ next_serial_status: HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION
 
 除此以外，题材、书名、世界观、主角、人物关系、总纲、卷纲、前段架构、既有《明日订单》候选设计均允许在名作学习完成后重新竞争或推倒重建。
 
-历史已发布/已验收事实不会因此被删除：CH1–CH7 的历史发布事实、CH8 的历史 FINAL/PUBLISH_READY 状态、Canon v12、正文 hash、签约失败事实仍作为历史业务证据保留。外部平台撤回/替换/重新发布仍由用户控制。
+历史已发布/已验收事实不会因此被删除：CH1–CH7 的历史发布事实、CH8 的历史 FINAL/PUBLISH_READY 状态、Canon v12、正文 hash、签约失败事实仍作为历史业务证据保留。**CH8 外部是否已在番茄发布仍未确认。** 外部平台撤回/替换/重新发布仍由用户控制。
 
 ## 当前执行优先级
 
