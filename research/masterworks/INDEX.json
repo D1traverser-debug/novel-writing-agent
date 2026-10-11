@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "ACTIVE",
   "protocol_ref": "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
   "authority_role": "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY",
@@ -12,23 +12,36 @@
       "AUTHOR_INTERVIEW_OR_CREATION_ESSAY",
       "LAWFUL_CRITICISM_AND_READER_FEEDBACK"
     ],
-    "persisted_material": "ABSTRACTED_MECHANISMS_LOCATION_REFS_MINIMAL_QUOTES_ONLY"
+    "persisted_material": "ABSTRACTED_MECHANISMS_LOCATION_REFS_MINIMAL_QUOTES_ONLY__USER_PROVIDED_SOURCE_MAY_REMAIN_IN_USER_RESEARCH_STORAGE"
   },
   "active_studies": [
     {
       "work_id": "SHIRI_ZHONGYAN",
       "title": "十日终焉",
       "author": "杀虫队队员",
-      "source_status": "OFFICIAL_FANQIE_FREE_READING_PLUS_PUBLIC_AUTHOR_INTERVIEWS",
+      "source_status": "USER_LAWFULLY_PROVIDED_MAINLINE_TEXT_THROUGH_CH1359_PLUS_OFFICIAL_FANQIE_FREE_READING_AND_PUBLIC_AUTHOR_INTERVIEWS",
       "execution_authority": false,
       "target_competencies": ["C02","C03","C04","C05","C07","C08","C09","C10","C11","C12","C13","C14","C15","C16","C17","C20"],
       "completed_passes": [
         "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
         "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
         "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md",
-        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_04_MYSTERY_WORLD_RULES.md"
+        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_04_MYSTERY_WORLD_RULES.md",
+        "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md"
       ],
-      "current_status": "OPENING_CHARACTER_ENSEMBLE_MYSTERY_WORLD_DISTILLED__PROJECT_TRANSFER_PENDING",
+      "fulltext_coverage": {
+        "user_source_sha256": "4236619fe12174798682716433d425e2351dac643c9fcb014f6876356ce667ba",
+        "user_source_numbered_mainline_through": 1359,
+        "user_source_chapter_heading_occurrences": 1360,
+        "source_numbering_anomaly": "two distinct headings labelled CH1357",
+        "fanqie_current_catalog_chapters": 1496,
+        "current_catalog_supplement_gap": "CH1360-CH1496",
+        "deep_read_completed": "CH1-CH10",
+        "deep_read_pending": "CH11-CH1359",
+        "official_supplement_pending": "CH1360-CH1496",
+        "coverage_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/十日终焉/00_全书索引与进度/十日终焉_1496章全书覆盖台账"
+      },
+      "current_status": "USER_FULLTEXT_MAINLINE_INGESTED__CH1_CH10_DEEP_READ__SEQUENTIAL_FULL_COVERAGE_ACTIVE",
       "promoted_reference_mechanisms": [
         "ANSWER_AWARE_MYSTERY_OUTLINING",
         "READER_FEEDBACK_CLUSTERING",
@@ -68,7 +81,7 @@
         "MANY_POWERS_OR_RULES_AS_QUALITY_TARGET",
         "COPIED_SENTENCE_PLOT_RULE_CHARACTER_OR_REVEAL"
       ],
-      "next_pass": "PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE"
+      "next_pass": "SEQUENTIAL_FULLTEXT_CH11_PLUS_PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE"
     }
   ]
 }
