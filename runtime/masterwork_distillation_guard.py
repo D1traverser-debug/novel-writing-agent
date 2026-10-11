@@ -13,16 +13,20 @@ def need(rel):
 
 protocol_p = need("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 index_p = need("research/masterworks/INDEX.json")
-pass1_p = need("research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md")
-pass2_p = need("research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md")
+pass_paths = [
+    "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
+    "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
+    "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md",
+    "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_04_MYSTERY_WORLD_RULES.md",
+]
+pass_files = [need(rel) for rel in pass_paths]
 canonical_idx_p = need("continuity/TASK_INDEX.json")
 alias_idx_p = need("TASK_INDEX.json")
 
 if not problems:
     protocol = protocol_p.read_text(encoding="utf-8")
     registry = json.loads(index_p.read_text(encoding="utf-8"))
-    pass1 = pass1_p.read_text(encoding="utf-8")
-    pass2 = pass2_p.read_text(encoding="utf-8")
+    passes = [p.read_text(encoding="utf-8") for p in pass_files]
     canonical = json.loads(canonical_idx_p.read_text(encoding="utf-8"))
     alias = json.loads(alias_idx_p.read_text(encoding="utf-8"))
 
@@ -34,8 +38,6 @@ if not problems:
     for concept in ("Psychological portrayal","Environment / atmosphere","Plot progression","Dialogue","Emotion","Quality audit"):
         if concept not in protocol:
             problems.append("microcraft-gap:"+concept)
-    if "No prose imitation, phrase borrowing or plot cloning" in protocol:
-        pass
     if "盗版" in protocol and "禁止" not in protocol:
         problems.append("copyright-boundary-ambiguous")
 
@@ -56,27 +58,41 @@ if not problems:
         study = studies[0]
         if study.get("execution_authority") is not False:
             problems.append("masterwork-promoted-to-execution-authority")
-        expected_passes = {
-            "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
-            "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
-        }
-        if not expected_passes.issubset(set(study.get("completed_passes", []))):
+        if not set(pass_paths).issubset(set(study.get("completed_passes", []))):
             problems.append("study-pass-registry-drift")
-        if "MORE_COMPLEXITY_IS_ALWAYS_BETTER" not in study.get("explicitly_not_promoted", []):
-            problems.append("anti-overfit-missing")
-        if study.get("next_pass") != "PASS_03_CHARACTER_ENSEMBLE_AND_ATTACHMENT":
+        for rejected in (
+            "MORE_COMPLEXITY_IS_ALWAYS_BETTER",
+            "MANDATORY_AUTOBIOGRAPHY_CHAPTERS",
+            "DEATH_GAME_TEMPLATE",
+            "HYPERINTELLIGENT_PROTAGONIST_TEMPLATE",
+        ):
+            if rejected not in study.get("explicitly_not_promoted", []):
+                problems.append("anti-overfit-missing:"+rejected)
+        if study.get("next_pass") != "PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE":
             problems.append("next-pass-drift")
+        if study.get("current_status") != "OPENING_CHARACTER_ENSEMBLE_MYSTERY_WORLD_DISTILLED__PROJECT_TRANSFER_PENDING":
+            problems.append("study-status-drift")
 
-    for label, text in (("pass1", pass1), ("pass2", pass2)):
+    for i, text in enumerate(passes, start=1):
         if "status: LEARNING_EVIDENCE" not in text:
-            problems.append(label+":authority-inflation")
-        if "NOT PROMOTED" not in text and label == "pass1":
-            problems.append(label+":no-negative-promotion-boundary")
-    if "Current assurance: `OPENING_PACKET_LEARNING_EVIDENCE__PROJECT_TRANSFER_PENDING`" not in pass2:
+            problems.append(f"pass{i}:authority-inflation")
+    if "NOT PROMOTED" not in passes[0]:
+        problems.append("pass1:no-negative-promotion-boundary")
+    if "Current assurance: `OPENING_PACKET_LEARNING_EVIDENCE__PROJECT_TRANSFER_PENDING`" not in passes[1]:
         problems.append("pass2-claim-boundary")
+    if "Current assurance: `CHARACTER_ENSEMBLE_LEARNING_EVIDENCE__PROJECT_TRANSFER_PENDING`" not in passes[2]:
+        problems.append("pass3-claim-boundary")
+    if "Current assurance: `MYSTERY_WORLD_LEARNING_EVIDENCE__PROJECT_TRANSFER_PENDING`" not in passes[3]:
+        problems.append("pass4-claim-boundary")
     for skill in ("Psychological portrayal","Environment and spatial description","Dialogue and voice","Plot progression","Chapter architecture / hooks","Emotion and attachment"):
-        if skill not in pass2:
+        if skill not in passes[1]:
             problems.append("pass2-skill-gap:"+skill)
+    for skill in ("Independent agency","Character familiarity","Voice","Attachment object","Emotional progression"):
+        if skill.lower() not in passes[2].lower():
+            problems.append("pass3-skill-gap:"+skill)
+    for skill in ("Rule design","Worldbuilding","Information asymmetry","Mystery ladder","Complexity is not the goal"):
+        if skill.lower() not in passes[3].lower():
+            problems.append("pass4-skill-gap:"+skill)
 
     c_learning = canonical.get("system", {}).get("masterwork_learning", {})
     a_learning = alias.get("system", {}).get("masterwork_learning", {})
@@ -95,6 +111,8 @@ result = {
     "status": "PASS" if not problems else "FAIL",
     "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@1.0",
     "active_study": "SHIRI_ZHONGYAN",
+    "completed_passes": 4,
+    "next_pass": "PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE",
     "assurance": "LEARNING_EVIDENCE_ONLY__PROJECT_TRANSFER_PENDING",
     "failures": problems,
 }
