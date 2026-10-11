@@ -8,6 +8,8 @@ sys.path.insert(0, str(ROOT / "runtime"))
 from release_evidence_guard import validate_repository as validate_release_evidence
 
 problems = []
+TERMINAL = "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
+ACTIVE_STATUSES = {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS"}
 
 
 def need(rel):
@@ -15,6 +17,11 @@ def need(rel):
     if not p.exists():
         problems.append(f"missing:{rel}")
     return p
+
+
+def load(rel):
+    return json.loads((ROOT / rel).read_text(encoding="utf-8"))
+
 
 required = [
     "ENTRYPOINT.md","PROTOCOL.md","SKILL.md","AUTHORITY_STATUS.json","CONTINUITY_ADAPTER.json","TASK_INDEX.json",
@@ -31,18 +38,23 @@ required = [
     "projects/FQ001_MINGRI_ORDER/canon/THREADS.json","projects/FQ001_MINGRI_ORDER/canon/FORESHADOW.jsonl",
     "projects/FQ001_MINGRI_ORDER/canon/TIMELINE.jsonl","projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json",
     "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md","projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
-    "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md","audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md",
-    "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md","audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
-    "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md","audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
+    "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md","audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
+    "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md","audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
+    "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
 ]
 for rel in required:
     need(rel)
 
-m = json.loads((TASK / "TASK_MANIFEST.json").read_text(encoding="utf-8"))
-cp = json.loads((TASK / "checkpoints/CURRENT_CHECKPOINT.json").read_text(encoding="utf-8"))
+m = load("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
+cp = load("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
+study = load("research/masterworks/STUDY_STATE.json")
+registry = load("research/masterworks/INDEX.json")
+idx = load("continuity/TASK_INDEX.json")
+alias = load("TASK_INDEX.json")
+adapter = load("CONTINUITY_ADAPTER.json")
+
 expected_stage = "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING"
 expected_next_serial_status = "HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION"
-
 for f in ("task_id","current_stage","next_action","canon_version","last_final_chapter","last_final_hash","next_serial_chapter","next_serial_status"):
     if m.get(f) != cp.get(f):
         problems.append("checkpoint-drift:" + f)
@@ -68,40 +80,53 @@ expected_hashes = {
 }
 for n, h in expected_hashes.items():
     p = TASK / f"manuscript/CH{n:04d}_FINAL.md"
-    if not p.exists():
-        problems.append(f"missing-published:{n}")
-    elif hashlib.sha256(p.read_bytes()).hexdigest() != h:
+    if not p.exists() or hashlib.sha256(p.read_bytes()).hexdigest() != h:
         problems.append(f"historical-final-hash:{n}")
 if hashlib.sha256((TASK / "manuscript/CH0008_FINAL.md").read_bytes()).hexdigest() != m.get("last_final_hash"):
     problems.append("ch8-hash")
 
 state_text = (TASK / "CURRENT_STATE.md").read_text(encoding="utf-8")
-for token in (
-    "canon_version: 12","last_final_chapter: 8","next_serial_chapter: 9",expected_stage,
-    "SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE","GUI_MI_ZHI_ZHU","EXCLUDED_BY_USER",
-):
+for token in ("canon_version: 12","last_final_chapter: 8","next_serial_chapter: 9",expected_stage,"SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE","EXCLUDED_BY_USER"):
     if token not in state_text:
         problems.append("current-state:" + token)
 if "CH8" not in state_text or "仍未确认" not in state_text:
     problems.append("publication-state")
 
-study = json.loads((ROOT / "research/masterworks/STUDY_STATE.json").read_text(encoding="utf-8"))
-registry = json.loads((ROOT / "research/masterworks/INDEX.json").read_text(encoding="utf-8"))
 if study.get("study_policy", {}).get("mode") != "ONE_BOOK_AT_A_TIME":
     problems.append("study-policy")
 if set(study.get("user_locked_business_constraints", [])) != {"SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"}:
     problems.append("locked-business-constraints")
-if study.get("active_work", {}).get("work_id") != "GUI_MI_ZHI_ZHU":
-    problems.append("active-masterwork")
-if not any(w.get("work_id") == "SHIRI_ZHONGYAN" and w.get("status") == "COMPLETE" for w in study.get("queue", [])):
-    problems.append("shiri-not-complete")
-if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in study.get("queue", [])):
+current = study.get("active_work", {})
+current_id = current.get("work_id")
+current_status = current.get("status")
+if not current_id:
+    problems.append("active-masterwork-missing")
+if m.get("masterwork_learning", {}).get("active_work") != current_id or cp.get("masterwork_learning", {}).get("active_work") != current_id:
+    problems.append("project-masterwork-binding-drift")
+if m.get("masterwork_learning", {}).get("active_work_status") != current_status or cp.get("masterwork_learning", {}).get("active_work_status") != current_status:
+    problems.append("project-masterwork-status-drift")
+if m.get("masterwork_learning", {}).get("active_work_next_location") != current.get("coverage", {}).get("next_location"):
+    problems.append("project-masterwork-location-drift")
+if cp.get("masterwork_learning", {}).get("active_work_next_location") != current.get("coverage", {}).get("next_location"):
+    problems.append("checkpoint-masterwork-location-drift")
+
+queue = study.get("queue", [])
+queue_by_id = {w.get("work_id"): w for w in queue}
+if current_id not in queue_by_id:
+    problems.append("active-masterwork-not-in-queue")
+if current_status in ACTIVE_STATUSES:
+    actives = [w for w in queue if w.get("status") == "ACTIVE"]
+    if len(actives) != 1 or actives[0].get("work_id") != current_id:
+        problems.append("queue-active-masterwork-drift")
+if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in queue):
     problems.append("norwegian-not-excluded")
-if registry.get("active_studies", [{}])[0].get("work_id") != "GUI_MI_ZHI_ZHU":
+completed_ids = {w.get("work_id") for w in queue if w.get("status") == "COMPLETE"}
+registry_completed = {s.get("work_id") for s in registry.get("completed_studies", [])}
+if not completed_ids.issubset(registry_completed):
+    problems.append("registry-completed-drift")
+active_studies = registry.get("active_studies", [])
+if len(active_studies) != 1 or active_studies[0].get("work_id") != current_id:
     problems.append("registry-active-masterwork")
-completed = {s.get("work_id"): s for s in registry.get("completed_studies", [])}
-if completed.get("SHIRI_ZHONGYAN", {}).get("current_status") != "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING":
-    problems.append("registry-shiri-completion")
 
 contract = (TASK / "NEXT_CHAPTER_CONTRACT.md").read_text(encoding="utf-8")
 if "chapter_no: 9" not in contract or "status: SUPERSEDED_BY_FULL_FRONT_ARC_REBASE" not in contract or "Do not write old CH9 next" not in contract:
@@ -109,18 +134,16 @@ if "chapter_no: 9" not in contract or "status: SUPERSEDED_BY_FULL_FRONT_ARC_REBA
 
 rebase = m.get("rebase", {})
 cp_rebase = cp.get("rebase", {})
-if rebase.get("authorized_by_user") is not True:
-    problems.append("rebase-user-authorization")
-if rebase.get("mode") != "CONTROLLED_FULL_FRONT_ARC_REBASE":
-    problems.append("rebase-mode")
-if rebase.get("execution_status") != "SUSPENDED_PENDING_POST_DISTILLATION_STORY_RESELECTION":
-    problems.append("rebase-suspension")
-if rebase.get("old_finals_role") != "IMMUTABLE_HISTORICAL_BASELINE":
-    problems.append("rebase-old-finals-role")
-if rebase.get("frozen_architecture_role") != "HISTORICAL_CANDIDATE_NOT_NEXT_ACTION":
-    problems.append("rebase-architecture-role")
-if rebase.get("candidate_promotion") != "BLOCKED_UNTIL_POST_DISTILLATION_STORY_RESELECTION":
-    problems.append("rebase-promotion-block")
+for key, expected in {
+    "authorized_by_user": True,
+    "mode": "CONTROLLED_FULL_FRONT_ARC_REBASE",
+    "execution_status": "SUSPENDED_PENDING_POST_DISTILLATION_STORY_RESELECTION",
+    "old_finals_role": "IMMUTABLE_HISTORICAL_BASELINE",
+    "frozen_architecture_role": "HISTORICAL_CANDIDATE_NOT_NEXT_ACTION",
+    "candidate_promotion": "BLOCKED_UNTIL_POST_DISTILLATION_STORY_RESELECTION",
+}.items():
+    if rebase.get(key) != expected:
+        problems.append("rebase:" + key)
 for f in ("authorized_by_user","scope","mode","execution_status","old_finals_role","old_chapter_boundaries_binding","old_ch9_contract_status","candidate_promotion","series_master_outline_ref","frozen_architecture_ref","frozen_architecture_role"):
     if cp_rebase.get(f) != rebase.get(f):
         problems.append("rebase-checkpoint-drift:" + f)
@@ -132,15 +155,13 @@ for token in [f"C{i:02d}" for i in range(1,21)]:
 for level in ("L0","L1","L2","L3","L4"):
     if level not in mastery:
         problems.append("mastery-level-missing:" + level)
-mastery_state = m.get("mastery", {})
-cp_mastery = cp.get("mastery", {})
 for f in ("system_model_ref","series_master_outline_ref","front_arc_frozen_architecture_ref","project_benchmark_ref","architecture_gate","maximum_current_claim"):
-    if cp_mastery.get(f) != mastery_state.get(f):
+    if cp.get("mastery", {}).get(f) != m.get("mastery", {}).get(f):
         problems.append("mastery-checkpoint-drift:" + f)
 
-chars = json.loads((TASK / "canon/CHARACTERS.json").read_text(encoding="utf-8"))
-threads = json.loads((TASK / "canon/THREADS.json").read_text(encoding="utf-8"))
-prom = json.loads((TASK / "canon/READER_PROMISES.json").read_text(encoding="utf-8"))
+chars = load("projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json")
+threads = load("projects/FQ001_MINGRI_ORDER/canon/THREADS.json")
+prom = load("projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json")
 if not any(c.get("name") == "许知微" and c.get("last_updated_chapter") == 8 for c in chars):
     problems.append("canon-characters")
 if threads.get("T005", {}).get("last_progress_chapter") != 8:
@@ -148,31 +169,30 @@ if threads.get("T005", {}).get("last_progress_chapter") != 8:
 if prom.get("version") != 6:
     problems.append("canon-promises")
 
-idx = json.loads((ROOT / "continuity/TASK_INDEX.json").read_text(encoding="utf-8"))
-alias = json.loads((ROOT / "TASK_INDEX.json").read_text(encoding="utf-8"))
-adapter = json.loads((ROOT / "CONTINUITY_ADAPTER.json").read_text(encoding="utf-8"))
 system = idx.get("system", {})
-if system.get("system_id") != "NOVEL_OS" or system.get("active_project_task_id") != "FQ001_MINGRI_ORDER":
+if system.get("system_id") != "NOVEL_OS" or system.get("active_project_task_id") != "FQ001_MINGRI_ORDER" or system.get("resume_behavior") != "ROUTE_TO_ACTIVE_PROJECT":
     problems.append("system-route")
-if system.get("resume_behavior") != "ROUTE_TO_ACTIVE_PROJECT":
-    problems.append("system-resume-behavior")
 learning = system.get("masterwork_learning", {})
-if learning.get("active_study") != "GUI_MI_ZHI_ZHU" or learning.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
+if learning.get("active_study") != current_id or learning.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
     problems.append("system-learning-route")
-active = {t.get("task_id"): t for t in idx.get("tasks", [])}.get("FQ001_MINGRI_ORDER", {})
-if active.get("current_stage") != m.get("current_stage") or active.get("next_action") != m.get("next_action"):
-    problems.append("task-index-state-drift")
-if alias.get("tasks", [{}])[0].get("current_stage") != m.get("current_stage") or alias.get("tasks", [{}])[0].get("next_action") != m.get("next_action"):
-    problems.append("compat-index-state-drift")
-if alias.get("system", {}).get("masterwork_learning", {}).get("active_study") != "GUI_MI_ZHI_ZHU":
+if set(learning.get("completed_studies", [])) != completed_ids:
+    problems.append("system-completed-studies-drift")
+a_learning = alias.get("system", {}).get("masterwork_learning", {})
+if a_learning.get("active_study") != current_id or set(a_learning.get("completed_studies", [])) != completed_ids:
     problems.append("compat-learning-route")
+active_task = {t.get("task_id"): t for t in idx.get("tasks", [])}.get("FQ001_MINGRI_ORDER", {})
+if active_task.get("current_stage") != m.get("current_stage") or active_task.get("next_action") != m.get("next_action"):
+    problems.append("task-index-state-drift")
+alias_task = {t.get("task_id"): t for t in alias.get("tasks", [])}.get("FQ001_MINGRI_ORDER", {})
+if alias_task.get("current_stage") != m.get("current_stage") or alias_task.get("next_action") != m.get("next_action"):
+    problems.append("compat-index-state-drift")
 topology = adapter.get("system_project_topology", {})
 if topology.get("system_id") != "NOVEL_OS" or topology.get("routing_rule") != "SYSTEM_ALIAS_RESOLVES_OWNER_THEN_ACTIVE_PROJECT":
     problems.append("adapter-system-routing")
 
 for failure in validate_release_evidence(ROOT):
     problems.append("release-evidence:" + failure)
-cap = json.loads((ROOT / "continuity/EXECUTION_CAPABILITIES.json").read_text(encoding="utf-8"))
+cap = load("continuity/EXECUTION_CAPABILITIES.json")
 if cap.get("release_evidence_contract_version") != "1.0":
     problems.append("release-evidence-contract-version")
 if not any(c.get("capability_id") == "masterwork_distillation_and_transfer_learning" for c in cap.get("capabilities", [])):
@@ -196,8 +216,9 @@ result = {
     "system_id": system.get("system_id"),
     "stage": m.get("current_stage"),
     "next_action": m.get("next_action"),
-    "active_masterwork": study.get("active_work", {}).get("work_id"),
-    "completed_masterworks": [w.get("work_id") for w in study.get("completed_works", [])],
+    "active_masterwork": current_id,
+    "active_masterwork_status": current_status,
+    "completed_masterworks": sorted(completed_ids),
     "rebase_execution_status": rebase.get("execution_status"),
     "signing_attempt_1": signing.get("attempt_1"),
     "failures": problems,
