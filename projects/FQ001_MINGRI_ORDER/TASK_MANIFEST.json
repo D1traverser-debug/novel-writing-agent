@@ -1,6 +1,6 @@
 {
   "schema_version": "2.1-github",
-  "manifest_version": 11,
+  "manifest_version": 12,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -10,9 +10,9 @@
   "resume_eligible": true,
   "resume_visibility": "DEFAULT",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-11T14:02:00Z",
+  "updated_at": "2026-10-11T14:20:00Z",
   "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-  "next_action": "Continue the user-provided standardized masterwork corpus one book at a time. SHIRI_ZHONGYAN is complete; GUI_MI_ZHI_ZHU has completed sequential study and volume distillation of 第一部《小丑》 CH1-CH213 plus summary and 第二部《无面人》 CH1-CH269 plus summary, and must continue from 第三部《旅行家》 CH1. Maintain the single rolling ledger and do not switch books until the active work is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+  "next_action": "GUI_MI_ZHI_ZHU (《诡秘之主》) has completed full sequential study through the user-provided end marker and whole-book single-work distillation. Stop after this completed work exactly as the user requested; do not begin DAO_MU_BI_JI in this run. Keep the masterwork queue and current focus binding durable. On a later explicit continue, activate DAO_MU_BI_JI from its beginning and continue one book at a time. Do not draft the existing FQ001 replacement CH1-CH8 while the masterwork study queue is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
   "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
@@ -45,17 +45,26 @@
     "study_state_ref": "research/masterworks/STUDY_STATE.json",
     "registry_ref": "research/masterworks/INDEX.json",
     "policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT",
-    "completed_work": "SHIRI_ZHONGYAN",
+    "completed_work": "GUI_MI_ZHI_ZHU",
+    "completed_works": [
+      "SHIRI_ZHONGYAN",
+      "GUI_MI_ZHI_ZHU"
+    ],
     "active_work": "GUI_MI_ZHI_ZHU",
-    "active_work_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
-    "active_work_coverage": "VOLUME_01_XIAO_CHOU__CH1-CH213_PLUS_VOLUME_SUMMARY__VOLUME_02_WU_MIAN_REN__CH1-CH269_PLUS_VOLUME_SUMMARY",
-    "active_work_next_location": "VOLUME_03_LV_XING_JIA__CH1",
+    "active_work_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+    "active_work_binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
+    "active_work_coverage": "ALL_8_VOLUMES__1394_CHAPTER_HEADINGS__THROUGH_FULL_BOOK_END",
+    "active_work_next_location": "STOP_AFTER_GUI_MI_COMPLETION__DO_NOT_BEGIN_NEXT_BOOK",
+    "next_pass": "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED",
+    "next_pending_work": "DAO_MU_BI_JI",
+    "next_pending_status": "PENDING_NOT_STARTED",
     "source_file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
     "source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
     "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
     "rolling_ledger_file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
-    "rolling_ledger_sha256": "f0ee715b5d7d4710e3591448a76901bf4e9f0a9da34bf310c97c809bc935af1a",
-    "cross_work_synthesis": "DEFERRED_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
+    "rolling_ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe",
+    "cross_work_synthesis": "DEFERRED_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE",
+    "stop_after_current_work": true
   },
   "platform_signing": {
     "attempt_1": "REJECTED_QUALITY_EVALUATION",
@@ -77,9 +86,33 @@
     "front_arc_frozen_architecture_ref": "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
     "project_benchmark_ref": "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
     "architecture_gate": "PASS_WITH_SCOPED_DEFERRALS",
-    "architecture_project_ready_competencies": ["C01","C02","C03","C04","C05","C06","C07","C08_FRONT_ARC","C11_ACQUISITION_VOL1","C14_ARCHITECTURE","C15","C17","C18","C19","C20"],
-    "deferred_to_candidate_prose": ["C09","C10","C12","C13","C16"],
-    "late_series_partial": ["C08_LATE_SENDER_ONTOLOGY"],
+    "architecture_project_ready_competencies": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08_FRONT_ARC",
+      "C11_ACQUISITION_VOL1",
+      "C14_ARCHITECTURE",
+      "C15",
+      "C17",
+      "C18",
+      "C19",
+      "C20"
+    ],
+    "deferred_to_candidate_prose": [
+      "C09",
+      "C10",
+      "C12",
+      "C13",
+      "C16"
+    ],
+    "late_series_partial": [
+      "C08_LATE_SENDER_ONTOLOGY"
+    ],
     "maximum_current_claim": "PROJECT_LEVEL_L3_WHERE_LISTED__NO_L4_TRANSFER_OR_LIVE_OUTCOME_CLAIM"
   },
   "rebase": {
@@ -125,6 +158,7 @@
     "projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
     "projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
     "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
-    "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md"
+    "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md",
+    "research/masterworks/GUI_MI_ZHI_ZHU/FULL_BOOK_EXECUTION_RECEIPT_2026-10-11.json"
   ]
 }
