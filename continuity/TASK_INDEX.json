@@ -16,10 +16,15 @@
     "masterwork_learning": {
       "protocol_ref": "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
       "registry_ref": "research/masterworks/INDEX.json",
+      "study_state_ref": "research/masterworks/STUDY_STATE.json",
       "authority_role": "LEARNING_EVIDENCE_NOT_EXECUTION_AUTHORITY",
-      "active_study": "SHIRI_ZHONGYAN",
-      "active_study_ref": "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md",
-      "coverage_state": "CH1_CH10_DEEP_READ__CH11_CH1359_PENDING__CH1360_CH1496_OFFICIAL_SUPPLEMENT_PENDING",
+      "active_study": "GUI_MI_ZHI_ZHU",
+      "active_study_ref": "research/masterworks/STUDY_STATE.json",
+      "completed_studies": ["SHIRI_ZHONGYAN"],
+      "coverage_state": "SHIRI_COMPLETE__GUI_MI_ACTIVE_PENDING_FIRST_SEQUENTIAL_READ",
+      "study_policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT__CROSS_WORK_SYNTHESIS_DEFERRED",
+      "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"],
+      "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_LEARNING",
       "promotion_rule": "REFERENCE_TO_EXPERIMENTAL_TO_PROJECT_PROVEN_TO_ACTIVE_RULE_TO_CROSS_PROJECT_VERIFIED",
       "copyright_rule": "OFFICIAL_OR_LAWFUL_SOURCES_ONLY_NO_PIRATED_FULLTEXT"
     }
@@ -39,9 +44,9 @@
       "resume_eligible": true,
       "resume_visibility": "DEFAULT",
       "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-10T21:06:00Z",
-      "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY",
-      "next_action": "Draft replacement candidate CH1-CH8 coherently from outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md, preserving old FINALs as immutable historical baseline. For the new bodies, create the applicable frozen contracts/context packs and prove the deferred prose competencies (scene/chapter execution, dialogue/subtext, POV/immersion, domain reality, revision) through role-separated reviews and whole-packet gates before any replacement promotion. Keep old CH9 held and do not consume the 50k second-signing attempt before SIGNING_READINESS_AUDIT_PASS.",
+      "updated_at": "2026-10-11T12:05:00Z",
+      "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
+      "next_action": "Continue the user-provided standardized masterwork corpus one book at a time. SHIRI_ZHONGYAN is complete; GUI_MI_ZHI_ZHU is ACTIVE and must be read sequentially from the beginning. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
       "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
       "contract_version": "3.7",
       "continuity_protocol_version": "3.7",
@@ -49,7 +54,7 @@
       "skill_version": "Novel Writing Agent 2.4.0-github",
       "runtime_version": "github-owner-2.5",
       "release_evidence_contract_version": "1.0",
-      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","凌晨零点","番茄小说","FQ001","NOVEL_WRITING_AGENT","全前段重构","FULL_FRONT_ARC_REBASE","小说技能","能力掌握","系列总纲","签约修复","二签","名作蒸馏","十日终焉"]
+      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","番茄小说","FQ001","NOVEL_WRITING_AGENT","名作蒸馏","逐本学习","十日终焉","诡秘之主","故事重选"]
     }
   ]
 }
