@@ -2,6 +2,10 @@ from pathlib import Path
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
+INGEST_REL = "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md"
+EXPECTED_STATUS = "USER_FULLTEXT_MAINLINE_INGESTED__CH1_CH10_DEEP_READ__SEQUENTIAL_FULL_COVERAGE_ACTIVE"
+EXPECTED_NEXT = "SEQUENTIAL_FULLTEXT_CH11_PLUS_PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE"
+EXPECTED_SHA = "4236619fe12174798682716433d425e2351dac643c9fcb014f6876356ce667ba"
 
 
 def test_masterwork_distillation_protocol_is_broad_and_not_user_prompt_dependent():
@@ -38,16 +42,42 @@ def test_masterwork_registry_is_learning_evidence_not_execution_authority():
     assert registry["authority_role"] == "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY"
     assert registry["copyright_policy"]["pirated_fulltext_allowed"] is False
     assert registry["copyright_policy"]["store_substitute_for_original_work"] is False
+    assert "USER_LAWFULLY_PROVIDED_TEXT" in registry["copyright_policy"]["allowed_sources"]
     study = registry["active_studies"][0]
     assert study["work_id"] == "SHIRI_ZHONGYAN"
     assert study["execution_authority"] is False
-    assert study["current_status"] == "OPENING_CHARACTER_ENSEMBLE_MYSTERY_WORLD_DISTILLED__PROJECT_TRANSFER_PENDING"
-    assert study["next_pass"] == "PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE"
+    assert study["current_status"] == EXPECTED_STATUS
+    assert study["next_pass"] == EXPECTED_NEXT
     assert "MORE_COMPLEXITY_IS_ALWAYS_BETTER" in study["explicitly_not_promoted"]
     assert "PROTAGONIST_SECRET_MASTERMIND_AS_UNIVERSAL_RETENTION_TOOL" in study["explicitly_not_promoted"]
-    assert len(study["completed_passes"]) == 4
+    assert len(study["completed_passes"]) == 5
+    assert INGEST_REL in study["completed_passes"]
     for rel in study["completed_passes"]:
         assert (ROOT / rel).exists()
+
+
+def test_fulltext_corpus_receipt_and_coverage_are_exact():
+    registry = json.loads((ROOT / "research/masterworks/INDEX.json").read_text(encoding="utf-8"))
+    study = registry["active_studies"][0]
+    coverage = study["fulltext_coverage"]
+    assert coverage["user_source_sha256"] == EXPECTED_SHA
+    assert coverage["user_source_numbered_mainline_through"] == 1359
+    assert coverage["user_source_chapter_heading_occurrences"] == 1360
+    assert coverage["source_numbering_anomaly"] == "two distinct headings labelled CH1357"
+    assert coverage["fanqie_current_catalog_chapters"] == 1496
+    assert coverage["current_catalog_supplement_gap"] == "CH1360-CH1496"
+    assert coverage["deep_read_completed"] == "CH1-CH10"
+    assert coverage["deep_read_pending"] == "CH11-CH1359"
+    assert coverage["official_supplement_pending"] == "CH1360-CH1496"
+    assert "十日终焉_1496章全书覆盖台账" in coverage["coverage_ledger"]
+
+    receipt = (ROOT / INGEST_REL).read_text(encoding="utf-8")
+    assert "status: LEARNING_EVIDENCE" in receipt
+    assert EXPECTED_SHA in receipt
+    assert "第1359章 终：完结感言" in receipt
+    assert "CH1360–CH1496" in receipt
+    assert "CH1_CH10_DEEP_READ_FROM_USER_FULLTEXT" in receipt
+    assert "does not contain the current post-completion catalog additions" in receipt
 
 
 def test_ten_day_endgame_passes_have_claim_and_imitation_boundaries():
