@@ -1,6 +1,6 @@
 {
   "schema_version": "2.1-github",
-  "manifest_version": 7,
+  "manifest_version": 8,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -10,9 +10,9 @@
   "resume_eligible": true,
   "resume_visibility": "DEFAULT",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-10T21:06:00Z",
-  "current_stage": "FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY",
-  "next_action": "Draft replacement candidate CH1-CH8 coherently from outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md, preserving old FINALs as immutable historical baseline. For the new bodies, create the applicable frozen contracts/context packs and prove the deferred prose competencies (scene/chapter execution, dialogue/subtext, POV/immersion, domain reality, revision) through role-separated reviews and whole-packet gates before any replacement promotion. Keep old CH9 held and do not consume the 50k second-signing attempt before SIGNING_READINESS_AUDIT_PASS.",
+  "updated_at": "2026-10-11T12:05:00Z",
+  "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
+  "next_action": "Continue the user-provided standardized masterwork corpus one book at a time. SHIRI_ZHONGYAN is complete; GUI_MI_ZHI_ZHU is ACTIVE and must be read sequentially from the beginning. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
   "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
   "contract_version": "3.7",
   "continuity_protocol_version": "3.7",
@@ -28,14 +28,28 @@
   "last_final_chapter": 8,
   "last_final_hash": "fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14",
   "next_serial_chapter": 9,
-  "next_serial_status": "HELD_DURING_FULL_FRONT_ARC_REBASE",
+  "next_serial_status": "HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION",
   "external_publication": {
     "confirmed_published_through": 7,
     "chapter_8": "PUBLISH_READY_NOT_CONFIRMED_PUBLISHED"
   },
   "external_fact_pending": [
-    "CH8 Fanqie publication status remains unconfirmed. This does not block internal full-front-arc rebase."
+    "CH8 Fanqie publication status remains unconfirmed. This does not block internal learning or story reselection."
   ],
+  "user_locked_business_constraints": [
+    "SIGNING_MODE_IMMUTABLE",
+    "SERIALIZATION_MODE_IMMUTABLE"
+  ],
+  "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_MASTERWORK_DISTILLATION",
+  "masterwork_learning": {
+    "study_state_ref": "research/masterworks/STUDY_STATE.json",
+    "registry_ref": "research/masterworks/INDEX.json",
+    "policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT",
+    "completed_work": "SHIRI_ZHONGYAN",
+    "active_work": "GUI_MI_ZHI_ZHU",
+    "active_work_status": "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ",
+    "cross_work_synthesis": "DEFERRED_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
+  },
   "platform_signing": {
     "attempt_1": "REJECTED_QUALITY_EVALUATION",
     "attempt_1_visible_reason": "GENERIC_SIGNING_QUALITY_NOT_MET",
@@ -65,22 +79,27 @@
     "authorized_by_user": true,
     "scope": "CH1-CH8_FRONT_ARC",
     "mode": "CONTROLLED_FULL_FRONT_ARC_REBASE",
+    "execution_status": "SUSPENDED_PENDING_POST_DISTILLATION_STORY_RESELECTION",
     "old_finals_role": "IMMUTABLE_HISTORICAL_BASELINE",
     "old_chapter_boundaries_binding": false,
-    "current_canon_role": "FACTUAL_STARTING_POINT_REQUIRES_EXPLICIT_RETCON_FOR_FACT_CHANGE",
+    "current_canon_role": "HISTORICAL_FACTUAL_BASELINE_UNTIL_EXPLICIT_REPLACEMENT_OR_RETCON",
     "plan_ref": "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
     "learning_evidence_ref": "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
     "series_master_outline_ref": "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
     "frozen_architecture_ref": "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
+    "frozen_architecture_role": "HISTORICAL_CANDIDATE_NOT_NEXT_ACTION",
     "old_ch9_contract_status": "SUPERSEDED_BY_FULL_FRONT_ARC_REBASE",
-    "candidate_promotion": "WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT",
+    "candidate_promotion": "BLOCKED_UNTIL_POST_DISTILLATION_STORY_RESELECTION",
     "platform_replacement_user_controlled": true
   },
   "strategic_constraints": [
-    "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REBASE",
+    "SIGNING_MODE_IMMUTABLE",
+    "SERIALIZATION_MODE_IMMUTABLE",
+    "DO_NOT_DRAFT_EXISTING_FQ001_REPLACEMENT_PACKET_DURING_MASTERWORK_STUDY",
+    "POST_STUDY_STORY_RESELECTION_REQUIRED_BEFORE_NEW_PROSE",
     "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS",
-    "OLD_FINALS_NOT_ACTIVE_REPLACEMENT_UNTIL_PACKET_ACCEPTED",
-    "CH9_EXECUTION_HELD_DURING_FULL_REBASE",
+    "OLD_FINALS_REMAIN_HISTORICAL_EVIDENCE",
+    "CH9_EXECUTION_HELD",
     "PUBLISHED_CHAPTER_PLATFORM_REPLACEMENT_REMAINS_USER_CONTROLLED",
     "CI_OR_SELF_REVIEW_MUST_NOT_BE_CLAIMED_AS_LIVE_QUALITY_OUTCOME",
     "MASTERY_FILES_OR_RESEARCH_DO_NOT_PROVE_L3_L4_WITHOUT_APPLIED_BENCHMARK",
@@ -89,24 +108,16 @@
   "blockers": [],
   "waiting_on": [],
   "artifact_refs": [
+    "research/masterworks/STUDY_STATE.json",
+    "research/masterworks/INDEX.json",
     "protocols/NOVEL_MASTERY_MODEL.md",
     "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
     "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
-    "projects/FQ001_MINGRI_ORDER/outline/ARC_001.md",
     "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
     "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
     "projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
     "projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
     "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
-    "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md",
-    "projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
-    "projects/FQ001_MINGRI_ORDER/canon/THREADS.json",
-    "projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json",
-    "audits/PLATFORM_SIGNING_SIGNAL_2026-10-11.md",
-    "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
-    "audits/FQ001_ARCHITECTURE_MASTERY_BENCHMARK_2026-10-11.md",
-    "audits/FULL_REBASE_LEARNING_EVIDENCE_2026-10-11.md",
-    "audits/FULL_FRONT_ARC_REBASE_PLAN_2026-10-11.md",
-    "audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md"
+    "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md"
   ]
 }
