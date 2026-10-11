@@ -30,32 +30,30 @@
       "copyright_rule": "OFFICIAL_OR_LAWFUL_SOURCES_ONLY_NO_PIRATED_FULLTEXT"
     }
   },
-  "tasks": [
-    {
-      "task_id": "FQ001_MINGRI_ORDER",
-      "task_class": "USER",
-      "domain": "NOVEL",
-      "title": "FQ001_MINGRI_ORDER_SERIALIZATION",
-      "display_name_zh": "《凌晨零点，我接到明天的订单》",
-      "system_id": "NOVEL_OS",
-      "system_display_name_zh": "小说系统",
-      "is_active_project": true,
-      "candidate_label_zh": "小说系统｜《凌晨零点，我接到明天的订单》",
-      "status": "ACTIVE",
-      "resume_eligible": true,
-      "resume_visibility": "DEFAULT",
-      "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-11T16:14:00Z",
-      "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-      "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《怒海潜沙》第一章《蛇眉铜鱼》. 《七星鲁王宫》CH1-CH29 is complete and checkpointed in the single rolling ledger. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete; do not draft existing FQ001 replacement prose during the masterwork queue.",
-      "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
-      "contract_version": "3.7",
-      "continuity_protocol_version": "3.7",
-      "domain_contract_version": "2.1-github",
-      "skill_version": "Novel Writing Agent 2.4.0-github",
-      "runtime_version": "github-owner-2.5",
-      "release_evidence_contract_version": "1.0",
-      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","番茄小说","FQ001","NOVEL_WRITING_AGENT","名作蒸馏","逐本学习","十日终焉","诡秘之主","盗墓笔记","故事重选"]
-    }
-  ]
+  "tasks": [{
+    "task_id": "FQ001_MINGRI_ORDER",
+    "task_class": "USER",
+    "domain": "NOVEL",
+    "title": "FQ001_MINGRI_ORDER_SERIALIZATION",
+    "display_name_zh": "《凌晨零点，我接到明天的订单》",
+    "system_id": "NOVEL_OS",
+    "system_display_name_zh": "小说系统",
+    "is_active_project": true,
+    "candidate_label_zh": "小说系统｜《凌晨零点，我接到明天的订单》",
+    "status": "ACTIVE",
+    "resume_eligible": true,
+    "resume_visibility": "DEFAULT",
+    "recovery_owner": "NOVEL_WRITING_AGENT",
+    "updated_at": "2026-10-11T16:14:00Z",
+    "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
+    "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《怒海潜沙》第一章《蛇眉铜鱼》. 《七星鲁王宫》CH1-CH29 has completed sequential study and volume-level distillation in the single rolling ledger. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+    "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+    "contract_version": "3.7",
+    "continuity_protocol_version": "3.7",
+    "domain_contract_version": "2.1-github",
+    "skill_version": "Novel Writing Agent 2.4.0-github",
+    "runtime_version": "github-owner-2.5",
+    "release_evidence_contract_version": "1.0",
+    "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","番茄小说","FQ001","NOVEL_WRITING_AGENT","名作蒸馏","逐本学习","十日终焉","诡秘之主","盗墓笔记","故事重选"]
+  }]
 }
