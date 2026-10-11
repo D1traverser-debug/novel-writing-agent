@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T16:59:00Z",
+  "updated_at": "2026-10-11T17:11:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -29,17 +29,18 @@
     "source_total_lines": 30839,
     "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
     "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
-    "rolling_ledger_sha256": "f5b63dda298654f850482669a5f7b24d8ec600346a80bcdfaf35bbf66cb64c61",
+    "rolling_ledger_sha256": "9689a8d96774ca2c190ee536180060600fc8b9be5b9d2178c7eb1c567996cd6c",
     "coverage": {
-      "sequential_completed": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE__QINLING_SHENSHU__CH1-CH42__VOLUME_03_COMPLETE__YUNDING_TIANGONG__LOGICAL_CH1-CH56__VOLUME_04_COMPLETE__SOURCE_SPLIT_HEADING_VARIANTS_RECORDED",
-      "completed_sections": ["《七星鲁王宫》", "《怒海潜沙》", "《秦岭神树》", "《云顶天宫篇》"],
-      "current_section": "《蛇沼鬼城篇》",
+      "sequential_completed": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE__QINLING_SHENSHU__CH1-CH42__VOLUME_03_COMPLETE__YUNDING_TIANGONG__LOGICAL_CH1-CH56__VOLUME_04_COMPLETE__SHEZHAO_GUICHENG__FULL_SOURCE_ORDER_THROUGH_SECTION_END__SOURCE_NUMBERING_RESETS_RECORDED",
+      "completed_sections": ["《七星鲁王宫》", "《怒海潜沙》", "《秦岭神树》", "《云顶天宫篇》", "《蛇沼鬼城篇》"],
+      "current_section": "《谜海归巢》",
       "current_section_completed_body_chapters": 0,
-      "completed_body_chapters_total": 173,
-      "next_location": "《蛇沼鬼城篇》第一章"
+      "completed_body_chapters_total": null,
+      "completed_body_chapters_total_note": "173 logical chapters through YUNDING_TIANGONG; SHEZHAO_GUICHENG source numbering resets and is therefore recorded by full source-order section coverage rather than a fabricated single logical chapter total.",
+      "next_location": "《谜海归巢》第一章《集结号》"
     },
-    "next_pass": "SEQUENTIAL_CONTINUE__SHEZHAO_GUICHENG_CH1",
-    "next_action": "Continue the user-provided standardized text sequentially from 《蛇沼鬼城篇》第一章, update the same rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
+    "next_pass": "SEQUENTIAL_CONTINUE__MIHAI_GUICAO_CH1",
+    "next_action": "Continue the user-provided standardized text sequentially from 《谜海归巢》第一章《集结号》, update the same rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
   },
   "completed_works": [
     {"queue_no": 1, "work_id": "SHIRI_ZHONGYAN", "title": "十日终焉", "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING", "coverage": "SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED", "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"},
