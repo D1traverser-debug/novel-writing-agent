@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "receipt_id": "DAO_MU_BI_JI_FULL_BOOK_2026_10_12_R1",
+  "action_id": "DAO_MU_BI_JI_COMPLETE_STANDARDIZED_SOURCE_AND_SINGLE_BOOK_DISTILLATION",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
+  "capability_id": "masterwork_distillation_and_transfer_learning",
+  "executor_identity": "CHAT_BRIDGED_RESEARCH_AND_DISTILLATION__CURRENT_SESSION",
+  "execution_ref": "research/masterworks/DAO_MU_BI_JI/FULL_BOOK_EXECUTION_RECEIPT_2026-10-12.json",
+  "subject_bindings": {
+    "work_id": "DAO_MU_BI_JI",
+    "title": "盗墓笔记全集",
+    "terminal_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
+  },
+  "input_bindings": {
+    "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
+    "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
+    "source_size_bytes": 4324861,
+    "source_total_lines": 30839,
+    "full_book_end_marker": "【全书完】"
+  },
+  "output_refs": [
+    "Google Drive file 17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4#sha256=55a914a10166167e0cb4a1632e7a5378dc037bb548f73bea24b12d8a88e3b5c8",
+    "research/masterworks/DAO_MU_BI_JI/FULL_BOOK_EXECUTION_RECEIPT_2026-10-12.json",
+    "research/masterworks/STUDY_STATE.json",
+    "research/masterworks/INDEX.json"
+  ],
+  "result": "PASS__FULL_SOURCE_ORDER_READ_THROUGH_PHYSICAL_END__WHOLE_BOOK_DISTILLATION_COMPLETE__NO_CROSS_WORK_PROMOTION__NEXT_BOOK_NOT_STARTED",
+  "assurance": "ROLE_SEPARATED_NOT_ATTESTED_ISOLATED",
+  "created_at": "2026-10-11T17:53:00Z"
+}
