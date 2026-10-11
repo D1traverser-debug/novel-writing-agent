@@ -18,7 +18,7 @@
       "active_study": "GUI_MI_ZHI_ZHU",
       "active_study_ref": "research/masterworks/STUDY_STATE.json",
       "completed_studies": ["SHIRI_ZHONGYAN"],
-      "coverage_state": "SHIRI_COMPLETE__GUI_MI_ACTIVE_PENDING_FIRST_SEQUENTIAL_READ"
+      "coverage_state": "SHIRI_COMPLETE__GUI_MI_VOLUME_01_COMPLETE__VOLUME_02_CH1_NEXT"
     }
   },
   "tasks": [
@@ -36,9 +36,9 @@
       "resume_eligible": true,
       "resume_visibility": "DEFAULT",
       "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-11T12:05:00Z",
+      "updated_at": "2026-10-11T12:18:00Z",
       "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-      "next_action": "Continue the user-provided standardized masterwork corpus one book at a time. SHIRI_ZHONGYAN is complete; GUI_MI_ZHI_ZHU is ACTIVE and must be read sequentially from the beginning. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+      "next_action": "Continue the user-provided standardized masterwork corpus one book at a time. SHIRI_ZHONGYAN is complete; GUI_MI_ZHI_ZHU has completed sequential study of 第一部《小丑》 CH1-CH213 plus the volume summary and must continue from 第二部《无面人》 CH1. Maintain the single rolling ledger and do not switch books until the active work is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
       "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
       "contract_version": "3.7",
       "domain_contract_version": "2.1-github",
