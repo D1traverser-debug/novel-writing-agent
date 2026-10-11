@@ -6,7 +6,7 @@
   "system": {
     "system_id": "NOVEL_OS",
     "display_name_zh": "小说系统",
-    "resume_aliases": ["小说系统","NOVEL_OS","Novel Writing Agent","novel-writing-agent"],
+    "resume_aliases": ["小说系统", "NOVEL_OS", "Novel Writing Agent", "novel-writing-agent"],
     "resume_behavior": "ROUTE_TO_ACTIVE_PROJECT",
     "active_project_task_id": "FQ001_MINGRI_ORDER",
     "candidate_presentation_zh": "小说系统｜《凌晨零点，我接到明天的订单》",
@@ -18,12 +18,14 @@
       "active_study": "DAO_MU_BI_JI",
       "active_study_ref": "research/masterworks/STUDY_STATE.json",
       "active_study_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
-      "completed_studies": ["SHIRI_ZHONGYAN","GUI_MI_ZHI_ZHU"],
+      "completed_studies": ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU"],
       "next_pending_study": "GUI_CHUI_DENG",
       "stop_after_current_work": false,
-      "coverage_state": "SHIRI_COMPLETE__GUI_MI_COMPLETE__DAO_QIXING_NUHAI_QINLING_COMPLETE__YUNDING_TIANGONG_CH1_NEXT",
-      "active_study_next_location": "《云顶天宫篇》第一章《新的消息》",
-      "rolling_ledger_sha256": "0d0f6ea68d1a6227bf69c99fae2a0da832a2e7195e6d24b05c272673f7920c9f"
+      "coverage_state": "SHIRI_COMPLETE__GUI_MI_COMPLETE__DAO_QIXING_NUHAI_QINLING_YUNDING_COMPLETE__SHEZHAO_GUICHENG_CH1_NEXT",
+      "active_study_next_location": "《蛇沼鬼城篇》第一章",
+      "logical_body_chapters_completed_total": 173,
+      "rolling_ledger_sha256": "f5b63dda298654f850482669a5f7b24d8ec600346a80bcdfaf35bbf66cb64c61",
+      "storage_policy": "PER_WORK_COLOCATED_RESEARCH__INTERNAL_VOLUMES_SHARE_ONE_WORK_LEDGER__CROSS_WORK_SYNTHESIS_SEPARATE"
     }
   },
   "tasks": [{
@@ -40,9 +42,9 @@
     "resume_eligible": true,
     "resume_visibility": "DEFAULT",
     "recovery_owner": "NOVEL_WRITING_AGENT",
-    "updated_at": "2026-10-11T16:38:00Z",
+    "updated_at": "2026-10-11T16:59:00Z",
     "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-    "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) sequentially from 《云顶天宫篇》第一章《新的消息》. 《七星鲁王宫》CH1-CH29, 《怒海潜沙》CH1-CH46, and 《秦岭神树》CH1-CH42 are checkpointed complete. Keep GUI_CHUI_DENG pending until DAO_MU_BI_JI is complete. Do not draft existing FQ001 replacement prose while the masterwork queue is active.",
+    "next_action": "Continue DAO_MU_BI_JI (《盗墓笔记全集》) from 《蛇沼鬼城篇》第一章. Four sections are checkpointed complete through 《云顶天宫篇》logical CH1-CH56. Keep GUI_CHUI_DENG pending, preserve per-work colocated research, and do not draft existing FQ001 replacement prose while the masterwork queue is active.",
     "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
     "contract_version": "3.7",
     "domain_contract_version": "2.1-github",
