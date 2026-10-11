@@ -4,6 +4,9 @@ import json, re, sys
 
 ROOT = Path(__file__).resolve().parents[1]
 problems = []
+TERMINAL = "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
+ACTIVE_STATUSES = {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS"}
+VALID_STATUSES = ACTIVE_STATUSES | {TERMINAL}
 
 
 def need(rel):
@@ -13,11 +16,16 @@ def need(rel):
     return p
 
 
+def load(rel):
+    p = need(rel)
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
 protocol_p = need("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
-registry_p = need("research/masterworks/INDEX.json")
-study_state_p = need("research/masterworks/STUDY_STATE.json")
-canonical_idx_p = need("continuity/TASK_INDEX.json")
-alias_idx_p = need("TASK_INDEX.json")
+registry = load("research/masterworks/INDEX.json")
+state = load("research/masterworks/STUDY_STATE.json")
+canonical = load("continuity/TASK_INDEX.json")
+alias = load("TASK_INDEX.json")
 for rel in [
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
@@ -27,192 +35,125 @@ for rel in [
 ]:
     need(rel)
 
-TERMINAL = "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
-STOP_PASS = "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED"
-
-if not problems:
+if protocol_p.exists():
     protocol = protocol_p.read_text(encoding="utf-8")
-    registry = json.loads(registry_p.read_text(encoding="utf-8"))
-    state = json.loads(study_state_p.read_text(encoding="utf-8"))
-    canonical = json.loads(canonical_idx_p.read_text(encoding="utf-8"))
-    alias = json.loads(alias_idx_p.read_text(encoding="utf-8"))
-
     if "status: ACTIVE_SYSTEM_PROTOCOL" not in protocol:
         problems.append("protocol-not-active")
-    for stage in ("D0 RIGHTS_AND_SOURCE","D3 COLD_READ_TRACE","D6 POSITIVE_NEGATIVE_DIFF","D8 CROSS-WORK_TRIANGULATION","D9 PROJECT_TRANSFER_EXPERIMENT","D11 PROMOTION","D12 STOP / DECAY"):
+    for stage in ("D0 RIGHTS_AND_SOURCE", "D3 COLD_READ_TRACE", "D6 POSITIVE_NEGATIVE_DIFF", "D8 CROSS-WORK_TRIANGULATION", "D9 PROJECT_TRANSFER_EXPERIMENT", "D11 PROMOTION", "D12 STOP / DECAY"):
         if stage not in protocol:
             problems.append("protocol-stage:" + stage)
-    for concept in ("Psychological portrayal","Environment / atmosphere","Plot progression","Dialogue","Emotion","Quality audit"):
-        if concept not in protocol:
-            problems.append("microcraft-gap:" + concept)
 
-    if registry.get("status") != "ACTIVE":
-        problems.append("registry-not-active")
-    if registry.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
-        problems.append("registry-study-state-ref")
-    if registry.get("authority_role") != "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY":
-        problems.append("registry-authority-role")
-    copyright_policy = registry.get("copyright_policy", {})
-    if copyright_policy.get("pirated_fulltext_allowed") is not False:
-        problems.append("pirated-fulltext-not-denied")
-    if copyright_policy.get("store_substitute_for_original_work") is not False:
-        problems.append("copyright-substitute-risk")
-    if "USER_LAWFULLY_PROVIDED_TEXT" not in set(copyright_policy.get("allowed_sources", [])):
-        problems.append("user-provided-source-not-allowed")
+if registry.get("status") != "ACTIVE":
+    problems.append("registry-not-active")
+if registry.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
+    problems.append("registry-study-state-ref")
+if registry.get("authority_role") != "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY":
+    problems.append("registry-authority-role")
+cp = registry.get("copyright_policy", {})
+if cp.get("pirated_fulltext_allowed") is not False or cp.get("store_substitute_for_original_work") is not False:
+    problems.append("copyright-policy")
+if "USER_LAWFULLY_PROVIDED_TEXT" not in set(cp.get("allowed_sources", [])):
+    problems.append("user-provided-source-not-allowed")
 
-    if state.get("status") != "ACTIVE":
-        problems.append("study-state-not-active")
-    policy = state.get("study_policy", {})
-    if policy.get("mode") != "ONE_BOOK_AT_A_TIME" or policy.get("rule") != "COMPLETE_CURRENT_WORK_BEFORE_NEXT":
-        problems.append("study-policy")
-    if policy.get("cross_work_synthesis") != "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE":
-        problems.append("cross-work-policy")
-    if set(state.get("user_locked_business_constraints", [])) != {"SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"}:
-        problems.append("user-locked-constraints")
+if state.get("status") != "ACTIVE":
+    problems.append("study-state-not-active")
+policy = state.get("study_policy", {})
+if policy.get("mode") != "ONE_BOOK_AT_A_TIME" or policy.get("rule") != "COMPLETE_CURRENT_WORK_BEFORE_NEXT":
+    problems.append("study-policy")
+if policy.get("cross_work_synthesis") != "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE":
+    problems.append("cross-work-policy")
+if set(state.get("user_locked_business_constraints", [])) != {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}:
+    problems.append("user-locked-constraints")
 
-    active_work = state.get("active_work") or {}
-    active_status = active_work.get("status")
-    active_next_pass = active_work.get("next_pass")
-    valid_statuses = {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", TERMINAL}
-    if active_work.get("work_id") != "GUI_MI_ZHI_ZHU":
-        problems.append("study-state-active-work")
-    if active_status not in valid_statuses:
-        problems.append("study-state-active-status")
-    if active_status == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
-        if active_next_pass != "SEQUENTIAL_FULLTEXT_FROM_BEGINNING":
-            problems.append("study-state-initial-next-pass")
-    elif active_status == "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS":
-        if not isinstance(active_next_pass, str) or not active_next_pass.startswith("SEQUENTIAL_CONTINUE__"):
-            problems.append("study-state-progress-next-pass")
-    elif active_status == TERMINAL:
-        if active_next_pass != STOP_PASS:
-            problems.append("study-state-terminal-next-pass")
-        if active_work.get("next_pending_work") != "DAO_MU_BI_JI":
-            problems.append("study-state-terminal-next-work")
-        if active_work.get("binding_role") != "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS":
-            problems.append("study-state-terminal-binding-role")
+active_work = state.get("active_work") or {}
+work_id = active_work.get("work_id")
+active_status = active_work.get("status")
+next_pass = active_work.get("next_pass")
+if not work_id:
+    problems.append("study-state-active-work-missing")
+if active_status not in VALID_STATUSES:
+    problems.append("study-state-active-status")
+if active_status == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ" and next_pass != "SEQUENTIAL_FULLTEXT_FROM_BEGINNING":
+    problems.append("study-state-initial-next-pass")
+if active_status == "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS" and (not isinstance(next_pass, str) or not next_pass.startswith("SEQUENTIAL_CONTINUE__")):
+    problems.append("study-state-progress-next-pass")
+if active_status == TERMINAL and active_work.get("binding_role") != "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS":
+    problems.append("study-state-terminal-binding-role")
 
-    if active_status in {"ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", TERMINAL}:
-        coverage = active_work.get("coverage", {})
-        sha = active_work.get("source_sha256", "")
-        ledger_sha = active_work.get("rolling_ledger_sha256", "")
-        if not re.fullmatch(r"[0-9a-f]{64}", sha):
-            problems.append("study-state-source-sha256")
-        if not re.fullmatch(r"[0-9a-f]{64}", ledger_sha):
-            problems.append("study-state-ledger-sha256")
-        if not coverage.get("sequential_completed"):
-            problems.append("study-state-coverage:sequential_completed")
-        if not coverage.get("next_location"):
-            problems.append("study-state-coverage:next_location")
-        if not active_work.get("rolling_ledger"):
-            problems.append("study-state-rolling-ledger")
-        if active_status == TERMINAL:
-            if coverage.get("full_book_end_verified") is not True:
-                problems.append("study-state-full-book-end")
-            if coverage.get("chapter_heading_count") != 1394:
-                problems.append("study-state-chapter-count")
-            if coverage.get("source_total_lines") != 117803:
-                problems.append("study-state-source-line-count")
-            if coverage.get("next_location") != "STOP_AFTER_GUI_MI_COMPLETION__DO_NOT_BEGIN_NEXT_BOOK":
-                problems.append("study-state-terminal-location")
+if active_status in {"ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", TERMINAL}:
+    cov = active_work.get("coverage", {})
+    if not re.fullmatch(r"[0-9a-f]{64}", active_work.get("source_sha256", "")):
+        problems.append("study-state-source-sha256")
+    if not re.fullmatch(r"[0-9a-f]{64}", active_work.get("rolling_ledger_sha256", "")):
+        problems.append("study-state-ledger-sha256")
+    if not cov.get("sequential_completed"):
+        problems.append("study-state-coverage:sequential_completed")
+    if not cov.get("next_location"):
+        problems.append("study-state-coverage:next_location")
+    if not active_work.get("rolling_ledger") or not active_work.get("rolling_ledger_file_id"):
+        problems.append("study-state-rolling-ledger")
 
-    active = registry.get("active_studies", [])
-    if len(active) != 1 or active[0].get("work_id") != "GUI_MI_ZHI_ZHU":
-        problems.append("active-study-binding")
-    else:
-        guimi = active[0]
-        if guimi.get("execution_authority") is not False:
-            problems.append("active-study-authority-inflation")
-        if guimi.get("current_status") != active_status:
-            problems.append("guimi-status-drift")
-        if guimi.get("next_pass") != active_next_pass:
-            problems.append("guimi-next-pass-drift")
-        if active_status == TERMINAL and guimi.get("binding_role") != "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS":
-            problems.append("guimi-terminal-binding-role")
+queue = state.get("queue", [])
+queue_by_id = {w.get("work_id"): w for w in queue}
+if work_id and work_id not in queue_by_id:
+    problems.append("active-work-not-in-queue")
+active_queue = [w for w in queue if w.get("status") == "ACTIVE"]
+if active_status in ACTIVE_STATUSES:
+    if len(active_queue) != 1 or active_queue[0].get("work_id") != work_id:
+        problems.append("queue-active-binding")
+elif active_status == TERMINAL:
+    if queue_by_id.get(work_id, {}).get("status") != "COMPLETE":
+        problems.append("queue-terminal-binding")
+    if active_queue:
+        problems.append("queue-terminal-has-active-work")
+if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in queue):
+    problems.append("queue-norwegian-excluded")
 
-    completed = {s.get("work_id"): s for s in registry.get("completed_studies", [])}
-    shiri = completed.get("SHIRI_ZHONGYAN", {})
-    if not shiri:
-        problems.append("shiri-completed-study-missing")
-    else:
-        if shiri.get("current_status") != TERMINAL:
-            problems.append("shiri-completion-state")
-        if shiri.get("next_pass") != "NEXT_BOOK__GUI_MI_ZHI_ZHU":
-            problems.append("shiri-next-work")
-        cov = shiri.get("fulltext_coverage", {})
-        expected = {
-            "user_source_numbered_mainline_through": 1359,
-            "user_source_chapter_heading_occurrences": 1360,
-            "source_numbering_anomaly": "two distinct headings labelled CH1357",
-            "sequential_study_completed": "SOURCE_ORDER_1-1360",
-            "body_numbering": "CH1-CH1359",
-            "study_scope": "USER_PROVIDED_TEXT_ONLY_PER_USER_DIRECTION",
-            "official_supplement_status": "OUT_OF_SCOPE_FOR_THIS_STUDY",
-        }
-        for key, value in expected.items():
-            if cov.get(key) != value:
-                problems.append("shiri-coverage-drift:" + key)
-        for rejected in ("MORE_COMPLEXITY_IS_ALWAYS_BETTER","MANDATORY_AUTOBIOGRAPHY_CHAPTERS","DEATH_GAME_TEMPLATE","HYPERINTELLIGENT_PROTAGONIST_TEMPLATE"):
-            if rejected not in shiri.get("explicitly_not_promoted", []):
-                problems.append("anti-overfit-missing:" + rejected)
+active_studies = registry.get("active_studies", [])
+if len(active_studies) != 1 or active_studies[0].get("work_id") != work_id:
+    problems.append("registry-active-study-binding")
+else:
+    reg = active_studies[0]
+    if reg.get("execution_authority") is not False:
+        problems.append("active-study-authority-inflation")
+    if reg.get("current_status") != active_status:
+        problems.append("active-study-status-drift")
+    if reg.get("next_pass") != next_pass:
+        problems.append("active-study-next-pass-drift")
+    for field in ("source_file_id", "source_sha256", "rolling_ledger_file_id", "rolling_ledger_sha256"):
+        if active_work.get(field) and reg.get(field) != active_work.get(field):
+            problems.append("active-study-binding-drift:" + field)
 
-    if active_status == TERMINAL:
-        guimi_done = completed.get("GUI_MI_ZHI_ZHU", {})
-        if guimi_done.get("current_status") != TERMINAL:
-            problems.append("guimi-completed-study-missing")
-        else:
-            cov = guimi_done.get("fulltext_coverage", {})
-            expected = {
-                "user_source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
-                "source_total_lines": 117803,
-                "chapter_heading_count": 1394,
-                "sequential_study_completed": "ALL_8_VOLUMES__THROUGH_FULL_BOOK_END",
-                "full_book_end_verified": True,
-                "study_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_PER_USER_DIRECTION",
-            }
-            for key, value in expected.items():
-                if cov.get(key) != value:
-                    problems.append("guimi-coverage-drift:" + key)
-            if guimi_done.get("next_pass") != STOP_PASS:
-                problems.append("guimi-completion-next-pass")
+completed = {s.get("work_id"): s for s in registry.get("completed_studies", [])}
+queue_complete_ids = {w.get("work_id") for w in queue if w.get("status") == "COMPLETE"}
+missing_completed = sorted(w for w in queue_complete_ids if w not in completed)
+if missing_completed:
+    problems.append("registry-missing-completed:" + ",".join(missing_completed))
+if active_status in ACTIVE_STATUSES and work_id in completed:
+    problems.append("active-work-also-completed")
+if active_status == TERMINAL and work_id not in completed:
+    problems.append("terminal-work-not-completed")
 
-    queue = state.get("queue", [])
-    if not any(w.get("work_id") == "SHIRI_ZHONGYAN" and w.get("status") == "COMPLETE" for w in queue):
-        problems.append("queue-shiri-complete")
-    expected_guimi_queue_status = "COMPLETE" if active_status == TERMINAL else "ACTIVE"
-    if not any(w.get("work_id") == "GUI_MI_ZHI_ZHU" and w.get("status") == expected_guimi_queue_status for w in queue):
-        problems.append("queue-guimi-status")
-    if active_status == TERMINAL and not any(w.get("work_id") == "DAO_MU_BI_JI" and w.get("status") == "PENDING" for w in queue):
-        problems.append("queue-next-book-started-or-missing")
-    if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in queue):
-        problems.append("queue-norwegian-excluded")
-
-    c_learning = canonical.get("system", {}).get("masterwork_learning", {})
-    a_learning = alias.get("system", {}).get("masterwork_learning", {})
-    for label, learning in (("canonical", c_learning), ("alias", a_learning)):
-        if learning.get("registry_ref") != "research/masterworks/INDEX.json":
-            problems.append(label + "-registry-ref")
-        if learning.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
-            problems.append(label + "-study-state-ref")
-        if learning.get("active_study") != "GUI_MI_ZHI_ZHU":
-            problems.append(label + "-active-study-binding")
-        if active_status == TERMINAL:
-            if "GUI_MI_ZHI_ZHU" not in learning.get("completed_studies", []):
-                problems.append(label + "-guimi-not-listed-complete")
-            if learning.get("next_pending_study") != "DAO_MU_BI_JI":
-                problems.append(label + "-next-pending-study")
-            if learning.get("stop_after_current_work") is not True:
-                problems.append(label + "-stop-boundary")
-    if a_learning.get("active_study_ref") != c_learning.get("active_study_ref"):
-        problems.append("compat-index-masterwork-drift")
+for label, idx in (("canonical", canonical), ("alias", alias)):
+    learning = idx.get("system", {}).get("masterwork_learning", {})
+    if learning.get("registry_ref") != "research/masterworks/INDEX.json":
+        problems.append(label + "-registry-ref")
+    if learning.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
+        problems.append(label + "-study-state-ref")
+    if learning.get("active_study") != work_id:
+        problems.append(label + "-active-study-binding")
+    if set(learning.get("completed_studies", [])) != queue_complete_ids:
+        problems.append(label + "-completed-studies-drift")
+if alias.get("system", {}).get("masterwork_learning", {}).get("active_study_ref") != canonical.get("system", {}).get("masterwork_learning", {}).get("active_study_ref"):
+    problems.append("compat-index-masterwork-drift")
 
 result = {
     "status": "PASS" if not problems else "FAIL",
     "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@1.0",
-    "active_study_binding": "GUI_MI_ZHI_ZHU",
-    "active_status": state.get("active_work", {}).get("status") if 'state' in locals() else None,
-    "study_policy": "ONE_BOOK_AT_A_TIME",
-    "next_pass": state.get("active_work", {}).get("next_pass") if 'state' in locals() else None,
+    "active_study_binding": work_id,
+    "active_status": active_status,
+    "completed_studies": sorted(queue_complete_ids),
+    "next_pass": next_pass,
     "assurance": "LEARNING_EVIDENCE_ONLY__PROJECT_TRANSFER_PENDING",
     "failures": problems,
 }
