@@ -12,6 +12,10 @@ production_status: MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION
 next_serial_chapter: 9
 next_serial_status: HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION
 active_masterwork_id: GUI_MI_ZHI_ZHU
+active_masterwork_status: SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING
+active_masterwork_binding_role: CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS
+next_pending_masterwork_id: DAO_MU_BI_JI
+stop_after_current_work: true
 
 ## 当前用户锁定约束
 
@@ -36,9 +40,12 @@ active_masterwork_id: GUI_MI_ZHI_ZHU
 - 学习 registry：`research/masterworks/INDEX.json`
 
 当前队列状态：
-- 《十日终焉》：`COMPLETE`，已完成用户提供版本的整本顺序学习；正文编号到 CH1359，源文件有两个不同的 CH1357 标题，异常已记录。
-- 《诡秘之主》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`。第一部《小丑》CH1–CH213及卷末总结已完成；第二部《无面人》CH1–CH60已完成当前阶段顺序学习，恢复点为CH61。权威覆盖、源文件 hash、滚动总账 hash 与下一位置以 `research/masterworks/STUDY_STATE.json` 为准。
+- 《十日终焉》：`COMPLETE`。
+- 《诡秘之主》：`COMPLETE`。用户提供标准化主文本已顺序覆盖到“（全书完）”；八部共 1394 个章节标题；第一、二、三、四、七部作者卷末总结已分层纳入，第五、六、八部源文件未见独立卷末总结；整本单书蒸馏完成。最终滚动总账 SHA-256：`4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe`。
+- 《盗墓笔记全集》：`PENDING`，本轮明确未启动。
 - 《挪威的森林》：`EXCLUDED_BY_USER`，不读、不蒸馏、不进入跨作品能力结论。
+
+《诡秘之主》完成后仍作为 current focus binding 保留，状态为 `CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS`，用于防止恢复时误判下一本已经开始。
 
 ## 既有 FQ001 架构的当前身份
 
@@ -46,7 +53,7 @@ active_masterwork_id: GUI_MI_ZHI_ZHU
 
 当前状态：`SUSPENDED_PENDING_POST_DISTILLATION_STORY_RESELECTION`。
 
-名作队列完成后，必须先做跨作品蒸馏与新的故事竞争：重新评估题材、premise、世界观、人物、关系、长篇发动机、卷级结构、前段签约包和持续连载能力。只有新方案竞争完成后，才决定继续改造《明日订单》还是换成新的故事设计。
+名作队列全部完成后，必须先做跨作品蒸馏与新的故事竞争：重新评估题材、premise、世界观、人物、关系、长篇发动机、卷级结构、前段签约包和持续连载能力。只有新方案竞争完成后，才决定继续改造《明日订单》还是换成新的故事设计。
 
 ## 平台签约状态
 
@@ -57,4 +64,6 @@ active_masterwork_id: GUI_MI_ZHI_ZHU
 
 ## 下一步
 
-从第二部《无面人》CH61继续按用户提供标准化全文顺序学习，持续更新唯一滚动学习总账；完成整本《诡秘之主》后才切下一部。全部非排除作品学完后，再做跨作品综合和故事重新选择。在此之前，不起草现有 FQ001 replacement CH1–CH8。
+`STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED`。
+
+本轮到《诡秘之主》整本学习与单书蒸馏完成即停止，不启动《盗墓笔记全集》。未来只有在用户再次明确继续后，才把 `DAO_MU_BI_JI` 从 `PENDING` 激活并从头顺序学习。全部非排除作品学完后，再做跨作品综合和故事重新选择。在此之前，不起草现有 FQ001 replacement CH1–CH8。
