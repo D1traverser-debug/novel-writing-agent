@@ -39,9 +39,13 @@ active_masterwork_status: ACTIVE__SEQUENTIAL_READ_IN_PROGRESS
 当前队列状态：
 - 《十日终焉》：`COMPLETE`。
 - 《诡秘之主》：`COMPLETE`。用户提供标准化主文本已顺序覆盖到“（全书完）”；整本单书蒸馏完成。
-- 《盗墓笔记全集》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`。标准化语料 file id `1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG`，SHA-256 `7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768`。第一卷《七星鲁王宫》CH1–CH29、第二卷《怒海潜沙》CH1–CH46 已顺序学习并完成卷级蒸馏；唯一滚动总账 file id `17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4`，当前 SHA-256 `133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc`。
+- 《盗墓笔记全集》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`。标准化语料 file id `1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG`，SHA-256 `7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768`。第一卷《七星鲁王宫》CH1–CH29、第二卷《怒海潜沙》CH1–CH46、第三卷《秦岭神树》CH1–CH42 均已顺序学习并完成卷级蒸馏；标准化源在第三卷末明确出现 `(秦岭神树 篇.完)`，随后进入《云顶天宫篇》第一章《新的消息》。唯一滚动总账 file id `17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4`，当前 SHA-256 `0d0f6ea68d1a6227bf69c99fae2a0da832a2e7195e6d24b05c272673f7920c9f`。
 - 《鬼吹灯全集》：`PENDING`，不得提前切换。
 - 《挪威的森林》：`EXCLUDED_BY_USER`，不读、不蒸馏、不进入跨作品能力结论。
+
+## 第三卷阶段蒸馏边界
+
+《秦岭神树》的阶段证据已写入同一滚动总账。新增重点包括：双人关系/信任恐怖取代固定团队探墓发动机；世界模型、感知与身份同时失稳；老痒的关系债务升级为身份本体问题；物质化能力越强，认知控制反而越弱；尸体、身份证、日记、物理遗留和历史痕迹继续充当外部锚点；吴邪的成长体现为证据处理与反证能力增强。上述仍为 `SINGLE_WORK_STAGE_EVIDENCE_ONLY`，没有直接晋升 ACTIVE_RULE。
 
 ## 既有 FQ001 架构的当前身份
 
@@ -60,4 +64,4 @@ active_masterwork_status: ACTIVE__SEQUENTIAL_READ_IN_PROGRESS
 
 ## 下一步
 
-从《秦岭神树》第一章《老痒出狱》继续按用户提供标准化全文顺序学习，持续覆盖同一份《盗墓笔记全集_学习总账.md》。完成《盗墓笔记全集》前，不切换《鬼吹灯全集》，不做跨作品规则晋升，也不起草现有 FQ001 replacement CH1–CH8。
+从《云顶天宫篇》第一章《新的消息》继续按用户提供标准化全文顺序学习，持续覆盖同一份《盗墓笔记全集_学习总账.md》。完成《盗墓笔记全集》前，不切换《鬼吹灯全集》，不做跨作品规则晋升，也不起草现有 FQ001 replacement CH1–CH8。
