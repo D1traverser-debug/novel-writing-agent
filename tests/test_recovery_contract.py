@@ -68,9 +68,19 @@ def test_study_checkpoint_has_exact_queue_semantics():
     assert state["study_policy"]["mode"] == "ONE_BOOK_AT_A_TIME"
     assert state["study_policy"]["rule"] == "COMPLETE_CURRENT_WORK_BEFORE_NEXT"
     assert state["study_policy"]["cross_work_synthesis"] == "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
-    assert state["active_work"]["work_id"] == "GUI_MI_ZHI_ZHU"
-    assert state["active_work"]["status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ"
+    active = state["active_work"]
+    assert active["work_id"] == "GUI_MI_ZHI_ZHU"
+    assert active["status"] in {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS"}
+    if active["status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
+        assert active["next_pass"] == "SEQUENTIAL_FULLTEXT_FROM_BEGINNING"
+    else:
+        assert active["next_pass"].startswith("SEQUENTIAL_CONTINUE__")
+        assert len(active["source_sha256"]) == 64
+        assert active["coverage"]["sequential_completed"]
+        assert active["coverage"]["next_location"]
+        assert active["rolling_ledger"]
     assert any(w["work_id"] == "SHIRI_ZHONGYAN" and w["status"] == "COMPLETE" for w in state["queue"])
+    assert any(w["work_id"] == "GUI_MI_ZHI_ZHU" and w["status"] == "ACTIVE" for w in state["queue"])
     assert any(w["work_id"] == "NORWEGIAN_WOOD" and w["status"] == "EXCLUDED_BY_USER" for w in state["queue"])
 
 
