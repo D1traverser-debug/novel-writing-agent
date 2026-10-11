@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "SINGLE_WORK_SEQUENTIAL_STUDY_STAGE_EXECUTION",
+  "work_id": "DAO_MU_BI_JI",
+  "title": "盗墓笔记全集",
+  "section": "《蛇沼鬼城篇》",
+  "status": "FULL_SECTION_SEQUENTIAL_STUDY_AND_VOLUME_LEVEL_DISTILLATION_COMPLETE__SINGLE_WORK_STAGE_EVIDENCE_ONLY",
+  "executed_at_utc": "2026-10-11T17:10:00Z",
+  "executed_at_asia_tokyo": "2026-10-12T02:10:00+09:00",
+  "source": {
+    "file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
+    "sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
+    "size_bytes": 4324861,
+    "total_lines": 30839,
+    "scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY"
+  },
+  "coverage": {
+    "source_start_marker": "盗墓笔记 蛇沼鬼城篇 第一章",
+    "source_start_line_approx": 9872,
+    "source_end_marker": "（蛇沼鬼城完）",
+    "source_end_line_approx": 13994,
+    "sequential_full_section_end_verified": true,
+    "internal_source_structure_anomalies": [
+      "《蛇沼鬼城上》完 followed by 第29章 重启",
+      "numbering reaches 第81章 蛇的阴谋",
+      "then resets to 第一章 追击 while narrative continues",
+      "final local heading before section end is 第四十三章 第三夜：录像带"
+    ],
+    "counting_policy": "DO_NOT_INVENT_SINGLE_LOGICAL_CHAPTER_TOTAL_FROM_RESET_OR_SPLIT_SOURCE_NUMBERING__DECLARE_SOURCE_ORDER_FULL_SECTION_COVERAGE",
+    "next_section": "《谜海归巢》",
+    "next_location": "《谜海归巢》第一章《集结号》"
+  },
+  "rolling_ledger": {
+    "drive_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
+    "path": "/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
+    "sha256": "9689a8d96774ca2c190ee536180060600fc8b9be5b9d2178c7eb1c567996cd6c",
+    "size_bytes": 95464,
+    "update_mode": "IN_PLACE_SAME_FILE_ID__ONE_ROLLING_LEDGER_PER_WORK"
+  },
+  "storage_policy": {
+    "per_work_colocation": true,
+    "rule": "SOURCE_BINDING__ROLLING_LEDGER__STAGE_DISTILLATION__EVIDENCE_AND_EXECUTION_RECEIPTS_STAY_IN_THIS_NOVEL_WORK_SCOPE",
+    "internal_volume_rule": "INTERNAL_VOLUMES_SHARE_THE_BOOK_LEVEL_ROLLING_LEDGER__DO_NOT_CREATE_SEPARATE_RESEARCH_SILOS",
+    "cross_work_rule": "CROSS_WORK_SYNTHESIS_REMAINS_SEPARATE_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
+  },
+  "distillation_boundary": {
+    "evidence_level": "SINGLE_WORK_STAGE_EVIDENCE_ONLY",
+    "active_rule_promotion": false,
+    "cross_work_synthesis": "DEFERRED",
+    "next_book_started": false,
+    "gui_chui_deng_status": "PENDING",
+    "fq001_replacement_prose_written": false
+  },
+  "resume": {
+    "active_work": "DAO_MU_BI_JI",
+    "next_pass": "SEQUENTIAL_CONTINUE__MIHAI_GUICAO_CH1",
+    "next_location": "《谜海归巢》第一章《集结号》"
+  }
+}
