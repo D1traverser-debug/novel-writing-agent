@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T16:10:00Z",
+  "updated_at": "2026-10-11T16:14:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -27,15 +27,17 @@
     "source_total_lines": 30839,
     "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
     "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
-    "rolling_ledger_sha256": "2d6a1f96e551d692419470f528af4dacb12fb6c980c643421a21cbec258b4465",
+    "rolling_ledger_sha256": "efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a",
     "coverage": {
-      "sequential_completed": "ACTIVATED__NO_CHAPTER_SAFEPOINT_YET",
-      "current_section": "《七星鲁王宫》",
+      "sequential_completed": "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE",
+      "completed_sections": ["《七星鲁王宫》"],
+      "current_section": "《怒海潜沙》",
       "current_section_completed_body_chapters": 0,
-      "next_location": "《七星鲁王宫》第一章《血尸》"
+      "completed_body_chapters_total": 29,
+      "next_location": "《怒海潜沙》第一章《蛇眉铜鱼》"
     },
-    "next_pass": "SEQUENTIAL_CONTINUE__QIXING_LUWANGGONG_CH1",
-    "next_action": "Continue the user-provided standardized text sequentially from 《七星鲁王宫》第一章《血尸》, update the single rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
+    "next_pass": "SEQUENTIAL_CONTINUE__NUHAI_QIANSHA_CH1",
+    "next_action": "Continue the user-provided standardized text sequentially from 《怒海潜沙》第一章《蛇眉铜鱼》, update the single rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
   },
   "completed_works": [
     {
