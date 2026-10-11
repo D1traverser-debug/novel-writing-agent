@@ -9,7 +9,14 @@
     "resume_aliases": ["小说系统","NOVEL_OS","Novel Writing Agent","novel-writing-agent"],
     "resume_behavior": "ROUTE_TO_ACTIVE_PROJECT",
     "active_project_task_id": "FQ001_MINGRI_ORDER",
-    "candidate_presentation_zh": "小说系统｜《凌晨零点，我接到明天的订单》"
+    "candidate_presentation_zh": "小说系统｜《凌晨零点，我接到明天的订单》",
+    "masterwork_learning": {
+      "protocol_ref": "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
+      "registry_ref": "research/masterworks/INDEX.json",
+      "authority_role": "LEARNING_EVIDENCE_NOT_EXECUTION_AUTHORITY",
+      "active_study": "SHIRI_ZHONGYAN",
+      "active_study_ref": "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md"
+    }
   },
   "tasks": [
     {
