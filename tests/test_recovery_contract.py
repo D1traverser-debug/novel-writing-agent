@@ -3,6 +3,8 @@ import json, hashlib
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK = ROOT / "projects/FQ001_MINGRI_ORDER"
+TERMINAL = "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
+STOP_PASS = "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED"
 
 
 def load_json(rel):
@@ -70,18 +72,28 @@ def test_study_checkpoint_has_exact_queue_semantics():
     assert state["study_policy"]["cross_work_synthesis"] == "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
     active = state["active_work"]
     assert active["work_id"] == "GUI_MI_ZHI_ZHU"
-    assert active["status"] in {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS"}
+    assert active["status"] in {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", TERMINAL}
     if active["status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
         assert active["next_pass"] == "SEQUENTIAL_FULLTEXT_FROM_BEGINNING"
-    else:
+    elif active["status"] == "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS":
         assert active["next_pass"].startswith("SEQUENTIAL_CONTINUE__")
         assert len(active["source_sha256"]) == 64
         assert active["coverage"]["sequential_completed"]
         assert active["coverage"]["next_location"]
         assert active["rolling_ledger"]
+    else:
+        assert active["next_pass"] == STOP_PASS
+        assert active["binding_role"] == "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS"
+        assert active["next_pending_work"] == "DAO_MU_BI_JI"
+        assert active["coverage"]["full_book_end_verified"] is True
+        assert active["coverage"]["chapter_heading_count"] == 1394
+        assert active["coverage"]["source_total_lines"] == 117803
     assert any(w["work_id"] == "SHIRI_ZHONGYAN" and w["status"] == "COMPLETE" for w in state["queue"])
-    assert any(w["work_id"] == "GUI_MI_ZHI_ZHU" and w["status"] == "ACTIVE" for w in state["queue"])
+    expected = "COMPLETE" if active["status"] == TERMINAL else "ACTIVE"
+    assert any(w["work_id"] == "GUI_MI_ZHI_ZHU" and w["status"] == expected for w in state["queue"])
     assert any(w["work_id"] == "NORWEGIAN_WOOD" and w["status"] == "EXCLUDED_BY_USER" for w in state["queue"])
+    if active["status"] == TERMINAL:
+        assert any(w["work_id"] == "DAO_MU_BI_JI" and w["status"] == "PENDING" for w in state["queue"])
 
 
 def test_mastery_model_and_historical_architecture_evidence_remain_present():
@@ -98,7 +110,8 @@ def test_mastery_model_and_historical_architecture_evidence_remain_present():
     assert "SUPERSEDED_BY_SERIES_MASTER_OUTLINE_FOR_ACTIVE_REBASE" in legacy
 
 
-def test_novel_os_routes_same_project_but_new_execution_stage():
+def test_novel_os_routes_same_project_and_current_masterwork_binding():
+    state = load_json("research/masterworks/STUDY_STATE.json")
     idx = load_json("continuity/TASK_INDEX.json")
     alias = load_json("TASK_INDEX.json")
     system = idx["system"]
@@ -106,8 +119,13 @@ def test_novel_os_routes_same_project_but_new_execution_stage():
     assert system["resume_behavior"] == "ROUTE_TO_ACTIVE_PROJECT"
     assert system["active_project_task_id"] == "FQ001_MINGRI_ORDER"
     assert system["masterwork_learning"]["active_study"] == "GUI_MI_ZHI_ZHU"
-    assert system["masterwork_learning"]["completed_studies"] == ["SHIRI_ZHONGYAN"]
     assert system["masterwork_learning"]["study_state_ref"] == "research/masterworks/STUDY_STATE.json"
+    if state["active_work"]["status"] == TERMINAL:
+        assert system["masterwork_learning"]["completed_studies"] == ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU"]
+        assert system["masterwork_learning"]["next_pending_study"] == "DAO_MU_BI_JI"
+        assert system["masterwork_learning"]["stop_after_current_work"] is True
+    else:
+        assert system["masterwork_learning"]["completed_studies"] == ["SHIRI_ZHONGYAN"]
     task = idx["tasks"][0]
     assert task["current_stage"] == "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING"
     assert alias["tasks"][0]["current_stage"] == task["current_stage"]
