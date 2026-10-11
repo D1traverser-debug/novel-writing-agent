@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json, sys
+import json, re, sys
 
 ROOT = Path(__file__).resolve().parents[1]
 problems = []
@@ -11,6 +11,7 @@ def need(rel):
     if not p.exists():
         problems.append(f"missing:{rel}")
     return p
+
 
 protocol_p = need("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 registry_p = need("research/masterworks/INDEX.json")
@@ -56,6 +57,30 @@ if not problems:
     if "USER_LAWFULLY_PROVIDED_TEXT" not in set(copyright_policy.get("allowed_sources", [])):
         problems.append("user-provided-source-not-allowed")
 
+    active_work = state.get("active_work", {})
+    valid_active_statuses = {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS"}
+    active_status = active_work.get("status")
+    active_next_pass = active_work.get("next_pass")
+    if active_work.get("work_id") != "GUI_MI_ZHI_ZHU":
+        problems.append("study-state-active-work")
+    if active_status not in valid_active_statuses:
+        problems.append("study-state-active-status")
+    if active_status == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
+        if active_next_pass != "SEQUENTIAL_FULLTEXT_FROM_BEGINNING":
+            problems.append("study-state-initial-next-pass")
+    elif active_status == "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS":
+        if not isinstance(active_next_pass, str) or not active_next_pass.startswith("SEQUENTIAL_CONTINUE__"):
+            problems.append("study-state-progress-next-pass")
+        coverage = active_work.get("coverage", {})
+        sha = active_work.get("source_sha256", "")
+        if not re.fullmatch(r"[0-9a-f]{64}", sha):
+            problems.append("study-state-source-sha256")
+        for field in ("sequential_completed", "next_location"):
+            if not coverage.get(field):
+                problems.append("study-state-coverage:" + field)
+        if not active_work.get("rolling_ledger"):
+            problems.append("study-state-rolling-ledger")
+
     active = registry.get("active_studies", [])
     if len(active) != 1 or active[0].get("work_id") != "GUI_MI_ZHI_ZHU":
         problems.append("active-study-binding")
@@ -63,9 +88,9 @@ if not problems:
         guimi = active[0]
         if guimi.get("execution_authority") is not False:
             problems.append("active-study-authority-inflation")
-        if guimi.get("current_status") != "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
+        if guimi.get("current_status") != active_status:
             problems.append("guimi-status-drift")
-        if guimi.get("next_pass") != "SEQUENTIAL_FULLTEXT_FROM_BEGINNING":
+        if guimi.get("next_pass") != active_next_pass:
             problems.append("guimi-next-pass-drift")
 
     completed = {s.get("work_id"): s for s in registry.get("completed_studies", [])}
@@ -103,11 +128,10 @@ if not problems:
         problems.append("cross-work-policy")
     if set(state.get("user_locked_business_constraints", [])) != {"SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"}:
         problems.append("user-locked-constraints")
-    active_work = state.get("active_work", {})
-    if active_work.get("work_id") != "GUI_MI_ZHI_ZHU" or active_work.get("status") != "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
-        problems.append("study-state-active-work")
     if not any(w.get("work_id") == "SHIRI_ZHONGYAN" and w.get("status") == "COMPLETE" for w in state.get("queue", [])):
         problems.append("queue-shiri-complete")
+    if not any(w.get("work_id") == "GUI_MI_ZHI_ZHU" and w.get("status") == "ACTIVE" for w in state.get("queue", [])):
+        problems.append("queue-guimi-active")
     if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in state.get("queue", [])):
         problems.append("queue-norwegian-excluded")
 
@@ -127,9 +151,10 @@ result = {
     "status": "PASS" if not problems else "FAIL",
     "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@1.0",
     "active_study": "GUI_MI_ZHI_ZHU",
+    "active_status": state.get("active_work", {}).get("status") if 'state' in locals() else None,
     "completed_studies": ["SHIRI_ZHONGYAN"],
     "study_policy": "ONE_BOOK_AT_A_TIME",
-    "next_pass": "SEQUENTIAL_FULLTEXT_FROM_BEGINNING",
+    "next_pass": state.get("active_work", {}).get("next_pass") if 'state' in locals() else None,
     "assurance": "LEARNING_EVIDENCE_ONLY__PROJECT_TRANSFER_PENDING",
     "failures": problems,
 }
