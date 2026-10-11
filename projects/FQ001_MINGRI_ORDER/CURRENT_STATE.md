@@ -37,7 +37,7 @@ active_masterwork_id: GUI_MI_ZHI_ZHU
 
 当前队列状态：
 - 《十日终焉》：`COMPLETE`，已完成用户提供版本的整本顺序学习；正文编号到 CH1359，源文件有两个不同的 CH1357 标题，异常已记录。
-- 《诡秘之主》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`。第一部《小丑》CH1–CH213及卷末总结已完成顺序学习；当前恢复点为第二部《无面人》CH1。权威覆盖与下一位置以 `research/masterworks/STUDY_STATE.json` 为准。
+- 《诡秘之主》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`。第一部《小丑》CH1–CH213及卷末总结已完成；第二部《无面人》CH1–CH60已完成当前阶段顺序学习，恢复点为CH61。权威覆盖、源文件 hash、滚动总账 hash 与下一位置以 `research/masterworks/STUDY_STATE.json` 为准。
 - 《挪威的森林》：`EXCLUDED_BY_USER`，不读、不蒸馏、不进入跨作品能力结论。
 
 ## 既有 FQ001 架构的当前身份
@@ -57,4 +57,4 @@ active_masterwork_id: GUI_MI_ZHI_ZHU
 
 ## 下一步
 
-从第二部《无面人》CH1继续按用户提供标准化全文顺序学习，持续更新唯一滚动学习总账；完成整本《诡秘之主》后才切下一部。全部非排除作品学完后，再做跨作品综合和故事重新选择。在此之前，不起草现有 FQ001 replacement CH1–CH8。
+从第二部《无面人》CH61继续按用户提供标准化全文顺序学习，持续更新唯一滚动学习总账；完成整本《诡秘之主》后才切下一部。全部非排除作品学完后，再做跨作品综合和故事重新选择。在此之前，不起草现有 FQ001 replacement CH1–CH8。
