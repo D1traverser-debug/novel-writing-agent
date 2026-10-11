@@ -12,7 +12,16 @@
     "active_project_task_id": "FQ001_MINGRI_ORDER",
     "active_project_ref": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
     "candidate_presentation_zh": "小说系统｜《凌晨零点，我接到明天的订单》",
-    "state_model": "SYSTEM_RULES_AND_PROJECT_STATE_COUPLED_BUT_LAYERED"
+    "state_model": "SYSTEM_RULES_AND_PROJECT_STATE_COUPLED_BUT_LAYERED",
+    "masterwork_learning": {
+      "protocol_ref": "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
+      "registry_ref": "research/masterworks/INDEX.json",
+      "authority_role": "LEARNING_EVIDENCE_NOT_EXECUTION_AUTHORITY",
+      "active_study": "SHIRI_ZHONGYAN",
+      "active_study_ref": "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
+      "promotion_rule": "REFERENCE_TO_EXPERIMENTAL_TO_PROJECT_PROVEN_TO_ACTIVE_RULE_TO_CROSS_PROJECT_VERIFIED",
+      "copyright_rule": "OFFICIAL_OR_LAWFUL_SOURCES_ONLY_NO_PIRATED_FULLTEXT"
+    }
   },
   "tasks": [
     {
@@ -39,7 +48,7 @@
       "skill_version": "Novel Writing Agent 2.4.0-github",
       "runtime_version": "github-owner-2.5",
       "release_evidence_contract_version": "1.0",
-      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","凌晨零点","番茄小说","FQ001","NOVEL_WRITING_AGENT","全前段重构","FULL_FRONT_ARC_REBASE","小说技能","能力掌握","系列总纲","签约修复","二签"]
+      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","凌晨零点","番茄小说","FQ001","NOVEL_WRITING_AGENT","全前段重构","FULL_FRONT_ARC_REBASE","小说技能","能力掌握","系列总纲","签约修复","二签","名作蒸馏","十日终焉"]
     }
   ]
 }
