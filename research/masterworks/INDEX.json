@@ -21,9 +21,12 @@
       "title": "诡秘之主",
       "source_status": "USER_LAWFULLY_PROVIDED_STANDARDIZED_TEXT",
       "execution_authority": false,
-      "current_status": "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ",
-      "completed_passes": [],
-      "next_pass": "SEQUENTIAL_FULLTEXT_FROM_BEGINNING",
+      "current_status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+      "completed_passes": ["VOLUME_01_XIAO_CHOU__CH1-CH213_PLUS_VOLUME_SUMMARY"],
+      "next_pass": "SEQUENTIAL_CONTINUE__VOLUME_02_WU_MIAN_REN_CH1",
+      "progress_ref": "research/masterworks/STUDY_STATE.json",
+      "rolling_ledger": "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
+      "source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
       "queue_ref": "research/masterworks/STUDY_STATE.json"
     }
   ],
