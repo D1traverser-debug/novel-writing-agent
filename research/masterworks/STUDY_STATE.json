@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T14:18:00Z",
+  "updated_at": "2026-10-11T16:10:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -16,31 +16,26 @@
   "drive_corpus_root": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料",
   "drive_learning_root": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习",
   "active_work": {
-    "queue_no": 2,
-    "work_id": "GUI_MI_ZHI_ZHU",
-    "title": "诡秘之主",
-    "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
-    "binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
-    "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/诡秘之主.txt",
-    "source_file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
-    "source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
-    "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/诡秘之主/诡秘之主_学习总账.md",
-    "rolling_ledger_file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
-    "rolling_ledger_sha256": "4fd257d130a019fcc4cc558377c807fe260c17f5ee10658a97612ddb7f49a7fe",
+    "queue_no": 3,
+    "work_id": "DAO_MU_BI_JI",
+    "title": "盗墓笔记全集",
+    "status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+    "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/盗墓笔记全集.txt",
+    "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
+    "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
+    "source_size_bytes": 4324861,
+    "source_total_lines": 30839,
+    "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
+    "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
+    "rolling_ledger_sha256": "2d6a1f96e551d692419470f528af4dacb12fb6c980c643421a21cbec258b4465",
     "coverage": {
-      "sequential_completed": "ALL_8_VOLUMES__THROUGH_FULL_BOOK_END",
-      "completed_volumes": ["第一部《小丑》","第二部《无面人》","第三部《旅行家》","第四部《不死者》","第五部《红祭司》","第六部《逐光者》","第七卷《倒吊人》","第八卷《愚者》"],
-      "chapter_heading_count": 1394,
-      "source_total_lines": 117803,
-      "author_volume_summaries_included": ["VOLUME_01","VOLUME_02","VOLUME_03","VOLUME_04","VOLUME_07"],
-      "author_volume_summaries_absent_in_user_source": ["VOLUME_05","VOLUME_06","VOLUME_08"],
-      "full_book_end_verified": true,
-      "full_book_end_marker": "（全书完）",
-      "next_location": "STOP_AFTER_GUI_MI_COMPLETION__DO_NOT_BEGIN_NEXT_BOOK"
+      "sequential_completed": "ACTIVATED__NO_CHAPTER_SAFEPOINT_YET",
+      "current_section": "《七星鲁王宫》",
+      "current_section_completed_body_chapters": 0,
+      "next_location": "《七星鲁王宫》第一章《血尸》"
     },
-    "next_pass": "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED",
-    "next_pending_work": "DAO_MU_BI_JI",
-    "next_action": "Stop after completing GUI_MI_ZHI_ZHU exactly as the user requested. Do not begin DAO_MU_BI_JI in this turn. When the user later explicitly continues the queue, start DAO_MU_BI_JI sequentially from its beginning."
+    "next_pass": "SEQUENTIAL_CONTINUE__QIXING_LUWANGGONG_CH1",
+    "next_action": "Continue the user-provided standardized text sequentially from 《七星鲁王宫》第一章《血尸》, update the single rolling ledger at verified safe points, and do not switch books until DAO_MU_BI_JI is complete."
   },
   "completed_works": [
     {
@@ -64,7 +59,7 @@
   "queue": [
     {"no":1,"work_id":"SHIRI_ZHONGYAN","title":"十日终焉","status":"COMPLETE"},
     {"no":2,"work_id":"GUI_MI_ZHI_ZHU","title":"诡秘之主","status":"COMPLETE"},
-    {"no":3,"work_id":"DAO_MU_BI_JI","title":"盗墓笔记全集","status":"PENDING"},
+    {"no":3,"work_id":"DAO_MU_BI_JI","title":"盗墓笔记全集","status":"ACTIVE"},
     {"no":4,"work_id":"GUI_CHUI_DENG","title":"鬼吹灯全集","status":"PENDING"},
     {"no":5,"work_id":"QING_YU_NIAN","title":"庆余年","status":"PENDING"},
     {"no":6,"work_id":"HARRY_POTTER","title":"哈利·波特全集","status":"PENDING"},
@@ -85,5 +80,5 @@
     {"no":21,"work_id":"THE_STRANGER","title":"局外人","status":"PENDING"},
     {"no":22,"work_id":"OLD_MAN_AND_SEA","title":"老人与海","status":"PENDING"}
   ],
-  "resume_rule": "On resume, read this file first for the learning substream. GUI_MI_ZHI_ZHU is complete and intentionally remains the current focus binding until a later explicit continue activates DAO_MU_BI_JI. Never infer that the next pending book has started."
+  "resume_rule": "On resume, read this file first for the learning substream. Continue DAO_MU_BI_JI exactly from active_work.next_location. Never regress to GUI_MI_ZHI_ZHU or infer that GUI_CHUI_DENG has started."
 }
