@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "status": "ACTIVE",
+  "protocol_ref": "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
+  "authority_role": "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY",
+  "copyright_policy": {
+    "pirated_fulltext_allowed": false,
+    "store_substitute_for_original_work": false,
+    "allowed_sources": [
+      "OFFICIAL_OR_AUTHORIZED_FREE_READING",
+      "USER_LAWFULLY_PROVIDED_TEXT",
+      "AUTHOR_INTERVIEW_OR_CREATION_ESSAY",
+      "LAWFUL_CRITICISM_AND_READER_FEEDBACK"
+    ],
+    "persisted_material": "ABSTRACTED_MECHANISMS_LOCATION_REFS_MINIMAL_QUOTES_ONLY"
+  },
+  "active_studies": [
+    {
+      "work_id": "SHIRI_ZHONGYAN",
+      "title": "十日终焉",
+      "author": "杀虫队队员",
+      "source_status": "OFFICIAL_FANQIE_FREE_READING_PLUS_PUBLIC_AUTHOR_INTERVIEWS",
+      "execution_authority": false,
+      "target_competencies": ["C02","C03","C04","C05","C08","C09","C10","C11","C12","C13","C14","C15","C16","C17","C20"],
+      "completed_passes": [
+        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
+        "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md"
+      ],
+      "current_status": "OPENING_PACKET_MICROCRAFT_DISTILLED__TRANSFER_EXPERIMENTS_PENDING",
+      "promoted_reference_mechanisms": [
+        "ANSWER_AWARE_MYSTERY_OUTLINING",
+        "READER_FEEDBACK_CLUSTERING",
+        "DOMAIN_RESEARCH_TRIGGERED_BY_DRAMA",
+        "FINITE_MAINLINE_UNDER_EPISODIC_SURFACE",
+        "RETROSPECTIVE_CHARACTER_RECONTEXTUALIZATION",
+        "FOCALIZED_FUNCTIONAL_ENVIRONMENT"
+      ],
+      "experimental_for_FQ001": [
+        "QUESTION_REPLACEMENT_LEDGER",
+        "FUNCTIONAL_ENVIRONMENT_TAGGING",
+        "COGNITION_THROUGH_CHOICE_PSYCHOLOGY_CHAIN",
+        "ENGINE_DIVERSITY_MAP",
+        "CHARACTER_SIMULATION_BENCHMARK",
+        "RULE_CONSEQUENCE_TRIAD"
+      ],
+      "explicitly_not_promoted": [
+        "MORE_COMPLEXITY_IS_ALWAYS_BETTER",
+        "MANDATORY_AUTOBIOGRAPHY_CHAPTERS",
+        "DEATH_GAME_TEMPLATE",
+        "HYPERINTELLIGENT_PROTAGONIST_TEMPLATE",
+        "COPIED_SENTENCE_PLOT_RULE_CHARACTER_OR_REVEAL"
+      ],
+      "next_pass": "PASS_03_CHARACTER_ENSEMBLE_AND_ATTACHMENT"
+    }
+  ]
+}
