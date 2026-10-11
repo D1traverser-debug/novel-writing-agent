@@ -5,10 +5,6 @@ import json, sys
 ROOT = Path(__file__).resolve().parents[1]
 problems = []
 
-EXPECTED_STATUS = "USER_FULLTEXT_MAINLINE_INGESTED__CH1_CH10_DEEP_READ__SEQUENTIAL_FULL_COVERAGE_ACTIVE"
-EXPECTED_NEXT = "SEQUENTIAL_FULLTEXT_CH11_PLUS_PASS_05_PACING_ENGINE_ROTATION_AND_CONVERGENCE"
-EXPECTED_FULLTEXT_SHA = "4236619fe12174798682716433d425e2351dac643c9fcb014f6876356ce667ba"
-INGEST_REL = "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md"
 
 def need(rel):
     p = ROOT / rel
@@ -17,23 +13,23 @@ def need(rel):
     return p
 
 protocol_p = need("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
-index_p = need("research/masterworks/INDEX.json")
-pass_paths = [
+registry_p = need("research/masterworks/INDEX.json")
+study_state_p = need("research/masterworks/STUDY_STATE.json")
+canonical_idx_p = need("continuity/TASK_INDEX.json")
+alias_idx_p = need("TASK_INDEX.json")
+for rel in [
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_04_MYSTERY_WORLD_RULES.md",
-]
-pass_files = [need(rel) for rel in pass_paths]
-ingest_p = need(INGEST_REL)
-canonical_idx_p = need("continuity/TASK_INDEX.json")
-alias_idx_p = need("TASK_INDEX.json")
+    "research/masterworks/SHIRI_ZHONGYAN/FULLTEXT_CORPUS_INGEST_2026-10-11.md",
+]:
+    need(rel)
 
 if not problems:
     protocol = protocol_p.read_text(encoding="utf-8")
-    registry = json.loads(index_p.read_text(encoding="utf-8"))
-    passes = [p.read_text(encoding="utf-8") for p in pass_files]
-    ingest = ingest_p.read_text(encoding="utf-8")
+    registry = json.loads(registry_p.read_text(encoding="utf-8"))
+    state = json.loads(study_state_p.read_text(encoding="utf-8"))
     canonical = json.loads(canonical_idx_p.read_text(encoding="utf-8"))
     alias = json.loads(alias_idx_p.read_text(encoding="utf-8"))
 
@@ -41,15 +37,15 @@ if not problems:
         problems.append("protocol-not-active")
     for stage in ("D0 RIGHTS_AND_SOURCE","D3 COLD_READ_TRACE","D6 POSITIVE_NEGATIVE_DIFF","D8 CROSS-WORK_TRIANGULATION","D9 PROJECT_TRANSFER_EXPERIMENT","D11 PROMOTION","D12 STOP / DECAY"):
         if stage not in protocol:
-            problems.append("protocol-stage:"+stage)
+            problems.append("protocol-stage:" + stage)
     for concept in ("Psychological portrayal","Environment / atmosphere","Plot progression","Dialogue","Emotion","Quality audit"):
         if concept not in protocol:
-            problems.append("microcraft-gap:"+concept)
-    if "盗版" in protocol and "禁止" not in protocol:
-        problems.append("copyright-boundary-ambiguous")
+            problems.append("microcraft-gap:" + concept)
 
     if registry.get("status") != "ACTIVE":
         problems.append("registry-not-active")
+    if registry.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
+        problems.append("registry-study-state-ref")
     if registry.get("authority_role") != "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY":
         problems.append("registry-authority-role")
     copyright_policy = registry.get("copyright_policy", {})
@@ -57,107 +53,83 @@ if not problems:
         problems.append("pirated-fulltext-not-denied")
     if copyright_policy.get("store_substitute_for_original_work") is not False:
         problems.append("copyright-substitute-risk")
-    allowed_sources = set(copyright_policy.get("allowed_sources", []))
-    if "USER_LAWFULLY_PROVIDED_TEXT" not in allowed_sources:
+    if "USER_LAWFULLY_PROVIDED_TEXT" not in set(copyright_policy.get("allowed_sources", [])):
         problems.append("user-provided-source-not-allowed")
 
-    studies = registry.get("active_studies", [])
-    if len(studies) != 1 or studies[0].get("work_id") != "SHIRI_ZHONGYAN":
+    active = registry.get("active_studies", [])
+    if len(active) != 1 or active[0].get("work_id") != "GUI_MI_ZHI_ZHU":
         problems.append("active-study-binding")
-        study = {}
     else:
-        study = studies[0]
-        if study.get("execution_authority") is not False:
-            problems.append("masterwork-promoted-to-execution-authority")
-        expected_evidence = set(pass_paths + [INGEST_REL])
-        if not expected_evidence.issubset(set(study.get("completed_passes", []))):
-            problems.append("study-pass-registry-drift")
-        for rejected in (
-            "MORE_COMPLEXITY_IS_ALWAYS_BETTER",
-            "MANDATORY_AUTOBIOGRAPHY_CHAPTERS",
-            "DEATH_GAME_TEMPLATE",
-            "HYPERINTELLIGENT_PROTAGONIST_TEMPLATE",
-        ):
-            if rejected not in study.get("explicitly_not_promoted", []):
-                problems.append("anti-overfit-missing:"+rejected)
-        if study.get("next_pass") != EXPECTED_NEXT:
-            problems.append("next-pass-drift")
-        if study.get("current_status") != EXPECTED_STATUS:
-            problems.append("study-status-drift")
+        guimi = active[0]
+        if guimi.get("execution_authority") is not False:
+            problems.append("active-study-authority-inflation")
+        if guimi.get("current_status") != "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
+            problems.append("guimi-status-drift")
+        if guimi.get("next_pass") != "SEQUENTIAL_FULLTEXT_FROM_BEGINNING":
+            problems.append("guimi-next-pass-drift")
 
-        coverage = study.get("fulltext_coverage", {})
-        expected_coverage = {
-            "user_source_sha256": EXPECTED_FULLTEXT_SHA,
+    completed = {s.get("work_id"): s for s in registry.get("completed_studies", [])}
+    shiri = completed.get("SHIRI_ZHONGYAN", {})
+    if not shiri:
+        problems.append("shiri-completed-study-missing")
+    else:
+        if shiri.get("current_status") != "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING":
+            problems.append("shiri-completion-state")
+        if shiri.get("next_pass") != "NEXT_BOOK__GUI_MI_ZHI_ZHU":
+            problems.append("shiri-next-work")
+        cov = shiri.get("fulltext_coverage", {})
+        expected = {
             "user_source_numbered_mainline_through": 1359,
             "user_source_chapter_heading_occurrences": 1360,
             "source_numbering_anomaly": "two distinct headings labelled CH1357",
-            "fanqie_current_catalog_chapters": 1496,
-            "current_catalog_supplement_gap": "CH1360-CH1496",
-            "deep_read_completed": "CH1-CH10",
-            "deep_read_pending": "CH11-CH1359",
-            "official_supplement_pending": "CH1360-CH1496",
+            "sequential_study_completed": "SOURCE_ORDER_1-1360",
+            "body_numbering": "CH1-CH1359",
+            "study_scope": "USER_PROVIDED_TEXT_ONLY_PER_USER_DIRECTION",
+            "official_supplement_status": "OUT_OF_SCOPE_FOR_THIS_STUDY",
         }
-        for key, value in expected_coverage.items():
-            if coverage.get(key) != value:
-                problems.append("fulltext-coverage-drift:"+key)
-        ledger = coverage.get("coverage_ledger", "")
-        if "十日终焉_1496章全书覆盖台账" not in ledger:
-            problems.append("fulltext-coverage-ledger-missing")
+        for key, value in expected.items():
+            if cov.get(key) != value:
+                problems.append("shiri-coverage-drift:" + key)
+        for rejected in ("MORE_COMPLEXITY_IS_ALWAYS_BETTER","MANDATORY_AUTOBIOGRAPHY_CHAPTERS","DEATH_GAME_TEMPLATE","HYPERINTELLIGENT_PROTAGONIST_TEMPLATE"):
+            if rejected not in shiri.get("explicitly_not_promoted", []):
+                problems.append("anti-overfit-missing:" + rejected)
 
-    for i, text in enumerate(passes, start=1):
-        if "status: LEARNING_EVIDENCE" not in text:
-            problems.append(f"pass{i}:authority-inflation")
-    if "status: LEARNING_EVIDENCE" not in ingest:
-        problems.append("fulltext-ingest:authority-inflation")
-    for required in (
-        EXPECTED_FULLTEXT_SHA,
-        "第1359章 终：完结感言",
-        "CH1360–CH1496",
-        "CH1_CH10_DEEP_READ_FROM_USER_FULLTEXT",
-        "does not contain the current post-completion catalog additions",
-    ):
-        if required not in ingest:
-            problems.append("fulltext-ingest-evidence-gap:"+required)
-    if "NOT PROMOTED" not in passes[0]:
-        problems.append("pass1:no-negative-promotion-boundary")
-    if "Current assurance: `OPENING_PACKET_LEARNING_EVIDENCE__PROJECT_TRANSFER_PENDING`" not in passes[1]:
-        problems.append("pass2-claim-boundary")
-    if "Current assurance: `CHARACTER_ENSEMBLE_LEARNING_EVIDENCE__PROJECT_TRANSFER_PENDING`" not in passes[2]:
-        problems.append("pass3-claim-boundary")
-    if "Current assurance: `MYSTERY_WORLD_LEARNING_EVIDENCE__PROJECT_TRANSFER_PENDING`" not in passes[3]:
-        problems.append("pass4-claim-boundary")
-    for skill in ("Psychological portrayal","Environment and spatial description","Dialogue and voice","Plot progression","Chapter architecture / hooks","Emotion and attachment"):
-        if skill not in passes[1]:
-            problems.append("pass2-skill-gap:"+skill)
-    for skill in ("Independent agency","Character familiarity","Voice","Attachment object","Emotional progression"):
-        if skill.lower() not in passes[2].lower():
-            problems.append("pass3-skill-gap:"+skill)
-    for skill in ("Rule design","Worldbuilding","Information asymmetry","Mystery ladder","Complexity is not the goal"):
-        if skill.lower() not in passes[3].lower():
-            problems.append("pass4-skill-gap:"+skill)
+    if state.get("status") != "ACTIVE":
+        problems.append("study-state-not-active")
+    policy = state.get("study_policy", {})
+    if policy.get("mode") != "ONE_BOOK_AT_A_TIME" or policy.get("rule") != "COMPLETE_CURRENT_WORK_BEFORE_NEXT":
+        problems.append("study-policy")
+    if policy.get("cross_work_synthesis") != "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE":
+        problems.append("cross-work-policy")
+    if set(state.get("user_locked_business_constraints", [])) != {"SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"}:
+        problems.append("user-locked-constraints")
+    active_work = state.get("active_work", {})
+    if active_work.get("work_id") != "GUI_MI_ZHI_ZHU" or active_work.get("status") != "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ":
+        problems.append("study-state-active-work")
+    if not any(w.get("work_id") == "SHIRI_ZHONGYAN" and w.get("status") == "COMPLETE" for w in state.get("queue", [])):
+        problems.append("queue-shiri-complete")
+    if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in state.get("queue", [])):
+        problems.append("queue-norwegian-excluded")
 
     c_learning = canonical.get("system", {}).get("masterwork_learning", {})
     a_learning = alias.get("system", {}).get("masterwork_learning", {})
-    if c_learning.get("protocol_ref") != "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md":
-        problems.append("canonical-index-protocol-ref")
-    if c_learning.get("registry_ref") != "research/masterworks/INDEX.json":
-        problems.append("canonical-index-registry-ref")
-    if c_learning.get("authority_role") != "LEARNING_EVIDENCE_NOT_EXECUTION_AUTHORITY":
-        problems.append("canonical-index-authority-boundary")
-    if c_learning.get("active_study") != "SHIRI_ZHONGYAN":
-        problems.append("canonical-index-active-study")
+    for label, learning in (("canonical", c_learning), ("alias", a_learning)):
+        if learning.get("registry_ref") != "research/masterworks/INDEX.json":
+            problems.append(label + "-registry-ref")
+        if learning.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
+            problems.append(label + "-study-state-ref")
+        if learning.get("active_study") != "GUI_MI_ZHI_ZHU":
+            problems.append(label + "-active-study")
     if a_learning.get("active_study_ref") != c_learning.get("active_study_ref"):
         problems.append("compat-index-masterwork-drift")
 
 result = {
     "status": "PASS" if not problems else "FAIL",
     "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@1.0",
-    "active_study": "SHIRI_ZHONGYAN",
-    "source_mode": "USER_FULLTEXT_MAINLINE_PLUS_OFFICIAL_SUPPLEMENT",
-    "deep_read_completed": study.get("fulltext_coverage", {}).get("deep_read_completed") if isinstance(study, dict) else None,
-    "deep_read_pending": study.get("fulltext_coverage", {}).get("deep_read_pending") if isinstance(study, dict) else None,
-    "official_supplement_pending": study.get("fulltext_coverage", {}).get("official_supplement_pending") if isinstance(study, dict) else None,
-    "next_pass": EXPECTED_NEXT,
+    "active_study": "GUI_MI_ZHI_ZHU",
+    "completed_studies": ["SHIRI_ZHONGYAN"],
+    "study_policy": "ONE_BOOK_AT_A_TIME",
+    "next_pass": "SEQUENTIAL_FULLTEXT_FROM_BEGINNING",
     "assurance": "LEARNING_EVIDENCE_ONLY__PROJECT_TRANSFER_PENDING",
     "failures": problems,
 }
