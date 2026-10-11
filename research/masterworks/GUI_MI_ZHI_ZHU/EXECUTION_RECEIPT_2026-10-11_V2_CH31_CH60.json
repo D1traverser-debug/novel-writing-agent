@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "receipt_id": "2d87ca6d-ce1a-4f34-8245-220a8216b938",
+  "action_id": "GUI_MI_V2_CH31_CH60_SEQUENTIAL_DISTILLATION",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "owner": "NOVEL_WRITING_AGENT",
+  "stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
+  "capability_id": "masterwork_distillation_and_transfer_learning",
+  "executor_identity": "CHATGPT_CURRENT_SESSION_CHAT_BRIDGED_SELF_ATTESTED",
+  "execution_ref": "research/masterworks/GUI_MI_ZHI_ZHU/EXECUTION_RECEIPT_2026-10-11_V2_CH31_CH60.json",
+  "provider": "CHAT_BRIDGED_MODEL_PLUS_GOOGLE_DRIVE_SOURCE",
+  "work_order_id": "0f9863d8-5ee1-4860-b68e-1f87fd613ace",
+  "lease_binding": {
+    "lease_id": "1b0bc7df-c0b7-47e4-b054-40a98e887ba1",
+    "resume_epoch": 3
+  },
+  "subject_bindings": {
+    "work_id": "GUI_MI_ZHI_ZHU",
+    "title": "诡秘之主",
+    "volume": "第二部《无面人》",
+    "chapter_range": "CH31-CH60",
+    "cumulative_volume_coverage": "CH1-CH60",
+    "next_location": "CH61"
+  },
+  "input_bindings": {
+    "source_file_id": "1iXkVcu9gCCVKZweYVMrN8vH8jNIhbfEC",
+    "source_sha256": "25d76c8752e97255d8653205e44e0c12348fd50d9c68a657b3fc970d77112489",
+    "rolling_ledger_file_id": "1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo",
+    "prior_rolling_ledger_sha256": "fbfe6488c8cf8f24f82b779853149f1c3cc32b7c9a32dd2345be6203717d01cd",
+    "prior_resume_location": "第二部《无面人》CH31"
+  },
+  "output_refs": [
+    "gdrive:file:1Ixa5xE8iWyrGQjuJDgwBSTAQxO81hcXo#sha256=4da3cdf81fb55a3bad06abce492b84f9893b661db5a142e83099b06eaf31dac8",
+    "research/masterworks/STUDY_STATE.json",
+    "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json"
+  ],
+  "result": "EXECUTED",
+  "completed_at": "2026-10-11T12:37:40Z",
+  "assurance": "ACTION_LEVEL_SELF_ATTESTED",
+  "independent_verification_status": "NOT_AVAILABLE_CURRENT_SESSION",
+  "claim_boundary": "Proves only that this chat-bound action is recorded against the exact source, prior ledger version, chapter range and output ledger version. It does not independently attest semantic reading quality, cross-work transfer, prose quality, or live platform outcome.",
+  "anti_replay": {
+    "receipt_id_unique_by_construction": true,
+    "action_subject_range": "GUI_MI_ZHI_ZHU/V2/CH31-CH60",
+    "no_prior_same_action_receipt_found_in_owner_repository": true
+  }
+}
