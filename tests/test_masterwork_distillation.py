@@ -89,7 +89,7 @@ def test_completed_baselines_remain_preserved():
     assert "COPY_ANY_PLOT_RULE_CHARACTER_REVEAL_PHRASE_OR_ICONIC_STRUCTURE" in guimi["explicitly_not_promoted"]
 
 
-def test_current_dao_first_volume_checkpoint_is_source_bound():
+def test_current_dao_second_volume_checkpoint_is_source_bound():
     state = load_json("research/masterworks/STUDY_STATE.json")
     current = state["active_work"]
     assert current["work_id"] == "DAO_MU_BI_JI"
@@ -97,9 +97,9 @@ def test_current_dao_first_volume_checkpoint_is_source_bound():
     assert current["source_file_id"] == "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG"
     assert current["source_sha256"] == "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768"
     assert current["rolling_ledger_file_id"] == "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4"
-    assert current["rolling_ledger_sha256"] == "efbee1681938f115626a1f1138597a2f2bf5e56c210dbce471fdaa34fe86584a"
-    assert current["coverage"]["sequential_completed"] == "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE"
-    assert current["coverage"]["next_location"] == "《怒海潜沙》第一章《蛇眉铜鱼》"
+    assert current["rolling_ledger_sha256"] == "133dfb0de4decc2ab21aeb1042aadc340cec21870b96a23c99c11448dceae7bc"
+    assert current["coverage"]["sequential_completed"] == "QIXING_LUWANGGONG__CH1-CH29__VOLUME_01_COMPLETE__NUHAI_QIANSHA__CH1-CH46__VOLUME_02_COMPLETE"
+    assert current["coverage"]["next_location"] == "《秦岭神树》第一章《老痒出狱》"
 
 
 def test_execution_capability_keeps_learning_claim_ceiling():
