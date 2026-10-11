@@ -7,7 +7,12 @@
     "system_id": "NOVEL_OS",
     "display_name_zh": "小说系统",
     "owner_role": "SYSTEM_OWNER_ACTIVE_PROJECT_ROUTER",
-    "resume_aliases": ["小说系统","NOVEL_OS","Novel Writing Agent","novel-writing-agent"],
+    "resume_aliases": [
+      "小说系统",
+      "NOVEL_OS",
+      "Novel Writing Agent",
+      "novel-writing-agent"
+    ],
     "resume_behavior": "ROUTE_TO_ACTIVE_PROJECT",
     "active_project_task_id": "FQ001_MINGRI_ORDER",
     "active_project_ref": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
@@ -20,10 +25,20 @@
       "authority_role": "LEARNING_EVIDENCE_NOT_EXECUTION_AUTHORITY",
       "active_study": "GUI_MI_ZHI_ZHU",
       "active_study_ref": "research/masterworks/STUDY_STATE.json",
-      "completed_studies": ["SHIRI_ZHONGYAN"],
-      "coverage_state": "SHIRI_COMPLETE__GUI_MI_VOLUME_01_COMPLETE__VOLUME_02_CH1_CH60_COMPLETE__CH61_NEXT",
+      "active_study_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+      "active_study_binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
+      "completed_studies": [
+        "SHIRI_ZHONGYAN",
+        "GUI_MI_ZHI_ZHU"
+      ],
+      "next_pending_study": "DAO_MU_BI_JI",
+      "stop_after_current_work": true,
+      "coverage_state": "SHIRI_COMPLETE__GUI_MI_COMPLETE__STOPPED_BEFORE_DAO_MU_BI_JI",
       "study_policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT__CROSS_WORK_SYNTHESIS_DEFERRED",
-      "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE","SERIALIZATION_MODE_IMMUTABLE"],
+      "user_locked_business_constraints": [
+        "SIGNING_MODE_IMMUTABLE",
+        "SERIALIZATION_MODE_IMMUTABLE"
+      ],
       "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_LEARNING",
       "promotion_rule": "REFERENCE_TO_EXPERIMENTAL_TO_PROJECT_PROVEN_TO_ACTIVE_RULE_TO_CROSS_PROJECT_VERIFIED",
       "copyright_rule": "OFFICIAL_OR_LAWFUL_SOURCES_ONLY_NO_PIRATED_FULLTEXT"
@@ -44,9 +59,9 @@
       "resume_eligible": true,
       "resume_visibility": "DEFAULT",
       "recovery_owner": "NOVEL_WRITING_AGENT",
-      "updated_at": "2026-10-11T12:37:40Z",
+      "updated_at": "2026-10-11T14:20:00Z",
       "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-      "next_action": "Continue the user-provided standardized masterwork corpus one book at a time. SHIRI_ZHONGYAN is complete; GUI_MI_ZHI_ZHU has completed sequential study of 第一部《小丑》 CH1-CH213 plus the volume summary and 第二部《无面人》 CH1-CH60, and must continue from 第二部《无面人》 CH61. Maintain the single rolling ledger and do not switch books until the active work is complete. Do not draft the existing FQ001 replacement CH1-CH8 while this learning stage is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
+      "next_action": "GUI_MI_ZHI_ZHU (《诡秘之主》) has completed full sequential study through the user-provided end marker and whole-book single-work distillation. Stop after this completed work exactly as the user requested; do not begin DAO_MU_BI_JI in this run. Keep the masterwork queue and current focus binding durable. On a later explicit continue, activate DAO_MU_BI_JI from its beginning and continue one book at a time. Do not draft the existing FQ001 replacement CH1-CH8 while the masterwork study queue is active. After all non-excluded works are complete, synthesize cross-work evidence and run fresh story/premise/world/character/architecture selection. Only signing mode and serialization mode are user-locked; all other story design may be rebuilt. Preserve existing published/history/Canon artifacts as historical evidence; external platform changes remain user-controlled.",
       "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
       "contract_version": "3.7",
       "continuity_protocol_version": "3.7",
@@ -54,7 +69,21 @@
       "skill_version": "Novel Writing Agent 2.4.0-github",
       "runtime_version": "github-owner-2.5",
       "release_evidence_contract_version": "1.0",
-      "keywords": ["小说","小说系统","NOVEL_OS","Novel Writing Agent","明日订单","番茄小说","FQ001","NOVEL_WRITING_AGENT","名作蒸馏","逐本学习","十日终焉","诡秘之主","故事重选"]
+      "keywords": [
+        "小说",
+        "小说系统",
+        "NOVEL_OS",
+        "Novel Writing Agent",
+        "明日订单",
+        "番茄小说",
+        "FQ001",
+        "NOVEL_WRITING_AGENT",
+        "名作蒸馏",
+        "逐本学习",
+        "十日终焉",
+        "诡秘之主",
+        "故事重选"
+      ]
     }
   ]
 }
