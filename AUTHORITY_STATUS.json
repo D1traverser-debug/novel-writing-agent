@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "status": "GITHUB_PRIMARY",
   "repository": "D1traverser-debug/novel-writing-agent",
   "branch": "main",
@@ -31,8 +31,6 @@
   "task_id": "FQ001_MINGRI_ORDER",
   "migration_semantics": "storage/home and additive continuity-protocol migration only; no chapter/Canon/release replay",
   "project_state_authority": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json + projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
-  "dynamic_state_role": "MIRROR_ONLY__MUST_NOT_OVERRIDE_PROJECT_STATE_AUTHORITY",
-  "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-  "next_action": "Continue GUI_MI_ZHI_ZHU sequential study from 第二部《无面人》CH1 according to research/masterworks/STUDY_STATE.json; keep prose production held until the study queue and post-study story reselection gates are complete.",
+  "dynamic_state_role": "NOT_DUPLICATED_HERE__READ_PROJECT_STATE_AUTHORITY",
   "cutover_at": "2026-10-10T02:13:00Z"
 }
