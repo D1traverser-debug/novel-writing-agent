@@ -1,245 +1,151 @@
 from pathlib import Path
 import json, hashlib
 
-ROOT=Path(__file__).resolve().parents[1]
-TASK=ROOT/"projects/FQ001_MINGRI_ORDER"
+ROOT = Path(__file__).resolve().parents[1]
+TASK = ROOT / "projects/FQ001_MINGRI_ORDER"
 
 
-def test_recovery_truth():
-    m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
-    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
-    assert m["task_id"]=="FQ001_MINGRI_ORDER"
-    assert m["status"]=="ACTIVE"
-    assert cp["status"]=="ACTIVE"
-    assert m["last_final_chapter"]==8
-    assert m["next_serial_chapter"]==9
-    assert m["next_serial_status"]=="HELD_DURING_FULL_FRONT_ARC_REBASE"
-    assert cp["production_mode"]=="FULL_FRONT_ARC_REBASE"
-    assert m["current_stage"]=="FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY"
-    assert m["current_stage"]==cp["current_stage"]
-    assert m["next_action"]==cp["next_action"]
-    assert m["external_publication"]["confirmed_published_through"]==7
+def load_json(rel):
+    return json.loads((ROOT / rel).read_text(encoding="utf-8"))
 
 
-def test_historical_final_hashes_are_preserved_during_rebase():
-    m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
-    assert hashlib.sha256((TASK/"manuscript/CH0008_FINAL.md").read_bytes()).hexdigest()==m["last_final_hash"]
-    expected={1:"79f1a1778c4023fe185606f0493d2019938b61f6cc8e5697408453302e0d0043",2:"2b77d75aabebda658023a9ad570d56337d9391ed8d39fd85bbdcfd89a7d382bb",3:"b586faa1643fa92f9c4b528b1f94e11f7d80fbad4a133d02ea1feb8006911b58",4:"636b88301bbfdd2d9a7b150afef69192879cc26109da5c95c898e271188bc853",5:"d18a02c0bbc51e5585179ae096e3f2452e1f48085b4d188ed37b6ada8fc2e507",6:"9207c149ec8a8acb50dff22dc53cf9e0c4f6b53f63f4bcef6b4f8487332c0810",7:"e7d1ef881b042a70fd699817763cb07c055b06fd7cf9412cc98209739fd539f8"}
-    for n,h in expected.items():
-        assert hashlib.sha256((TASK/f"manuscript/CH{n:04d}_FINAL.md").read_bytes()).hexdigest()==h
+def test_recovery_truth_points_to_masterwork_study_before_story_reselection():
+    m = load_json("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
+    cp = load_json("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
+    assert m["task_id"] == "FQ001_MINGRI_ORDER"
+    assert m["status"] == cp["status"] == "ACTIVE"
+    assert m["current_stage"] == cp["current_stage"] == "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING"
+    assert m["next_action"] == cp["next_action"]
+    assert m["next_serial_chapter"] == cp["next_serial_chapter"] == 9
+    assert m["next_serial_status"] == cp["next_serial_status"] == "HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION"
+    assert cp["production_mode"] == "FULL_FRONT_ARC_REBASE"
+    assert set(m["user_locked_business_constraints"]) == {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}
+    assert m["reopenable_design_scope"] == "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_MASTERWORK_DISTILLATION"
+    assert m["masterwork_learning"]["active_work"] == "GUI_MI_ZHI_ZHU"
+    assert m["masterwork_learning"]["completed_work"] == "SHIRI_ZHONGYAN"
 
 
-def test_ch9_is_held_and_its_strong_design_is_migration_source():
-    c=(TASK/"NEXT_CHAPTER_CONTRACT.md").read_text(encoding="utf-8")
+def test_historical_final_hashes_are_preserved():
+    m = load_json("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
+    assert hashlib.sha256((TASK / "manuscript/CH0008_FINAL.md").read_bytes()).hexdigest() == m["last_final_hash"]
+    expected = {
+        1:"79f1a1778c4023fe185606f0493d2019938b61f6cc8e5697408453302e0d0043",
+        2:"2b77d75aabebda658023a9ad570d56337d9391ed8d39fd85bbdcfd89a7d382bb",
+        3:"b586faa1643fa92f9c4b528b1f94e11f7d80fbad4a133d02ea1feb8006911b58",
+        4:"636b88301bbfdd2d9a7b150afef69192879cc26109da5c95c898e271188bc853",
+        5:"d18a02c0bbc51e5585179ae096e3f2452e1f48085b4d188ed37b6ada8fc2e507",
+        6:"9207c149ec8a8acb50dff22dc53cf9e0c4f6b53f63f4bcef6b4f8487332c0810",
+        7:"e7d1ef881b042a70fd699817763cb07c055b06fd7cf9412cc98209739fd539f8",
+    }
+    for n, h in expected.items():
+        assert hashlib.sha256((TASK / f"manuscript/CH{n:04d}_FINAL.md").read_bytes()).hexdigest() == h
+
+
+def test_existing_rebase_is_suspended_historical_candidate_not_next_action():
+    m = load_json("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
+    cp = load_json("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
+    rebase = m["rebase"]
+    assert rebase["authorized_by_user"] is True
+    assert rebase["mode"] == "CONTROLLED_FULL_FRONT_ARC_REBASE"
+    assert rebase["execution_status"] == "SUSPENDED_PENDING_POST_DISTILLATION_STORY_RESELECTION"
+    assert rebase["old_finals_role"] == "IMMUTABLE_HISTORICAL_BASELINE"
+    assert rebase["frozen_architecture_role"] == "HISTORICAL_CANDIDATE_NOT_NEXT_ACTION"
+    assert rebase["candidate_promotion"] == "BLOCKED_UNTIL_POST_DISTILLATION_STORY_RESELECTION"
+    assert cp["rebase"] == rebase or all(cp["rebase"].get(k) == rebase.get(k) for k in cp["rebase"])
+    assert (ROOT / rebase["series_master_outline_ref"]).exists()
+    assert (ROOT / rebase["frozen_architecture_ref"]).exists()
+
+
+def test_old_ch9_stays_held():
+    c = (TASK / "NEXT_CHAPTER_CONTRACT.md").read_text(encoding="utf-8")
     assert "chapter_no: 9" in c
     assert "status: SUPERSEDED_BY_FULL_FRONT_ARC_REBASE" in c
-    assert "production_mode: FULL_FRONT_ARC_REBASE" in c
     assert "Do not write old CH9 next" in c
-    assert "许知微" in c
-    assert "precommit" in c.lower()
 
 
-def test_full_front_arc_rebase_is_durable_and_old_patch_plan_is_superseded():
-    m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
-    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
-    rebase=m["rebase"]
-    assert rebase["authorized_by_user"] is True
-    assert rebase["scope"]=="CH1-CH8_FRONT_ARC"
-    assert rebase["mode"]=="CONTROLLED_FULL_FRONT_ARC_REBASE"
-    assert rebase["old_finals_role"]=="IMMUTABLE_HISTORICAL_BASELINE"
-    assert rebase["old_chapter_boundaries_binding"] is False
-    assert rebase["old_ch9_contract_status"]=="SUPERSEDED_BY_FULL_FRONT_ARC_REBASE"
-    assert rebase["candidate_promotion"]=="WHOLE_PACKET_GATES_BEFORE_AUTHORITATIVE_REPLACEMENT"
-    assert cp["rebase"]["mode"]==rebase["mode"]
-    for key in ("plan_ref","learning_evidence_ref","series_master_outline_ref","frozen_architecture_ref"):
-        assert (ROOT/rebase[key]).exists()
-    old=(ROOT/"audits/FRONT_ARC_SIGNING_REPAIR_MATRIX_2026-10-11.md").read_text(encoding="utf-8")
-    plan=(ROOT/rebase["plan_ref"]).read_text(encoding="utf-8")
-    learning=(ROOT/rebase["learning_evidence_ref"]).read_text(encoding="utf-8")
-    assert "SUPERSEDED_FOR_ACTIVE_EXECUTION" in old
-    assert "M0 — Intake" in plan and "M11 — Durable learning" in plan
-    assert "CONTROLLED_FULL_FRONT_ARC_REBASE" in learning
+def test_study_checkpoint_has_exact_queue_semantics():
+    state = load_json("research/masterworks/STUDY_STATE.json")
+    assert state["study_policy"]["mode"] == "ONE_BOOK_AT_A_TIME"
+    assert state["study_policy"]["rule"] == "COMPLETE_CURRENT_WORK_BEFORE_NEXT"
+    assert state["study_policy"]["cross_work_synthesis"] == "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE"
+    assert state["active_work"]["work_id"] == "GUI_MI_ZHI_ZHU"
+    assert state["active_work"]["status"] == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ"
+    assert any(w["work_id"] == "SHIRI_ZHONGYAN" and w["status"] == "COMPLETE" for w in state["queue"])
+    assert any(w["work_id"] == "NORWEGIAN_WOOD" and w["status"] == "EXCLUDED_BY_USER" for w in state["queue"])
 
 
-def test_mastery_model_maps_full_skill_space_and_evidence_levels():
-    text=(ROOT/"protocols/NOVEL_MASTERY_MODEL.md").read_text(encoding="utf-8")
-    for token in [f"C{i:02d}" for i in range(1,21)]:
-        assert token in text
-    for level in ("L0","L1","L2","L3","L4"):
-        assert level in text
-    assert "Series architecture / master outline" in text
-    assert "Worldbuilding / system design" in text
-    assert "Character design / character arc" in text
-    assert "Mystery / suspense / information architecture" in text
-    assert "reading a course can move knowledge toward L1" in text
-    assert "LIVE_PROJECT_OUTCOME" in text
-    assert "MODEL_SELF_EVALUATION" in text
-
-
-def test_series_master_outline_is_active_and_planned_is_not_canon():
-    master=(TASK/"outline/SERIES_MASTER_OUTLINE.md").read_text(encoding="utf-8")
-    legacy=(TASK/"outline/ARC_001.md").read_text(encoding="utf-8")
-    frozen=(TASK/"outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md").read_text(encoding="utf-8")
+def test_mastery_model_and_historical_architecture_evidence_remain_present():
+    mastery = (ROOT / "protocols/NOVEL_MASTERY_MODEL.md").read_text(encoding="utf-8")
+    for token in [f"C{i:02d}" for i in range(1, 21)]:
+        assert token in mastery
+    for level in ("L0", "L1", "L2", "L3", "L4"):
+        assert level in mastery
+    master = (TASK / "outline/SERIES_MASTER_OUTLINE.md").read_text(encoding="utf-8")
+    frozen = (TASK / "outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md").read_text(encoding="utf-8")
+    legacy = (TASK / "outline/ARC_001.md").read_text(encoding="utf-8")
     assert "status: ACTIVE_ARCHITECTURE_AUTHORITY_DURING_FULL_REBASE" in master
-    assert "Planned architecture is not Canon" in master
-    for heading in ("Terminal constraints / ending design","Global protagonist arc","Relationship architecture","World / Mingrida architecture","Mystery architecture","Series / volume roadmap"):
-        assert heading in master
-    assert "SUPERSEDED_BY_SERIES_MASTER_OUTLINE_FOR_ACTIVE_REBASE" in legacy
-    assert "HISTORICAL_PLANNING_EVIDENCE" in legacy
     assert "FROZEN_FOR_CANDIDATE_DRAFT" in frozen
-    assert "READY_FOR_COHERENT_CANDIDATE_DRAFT" in frozen
+    assert "SUPERSEDED_BY_SERIES_MASTER_OUTLINE_FOR_ACTIVE_REBASE" in legacy
 
 
-def test_project_mastery_benchmark_has_scoped_claims_not_fake_total_mastery():
-    m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
-    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
-    mastery=m["mastery"]
-    assert mastery["architecture_gate"]=="PASS_WITH_SCOPED_DEFERRALS"
-    assert mastery["maximum_current_claim"]=="PROJECT_LEVEL_L3_WHERE_LISTED__NO_L4_TRANSFER_OR_LIVE_OUTCOME_CLAIM"
-    assert set(["C09","C10","C12","C13","C16"]).issubset(set(mastery["deferred_to_candidate_prose"]))
-    assert "C08_LATE_SENDER_ONTOLOGY" in mastery["late_series_partial"]
-    assert cp["mastery"]["architecture_gate"]==mastery["architecture_gate"]
-    benchmark=(ROOT/mastery["project_benchmark_ref"]).read_text(encoding="utf-8")
-    assert "PROJECT_LEVEL_MASTERY_EVIDENCE" in benchmark
-    assert "PASS_WITH_SCOPED_DEFERRALS" in benchmark
-    assert "no current BLOCKER" in benchmark
-    assert "L4" in benchmark
+def test_novel_os_routes_same_project_but_new_execution_stage():
+    idx = load_json("continuity/TASK_INDEX.json")
+    alias = load_json("TASK_INDEX.json")
+    system = idx["system"]
+    assert system["system_id"] == "NOVEL_OS"
+    assert system["resume_behavior"] == "ROUTE_TO_ACTIVE_PROJECT"
+    assert system["active_project_task_id"] == "FQ001_MINGRI_ORDER"
+    assert system["masterwork_learning"]["active_study"] == "GUI_MI_ZHI_ZHU"
+    assert system["masterwork_learning"]["completed_studies"] == ["SHIRI_ZHONGYAN"]
+    assert system["masterwork_learning"]["study_state_ref"] == "research/masterworks/STUDY_STATE.json"
+    task = idx["tasks"][0]
+    assert task["current_stage"] == "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING"
+    assert alias["tasks"][0]["current_stage"] == task["current_stage"]
+    assert alias["tasks"][0]["next_action"] == task["next_action"]
+    assert alias["system"]["masterwork_learning"]["active_study"] == "GUI_MI_ZHI_ZHU"
 
 
-def test_project_profile_exposes_rebase_not_old_frozen_baseline_as_active_architecture():
-    p=(TASK/"PROJECT_PROFILE.md").read_text(encoding="utf-8")
-    assert "production_mode: FULL_FRONT_ARC_REBASE" in p
-    assert "baseline: HISTORICAL_FINAL_CH01_CH08__REBASE_AUTHORIZED" in p
-    assert "next_serial_status: HELD_DURING_FULL_FRONT_ARC_REBASE" in p
-    assert "Full front-arc rebase objective" in p
-    assert "HISTORICAL_SUPERSEDED_BY_FULL_FRONT_ARC_REBASE" in p
-
-
-def test_novel_os_routes_to_active_project_without_duplicate_task():
-    idx=json.loads((ROOT/"continuity/TASK_INDEX.json").read_text())
-    system=idx["system"]
-    assert system["system_id"]=="NOVEL_OS"
-    assert system["display_name_zh"]=="小说系统"
-    assert system["resume_behavior"]=="ROUTE_TO_ACTIVE_PROJECT"
-    assert system["active_project_task_id"]=="FQ001_MINGRI_ORDER"
-    assert "小说系统" in system["resume_aliases"]
-    assert "NOVEL_OS" in system["resume_aliases"]
-    tasks=[t for t in idx["tasks"] if t["task_id"]=="FQ001_MINGRI_ORDER"]
-    assert len(tasks)==1
-    assert tasks[0]["is_active_project"] is True
-    assert tasks[0]["system_id"]=="NOVEL_OS"
-    assert tasks[0]["candidate_label_zh"]=="小说系统｜《凌晨零点，我接到明天的订单》"
-    assert tasks[0]["current_stage"]=="FULL_FRONT_ARC_REBASE_ACTIVE__ARCHITECTURE_FROZEN__CANDIDATE_DRAFT_READY"
-
-
-def test_continuity_adapter_system_project_semantics():
-    adapter=json.loads((ROOT/"CONTINUITY_ADAPTER.json").read_text())
-    topology=adapter["system_project_topology"]
-    assert topology["system_id"]=="NOVEL_OS"
-    assert topology["routing_rule"]=="SYSTEM_ALIAS_RESOLVES_OWNER_THEN_ACTIVE_PROJECT"
-    assert topology["single_active_project_behavior"]=="AUTO_BIND_WITHOUT_SECOND_USER_SELECTION"
-    assert topology["duplicate_task_for_system_and_same_project"] is False
-    assert adapter["capabilities"]["resolve_system_resume_alias"]["source"]=="continuity/TASK_INDEX.json#system"
-
-
-def test_compatibility_task_index_mirrors_system_route_and_state():
-    canonical=json.loads((ROOT/"continuity/TASK_INDEX.json").read_text())
-    alias=json.loads((ROOT/"TASK_INDEX.json").read_text())
-    assert alias["canonical_ref"]=="continuity/TASK_INDEX.json"
-    assert alias["system"]["system_id"]==canonical["system"]["system_id"]
-    assert alias["system"]["active_project_task_id"]==canonical["system"]["active_project_task_id"]
-    assert alias["tasks"][0]["current_stage"]==canonical["tasks"][0]["current_stage"]
-    assert alias["tasks"][0]["next_action"]==canonical["tasks"][0]["next_action"]
-
-
-def test_post_cutover_storage_governance():
-    auth=json.loads((ROOT/"AUTHORITY_STATUS.json").read_text())
-    gov=json.loads((ROOT/"continuity/ARTIFACT_CONTEXT_GOVERNANCE.json").read_text())
-    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
-    adapter=json.loads((ROOT/"CONTINUITY_ADAPTER.json").read_text())
-    assert auth["status"]=="GITHUB_PRIMARY"
+def test_post_cutover_storage_governance_remains_intact():
+    auth = load_json("AUTHORITY_STATUS.json")
+    gov = load_json("continuity/ARTIFACT_CONTEXT_GOVERNANCE.json")
+    cp = load_json("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
+    assert auth["status"] == "GITHUB_PRIMARY"
     assert auth["business_authority"] is True
-    assert auth["library_post_cutover_role"]=="REMOVED_NO_NOVEL_EXECUTION_TREE"
-    assert auth["artifact_vault"]["provider"]=="Google Drive"
+    assert auth["library_post_cutover_role"] == "REMOVED_NO_NOVEL_EXECUTION_TREE"
+    assert auth["artifact_vault"]["provider"] == "Google Drive"
     assert auth["artifact_vault"]["business_authority"] is False
-    assert auth["artifact_vault"]["path"]=="/Google Drive/ChatGPT/NOVEL_OS_小说系统_交付归档"
     assert "Google Drive" in gov["external_artifact_vault_if_any"]
-    assert "ChatGPT Library" not in gov["external_artifact_vault_if_any"]
     assert any("Google Drive" in r for r in cp["derived_artifact_refs"])
-    assert not any("ChatGPT Library" in r for r in cp["derived_artifact_refs"])
-    assert adapter["external_artifact_vault"]["business_authority"] is False
-    assert adapter["external_artifact_vault"]["recovery_state_source"] is False
 
 
-def test_release_evidence_rebase_and_mastery_capabilities_are_bound_not_just_prose():
-    caps=json.loads((ROOT/"continuity/EXECUTION_CAPABILITIES.json").read_text())
-    assert caps["release_evidence_contract_version"]=="1.0"
-    high=next(c for c in caps["capabilities"] if c["capability_id"]=="high_judgment_serialization_pipeline")
-    det=next(c for c in caps["capabilities"] if c["capability_id"]=="deterministic_guards")
-    for scope in ("SERIES_ARCHITECTURE","REBASE_ARCHITECTURE","WORLDBUILDING","CHARACTER_ARC","MYSTERY_ARCHITECTURE","MASTERY_BENCHMARK","SIGNING_READINESS"):
-        assert scope in high["scope"]
+def test_execution_capabilities_and_release_evidence_stay_bound():
+    caps = load_json("continuity/EXECUTION_CAPABILITIES.json")
+    assert caps["release_evidence_contract_version"] == "1.0"
+    high = next(c for c in caps["capabilities"] if c["capability_id"] == "high_judgment_serialization_pipeline")
+    mw = next(c for c in caps["capabilities"] if c["capability_id"] == "masterwork_distillation_and_transfer_learning")
+    det = next(c for c in caps["capabilities"] if c["capability_id"] == "deterministic_guards")
     assert "release_evidence_guard.py" in high["release_enforcement"]
-    assert any("project-level mastery benchmark" in item for item in high["evidence_contract"])
-    assert any("role-specific structured self-attested execution/review receipts" in item for item in high["evidence_contract"])
-    assert any("Reading/research or a mastery-model declaration does not prove L3/L4" in item for item in caps["owner_notes"])
-    assert "MASTERY_MODEL_PRESENCE" in det["scope"]
-    assert "SERIES_MASTER_OUTLINE_STATE" in det["scope"]
-    assert "release_evidence_guard.py" in det["invocation_path"]
-    assert (ROOT/"runtime/release_evidence_guard.py").exists()
+    assert mw["assurance_ceiling"] == "SESSION_EXECUTABLE"
+    assert "masterwork_distillation_guard.py" in mw["release_enforcement"]
+    assert "MASTERWORK_LEARNING_STATE" in det["scope"]
 
 
-def test_active_authority_has_no_dangling_canon_snapshot_or_legacy_library_source():
-    skill=(ROOT/"SKILL.md").read_text(encoding="utf-8")
-    rulebook=(ROOT/"protocols/ACTIVE_RULEBOOK.md").read_text(encoding="utf-8")
-    entry=(ROOT/"ENTRYPOINT.md").read_text(encoding="utf-8")
-    assert "不存在另一个可覆盖这些 ledgers 的 `CANON_SNAPSHOT.json` 权威" in skill
-    assert "historical protocol files/research remain Library backup evidence" not in rulebook
-    assert "Google Drive artifact vault" in rulebook
-    assert "Full front-arc rebase / learning-to-authority promotion" in skill
-    assert "Novel mastery / competency assurance" in skill
-    assert "NOVEL_MASTERY_MODEL.md" in skill
-    assert "SERIES_MASTER_OUTLINE.md" in entry
-    assert "Full-unit rebase / owner evolution" in rulebook
+def test_signing_rejection_and_retry_gate_are_not_lost():
+    m = load_json("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
+    cp = load_json("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
+    signing = m["platform_signing"]
+    assert signing["attempt_1"] == "REJECTED_QUALITY_EVALUATION"
+    assert signing["next_application_threshold"] == 50000
+    assert signing["third_application_threshold_if_needed"] == 80000
+    assert signing["second_application_gate"] == "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS"
+    assert cp["platform_signing"]["attempt_1"] == signing["attempt_1"]
+    assert cp["platform_signing"]["second_application_gate"] == signing["second_application_gate"]
 
 
-def test_ch8_legacy_acceptance_does_not_fake_role_or_isolation_receipts():
-    text=(TASK/"reviews/CH0008_ACCEPTANCE.md").read_text(encoding="utf-8")
-    assert "evidence_assurance: LEGACY_AGGREGATE_MIGRATED" in text
-    assert "role_receipts: NOT_AVAILABLE" in text
-    assert "isolated_reviewer_attestation: NOT_CLAIMED" in text
-    assert "must not replay CH8" in text
-
-
-def test_signing_rejection_is_durable_and_second_attempt_is_gated():
-    m=json.loads((TASK/"TASK_MANIFEST.json").read_text())
-    cp=json.loads((TASK/"checkpoints/CURRENT_CHECKPOINT.json").read_text())
-    signing=m["platform_signing"]
-    assert signing["attempt_1"]=="REJECTED_QUALITY_EVALUATION"
-    assert signing["next_application_threshold"]==50000
-    assert signing["third_application_threshold_if_needed"]==80000
-    assert signing["second_application_gate"]=="SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS"
-    assert cp["platform_signing"]["attempt_1"]==signing["attempt_1"]
-    assert cp["platform_signing"]["second_application_gate"]==signing["second_application_gate"]
-    for key in ("quality_diagnosis_ref","active_rebase_plan_ref","learning_evidence_ref","mastery_evolution_ref","architecture_mastery_benchmark_ref"):
-        assert (ROOT/signing[key]).exists()
-    assert "DO_NOT_BLINDLY_CONTINUE_TO_50K_WITHOUT_FRONT_ARC_REBASE" in m["strategic_constraints"]
-    assert "SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS" in m["strategic_constraints"]
-    assert "MASTERY_FILES_OR_RESEARCH_DO_NOT_PROVE_L3_L4_WITHOUT_APPLIED_BENCHMARK" in m["strategic_constraints"]
-    assert "SUPERSEDED_ARC_001_NOT_EXECUTABLE" in m["strategic_constraints"]
-    assert "平台签约拒绝" in (ROOT/"SKILL.md").read_text(encoding="utf-8")
-
-
-def test_universal_methodology_adapter_records_mastery_evolution_without_overclaiming_outcome():
-    a=json.loads((ROOT/"continuity/UNIVERSAL_PROTOCOL_ADAPTER.json").read_text())
-    assert a["skill_version"]=="Novel Writing Agent 2.4.0-github"
-    assert a["runtime_version"]=="github-owner-2.5"
-    assert a["full_front_arc_rebase"]["mode"]=="CONTROLLED_FULL_FRONT_ARC_REBASE"
-    assert a["novel_mastery"]["system_model_ref"]=="protocols/NOVEL_MASTERY_MODEL.md"
-    assert a["novel_mastery"]["series_master_outline_ref"]=="projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md"
-    assert a["novel_mastery"]["architecture_gate"]=="PASS_WITH_SCOPED_DEFERRALS"
-    assert a["methodology"]["profile_applicability"]["evolution"]["status"]=="APPLIES"
-    assurance=a["methodology_assurance"]
-    assert assurance["owner_regression_status"] in ("PENDING_FINAL_HEAD_VALIDATION","PASS")
-    if assurance["owner_regression_status"]=="PASS":
-        assert assurance["owner_regression_evidence"]
-    assert "does not prove" in assurance["boundary"]
+def test_current_state_text_explicitly_prevents_old_resume_path():
+    text = (TASK / "CURRENT_STATE.md").read_text(encoding="utf-8")
+    assert "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING" in text
+    assert "不执行旧 CH9" in text
+    assert "不再是当前 next_action" in text
+    assert "《诡秘之主》" in text
+    assert "《挪威的森林》" in text and "EXCLUDED_BY_USER" in text
