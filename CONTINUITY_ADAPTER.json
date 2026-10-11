@@ -1,6 +1,6 @@
 {
   "schema_version": "3.7",
-  "adapter_version": "2.4",
+  "adapter_version": "2.5",
   "continuity_protocol_version": "3.7",
   "domain_contract_version": "2.1-github",
   "release_evidence_contract_version": "1.0",
@@ -59,6 +59,7 @@
     "GitHub owner current checkpoint/business artifacts",
     "GitHub owner task manifest",
     "Universal routing/lease manifest",
+    "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库 only when current GitHub study authority explicitly binds an exact source/ledger; EXTERNAL_REFERENCE/LEARNING_EVIDENCE only, never task-state/rule authority",
     "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档 for explicitly needed derived artifacts or historical migration evidence only",
     "decommissioned Notion/ChatGPT Library/legacy Google Drive materials as non-authoritative historical clues only",
     "chat memory"
@@ -69,5 +70,14 @@
     "business_authority": false,
     "recovery_state_source": false
   },
-  "updated_at": "2026-10-10"
+  "external_learning_evidence": {
+    "provider": "Google Drive",
+    "path": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库",
+    "role": "EXPLICIT_USER_SOURCE_AND_LEARNING_EVIDENCE_ONLY",
+    "business_authority": false,
+    "recovery_state_source": false,
+    "activation_authority": "research/masterworks/STUDY_STATE.json",
+    "stable_identity_and_hash_required_for_material_progress": true
+  },
+  "updated_at": "2026-10-11"
 }
