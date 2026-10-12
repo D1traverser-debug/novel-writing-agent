@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-11T17:51:00Z",
+  "updated_at": "2026-10-12T01:03:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -18,35 +18,31 @@
   "drive_corpus_root": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料",
   "drive_learning_root": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习",
   "active_work": {
-    "queue_no": 3,
-    "work_id": "DAO_MU_BI_JI",
-    "title": "盗墓笔记全集",
-    "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
-    "binding_role": "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS",
-    "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/盗墓笔记全集.txt",
-    "source_file_id": "1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG",
-    "source_sha256": "7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768",
-    "source_size_bytes": 4324861,
-    "source_total_lines": 30839,
-    "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/盗墓笔记全集/盗墓笔记全集_学习总账.md",
-    "rolling_ledger_file_id": "17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4",
-    "rolling_ledger_sha256": "55a914a10166167e0cb4a1632e7a5378dc037bb548f73bea24b12d8a88e3b5c8",
-    "rolling_ledger_size_bytes": 140554,
+    "queue_no": 4,
+    "work_id": "GUI_CHUI_DENG",
+    "title": "鬼吹灯全集",
+    "status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+    "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/鬼吹灯全集.txt",
+    "source_file_id": "1sNSSvaHcGTxqtAC4kXMR8c7VYdTbJMOL",
+    "source_sha256": "c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a",
+    "source_size_bytes": 10268057,
+    "source_total_lines": 61201,
+    "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/鬼吹灯全集/鬼吹灯全集_学习总账.md",
+    "rolling_ledger_file_id": "1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF",
+    "rolling_ledger_sha256": "d4d8890a180090e3c37f83b6d839eb2dec610a6b49ad1fbd13aab27c196e4786",
+    "rolling_ledger_size_bytes": 4133,
     "coverage": {
-      "sequential_completed": "ENTIRE_USER_STANDARDIZED_SOURCE__FIRST_LINE_THROUGH_LINE_30839__FULL_BOOK_END_VERIFIED",
-      "completed_sections": ["《七星鲁王宫》", "《怒海潜沙》", "《秦岭神树》", "《云顶天宫篇》", "《蛇沼鬼城篇》", "《谜海归巢》", "《阴山古楼》", "《邛笼石影》", "《盗墓笔记8（大结局）上册》", "《盗墓笔记8（大结局）下册》"],
-      "current_section": "FULL_BOOK_COMPLETE",
-      "current_section_completed_body_chapters": null,
-      "completed_body_chapters_total": null,
-      "completed_body_chapters_total_note": "Source contains split/repeated/reset/skipped chapter numbering across sections; entire source order through physical end is authoritative and no fabricated unified logical chapter total is asserted.",
-      "full_book_end_verified": true,
-      "full_book_end_marker": "【全书完】",
-      "final_source_line": 30839,
-      "next_location": "FULL_BOOK_END__STOP_BEFORE_GUI_CHUI_DENG"
+      "sequential_completed": "SOURCE_PREFLIGHT_COMPLETE__NO_BODY_STAGE_COMPLETION_YET",
+      "completed_sections": [],
+      "current_section": "《鬼吹灯I-1之精绝古城》",
+      "current_section_completed_body_chapters": 0,
+      "completed_body_chapters_total": 0,
+      "source_structure_note": "Source contains entity/numbered blocks through GUI_CHUI_DENG_11 and a later explicitly marked 网络版(1-234完) variant/overlap block beginning at line 43264. Read physical source order fully; preserve variant/duplicate structure and do not inflate evidence by counting overlap as a new independent work.",
+      "next_location": "《鬼吹灯I-1之精绝古城》正文引子（源第77行）"
     },
-    "next_pass": "STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED",
-    "next_action": "Stop after DAO_MU_BI_JI completion. GUI_CHUI_DENG remains PENDING and has not started.",
-    "full_book_execution_receipt": "research/masterworks/DAO_MU_BI_JI/FULL_BOOK_EXECUTION_RECEIPT_2026-10-12.json"
+    "next_pass": "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_FROM_INTRO",
+    "next_action": "Read the user-provided standardized source sequentially from 《鬼吹灯I-1之精绝古城》正文引子 at source line 77, update the same rolling ledger at verified safe points, preserve source edition/duplicate boundaries, and do not switch to QING_YU_NIAN until GUI_CHUI_DENG is complete.",
+    "activation_receipt": "research/masterworks/GUI_CHUI_DENG/EXECUTION_BINDING_RECEIPT_2026-10-12_ACTIVATION.json"
   },
   "completed_works": [
     {"queue_no": 1, "work_id": "SHIRI_ZHONGYAN", "title": "十日终焉", "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING", "coverage": "SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED", "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"},
@@ -57,7 +53,7 @@
     {"no": 1, "work_id": "SHIRI_ZHONGYAN", "title": "十日终焉", "status": "COMPLETE"},
     {"no": 2, "work_id": "GUI_MI_ZHI_ZHU", "title": "诡秘之主", "status": "COMPLETE"},
     {"no": 3, "work_id": "DAO_MU_BI_JI", "title": "盗墓笔记全集", "status": "COMPLETE"},
-    {"no": 4, "work_id": "GUI_CHUI_DENG", "title": "鬼吹灯全集", "status": "PENDING"},
+    {"no": 4, "work_id": "GUI_CHUI_DENG", "title": "鬼吹灯全集", "status": "ACTIVE"},
     {"no": 5, "work_id": "QING_YU_NIAN", "title": "庆余年", "status": "PENDING"},
     {"no": 6, "work_id": "HARRY_POTTER", "title": "哈利·波特全集", "status": "PENDING"},
     {"no": 7, "work_id": "DUNE_01", "title": "沙丘01_沙丘", "status": "PENDING"},
@@ -77,5 +73,5 @@
     {"no": 21, "work_id": "THE_STRANGER", "title": "局外人", "status": "PENDING"},
     {"no": 22, "work_id": "OLD_MAN_AND_SEA", "title": "老人与海", "status": "PENDING"}
   ],
-  "resume_rule": "DAO_MU_BI_JI is terminal-complete and remains the current-focus binding only for recovery. Do not infer GUI_CHUI_DENG has started. On a later explicit continue, activate GUI_CHUI_DENG from its beginning."
+  "resume_rule": "GUI_CHUI_DENG is the only ACTIVE work. Resume exactly from active_work.coverage.next_location, keep QING_YU_NIAN pending until GUI_CHUI_DENG is terminal-complete, and preserve source variant/duplicate boundaries without fabricating independent evidence."
 }
