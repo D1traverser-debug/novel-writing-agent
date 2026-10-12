@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
-  "updated_at": "2026-10-12T01:03:00Z",
+  "updated_at": "2026-10-12T01:18:00Z",
   "study_policy": {
     "mode": "ONE_BOOK_AT_A_TIME",
     "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
@@ -21,7 +21,7 @@
     "queue_no": 4,
     "work_id": "GUI_CHUI_DENG",
     "title": "鬼吹灯全集",
-    "status": "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+    "status": "ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT",
     "source_file": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/00_标准化训练语料/鬼吹灯全集.txt",
     "source_file_id": "1sNSSvaHcGTxqtAC4kXMR8c7VYdTbJMOL",
     "source_sha256": "c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a",
@@ -29,20 +29,23 @@
     "source_total_lines": 61201,
     "rolling_ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/鬼吹灯全集/鬼吹灯全集_学习总账.md",
     "rolling_ledger_file_id": "1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF",
-    "rolling_ledger_sha256": "d4d8890a180090e3c37f83b6d839eb2dec610a6b49ad1fbd13aab27c196e4786",
-    "rolling_ledger_size_bytes": 4133,
+    "rolling_ledger_sha256": "3cec0a78067c7d1acbc6605b4af859d1860f13d46e1770141b979b7f3143c02f",
+    "rolling_ledger_size_bytes": 15349,
     "coverage": {
-      "sequential_completed": "SOURCE_PREFLIGHT_COMPLETE__NO_BODY_STAGE_COMPLETION_YET",
+      "sequential_completed": "SOURCE_LINE_77_THROUGH_3913__JINGJUE_GUCHENG_CH26_PARTIAL",
       "completed_sections": [],
       "current_section": "《鬼吹灯I-1之精绝古城》",
-      "current_section_completed_body_chapters": 0,
-      "completed_body_chapters_total": 0,
-      "source_structure_note": "Source contains entity/numbered blocks through GUI_CHUI_DENG_11 and a later explicitly marked 网络版(1-234完) variant/overlap block beginning at line 43264. Read physical source order fully; preserve variant/duplicate structure and do not inflate evidence by counting overlap as a new independent work.",
-      "next_location": "《鬼吹灯I-1之精绝古城》正文引子（源第77行）"
+      "current_section_completed_body_chapters": 25,
+      "current_partial_chapter": "第二十六章《天砖秘道》",
+      "current_partial_chapter_note": "Read through source line 3913: team has entered the Jingjue underground palace main hall and observed the jade throne; stop before source line 3914.",
+      "completed_body_chapters_total": 25,
+      "source_structure_note": "Source contains entity/numbered blocks through GUI_CHUI_DENG_11 and a later explicitly marked 网络版(1-234完) variant/overlap block beginning at line 43264. Read physical source order fully; preserve variant/duplicate structure and do not inflate overlap as a new independent work.",
+      "next_location": "源第3914行；继续第二十六章《天砖秘道》玉石王座场景"
     },
-    "next_pass": "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_FROM_INTRO",
-    "next_action": "Read the user-provided standardized source sequentially from 《鬼吹灯I-1之精绝古城》正文引子 at source line 77, update the same rolling ledger at verified safe points, preserve source edition/duplicate boundaries, and do not switch to QING_YU_NIAN until GUI_CHUI_DENG is complete.",
-    "activation_receipt": "research/masterworks/GUI_CHUI_DENG/EXECUTION_BINDING_RECEIPT_2026-10-12_ACTIVATION.json"
+    "next_pass": "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_CH26_FROM_SOURCE_LINE_3914",
+    "next_action": "Resume exactly at source line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》. Continue sequentially in the same source and overwrite the same rolling ledger at the next verified safe point. Do not switch to QING_YU_NIAN before GUI_CHUI_DENG is complete.",
+    "activation_receipt": "research/masterworks/GUI_CHUI_DENG/EXECUTION_BINDING_RECEIPT_2026-10-12_ACTIVATION.json",
+    "latest_pause_receipt": "research/masterworks/GUI_CHUI_DENG/EXECUTION_RECEIPT_2026-10-12_PAUSE_LINE3913.json"
   },
   "completed_works": [
     {"queue_no": 1, "work_id": "SHIRI_ZHONGYAN", "title": "十日终焉", "status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING", "coverage": "SOURCE_ORDER_1-1360__BODY_CH1-CH1359__SOURCE_DUPLICATE_CH1357_RECORDED", "ledger": "/Google Drive/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/十日终焉/十日终焉_学习总账.md"},
@@ -73,5 +76,5 @@
     {"no": 21, "work_id": "THE_STRANGER", "title": "局外人", "status": "PENDING"},
     {"no": 22, "work_id": "OLD_MAN_AND_SEA", "title": "老人与海", "status": "PENDING"}
   ],
-  "resume_rule": "GUI_CHUI_DENG is the only ACTIVE work. Resume exactly from active_work.coverage.next_location, keep QING_YU_NIAN pending until GUI_CHUI_DENG is terminal-complete, and preserve source variant/duplicate boundaries without fabricating independent evidence."
+  "resume_rule": "GUI_CHUI_DENG is the only ACTIVE work and is paused by user at a safe checkpoint. Resume exactly from source line 3914 in Jingjue Gucheng CH26. Keep QING_YU_NIAN pending until GUI_CHUI_DENG is terminal-complete."
 }
