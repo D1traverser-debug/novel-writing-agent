@@ -11,8 +11,8 @@ production_mode: FULL_FRONT_ARC_REBASE
 production_status: MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING
 next_serial_chapter: 9
 next_serial_status: HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION
-active_masterwork_id: DAO_MU_BI_JI
-active_masterwork_status: SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING
+active_masterwork_id: GUI_CHUI_DENG
+active_masterwork_status: ACTIVE__SEQUENTIAL_READ_IN_PROGRESS
 
 ## 当前用户锁定约束
 
@@ -39,22 +39,25 @@ active_masterwork_status: SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED
 
 - 《十日终焉》：`COMPLETE`
 - 《诡秘之主》：`COMPLETE`
-- 《盗墓笔记全集》：`COMPLETE`。用户标准化语料 file id `1j22-7Q5H3rsBY0fsCa3K3TmpQ3qhLBRG`，SHA-256 `7ee1015d5a384e0acaf85a05367e95c3eb5ed3cb3c7b95fcb5333ffe81bb6768`；已按源顺序完整覆盖到第 30,839 行 `【全书完】`。源内拆分、重复、重置、跳号标题均保留为源格式异常，不伪造统一逻辑章节总数。
-- 《盗墓笔记全集》唯一滚动总账仍为 Drive file id `17r1Q49KNT858dJLvrEWQeRlnt7-tb5f4`，当前 140,554 bytes，SHA-256 `55a914a10166167e0cb4a1632e7a5378dc037bb548f73bea24b12d8a88e3b5c8`。
-- 整本执行回执：`research/masterworks/DAO_MU_BI_JI/FULL_BOOK_EXECUTION_RECEIPT_2026-10-12.json`
-- 《鬼吹灯全集》：`PENDING / NOT STARTED`
+- 《盗墓笔记全集》：`COMPLETE`
+- 《鬼吹灯全集》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`
+  - source file id: `1sNSSvaHcGTxqtAC4kXMR8c7VYdTbJMOL`
+  - source SHA-256: `c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a`
+  - source size: `10,268,057 bytes`
+  - source physical lines: `61,201`
+  - rolling ledger file id: `1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF`
+  - rolling ledger SHA-256: `d4d8890a180090e3c37f83b6d839eb2dec610a6b49ad1fbd13aab27c196e4786`
+  - current location: `《鬼吹灯I-1之精绝古城》正文引子（源第77行）`
+- 《庆余年》：`PENDING`，不得提前切换
 - 《挪威的森林》：`EXCLUDED_BY_USER`
 
-## 《盗墓笔记全集》单书收口
+## 《鬼吹灯全集》源结构边界
 
-顺序覆盖完成的主要源结构包括：《七星鲁王宫》《怒海潜沙》《秦岭神树》《云顶天宫篇》《蛇沼鬼城篇》《谜海归巢》《阴山古楼》《邛笼石影》《盗墓笔记8（大结局）》上册与下册，直至物理末尾 `【全书完】`。
+用户标准化源自身包含：`I-1` 到 `II-8`、后续 `9–11`，并在第43,264行出现显式标记的 `鬼吹灯（网络版）(1-234完).txt` 变体/重叠块，物理末尾第61,201行为 `（《鬼吹灯》网络版至此终）`。
 
-整本总账已完成 macro / meso / micro 蒸馏、正负证据、反事实、anti-overfit、人物与关系弧、谜团债务与结尾收束分析。所有机制仍是 `SINGLE_WORK_REFERENCE__CROSS_WORK_PENDING`，没有因单本完成而直接晋升 ACTIVE_RULE。
+执行规则：按用户标准化源物理顺序全部读取；版本重叠/重复不私自删除，但必须作为 `SOURCE_VARIANT_OR_DUPLICATE_BLOCK` 记录，不能把重复文本膨胀成独立作品证据。
 
-终态绑定：`CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS`。
-
-next_pass: `STOP_AFTER_CURRENT_WORK__NEXT_BOOK_NOT_STARTED`
-next_location: `FULL_BOOK_END__STOP_BEFORE_GUI_CHUI_DENG`
+当前首个阶段边界：`《鬼吹灯I-1之精绝古城》`。目录位于源前段；正文引子从第77行开始，第一章从第86行开始，下一顶层分册《龙岭迷窟》从第5042行开始。
 
 ## 既有 FQ001 架构的当前身份
 
@@ -72,4 +75,4 @@ next_location: `FULL_BOOK_END__STOP_BEFORE_GUI_CHUI_DENG`
 
 ## 下一步
 
-现在按用户指令停在《盗墓笔记全集》整本完成态。**不得自动启动《鬼吹灯全集》**。后续只有用户再次明确继续时，才从《鬼吹灯全集》开头激活下一本；在全部非排除单书完成前，不做最终跨作品综合，也不起草现有 FQ001 replacement CH1–CH8。
+从《鬼吹灯I-1之精绝古城》正文引子（源第77行）开始顺序学习，更新同一份《鬼吹灯全集_学习总账.md》。完成《鬼吹灯全集》前，不切换《庆余年》，不做最终跨作品规则晋升，也不起草现有 FQ001 replacement CH1–CH8。
