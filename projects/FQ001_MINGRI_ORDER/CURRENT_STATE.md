@@ -12,7 +12,7 @@ production_status: MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION
 next_serial_chapter: 9
 next_serial_status: HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION
 active_masterwork_id: GUI_CHUI_DENG
-active_masterwork_status: ACTIVE__SEQUENTIAL_READ_IN_PROGRESS
+active_masterwork_status: ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT
 
 ## 当前用户锁定约束
 
@@ -22,57 +22,54 @@ active_masterwork_status: ACTIVE__SEQUENTIAL_READ_IN_PROGRESS
 
 除此以外，题材、书名、世界观、主角、人物关系、总纲、卷纲、前段架构、既有《明日订单》候选设计均允许在名作学习完成后重新竞争或推倒重建。
 
-历史已发布/已验收事实继续保留：CH1–CH7 历史发布事实、CH8 历史 FINAL/PUBLISH_READY、Canon v12、正文 hash、首次签约失败事实。**CH8 外部是否已在番茄发布仍未确认。** 外部平台撤回/替换/重新发布仍由用户控制。
-
-## 当前执行优先级
-
-当前停止候选 CH1–CH8 正文生产，不执行旧 CH9。
-
-名作学习规则：
-- `ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT`
-- 每本小说独立 research scope；源绑定、唯一滚动总账、阶段蒸馏、证据和执行回执归在本书之下
-- 同一本内部多卷不拆成相互割裂的研究库
-- 跨作品综合延后到全部非排除单书完成后
-- 单书观察不得直接晋升跨作品 ACTIVE_RULE
-
-## 当前队列状态
+## 当前名作队列
 
 - 《十日终焉》：`COMPLETE`
 - 《诡秘之主》：`COMPLETE`
 - 《盗墓笔记全集》：`COMPLETE`
-- 《鬼吹灯全集》：`ACTIVE__SEQUENTIAL_READ_IN_PROGRESS`
-  - source file id: `1sNSSvaHcGTxqtAC4kXMR8c7VYdTbJMOL`
-  - source SHA-256: `c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a`
-  - source size: `10,268,057 bytes`
-  - source physical lines: `61,201`
-  - rolling ledger file id: `1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF`
-  - rolling ledger SHA-256: `d4d8890a180090e3c37f83b6d839eb2dec610a6b49ad1fbd13aab27c196e4786`
-  - current location: `《鬼吹灯I-1之精绝古城》正文引子（源第77行）`
-- 《庆余年》：`PENDING`，不得提前切换
+- 《鬼吹灯全集》：`ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT`
+- 《庆余年》：`PENDING / NOT STARTED`
 - 《挪威的森林》：`EXCLUDED_BY_USER`
 
-## 《鬼吹灯全集》源结构边界
+## 《鬼吹灯全集》当前暂停点
 
-用户标准化源自身包含：`I-1` 到 `II-8`、后续 `9–11`，并在第43,264行出现显式标记的 `鬼吹灯（网络版）(1-234完).txt` 变体/重叠块，物理末尾第61,201行为 `（《鬼吹灯》网络版至此终）`。
+用户标准化源：
+- Drive file id: `1sNSSvaHcGTxqtAC4kXMR8c7VYdTbJMOL`
+- SHA-256: `c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a`
+- size: `10,268,057 bytes`
+- physical lines: `61,201`
 
-执行规则：按用户标准化源物理顺序全部读取；版本重叠/重复不私自删除，但必须作为 `SOURCE_VARIANT_OR_DUPLICATE_BLOCK` 记录，不能把重复文本膨胀成独立作品证据。
+独立 research scope：`/ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/鬼吹灯全集/`
 
-当前首个阶段边界：`《鬼吹灯I-1之精绝古城》`。目录位于源前段；正文引子从第77行开始，第一章从第86行开始，下一顶层分册《龙岭迷窟》从第5042行开始。
+唯一滚动总账：
+- Drive file id: `1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF`
+- size: `15,349 bytes`
+- SHA-256: `3cec0a78067c7d1acbc6605b4af859d1860f13d46e1770141b979b7f3143c02f`
 
-## 既有 FQ001 架构的当前身份
+已确认连续顺序阅读覆盖：**源第77–3913行**。
 
-`SERIES_MASTER_OUTLINE.md` 与 `FRONT_ARC_REBASE_ARCHITECTURE_V1.md` 继续作为历史候选与能力证据，不是当前 next_action。
+当前章节：`《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》`。
 
-当前 rebase 状态：`SUSPENDED_PENDING_POST_DISTILLATION_STORY_RESELECTION`。
+暂停时场景：队伍已穿过天砖甬道进入精绝王宫地宫正殿，观察到玉石王座；第3913行结束。
 
-名作队列全部完成后，才进行跨作品综合与新故事竞争，再决定继续重构《明日订单》还是选择新的故事。
+下一唯一恢复点：**源第3914行**，继续第二十六章《天砖秘道》玉石王座场景。
 
-## 平台签约状态
+next_pass: `SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_CH26_FROM_SOURCE_LINE_3914`
 
-- 首次签约评估：`NOT_APPROVED / REJECTED_QUALITY_EVALUATION`
-- 不从泛化拒绝原因推断 AI 检测、安全、抄袭或侵权
-- 第二次机会仍受 `SECOND_SIGNING_APPLICATION_REQUIRES_SIGNING_READINESS_AUDIT_PASS` 约束
+暂停执行回执：`research/masterworks/GUI_CHUI_DENG/EXECUTION_RECEIPT_2026-10-12_PAUSE_LINE3913.json`
+
+## 源结构边界
+
+源第43,264行开始存在显式标记的 `鬼吹灯（网络版）(1-234完).txt` 变体/重叠块。后续仍按物理源顺序读取，但版本重叠不得膨胀成新的独立作品证据。
+
+## 研究约束
+
+- 一次只学习一部作品；《鬼吹灯全集》完成前不得切《庆余年》。
+- 同一本内部多卷继续写入同一研究 scope 与唯一滚动总账。
+- 当前阶段观察仅为 `SINGLE_WORK_STAGE_EVIDENCE_ONLY`。
+- 跨作品综合继续延后到全部非排除单书完成后。
+- 现有 FQ001 replacement prose 与旧 CH9 继续 HOLD。
 
 ## 下一步
 
-从《鬼吹灯I-1之精绝古城》正文引子（源第77行）开始顺序学习，更新同一份《鬼吹灯全集_学习总账.md》。完成《鬼吹灯全集》前，不切换《庆余年》，不做最终跨作品规则晋升，也不起草现有 FQ001 replacement CH1–CH8。
+当前按用户要求停止，不继续正文阅读。下次明确“继续”时，从**源第3914行**恢复，不从本卷开头重读。
