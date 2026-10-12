@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "receipt_id": "gcd-activation-20261012-0902-jst",
+  "action_id": "GUI_CHUI_DENG_ACTIVATE_FROM_USER_CONTINUE_2026-10-12",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
+  "capability_id": "masterwork_distillation_and_transfer_learning",
+  "executor_identity": "CHAT_BRIDGED_CURRENT_SESSION",
+  "execution_ref": "NOVEL_WRITING_AGENT@main:protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
+  "subject_bindings": {
+    "work_id": "GUI_CHUI_DENG",
+    "title": "鬼吹灯全集",
+    "queue_no": 4,
+    "activation_reason": "USER_EXPLICIT_CONTINUE_AFTER_DAO_MU_BI_JI_COMPLETION"
+  },
+  "input_bindings": {
+    "source_file_id": "1sNSSvaHcGTxqtAC4kXMR8c7VYdTbJMOL",
+    "source_sha256": "c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a",
+    "source_size_bytes": 10268057,
+    "source_total_lines": 61201,
+    "previous_work": "DAO_MU_BI_JI",
+    "previous_work_status": "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING",
+    "universal_resume_epoch": 3,
+    "universal_lease_id": "1b0bc7df-c0b7-47e4-b054-40a98e887ba1"
+  },
+  "output_refs": [
+    "Google Drive folder 1UUFmzzl3L2k8pxagm5kTIawzLzL7wsJP /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/鬼吹灯全集",
+    "Google Drive file 1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF 鬼吹灯全集_学习总账.md#sha256=d4d8890a180090e3c37f83b6d839eb2dec610a6b49ad1fbd13aab27c196e4786"
+  ],
+  "result": {
+    "status": "PASS_ACTIVATION_SOURCE_AND_LEDGER_BOUND",
+    "availability": "AVAILABLE",
+    "observed_assurance": "SESSION_EXECUTABLE",
+    "execution_mode": "CHAT_BRIDGED",
+    "next_pass": "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_FROM_INTRO",
+    "claim_ceiling": "LEARNING_EVIDENCE_ONLY__NO_CROSS_WORK_RULE_PROMOTION"
+  }
+}
