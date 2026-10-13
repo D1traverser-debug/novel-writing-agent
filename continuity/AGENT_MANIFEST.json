@@ -1,13 +1,20 @@
 {
   "schema_version": "1.0",
-  "architecture_contract_version": "1.0",
+  "architecture_contract_version": "1.2",
   "owner": "NOVEL_WRITING_AGENT",
   "owner_kind": "BUSINESS",
+  "product_interface": {
+    "interaction_surface": "CHATGPT",
+    "entry_model": "SINGLE_OWNER_ENTRY",
+    "execution_mode_selection": "SYSTEM_INTERNAL",
+    "business_contract_model": "SINGLE_CANONICAL_OWNER_WORKFLOW"
+  },
   "skill": {"role": "ROUTER", "entrypoint": "SKILL.md"},
   "runtime": {
     "runtime_type": "DETERMINISTIC_WORKFLOW",
     "entrypoints": ["runtime/recovery_guard.py", "runtime/release_evidence_guard.py"],
-    "judgment_execution": "CHAT_BRIDGED"
+    "judgment_execution": "CHAT_BRIDGED",
+    "note": "CHAT_BRIDGED is an internal execution/assurance label for the single Novel Writing Agent product entry. Normal users interact through the Agent in ChatGPT and are not asked to choose an execution mode."
   },
   "workflow": {
     "state_authority_refs": ["AUTHORITY_STATUS.json", "projects"],
