@@ -1,8 +1,13 @@
 {
-  "schema_version":"2.0",
-  "profile_version":2,
+  "schema_version":"2.1",
+  "profile_version":3,
   "domain_id":"novel",
   "policy":"MINIMUM_SUFFICIENT_CONTEXT__SOURCE_IDENTITY_BOUND__NO_FALSE_INDEPENDENCE",
+  "uaos_common_capabilities_ref":"D1traverser-debug/universal-agent-os@main:config/COMMON_CAPABILITIES.json",
+  "common_capabilities_inheritance":"UAOS_HOSTED",
+  "domain_evolution_role":"DOMAIN_EVIDENCE_EVAL_AND_BUSINESS_OWNER_PROMOTION",
+  "authority_context":"DOMAIN:novel",
+  "updated_at":"2026-10-14T08:59:45Z",
   "capabilities":[
     {"capability_id":"project_recovery","required":["current_checkpoint","canon_identity"],"side_channel_allowed":false},
     {"capability_id":"large_corpus_distillation","required":["source_identity","coverage_cursor","rolling_ledger"],"side_channel_allowed":false},
