@@ -15,12 +15,58 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run recovery guard
-        run: python runtime/recovery_guard.py
+        shell: bash
+        run: |
+          set +e
+          python runtime/recovery_guard.py 2>&1 | tee /tmp/recovery-guard.txt
+          rc=${PIPESTATUS[0]}
+          {
+            echo '## Recovery guard'
+            echo '```text'
+            cat /tmp/recovery-guard.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
       - name: Run release evidence guard
-        run: python runtime/release_evidence_guard.py
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python runtime/release_evidence_guard.py 2>&1 | tee /tmp/release-guard.txt
+          rc=${PIPESTATUS[0]}
+          {
+            echo '## Release evidence guard'
+            echo '```text'
+            cat /tmp/release-guard.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
       - name: Run masterwork distillation guard
-        run: python runtime/masterwork_distillation_guard.py
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python runtime/masterwork_distillation_guard.py 2>&1 | tee /tmp/masterwork-guard.txt
+          rc=${PIPESTATUS[0]}
+          {
+            echo '## Masterwork distillation guard'
+            echo '```text'
+            cat /tmp/masterwork-guard.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
       - name: Run owner contract tests
+        if: always()
+        shell: bash
         run: |
           python -m pip install pytest
-          python -m pytest -q
+          set +e
+          python -m pytest -q 2>&1 | tee /tmp/pytest.txt
+          rc=${PIPESTATUS[0]}
+          {
+            echo '## Pytest'
+            echo '```text'
+            tail -n 120 /tmp/pytest.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
