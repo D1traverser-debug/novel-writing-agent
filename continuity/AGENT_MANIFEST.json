@@ -9,7 +9,7 @@
     "execution_mode_selection": "SYSTEM_INTERNAL",
     "business_contract_model": "SINGLE_CANONICAL_OWNER_WORKFLOW"
   },
-  "skill": {"role": "ROUTER", "entrypoint": "SKILL.md"},
+  "skill": {"role": "ROUTER", "entrypoint": "UAOS_SKILL.md", "business_rule_ref": "SKILL.md", "legacy_controller_sections_in_business_rule_ref": "SUPERSEDED_BY_UAOS_SKILL"},
   "runtime": {
     "runtime_type": "DETERMINISTIC_WORKFLOW",
     "entrypoints": ["runtime/recovery_guard.py", "runtime/release_evidence_guard.py"],
