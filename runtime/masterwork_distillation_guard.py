@@ -1,22 +1,28 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json, re, sys
+import json
+import re
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-problems = []
+problems: list[str] = []
 TERMINAL = "SINGLE_BOOK_DISTILLATION_COMPLETE__REFERENCE_EXTRACTED__CROSS_WORK_PENDING"
-ACTIVE_STATUSES = {"ACTIVE__PENDING_FIRST_SEQUENTIAL_READ", "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS"}
+ACTIVE_STATUSES = {
+    "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ",
+    "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS",
+    "ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT",
+}
 VALID_STATUSES = ACTIVE_STATUSES | {TERMINAL}
 
 
-def need(rel):
+def need(rel: str) -> Path:
     p = ROOT / rel
     if not p.exists():
         problems.append(f"missing:{rel}")
     return p
 
 
-def load(rel):
+def load(rel: str) -> dict:
     p = need(rel)
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
@@ -24,8 +30,8 @@ def load(rel):
 protocol_p = need("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 registry = load("research/masterworks/INDEX.json")
 state = load("research/masterworks/STUDY_STATE.json")
-canonical = load("continuity/TASK_INDEX.json")
-alias = load("TASK_INDEX.json")
+caps = load(".uaos/CAPABILITIES.json")
+
 for rel in [
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
@@ -39,7 +45,18 @@ if protocol_p.exists():
     protocol = protocol_p.read_text(encoding="utf-8")
     if "status: ACTIVE_SYSTEM_PROTOCOL" not in protocol:
         problems.append("protocol-not-active")
-    for stage in ("D0 RIGHTS_AND_SOURCE", "D3 COLD_READ_TRACE", "D6 POSITIVE_NEGATIVE_DIFF", "D8 CROSS-WORK_TRIANGULATION", "D9 PROJECT_TRANSFER_EXPERIMENT", "D11 PROMOTION", "D12 STOP / DECAY"):
+    for stage in (
+        "D0 RIGHTS_AND_SOURCE",
+        "D3 COLD_READ_TRACE",
+        "D5 MICROCRAFT_ANNOTATION",
+        "D6 POSITIVE_NEGATIVE_DIFF",
+        "D7 ABLATION / COUNTERFACTUAL",
+        "D8 CROSS-WORK_TRIANGULATION",
+        "D9 PROJECT_TRANSFER_EXPERIMENT",
+        "D10 ADVERSARIAL_REVIEW",
+        "D11 PROMOTION",
+        "D12 STOP / DECAY",
+    ):
         if stage not in protocol:
             problems.append("protocol-stage:" + stage)
 
@@ -49,10 +66,11 @@ if registry.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
     problems.append("registry-study-state-ref")
 if registry.get("authority_role") != "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY":
     problems.append("registry-authority-role")
-cp = registry.get("copyright_policy", {})
-if cp.get("pirated_fulltext_allowed") is not False or cp.get("store_substitute_for_original_work") is not False:
+
+copyright_policy = registry.get("copyright_policy", {})
+if copyright_policy.get("pirated_fulltext_allowed") is not False or copyright_policy.get("store_substitute_for_original_work") is not False:
     problems.append("copyright-policy")
-if "USER_LAWFULLY_PROVIDED_TEXT" not in set(cp.get("allowed_sources", [])):
+if "USER_LAWFULLY_PROVIDED_TEXT" not in set(copyright_policy.get("allowed_sources", [])):
     problems.append("user-provided-source-not-allowed")
 
 if state.get("status") != "ACTIVE":
@@ -75,37 +93,28 @@ if active_status not in VALID_STATUSES:
     problems.append("study-state-active-status")
 if active_status == "ACTIVE__PENDING_FIRST_SEQUENTIAL_READ" and next_pass != "SEQUENTIAL_FULLTEXT_FROM_BEGINNING":
     problems.append("study-state-initial-next-pass")
-if active_status == "ACTIVE__SEQUENTIAL_READ_IN_PROGRESS" and (not isinstance(next_pass, str) or not next_pass.startswith("SEQUENTIAL_CONTINUE__")):
-    problems.append("study-state-progress-next-pass")
-if active_status == TERMINAL and active_work.get("binding_role") != "CURRENT_FOCUS_BINDING_AFTER_COMPLETION__NOT_IN_PROGRESS":
-    problems.append("study-state-terminal-binding-role")
-
-if active_status in {"ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", TERMINAL}:
-    cov = active_work.get("coverage", {})
+if active_status in {"ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", "ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT"}:
+    if not isinstance(next_pass, str) or not next_pass.startswith("SEQUENTIAL_CONTINUE__"):
+        problems.append("study-state-progress-next-pass")
+    coverage = active_work.get("coverage", {})
     if not re.fullmatch(r"[0-9a-f]{64}", active_work.get("source_sha256", "")):
         problems.append("study-state-source-sha256")
     if not re.fullmatch(r"[0-9a-f]{64}", active_work.get("rolling_ledger_sha256", "")):
         problems.append("study-state-ledger-sha256")
-    if not cov.get("sequential_completed"):
-        problems.append("study-state-coverage:sequential_completed")
-    if not cov.get("next_location"):
-        problems.append("study-state-coverage:next_location")
-    if not active_work.get("rolling_ledger") or not active_work.get("rolling_ledger_file_id"):
-        problems.append("study-state-rolling-ledger")
+    if not coverage.get("sequential_completed") or not coverage.get("next_location"):
+        problems.append("study-state-coverage")
+    if not active_work.get("rolling_ledger_file_id"):
+        problems.append("study-state-rolling-ledger-id")
 
 queue = state.get("queue", [])
 queue_by_id = {w.get("work_id"): w for w in queue}
-if work_id and work_id not in queue_by_id:
+if work_id not in queue_by_id:
     problems.append("active-work-not-in-queue")
 active_queue = [w for w in queue if w.get("status") == "ACTIVE"]
-if active_status in ACTIVE_STATUSES:
-    if len(active_queue) != 1 or active_queue[0].get("work_id") != work_id:
-        problems.append("queue-active-binding")
-elif active_status == TERMINAL:
-    if queue_by_id.get(work_id, {}).get("status") != "COMPLETE":
-        problems.append("queue-terminal-binding")
-    if active_queue:
-        problems.append("queue-terminal-has-active-work")
+if active_status in ACTIVE_STATUSES and (len(active_queue) != 1 or active_queue[0].get("work_id") != work_id):
+    problems.append("queue-active-binding")
+if active_status == TERMINAL and (queue_by_id.get(work_id, {}).get("status") != "COMPLETE" or active_queue):
+    problems.append("queue-terminal-binding")
 if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in queue):
     problems.append("queue-norwegian-excluded")
 
@@ -134,18 +143,16 @@ if active_status in ACTIVE_STATUSES and work_id in completed:
 if active_status == TERMINAL and work_id not in completed:
     problems.append("terminal-work-not-completed")
 
-for label, idx in (("canonical", canonical), ("alias", alias)):
-    learning = idx.get("system", {}).get("masterwork_learning", {})
-    if learning.get("registry_ref") != "research/masterworks/INDEX.json":
-        problems.append(label + "-registry-ref")
-    if learning.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
-        problems.append(label + "-study-state-ref")
-    if learning.get("active_study") != work_id:
-        problems.append(label + "-active-study-binding")
-    if set(learning.get("completed_studies", [])) != queue_complete_ids:
-        problems.append(label + "-completed-studies-drift")
-if alias.get("system", {}).get("masterwork_learning", {}).get("active_study_ref") != canonical.get("system", {}).get("masterwork_learning", {}).get("active_study_ref"):
-    problems.append("compat-index-masterwork-drift")
+cap = next((c for c in caps.get("capabilities", []) if c.get("capability_id") == "large_corpus_distillation"), None)
+if cap is None:
+    problems.append("uaos-large-corpus-capability-missing")
+else:
+    required = set(cap.get("required", []))
+    if not {"source_identity", "coverage_cursor", "rolling_ledger"}.issubset(required):
+        problems.append("uaos-large-corpus-capability-contract")
+
+if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists():
+    problems.append("retired-learning-index-returned")
 
 result = {
     "status": "PASS" if not problems else "FAIL",

@@ -2,7 +2,7 @@ name: validate-novel-owner
 
 on:
   push:
-    branches: [main, migration/github-primary-cutover]
+    branches: [main]
   pull_request:
     branches: [main]
 
