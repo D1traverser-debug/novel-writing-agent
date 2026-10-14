@@ -1,6 +1,6 @@
 {
   "schema_version": "3.0-uaos",
-  "checkpoint_version": 23,
+  "checkpoint_version": 24,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -10,7 +10,7 @@
   "updated_at": "2026-10-12T01:19:00Z",
   "control_binding_updated_at": "2026-10-14",
   "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-  "next_action": "Resume GUI_CHUI_DENG exactly at source line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》. Verified sequential coverage is source lines 77–3913; user explicitly requested a stop after recording. Continue the same rolling ledger; do not switch to QING_YU_NIAN before GUI_CHUI_DENG is complete.",
+  "next_action": "GUI_CHUI_DENG (《鬼吹灯全集》) is paused by explicit user request at a verified safe checkpoint. Resume exactly from source line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》, immediately after the jade-throne observation in the Jingjue underground palace main hall. Verified sequential coverage is source lines 77–3913. Continue using the same rolling ledger. QING_YU_NIAN remains PENDING until GUI_CHUI_DENG is complete. Preserve later source variant/overlap boundaries and keep cross-work synthesis deferred.",
   "controller_contract_version": "UAOS_TASK_BINDING_1.0",
   "domain_contract_version": "3.0-uaos",
   "skill_version": "Novel Writing Agent UAOS 1.0",
