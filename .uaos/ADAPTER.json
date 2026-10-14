@@ -1,0 +1,13 @@
+{
+  "schema_version":"2.0",
+  "domain_id":"novel",
+  "controller":"D1traverser-debug/universal-agent-os@main",
+  "status":"UAOS_CONTROL_PLANE_ACTIVE",
+  "task_identity_authority":"UAOS",
+  "cross_chat_continuity_authority":"UAOS",
+  "business_state_authority":"projects/<task>/checkpoints/CURRENT_CHECKPOINT.json",
+  "canon_authority":"projects/<task>/canon/",
+  "business_rule_authority":"protocols/ACTIVE_RULEBOOK.md",
+  "learning_authority":"protocols/NOVEL_MASTERY_MODEL.md",
+  "legacy_controller_compatibility":"NONE"
+}
