@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "agent_id": "novel",
+  "domain_id": "novel",
+  "controller": "D1traverser-debug/universal-agent-os@main",
+  "status": "UAOS_CONTROL_PLANE_ACTIVE",
+  "skill": {"entrypoint": "UAOS_SKILL.md"},
+  "continuity": {
+    "controller_ref": "D1traverser-debug/universal-agent-os@main:CURRENT_SYSTEM.json",
+    "uaos_adapter_ref": "continuity/UAOS_ADAPTER.json"
+  },
+  "capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
+  "domain_authority": {
+    "project_root": "projects",
+    "canon_root": "projects/<task>/canon",
+    "rulebook_ref": "protocols/ACTIVE_RULEBOOK.md",
+    "mastery_ref": "protocols/NOVEL_MASTERY_MODEL.md",
+    "business_manifest_ref": "continuity/AGENT_MANIFEST.json",
+    "business_manifest_role": "DOMAIN_INTERNAL_NOT_CONTROLLER"
+  }
+}
