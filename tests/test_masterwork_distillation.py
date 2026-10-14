@@ -47,36 +47,29 @@ def test_study_state_binds_exactly_one_current_work_and_safe_pause():
     assert current["next_pass"] == "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_CH26_FROM_SOURCE_LINE_3914"
 
 
-def test_registry_follows_current_state_without_controller_indexes():
+def test_completed_summary_and_queue_are_one_source_of_truth():
     state = load_json("research/masterworks/STUDY_STATE.json")
-    registry = load_json("research/masterworks/INDEX.json")
+    queue = state["queue"]
     current = state["active_work"]
-    complete_ids = {w["work_id"] for w in state["queue"] if w["status"] == "COMPLETE"}
-
-    assert registry["status"] == "ACTIVE"
-    assert registry["study_state_ref"] == "research/masterworks/STUDY_STATE.json"
-    assert registry["authority_role"] == "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY"
-    assert len(registry["active_studies"]) == 1
-    active = registry["active_studies"][0]
-    assert active["work_id"] == current["work_id"]
-    assert active["current_status"] == current["status"]
-    assert active["next_pass"] == current["next_pass"]
-    assert active["execution_authority"] is False
-    for field in ("source_file_id", "source_sha256", "rolling_ledger_file_id", "rolling_ledger_sha256"):
-        assert active[field] == current[field]
-    assert complete_ids <= {s["work_id"] for s in registry["completed_studies"]}
+    assert current["work_id"] in {row["work_id"] for row in queue}
+    active = [row for row in queue if row["status"] == "ACTIVE"]
+    assert len(active) == 1 and active[0]["work_id"] == current["work_id"]
+    complete_ids = {row["work_id"] for row in queue if row["status"] == "COMPLETE"}
+    assert complete_ids == {row["work_id"] for row in state["completed_works"]}
+    assert not (ROOT / "research/masterworks/INDEX.json").exists()
     assert not (ROOT / "TASK_INDEX.json").exists()
     assert not (ROOT / "continuity").exists()
 
 
-def test_completed_baselines_remain_preserved():
-    registry = load_json("research/masterworks/INDEX.json")
-    completed = {s["work_id"]: s for s in registry["completed_studies"]}
-    assert completed["SHIRI_ZHONGYAN"]["current_status"] == TERMINAL
-    assert completed["GUI_MI_ZHI_ZHU"]["current_status"] == TERMINAL
-    assert completed["DAO_MU_BI_JI"]["current_status"] == TERMINAL
-    assert "MORE_COMPLEXITY_IS_ALWAYS_BETTER" in completed["SHIRI_ZHONGYAN"]["explicitly_not_promoted"]
-    assert "COPY_ANY_PLOT_RULE_CHARACTER_REVEAL_PHRASE_OR_ICONIC_STRUCTURE" in completed["GUI_MI_ZHI_ZHU"]["explicitly_not_promoted"]
+def test_completed_baseline_metadata_remains_in_study_state_and_work_files():
+    state = load_json("research/masterworks/STUDY_STATE.json")
+    completed = {row["work_id"]: row for row in state["completed_works"]}
+    assert completed["SHIRI_ZHONGYAN"]["status"] == TERMINAL
+    assert completed["GUI_MI_ZHI_ZHU"]["status"] == TERMINAL
+    assert completed["DAO_MU_BI_JI"]["status"] == TERMINAL
+    assert (ROOT / "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md").is_file()
+    assert (ROOT / "research/masterworks/GUI_MI_ZHI_ZHU").is_dir()
+    assert (ROOT / "research/masterworks/DAO_MU_BI_JI").is_dir()
 
 
 def test_uaos_capability_contract_keeps_distillation_bounded():

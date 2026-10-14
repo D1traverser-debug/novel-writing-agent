@@ -28,7 +28,6 @@ def load(rel: str) -> dict:
 
 
 protocol_p = need("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
-registry = load("research/masterworks/INDEX.json")
 state = load("research/masterworks/STUDY_STATE.json")
 caps = load(".uaos/CAPABILITIES.json")
 
@@ -60,26 +59,17 @@ if protocol_p.exists():
         if stage not in protocol:
             problems.append("protocol-stage:" + stage)
 
-if registry.get("status") != "ACTIVE":
-    problems.append("registry-not-active")
-if registry.get("study_state_ref") != "research/masterworks/STUDY_STATE.json":
-    problems.append("registry-study-state-ref")
-if registry.get("authority_role") != "LEARNING_EVIDENCE_REGISTRY_NOT_EXECUTION_AUTHORITY":
-    problems.append("registry-authority-role")
-
-copyright_policy = registry.get("copyright_policy", {})
-if copyright_policy.get("pirated_fulltext_allowed") is not False or copyright_policy.get("store_substitute_for_original_work") is not False:
-    problems.append("copyright-policy")
-if "USER_LAWFULLY_PROVIDED_TEXT" not in set(copyright_policy.get("allowed_sources", [])):
-    problems.append("user-provided-source-not-allowed")
-
 if state.get("status") != "ACTIVE":
     problems.append("study-state-not-active")
+if state.get("authority_role") != "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY":
+    problems.append("study-state-authority-role")
 policy = state.get("study_policy", {})
 if policy.get("mode") != "ONE_BOOK_AT_A_TIME" or policy.get("rule") != "COMPLETE_CURRENT_WORK_BEFORE_NEXT":
     problems.append("study-policy")
 if policy.get("cross_work_synthesis") != "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE":
     problems.append("cross-work-policy")
+if policy.get("source_scope") != "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_UNLESS_USER_EXPLICITLY_EXPANDS_SCOPE":
+    problems.append("source-scope-policy")
 if set(state.get("user_locked_business_constraints", [])) != {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}:
     problems.append("user-locked-constraints")
 
@@ -118,29 +108,13 @@ if active_status == TERMINAL and (queue_by_id.get(work_id, {}).get("status") != 
 if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in queue):
     problems.append("queue-norwegian-excluded")
 
-active_studies = registry.get("active_studies", [])
-if len(active_studies) != 1 or active_studies[0].get("work_id") != work_id:
-    problems.append("registry-active-study-binding")
-else:
-    reg = active_studies[0]
-    if reg.get("execution_authority") is not False:
-        problems.append("active-study-authority-inflation")
-    if reg.get("current_status") != active_status:
-        problems.append("active-study-status-drift")
-    if reg.get("next_pass") != next_pass:
-        problems.append("active-study-next-pass-drift")
-    for field in ("source_file_id", "source_sha256", "rolling_ledger_file_id", "rolling_ledger_sha256"):
-        if active_work.get(field) and reg.get(field) != active_work.get(field):
-            problems.append("active-study-binding-drift:" + field)
-
-completed = {s.get("work_id"): s for s in registry.get("completed_studies", [])}
 queue_complete_ids = {w.get("work_id") for w in queue if w.get("status") == "COMPLETE"}
-missing_completed = sorted(w for w in queue_complete_ids if w not in completed)
-if missing_completed:
-    problems.append("registry-missing-completed:" + ",".join(missing_completed))
-if active_status in ACTIVE_STATUSES and work_id in completed:
+state_complete_ids = {w.get("work_id") for w in state.get("completed_works", [])}
+if queue_complete_ids != state_complete_ids:
+    problems.append("completed-work-summary-drift")
+if active_status in ACTIVE_STATUSES and work_id in state_complete_ids:
     problems.append("active-work-also-completed")
-if active_status == TERMINAL and work_id not in completed:
+if active_status == TERMINAL and work_id not in state_complete_ids:
     problems.append("terminal-work-not-completed")
 
 cap = next((c for c in caps.get("capabilities", []) if c.get("capability_id") == "large_corpus_distillation"), None)
@@ -151,7 +125,7 @@ else:
     if not {"source_identity", "coverage_cursor", "rolling_ledger"}.issubset(required):
         problems.append("uaos-large-corpus-capability-contract")
 
-if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists():
+if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists() or (ROOT / "research/masterworks/INDEX.json").exists():
     problems.append("retired-learning-index-returned")
 
 result = {

@@ -1,6 +1,6 @@
 {
   "schema_version": "3.0-uaos",
-  "checkpoint_version": 24,
+  "checkpoint_version": 25,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -31,7 +31,6 @@
   "reopenable_design_scope": "ALL_OTHER_STORY_DESIGN_MAY_BE_REBUILT_AFTER_MASTERWORK_DISTILLATION",
   "masterwork_learning": {
     "study_state_ref": "research/masterworks/STUDY_STATE.json",
-    "registry_ref": "research/masterworks/INDEX.json",
     "policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT",
     "storage_policy": "PER_WORK_COLOCATED_RESEARCH__INTERNAL_VOLUMES_SHARE_ONE_WORK_LEDGER__CROSS_WORK_SYNTHESIS_SEPARATE",
     "completed_works": ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU", "DAO_MU_BI_JI"],

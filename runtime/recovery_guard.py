@@ -33,7 +33,6 @@ CURRENT_REQUIRED = [
     "protocols/ACTIVE_RULEBOOK.md",
     "protocols/NOVEL_MASTERY_MODEL.md",
     "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
-    "research/masterworks/INDEX.json",
     "research/masterworks/STUDY_STATE.json",
     "runtime/release_evidence_guard.py",
     "runtime/masterwork_distillation_guard.py",
@@ -67,6 +66,7 @@ RETIRED_ACTIVE_PATHS = [
     "AUTHORITY_STATUS.json",
     "continuity",
     "migration",
+    "research/masterworks/INDEX.json",
 ]
 for rel in RETIRED_ACTIVE_PATHS:
     if (ROOT / rel).exists():
@@ -79,7 +79,6 @@ gov = load("config/ARTIFACT_CONTEXT_GOVERNANCE.json")
 m = load("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
 cp = load("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
 study = load("research/masterworks/STUDY_STATE.json")
-registry = load("research/masterworks/INDEX.json")
 
 if uaos_manifest.get("controller") != "D1traverser-debug/universal-agent-os@main":
     problems.append("uaos-manifest-controller")
@@ -106,15 +105,15 @@ if m.get("task_id") != "FQ001_MINGRI_ORDER":
     problems.append("task-id")
 if m.get("status") != "ACTIVE" or cp.get("status") != "ACTIVE":
     problems.append("task-not-active")
-if m.get("controller_authority") != "D1traverser-debug/universal-agent-os@main":
-    problems.append("task-controller-authority")
-if cp.get("controller_authority") != "D1traverser-debug/universal-agent-os@main":
-    problems.append("checkpoint-controller-authority")
+if m.get("controller_authority") != "D1traverser-debug/universal-agent-os@main" or cp.get("controller_authority") != "D1traverser-debug/universal-agent-os@main":
+    problems.append("controller-authority")
 if m.get("controller_task_ref") != "state/tasks/FQ001_MINGRI_ORDER.json" or cp.get("controller_task_ref") != "state/tasks/FQ001_MINGRI_ORDER.json":
     problems.append("controller-task-ref")
 for payload, label in ((m, "manifest"), (cp, "checkpoint")):
     if "continuity_protocol_version" in payload or "universal_lease_authority" in payload:
         problems.append(label + "-legacy-control-field")
+    if payload.get("masterwork_learning", {}).get("registry_ref") is not None:
+        problems.append(label + "-duplicate-learning-registry-ref")
 
 expected_stage = "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING"
 expected_serial_status = "HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION"
@@ -150,11 +149,10 @@ if current.get("coverage", {}).get("next_location") != "源第3914行；继续�
     problems.append("active-masterwork-next-location")
 if current.get("next_pass") != "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_CH26_FROM_SOURCE_LINE_3914":
     problems.append("active-masterwork-next-pass")
-for field in ("active_work", "active_work_status"):
-    if m.get("masterwork_learning", {}).get(field) != cp.get("masterwork_learning", {}).get(field):
-        problems.append("masterwork-binding-drift:" + field)
-if m.get("masterwork_learning", {}).get("active_work") != current.get("work_id"):
-    problems.append("manifest-masterwork-binding")
+if m.get("masterwork_learning", {}).get("active_work") != cp.get("masterwork_learning", {}).get("active_work") or m.get("masterwork_learning", {}).get("active_work") != current.get("work_id"):
+    problems.append("masterwork-binding-drift")
+if m.get("masterwork_learning", {}).get("active_work_status") != cp.get("masterwork_learning", {}).get("active_work_status") or m.get("masterwork_learning", {}).get("active_work_status") != current.get("status"):
+    problems.append("masterwork-status-drift")
 if cp.get("masterwork_learning", {}).get("active_work_next_location") != "SOURCE_LINE_3914__JINGJUE_GUCHENG_CH26_CONTINUE":
     problems.append("checkpoint-masterwork-cursor")
 
@@ -166,14 +164,10 @@ if not any(w.get("work_id") == "QING_YU_NIAN" and w.get("status") == "PENDING" f
     problems.append("qing-yu-nian-not-pending")
 if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in queue):
     problems.append("norwegian-not-excluded")
-
-active_studies = registry.get("active_studies", [])
-if len(active_studies) != 1 or active_studies[0].get("work_id") != "GUI_CHUI_DENG":
-    problems.append("registry-active-masterwork")
-completed_ids = {w.get("work_id") for w in queue if w.get("status") == "COMPLETE"}
-registry_completed = {s.get("work_id") for s in registry.get("completed_studies", [])}
-if not completed_ids.issubset(registry_completed):
-    problems.append("registry-completed-drift")
+completed_queue = {w.get("work_id") for w in queue if w.get("status") == "COMPLETE"}
+completed_state = {w.get("work_id") for w in study.get("completed_works", [])}
+if completed_queue != completed_state:
+    problems.append("completed-work-summary-drift")
 
 contract = (TASK / "NEXT_CHAPTER_CONTRACT.md").read_text(encoding="utf-8")
 if "chapter_no: 9" not in contract or "status: SUPERSEDED_BY_FULL_FRONT_ARC_REBASE" not in contract or "Do not write old CH9 next" not in contract:

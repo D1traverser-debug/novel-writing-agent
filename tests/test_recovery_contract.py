@@ -28,6 +28,7 @@ def test_uaos_is_the_only_current_controller_surface():
         "AUTHORITY_STATUS.json",
         "continuity",
         "migration",
+        "research/masterworks/INDEX.json",
     ):
         assert not (ROOT / retired).exists(), retired
 
@@ -43,6 +44,7 @@ def test_project_checkpoint_is_uaos_native_without_v37_control_fields():
         assert "continuity_protocol_version" not in payload
         assert "universal_lease_authority" not in payload
         assert payload["controller_contract_version"] == "UAOS_TASK_BINDING_1.0"
+        assert "registry_ref" not in payload["masterwork_learning"]
 
 
 def test_recovery_truth_points_to_exact_current_masterwork_pause():
@@ -53,6 +55,7 @@ def test_recovery_truth_points_to_exact_current_masterwork_pause():
     assert m["task_id"] == cp["task_id"] == "FQ001_MINGRI_ORDER"
     assert m["status"] == cp["status"] == "ACTIVE"
     assert m["current_stage"] == cp["current_stage"] == "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING"
+    assert m["next_action"] == cp["next_action"]
     assert m["next_serial_chapter"] == cp["next_serial_chapter"] == 9
     assert m["next_serial_status"] == cp["next_serial_status"] == "HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION"
     assert current["work_id"] == "GUI_CHUI_DENG"
@@ -65,18 +68,15 @@ def test_recovery_truth_points_to_exact_current_masterwork_pause():
     assert cp["masterwork_learning"]["active_work_next_location"] == "SOURCE_LINE_3914__JINGJUE_GUCHENG_CH26_CONTINUE"
 
 
-def test_masterwork_queue_has_one_active_and_qing_yu_nian_remains_pending():
+def test_study_state_has_one_active_work_and_consistent_completed_summary():
     state = load_json("research/masterworks/STUDY_STATE.json")
-    registry = load_json("research/masterworks/INDEX.json")
     queue = state["queue"]
     active_rows = [row for row in queue if row["status"] == "ACTIVE"]
     assert active_rows == [{"no": 4, "work_id": "GUI_CHUI_DENG", "title": "鬼吹灯全集", "status": "ACTIVE"}]
     assert any(row["work_id"] == "QING_YU_NIAN" and row["status"] == "PENDING" for row in queue)
     assert any(row["work_id"] == "NORWEGIAN_WOOD" and row["status"] == "EXCLUDED_BY_USER" for row in queue)
-    assert len(registry["active_studies"]) == 1
-    assert registry["active_studies"][0]["work_id"] == "GUI_CHUI_DENG"
     complete_ids = {row["work_id"] for row in queue if row["status"] == "COMPLETE"}
-    assert complete_ids <= {row["work_id"] for row in registry["completed_studies"]}
+    assert complete_ids == {row["work_id"] for row in state["completed_works"]}
 
 
 def test_historical_final_hashes_are_preserved():
