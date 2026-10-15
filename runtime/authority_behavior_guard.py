@@ -17,6 +17,16 @@ def load_json(rel: str) -> dict:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+def version_at_least(actual: object, minimum: str) -> bool:
+    try:
+        left = tuple(int(part) for part in str(actual).split("."))
+        right = tuple(int(part) for part in minimum.split("."))
+    except ValueError:
+        return False
+    width = max(len(left), len(right))
+    return left + (0,) * (width - len(left)) >= right + (0,) * (width - len(right))
+
+
 manifest = load_json(".uaos/MANIFEST.json")
 adapter = load_json(".uaos/ADAPTER.json")
 caps = load_json(".uaos/CAPABILITIES.json")
@@ -54,15 +64,16 @@ for ref in (
     if ref not in rulebook and ref not in (ROOT / "UAOS_SKILL.md").read_text(encoding="utf-8"):
         problems.append("runtime-entry-ref-missing:" + ref)
 
-if caps.get("profile_version") != 5:
-    problems.append("profile-version")
-if caps.get("common_behavior_assurance_min") != "1.2.0":
-    problems.append("common-behavior-min")
+if int(caps.get("profile_version", 0)) < 6:
+    problems.append("profile-version-below-6")
+if not version_at_least(caps.get("common_behavior_assurance_min"), "1.3.0"):
+    problems.append("common-behavior-min-below-1.3")
 if caps.get("canonical_evolution_evidence_ref") != "audits/EVOLUTION_INDEX.json":
     problems.append("canonical-evolution-ref")
 cap_ids = {c.get("capability_id") for c in caps.get("capabilities", [])}
 for cap_id in (
     "recover_before_user_escalation",
+    "problem_root_scope_admission",
     "problem_to_action_closure",
     "material_deliberation_admission",
     "continual_cross_work_learning",
@@ -73,8 +84,8 @@ for cap_id in (
 
 if evolution.get("owner") != "DOMAIN:novel":
     problems.append("evolution-owner")
-if evolution.get("common_behavior_assurance_min") != "1.2.0":
-    problems.append("evolution-common-behavior-min")
+if not version_at_least(evolution.get("common_behavior_assurance_min"), "1.3.0"):
+    problems.append("evolution-common-behavior-min-below-1.3")
 open_items = evolution.get("current_open_items")
 current_refs = evolution.get("current_problem_refs")
 resolved = evolution.get("recent_resolved_or_promoted")
