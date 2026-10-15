@@ -40,6 +40,9 @@ for rel in [
     "runtime/deliberation_admission.py",
     "runtime/learning_transfer_admission.py",
     "runtime/story_reselection_admission.py",
+    "runtime/dynamic_outline.py",
+    "runtime/story_dependency_graph.py",
+    "runtime/narrative_evaluation.py",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md",
@@ -50,7 +53,7 @@ for rel in [
 
 if protocol_p.exists():
     protocol = protocol_p.read_text(encoding="utf-8")
-    if "version: 2.0" not in protocol or "status: ACTIVE_SYSTEM_PROTOCOL" not in protocol:
+    if "version: 2.1" not in protocol or "status: ACTIVE_SYSTEM_PROTOCOL" not in protocol:
         problems.append("protocol-version-or-status")
     for stage in (
         "D0 RIGHTS_AND_SOURCE",
@@ -59,7 +62,7 @@ if protocol_p.exists():
         "D6 POSITIVE_NEGATIVE_DIFF",
         "D7 ABLATION / COUNTERFACTUAL",
         "D8 CLOSED_CONTEXT_RECONSTRUCTION",
-        "D9 CROSS-WORK_TRIANGULATION",
+        "D9 CLAIM-CONDITIONED CROSS-WORK TRIANGULATION",
         "D10 PROJECT_TRANSFER_EXPERIMENT",
         "D11 ADVERSARIAL_REVIEW",
         "D12 PROMOTION",
@@ -114,7 +117,7 @@ if active_status in {"ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", "ACTIVE__PAUSED_BY_U
 if work_id == "GUI_CHUI_DENG":
     if active_work.get("coverage", {}).get("next_location") != "源第3914行；继续第二十六章《天砖秘道》玉石王座场景":
         problems.append("gui-chui-deng-cursor-drift")
-    if active_work.get("completion_gate_after_fulltext") != "RUN_D8_D11_INTERBOOK_LEARNING_CYCLE_BEFORE_QING_YU_NIAN":
+    if active_work.get("completion_gate_after_fulltext") != "RUN_D8_D11_CLAIM_CONDITIONED_INTERBOOK_LEARNING_CYCLE_BEFORE_QING_YU_NIAN":
         problems.append("gui-chui-deng-post-completion-gate")
 
 queue = state.get("queue", [])
@@ -138,7 +141,6 @@ if active_status in ACTIVE_STATUSES and work_id in state_complete_ids:
 if active_status == TERMINAL and work_id not in state_complete_ids:
     problems.append("terminal-work-not-completed")
 
-# Corpus relation map: no author/series/genre field may be used as an automatic evidence-family key.
 corpus_rows = corpus.get("works", [])
 corpus_by_id = {w.get("work_id"): w for w in corpus_rows}
 if set(queue_by_id) != set(corpus_by_id):
@@ -159,21 +161,11 @@ if evidence_schema.get("principle") != "EVIDENCE_DEPENDENCE_IS_CLAIM_CONDITIONED
     problems.append("narrative-evidence-schema-principle")
 dimension_ids = {row.get("id") for row in evidence_schema.get("narrative_dimensions", [])}
 required_dimensions = {
-    "N01_STORY_FABULA_CAUSAL_ENGINE",
-    "N02_DISCOURSE_TEMPORAL_ORDER",
-    "N03_NARRATOR_POV_FOCALIZATION",
-    "N04_CHARACTER_CONSTRUCTION_AGENCY",
-    "N05_RELATIONSHIP_NETWORK_ARCS",
-    "N06_WORLD_SETTING_INSTITUTIONS",
-    "N07_INFORMATION_MYSTERY_REVELATION",
-    "N08_EMOTION_TENSION_READER_AFFECT",
-    "N09_PACING_RHYTHM_PAGE_COST",
-    "N10_DIALOGUE_VOICE_SUBTEXT",
-    "N11_PROSE_STYLOMETRY_SURFACE",
-    "N12_SERIAL_ENGINE_ESCALATION_PAYOFF",
-    "N13_ACQUISITION_PRODUCT_PLATFORM",
-    "N14_THEME_VALUE_CONFLICT",
-    "N15_SPACE_ENVIRONMENT_ACTION",
+    "N01_STORY_FABULA_CAUSAL_ENGINE", "N02_DISCOURSE_TEMPORAL_ORDER", "N03_NARRATOR_POV_FOCALIZATION",
+    "N04_CHARACTER_CONSTRUCTION_AGENCY", "N05_RELATIONSHIP_NETWORK_ARCS", "N06_WORLD_SETTING_INSTITUTIONS",
+    "N07_INFORMATION_MYSTERY_REVELATION", "N08_EMOTION_TENSION_READER_AFFECT", "N09_PACING_RHYTHM_PAGE_COST",
+    "N10_DIALOGUE_VOICE_SUBTEXT", "N11_PROSE_STYLOMETRY_SURFACE", "N12_SERIAL_ENGINE_ESCALATION_PAYOFF",
+    "N13_ACQUISITION_PRODUCT_PLATFORM", "N14_THEME_VALUE_CONFLICT", "N15_SPACE_ENVIRONMENT_ACTION",
     "N16_READER_MEMORY_COGNITIVE_LOAD",
 }
 if not required_dimensions.issubset(dimension_ids):
@@ -210,12 +202,7 @@ for mechanism in registry.get("mechanisms", []):
     if mechanism.get("status") != "REFERENCE":
         problems.append("premature-mechanism-promotion:" + str(mechanism.get("mechanism_id")))
 
-required_caps = {
-    "large_corpus_distillation",
-    "continual_cross_work_learning",
-    "material_deliberation_admission",
-    "zero_based_story_reselection",
-}
+required_caps = {"large_corpus_distillation", "continual_cross_work_learning", "material_deliberation_admission", "zero_based_story_reselection"}
 cap_by_id = {c.get("capability_id"): c for c in caps.get("capabilities", [])}
 missing_caps = required_caps - set(cap_by_id)
 if missing_caps:
@@ -224,7 +211,11 @@ large = cap_by_id.get("large_corpus_distillation", {})
 if not {"source_identity", "coverage_cursor", "rolling_ledger", "single_work_context_isolation"}.issubset(set(large.get("required", []))):
     problems.append("uaos-large-corpus-capability-contract")
 continual = cap_by_id.get("continual_cross_work_learning", {})
-if not {"multidimensional_evidence_schema", "claim_conditioned_dependency_assessment", "comparison_design", "closed_context_reconstruction", "non_promotional_interbook_comparison", "transfer_probe", "mechanism_registry"}.issubset(set(continual.get("required", []))):
+if not {
+    "multidimensional_evidence_schema", "claim_conditioned_dependency_assessment", "comparison_design",
+    "shared_factor_assessment", "closed_context_reconstruction", "non_promotional_interbook_comparison",
+    "alternative_explanations", "negative_or_boundary_evidence", "transfer_probe", "mechanism_registry",
+}.issubset(set(continual.get("required", []))):
     problems.append("uaos-continual-learning-capability-contract")
 
 if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists() or (ROOT / "research/masterworks/INDEX.json").exists():
@@ -232,7 +223,7 @@ if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists() or (ROO
 
 result = {
     "status": "PASS" if not problems else "FAIL",
-    "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@2.0",
+    "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@2.1",
     "evidence_model": "CLAIM_CONDITIONED_MULTIDIMENSIONAL_DEPENDENCY_GRAPH",
     "active_study_binding": work_id,
     "active_status": active_status,
