@@ -54,15 +54,16 @@ for ref in (
     if ref not in rulebook and ref not in (ROOT / "UAOS_SKILL.md").read_text(encoding="utf-8"):
         problems.append("runtime-entry-ref-missing:" + ref)
 
-if caps.get("profile_version") != 5:
+if caps.get("profile_version") != 6:
     problems.append("profile-version")
-if caps.get("common_behavior_assurance_min") != "1.2.0":
+if caps.get("common_behavior_assurance_min") != "1.3.0":
     problems.append("common-behavior-min")
 if caps.get("canonical_evolution_evidence_ref") != "audits/EVOLUTION_INDEX.json":
     problems.append("canonical-evolution-ref")
 cap_ids = {c.get("capability_id") for c in caps.get("capabilities", [])}
 for cap_id in (
     "recover_before_user_escalation",
+    "problem_root_scope_admission",
     "problem_to_action_closure",
     "material_deliberation_admission",
     "continual_cross_work_learning",
@@ -73,7 +74,7 @@ for cap_id in (
 
 if evolution.get("owner") != "DOMAIN:novel":
     problems.append("evolution-owner")
-if evolution.get("common_behavior_assurance_min") != "1.2.0":
+if evolution.get("common_behavior_assurance_min") != "1.3.0":
     problems.append("evolution-common-behavior-min")
 open_items = evolution.get("current_open_items")
 current_refs = evolution.get("current_problem_refs")
@@ -89,6 +90,11 @@ if not isinstance(resolved, list) or not any(
     for row in (resolved or [])
 ):
     problems.append("evolution-prior-promotion-receipt-missing")
+if not isinstance(resolved, list) or not any(
+    isinstance(row, dict) and row.get("problem_ref") == "N-20261016-01-COMMON-BEHAVIOR-1_3-ROOT-SCOPE-ADOPTION"
+    for row in (resolved or [])
+):
+    problems.append("evolution-root-scope-candidate-missing")
 
 result = {
     "status": "PASS" if not problems else "FAIL",

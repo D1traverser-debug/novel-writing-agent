@@ -38,8 +38,10 @@ learning_protocol = text("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 architecture = text("protocols/NOVEL_PRODUCT_ARCHITECTURE.md")
 
 # Authority/version alignment.
-if caps.get("profile_version") != 5:
-    problems.append("profile-not-5")
+if caps.get("profile_version") != 6:
+    problems.append("profile-not-6")
+if caps.get("common_behavior_assurance_min") != "1.3.0":
+    problems.append("common-behavior-not-1.3")
 if "version: 2.5-github" not in rulebook:
     problems.append("rulebook-not-2.5")
 if "version: 2.0" not in mastery:
@@ -53,6 +55,7 @@ required_refs = {
     "product_architecture_ref": "protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
     "narrative_evidence_schema_ref": "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
     "material_deliberation_admission_ref": "runtime/deliberation_admission.py",
+    "root_scope_admission_ref": "runtime/deliberation_admission.py:build_root_scope_receipt",
     "learning_transfer_admission_ref": "runtime/learning_transfer_admission.py",
     "story_reselection_admission_ref": "runtime/story_reselection_admission.py",
     "dynamic_outline_ref": "runtime/dynamic_outline.py",
@@ -62,7 +65,8 @@ required_refs = {
 for key, expected in required_refs.items():
     if manifest.get("domain_authority", {}).get(key) != expected:
         problems.append("manifest-ref:" + key)
-    if not (ROOT / expected).is_file():
+    path_expected = expected.split(":", 1)[0]
+    if not (ROOT / path_expected).is_file():
         problems.append("manifest-ref-missing:" + key)
 
 # Exact study cursor and queue transition.

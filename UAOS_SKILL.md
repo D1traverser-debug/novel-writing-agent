@@ -35,7 +35,7 @@ Do not reconstruct task state from chat memory, broad repository search, retired
 - `config/ARTIFACT_CONTEXT_GOVERNANCE.json`: artifact/context governance;
 - `audits/EVOLUTION_INDEX.json`: canonical domain-evolution entrypoint;
 - `runtime/owner_behavior_admission.py`: recover-before-user-escalation and problem closure;
-- `runtime/deliberation_admission.py`: research/compare/challenge admission for material mutations;
+- `runtime/deliberation_admission.py`: material-decision deliberation plus owner-native root-scope admission;
 - `runtime/learning_transfer_admission.py`: closed-context reconstruction, claim-conditioned comparison, transfer and promotion admission;
 - `runtime/story_reselection_admission.py`: post-campaign zero-based story-selection and pre-draft admission;
 - `runtime/dynamic_outline.py`: evidence-driven hierarchical replan contract;
@@ -60,7 +60,11 @@ Do not reconstruct task state from chat memory, broad repository search, retired
 Any current execution that silently collapses these layers is a system defect.
 
 ## Common behavior / material decision discipline
-Novel adopts UAOS Common Behavior Assurance 1.2 owner-natively. Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
+Novel adopts UAOS Common Behavior Assurance 1.3 owner-natively. Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
+
+For every detected problem that may lead to repair/no-change, do not jump from symptom to edit. Use `runtime/deliberation_admission.py` to preserve competing root hypotheses and falsification/rejection evidence. Repeated, cross-subsystem, architecture-gap, complexity-growth or scope-expansion problems must compare at least two problem layers, test an architecture/upstream hypothesis, reject at least one alternative with evidence and preserve architecture reassessment evidence. A user correction, external method or first plausible explanation may seed a hypothesis but is not root-cause authority.
+
+After root-scope admission, assign an evolution/learning disposition. Material or evolution-relevant problems require a durable problem reference. Only then may `runtime/owner_behavior_admission.py` admit repair/no-change; a real external blocker may still be surfaced without fabricating root-cause certainty. A repair attempted before this admission is process-failure evidence, not retroactive proof of the diagnosis.
 
 For a material learning/system/story decision, do not execute the first plausible idea. Build an evidence-bound decision receipt: current authority, internal evidence, external research when material (or explicit not-material reason), >=2 alternatives, counterexample, challenged assumption, rejection reasoning, risks and rollback/recovery. Then mutate.
 
