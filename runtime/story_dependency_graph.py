@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Typed dependency graph for Novel planning without collapsing plan into Canon.
 
-The graph is deliberately small: it coordinates dependencies, invalidation and promotion.
-Existing project Canon files remain business authority for accepted facts. This runtime
-prevents planning/research changes from silently becoming Canon and makes downstream
-replanning explicit.
+The graph coordinates provenance, dependency invalidation and Canon promotion. Existing
+project Canon files remain business authority for accepted facts. Planning/research
+changes may invalidate dependents but never silently become Canon.
 """
 from __future__ import annotations
 
@@ -92,7 +91,9 @@ def validate_graph(graph: StoryDependencyGraph) -> str:
             raise StoryGraphError(f"unknown edge type: {edge.edge_type}")
         if not edge.source_refs:
             raise StoryGraphError("edge lacks provenance")
-    # Dependency edges must be acyclic. Other semantic edges may form legitimate loops.
+
+    # Only DEPENDS_ON is required to be a DAG. Other semantic relations can form loops.
+    # Semantics: A DEPENDS_ON B means changing B can invalidate A.
     adjacency = {node_id: [] for node_id in by_id}
     for edge in graph.edges:
         if edge.edge_type == "DEPENDS_ON":
@@ -116,23 +117,40 @@ def validate_graph(graph: StoryDependencyGraph) -> str:
 
 
 def invalidation_closure(graph: StoryDependencyGraph, changed_node_ids: Iterable[str]) -> tuple[str, ...]:
+    """Return nodes that require review after a semantic upstream change.
+
+    Direction matters:
+    - A DEPENDS_ON B -> B change may invalidate A.
+    - A REQUIRES_KNOWLEDGE_OF B -> B change may invalidate A.
+    - A ENABLES B / CAUSES B / FORESHADOWS B -> A change may invalidate B.
+    - A PAYS_OFF B means B is the setup/promise being paid; changing B can invalidate A,
+      while changing A may also require promise review. We conservatively review both.
+    - CONTRADICTS/REVISES are semantic relations but not automatic transitive dependencies.
+    """
     validate_graph(graph)
     changed = {x for x in changed_node_ids if x}
     known = {n.node_id for n in graph.nodes}
     if not changed or not changed.issubset(known):
         raise StoryGraphError("changed node set is empty or references unknown nodes")
-    reverse = {node_id: set() for node_id in known}
+
+    downstream = {node_id: set() for node_id in known}
     for edge in graph.edges:
-        if edge.edge_type in {"DEPENDS_ON", "ENABLES", "FORESHADOWS", "REQUIRES_KNOWLEDGE_OF"}:
-            reverse[edge.target_id].add(edge.source_id)
+        if edge.edge_type in {"DEPENDS_ON", "REQUIRES_KNOWLEDGE_OF"}:
+            downstream[edge.target_id].add(edge.source_id)
+        elif edge.edge_type in {"ENABLES", "CAUSES", "FORESHADOWS"}:
+            downstream[edge.source_id].add(edge.target_id)
+        elif edge.edge_type == "PAYS_OFF":
+            downstream[edge.source_id].add(edge.target_id)
+            downstream[edge.target_id].add(edge.source_id)
+
     affected = set(changed)
     frontier = list(changed)
     while frontier:
         current = frontier.pop()
-        for downstream in reverse[current]:
-            if downstream not in affected:
-                affected.add(downstream)
-                frontier.append(downstream)
+        for dependent in downstream[current]:
+            if dependent not in affected:
+                affected.add(dependent)
+                frontier.append(dependent)
     return tuple(sorted(affected))
 
 
