@@ -69,6 +69,20 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit "$rc"
+      - name: Run learning-to-planning system guard
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python runtime/learning_planning_system_guard.py 2>&1 | tee /tmp/learning-planning-guard.txt
+          rc=${PIPESTATUS[0]}
+          {
+            echo '## Learning-to-planning system guard'
+            echo '```text'
+            cat /tmp/learning-planning-guard.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
       - name: Run owner contract tests
         if: always()
         shell: bash
@@ -80,7 +94,7 @@ jobs:
           {
             echo '## Pytest'
             echo '```text'
-            tail -n 120 /tmp/pytest.txt
+            tail -n 160 /tmp/pytest.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit "$rc"
