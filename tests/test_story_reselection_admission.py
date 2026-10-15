@@ -1,6 +1,7 @@
 import pytest
 
 from runtime.story_reselection_admission import (
+    CandidateContrast,
     ReselectionDecisionReceipt,
     StoryCandidate,
     StoryReselectionAdmissionError,
@@ -14,7 +15,7 @@ def candidates():
         StoryCandidate(
             candidate_id="A",
             premise="urban future-order suspense",
-            engine_family="URBAN_FUTURE_INFORMATION",
+            engine_family="URBAN_SUSPENSE",
             target_reader="male suspense/brain-hole",
             reader_contract="future information forces costly choices",
             acquisition_hypothesis="first-screen impossible delivery problem",
@@ -26,7 +27,7 @@ def candidates():
         StoryCandidate(
             candidate_id="B",
             premise="closed social survival mystery",
-            engine_family="SOCIAL_SURVIVAL_GAME",
+            engine_family="URBAN_SUSPENSE",
             target_reader="suspense ensemble",
             reader_contract="alliances and rules mutate under pressure",
             acquisition_hypothesis="immediate social contradiction",
@@ -50,9 +51,18 @@ def candidates():
     )
 
 
-def valid_receipt(current_project_was_privileged=False):
+def contrasts():
+    return (
+        CandidateContrast("A", "B", ("READER_CONTRACT", "RELATIONSHIP_ENGINE", "ACQUISITION"), ("contrast:A-B",)),
+        CandidateContrast("A", "C", ("STORY_ENGINE", "WORLD_OR_INSTITUTIONAL_LOGIC", "CHARACTER_ATTACHMENT"), ("contrast:A-C",)),
+        CandidateContrast("B", "C", ("STORY_ENGINE", "SERIAL_SUSTAINABILITY", "DIFFERENTIATION"), ("contrast:B-C",)),
+    )
+
+
+def valid_receipt(current_project_was_privileged=False, candidate_contrasts=None):
     return ReselectionDecisionReceipt(
         candidates=candidates(),
+        candidate_contrasts=contrasts() if candidate_contrasts is None else tuple(candidate_contrasts),
         selected_candidate_id="C",
         pairwise_or_pareto_evidence_refs=("reselection/pareto.json",),
         platform_evidence_refs=("fanqie-current-first-party",),
@@ -83,12 +93,24 @@ def test_historical_fq001_cannot_be_privileged():
         )
 
 
-def test_zero_based_vector_reselection_admits_only_after_full_evidence():
+def test_same_broad_engine_family_is_allowed_when_candidate_difference_is_material_and_evidenced():
+    # A and B intentionally share a broad engine family. The system should not force fake
+    # diversity when reader contract/relationship/acquisition mechanisms are materially different.
     assert admit_story_reselection(
         valid_receipt(),
         corpus_campaign_complete=True,
         formal_cross_work_synthesis_complete=True,
     ).startswith("STORY_RESELECTION_ADMITTED")
+
+
+def test_missing_pairwise_material_difference_evidence_is_rejected():
+    incomplete = contrasts()[:-1]
+    with pytest.raises(StoryReselectionAdmissionError):
+        admit_story_reselection(
+            valid_receipt(candidate_contrasts=incomplete),
+            corpus_campaign_complete=True,
+            formal_cross_work_synthesis_complete=True,
+        )
 
 
 def test_pre_draft_architecture_requires_dynamic_hierarchy_and_benchmarks():
