@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "status": "ACTIVE_CAMPAIGN",
+  "authority_role": "CROSS_WORK_LEARNING_EVIDENCE__NOT_PROSE_CANON_OR_ACTIVE_RULE_AUTHORITY",
+  "campaign_id": "FQ001_POST_REJECTION_REBUILD_2026",
+  "corpus_map_ref": "research/masterworks/CORPUS_MAP.json",
+  "study_state_ref": "research/masterworks/STUDY_STATE.json",
+  "bootstrap_comparison": {
+    "status": "COMPLETE__NON_PROMOTIONAL",
+    "evidence_ref": "research/masterworks/CROSS_WORK_PROVISIONAL_SYNTHESIS_2026-10-15.md",
+    "completed_work_ids": ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU", "DAO_MU_BI_JI"],
+    "partial_challenge_only": ["GUI_CHUI_DENG"],
+    "active_rule_promotions": []
+  },
+  "learning_loop": {
+    "after_each_completed_work": [
+      "CLOSED_CONTEXT_RECONSTRUCTION_FROM_COMPACT_LEARNING_INDEX",
+      "COMPARE_WITH_PRIOR_COMPLETED_WORKS_BY_EVIDENCE_FAMILY",
+      "RECORD_COMMON_MECHANISMS_AND_CONFLICTING_BOUNDARIES",
+      "UPDATE_OBSERVATION_AXES_FOR_NEXT_WORK",
+      "RUN_TRANSFER_PROBES_ON_NEW_NON_COPIED_CASES",
+      "ADVERSARIAL_REVIEW_FOR_OVERFIT_AND_PAGE_COST",
+      "ONLY_THEN_ADVANCE_QUEUE"
+    ],
+    "interim_promotion_policy": "NON_PROMOTIONAL__REFERENCE_AND_EXPERIMENTAL_ONLY",
+    "formal_promotion_policy": "ACTIVE_RULE_BLOCKED_UNTIL_CORPUS_CAMPAIGN_COMPLETE_AND_FORMAL_SYNTHESIS_PASS",
+    "same_family_weighting": "ONE_EVIDENCE_FAMILY_NOT_MULTIPLE_INDEPENDENT_VOTES"
+  },
+  "current_gate": {
+    "active_work": "GUI_CHUI_DENG",
+    "active_work_must_finish_before_interbook_cycle": true,
+    "next_interbook_cycle_trigger": "GUI_CHUI_DENG_TERMINAL_COMPLETE",
+    "next_queue_work": "QING_YU_NIAN",
+    "queue_advance_before_cycle": "DENIED"
+  },
+  "formal_campaign_synthesis": {
+    "status": "BLOCKED_UNTIL_ALL_NON_EXCLUDED_QUEUE_WORKS_COMPLETE",
+    "required_outputs": [
+      "MECHANISM_GRAPH_WITH_SUPPORT_AND_CONTRADICTION_EDGES",
+      "COMPETENCY_EVIDENCE_MATRIX",
+      "FAILURE_AND_BOUNDARY_LIBRARY",
+      "TRANSFER_BENCHMARK_RESULTS",
+      "PLATFORM_CURRENT_EVIDENCE_REFRESH",
+      "ZERO_BASED_STORY_RESELECTION_PACKET"
+    ]
+  },
+  "story_reselection": {
+    "status": "BLOCKED_PENDING_FORMAL_CAMPAIGN_SYNTHESIS",
+    "historical_fq001_role": "ONE_CANDIDATE_OR_EVIDENCE_SOURCE_ONLY__NO_INCUMBENT_PRIVILEGE",
+    "minimum_materially_distinct_candidates": 3,
+    "selection_rule": "VECTOR_COMPARISON_PLUS_PAIRWISE_OR_PARETO_EVIDENCE__NO_SINGLE_WEIGHTED_SCORE_ONLY",
+    "drafting_before_reselection": "DENIED"
+  }
+}
