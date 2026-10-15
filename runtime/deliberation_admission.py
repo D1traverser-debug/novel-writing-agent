@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Evidence-first admission for material Novel-domain decisions.
+"""Evidence-first admission for material Novel-domain decisions and problem root scope.
 
-This is not a claim that every host response is physically intercepted. It provides an
-owner-native executable contract that material design/learning/promotion mutations can
-be trajectory-tested against before they are accepted as governed decisions.
+This module realizes the UAOS cognition floor owner-natively. It does not claim that
+every host response is physically intercepted and it does not create a second controller.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 from typing import Iterable
 
 
@@ -90,7 +90,6 @@ def build_material_decision_receipt(
 def admit_material_mutation(receipt: MaterialDecisionReceipt | None) -> str:
     if receipt is None:
         raise DeliberationAdmissionError("material mutation denied: no deliberation receipt")
-    # Re-run the strongest invariants in case a receipt was manually constructed.
     if len(receipt.alternatives) < 2 or not receipt.counterexamples or not receipt.challenged_assumptions:
         raise DeliberationAdmissionError("material mutation denied: deliberation floor incomplete")
     if not receipt.has_external_grounding:
@@ -98,3 +97,109 @@ def admit_material_mutation(receipt: MaterialDecisionReceipt | None) -> str:
     if not receipt.authority_refs or not receipt.internal_evidence_refs:
         raise DeliberationAdmissionError("material mutation denied: evidence grounding incomplete")
     return "MATERIAL_MUTATION_ADMITTED__EVIDENCE_COMPARE_CHALLENGE_COMPLETE"
+
+
+class ProblemLayer(str, Enum):
+    LOCAL_IMPLEMENTATION = "LOCAL_IMPLEMENTATION"
+    DOMAIN_WORKFLOW = "DOMAIN_WORKFLOW"
+    DOMAIN_ARCHITECTURE = "DOMAIN_ARCHITECTURE"
+    COMMON_CAPABILITY = "COMMON_CAPABILITY"
+    CONTROL_PLANE = "CONTROL_PLANE"
+    HOST = "HOST"
+    REQUIREMENT_OR_GOAL = "REQUIREMENT_OR_GOAL"
+
+
+class HypothesisDisposition(str, Enum):
+    PLAUSIBLE = "PLAUSIBLE"
+    SELECTED = "SELECTED"
+    REJECTED = "REJECTED"
+
+
+@dataclass(frozen=True)
+class RootScopeHypothesis:
+    hypothesis_id: str
+    layer: ProblemLayer
+    statement: str
+    disposition: HypothesisDisposition
+    supporting_evidence_refs: tuple[str, ...]
+    falsification_or_rejection_refs: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class RootScopeReceipt:
+    selected_hypothesis_id: str
+    selected_layer: ProblemLayer
+    compared_layers: tuple[ProblemLayer, ...]
+    rejected_hypothesis_ids: tuple[str, ...]
+    architecture_reassessment_refs: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+
+
+def build_root_scope_receipt(
+    *,
+    hypotheses: Iterable[RootScopeHypothesis],
+    selected_hypothesis_id: str,
+    systemic_signal: bool = False,
+    architecture_reassessment_refs: Iterable[str] | None = None,
+    direct_user_or_external_claim_promoted_without_test: bool = False,
+) -> RootScopeReceipt:
+    """Admit a Novel problem layer before repair/no-change.
+
+    `systemic_signal` applies to repeated/cross-subsystem/architecture-gap/complexity-
+    growth/scope-expansion problems and forces an explicit upstream hypothesis test.
+    """
+    items = tuple(hypotheses)
+    architecture_refs = _clean(architecture_reassessment_refs)
+    if direct_user_or_external_claim_promoted_without_test:
+        raise DeliberationAdmissionError(
+            "root-scope admission denied: user/external framing was promoted without falsification"
+        )
+    if not items:
+        raise DeliberationAdmissionError("root-scope admission requires hypotheses")
+    ids = [item.hypothesis_id.strip() for item in items]
+    if any(not value for value in ids) or len(ids) != len(set(ids)):
+        raise DeliberationAdmissionError("root-scope hypothesis ids must be non-empty and unique")
+    for item in items:
+        if not item.statement.strip() or not item.supporting_evidence_refs or not item.falsification_or_rejection_refs:
+            raise DeliberationAdmissionError(
+                "every root-scope hypothesis requires statement, supporting evidence and falsification/rejection evidence"
+            )
+    selected = [item for item in items if item.hypothesis_id == selected_hypothesis_id]
+    if len(selected) != 1 or selected[0].disposition is not HypothesisDisposition.SELECTED:
+        raise DeliberationAdmissionError("selected_hypothesis_id must identify the one SELECTED hypothesis")
+    if sum(item.disposition is HypothesisDisposition.SELECTED for item in items) != 1:
+        raise DeliberationAdmissionError("exactly one root-scope hypothesis may be SELECTED")
+
+    layers = tuple(sorted({item.layer for item in items}, key=lambda item: item.value))
+    rejected = tuple(sorted(item.hypothesis_id for item in items if item.disposition is HypothesisDisposition.REJECTED))
+    if systemic_signal:
+        if len(items) < 2 or len(layers) < 2:
+            raise DeliberationAdmissionError("systemic problem requires competing hypotheses across at least two layers")
+        if not rejected:
+            raise DeliberationAdmissionError("systemic problem requires an evidence-rejected alternative")
+        upstream = {
+            ProblemLayer.DOMAIN_ARCHITECTURE,
+            ProblemLayer.COMMON_CAPABILITY,
+            ProblemLayer.CONTROL_PLANE,
+            ProblemLayer.HOST,
+            ProblemLayer.REQUIREMENT_OR_GOAL,
+        }
+        if not any(item.layer in upstream for item in items):
+            raise DeliberationAdmissionError("systemic problem must test an architecture/upstream hypothesis")
+        if not architecture_refs:
+            raise DeliberationAdmissionError("systemic problem requires architecture reassessment evidence")
+
+    chosen = selected[0]
+    evidence = tuple(sorted({
+        *chosen.supporting_evidence_refs,
+        *chosen.falsification_or_rejection_refs,
+        *architecture_refs,
+    }))
+    return RootScopeReceipt(
+        selected_hypothesis_id=chosen.hypothesis_id,
+        selected_layer=chosen.layer,
+        compared_layers=layers,
+        rejected_hypothesis_ids=rejected,
+        architecture_reassessment_refs=architecture_refs,
+        evidence_refs=evidence,
+    )
