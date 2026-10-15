@@ -40,7 +40,7 @@ Do not reconstruct task state from chat memory, broad repository search, retired
 - `runtime/story_reselection_admission.py`: post-campaign zero-based story-selection and pre-draft admission;
 - `runtime/dynamic_outline.py`: evidence-driven hierarchical replan contract;
 - `runtime/story_dependency_graph.py`: Plan/Canon dependency and invalidation contract;
-- `runtime/narrative_evaluation.py`: vector/Pareto quality evaluation;
+- `runtime/narrative_evaluation.py`: calibrated uncertainty-bounded vector/Pareto quality evaluation;
 - `projects/<task>/canon/`: accepted factual Canon;
 - `projects/<task>/checkpoints/CURRENT_CHECKPOINT.json`: fine-grained business checkpoint.
 
@@ -72,7 +72,7 @@ Evidence dependence is claim-conditioned and dimension-specific. Same author, se
 Current campaign keeps interim mechanisms at REFERENCE until retroactive dependency-aware comparison verifies them; ACTIVE_RULE promotion remains blocked by the campaign/formal-synthesis gate.
 
 ## Post-study story selection
-After all non-excluded works complete and formal synthesis passes, refresh current Fanqie evidence and run a zero-based story tournament. Historical FQ001 may compete only as one candidate/evidence source and receives no incumbent privilege. Only signing mode and serialization mode remain user-locked.
+After all non-excluded works complete and formal synthesis passes, refresh current Fanqie evidence and run a zero-based story tournament. Historical FQ001 may compete only as one candidate/evidence source and receives no incumbent privilege. Candidate diversity must be proved on relevant story/product axes; broad genre/engine labels are not quotas. Only signing mode and serialization mode remain user-locked.
 
 No new replacement prose before reselection + pre-draft architecture admission.
 
@@ -80,7 +80,7 @@ No new replacement prose before reselection + pre-draft architecture admission.
 After a winner exists, use minimum sufficient context:
 `RECOVER -> PLAN_SLICE/FREEZE -> CONTEXT_PACK -> DRAFT -> REVIEW_FANOUT -> ISSUE_MERGE -> REVISE -> RE-AUDIT -> FINAL_PROOFREAD -> ARTIFACT_QA -> RELEASE_EVIDENCE_GUARD -> CANON_RECONCILIATION/COMMIT -> RELEASE -> CHECKPOINT`.
 
-A prose hash change invalidates body-dependent review evidence. Research cannot directly promote Canon. Plan changes require impact-scoped replanning; near/frozen structural changes need hard-defect/live-signal evidence.
+A prose hash change invalidates body-dependent review evidence. Research cannot directly promote Canon. Plan changes require impact-scoped replanning. `NEAR + FLEXIBLE` material may improve before acceptance; only accepted/`FROZEN` structure requires hard-defect/live-signal evidence to reopen. Numeric candidate comparison requires shared rubric/calibration scope and explicit uncertainty; otherwise use qualitative/pairwise tradeoff evidence.
 
 ## Completion
 System completion is not a literary-success claim. Internal tests may verify authority, admissions, state/cursor, dependency invalidation, evaluation mechanics and release evidence. Commercial/literary outcome stays open until actual post-reselection prose receives real reader/platform evidence.
