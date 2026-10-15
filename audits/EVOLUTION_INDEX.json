@@ -1,11 +1,29 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "owner":"DOMAIN:novel",
-  "revision":"1.0",
-  "updated_at":"2026-10-15T11:23:46+08:00",
+  "revision":"1.1",
+  "updated_at":"2026-10-15T16:11:53+08:00",
   "common_behavior_assurance_min":"1.2.0",
-  "current_open_items":[],
-  "current_problem_refs":{},
+  "current_open_items":["N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN"],
+  "current_problem_refs":{
+    "N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN":{
+      "status":"CANDIDATE_EVALUATION",
+      "evidence_ref":"audits/NOVEL_LEARNING_TO_PLANNING_REDESIGN_2026-10-15.md",
+      "candidate_branch":"feat/learning-to-planning-os-20261015",
+      "failure_classes":[
+        "END_ONLY_CROSS_WORK_FEEDBACK_DELAY",
+        "READING_WITHOUT_TRANSFER_ASSURANCE",
+        "HISTORICAL_PROJECT_INCUMBENT_BIAS",
+        "STATIC_LONGFORM_PLAN_RISK",
+        "SCALAR_QUALITY_COLLAPSE",
+        "LEARNING_PLAN_CANON_OUTCOME_BOUNDARY_FRAGMENTATION",
+        "MATERIAL_MUTATION_WITHOUT_EXPLICIT_DELIBERATION_RECEIPT",
+        "FIXED_EVIDENCE_FAMILY_OVERCOMPRESSION"
+      ],
+      "known_self_correction":"FIXED_EVIDENCE_FAMILY_MODEL_REJECTED__CLAIM_CONDITIONED_MULTIDIMENSIONAL_DEPENDENCY_MODEL_SELECTED",
+      "next_gate":"CANDIDATE_PR_CI_AND_DIFF_REVIEW"
+    }
+  },
   "recent_resolved_or_promoted":[
     {
       "problem_ref":"N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR",
@@ -33,9 +51,24 @@
     "runtime/recovery_guard.py",
     "runtime/authority_behavior_guard.py",
     "runtime/owner_behavior_admission.py",
+    "runtime/deliberation_admission.py",
+    "runtime/masterwork_distillation_guard.py",
+    "runtime/learning_transfer_admission.py",
+    "runtime/story_reselection_admission.py",
+    "runtime/dynamic_outline.py",
+    "runtime/story_dependency_graph.py",
+    "runtime/narrative_evaluation.py",
+    "runtime/learning_planning_system_guard.py",
     "tests/test_recovery_contract.py",
     "tests/test_authority_behavior_contract.py",
-    "tests/test_owner_behavior_admission.py"
+    "tests/test_owner_behavior_admission.py",
+    "tests/test_masterwork_distillation.py",
+    "tests/test_deliberation_admission.py",
+    "tests/test_learning_transfer_admission.py",
+    "tests/test_story_reselection_admission.py",
+    "tests/test_dynamic_outline.py",
+    "tests/test_story_dependency_graph.py",
+    "tests/test_narrative_evaluation.py"
   ],
-  "assurance":"OWNER_NATIVE_ENTRYPOINT__AUTHORITY_AND_COMMON_BEHAVIOR_EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_LITERARY_OUTCOME_OPEN"
+  "assurance":"CANDIDATE_LEARNING_TO_PLANNING_OS__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
 }

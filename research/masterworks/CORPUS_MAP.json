@@ -1,0 +1,45 @@
+{
+  "schema_version": "2.0",
+  "authority_role": "LEARNING_CORPUS_RELATION_MAP__NOT_PROSE_OR_CANON_AUTHORITY",
+  "campaign_id": "FQ001_POST_REJECTION_REBUILD_2026",
+  "evidence_schema_ref": "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
+  "policy": {
+    "queue_authority_ref": "research/masterworks/STUDY_STATE.json",
+    "one_book_at_a_time": true,
+    "evidence_dependence_rule": "CLAIM_CONDITIONED_AND_DIMENSION_SPECIFIC__NEVER_FIXED_BY_AUTHOR_OR_SERIES_ALONE",
+    "author_series_genre_rule": "DEPENDENCY_FACETS_AND_COMPARISON_OPPORTUNITIES__NOT_DEDUP_KEYS_OR_AUTOMATIC_WEIGHTS",
+    "unread_work_metadata_rule": "PREFLIGHT_HINT_ONLY__VERIFY_AT_D1_BEFORE_USING_FOR_EVIDENCE_REASONING",
+    "surface_imitation": "FORBIDDEN",
+    "comparison_role": "MECHANISM_EXTRACTION__CONFOUND_CHALLENGE__BOUNDARY_DISCOVERY__TRANSFER_TESTING"
+  },
+  "relation_hints": [
+    {"relation_id":"R_DUNE_SERIES","type":"SAME_SERIES_SAME_AUTHOR_HINT","work_ids":["DUNE_01","DUNE_02","DUNE_03"],"use":"valuable for WITHIN_SERIES_CROSS_STAGE comparisons; does not merge works into one evidence item"},
+    {"relation_id":"R_HIGASHINO_WORKS","type":"SAME_AUTHOR_HINT","work_ids":["DEVOTION_OF_SUSPECT_X","MALICE","BYAKUYAKO"],"use":"valuable for WITHIN_AUTHOR_CROSS_WORK comparisons; author commonality is a confound only when relevant to the claim dimension"},
+    {"relation_id":"R_YU_HUA_WORKS","type":"SAME_AUTHOR_HINT","work_ids":["TO_LIVE","XU_SANGUAN"],"use":"valuable for within-author comparison of structure, relation, pacing and prose; never assume identical style"},
+    {"relation_id":"R_ORWELL_WORKS","type":"SAME_AUTHOR_HINT","work_ids":["NINETEEN_EIGHTY_FOUR","ANIMAL_FARM"],"use":"valuable for holding author partly constant while genre/form/function vary; never collapse into one vote"}
+  ],
+  "works": [
+    {"queue_no":1,"work_id":"SHIRI_ZHONGYAN","title":"十日终焉","queue_status":"COMPLETE","study_metadata_status":"OBSERVED_IN_COMPLETED_LEDGER","comparison_state":"ELIGIBLE_COMPLETED_WORK"},
+    {"queue_no":2,"work_id":"GUI_MI_ZHI_ZHU","title":"诡秘之主","queue_status":"COMPLETE","study_metadata_status":"OBSERVED_IN_COMPLETED_LEDGER","comparison_state":"ELIGIBLE_COMPLETED_WORK"},
+    {"queue_no":3,"work_id":"DAO_MU_BI_JI","title":"盗墓笔记全集","queue_status":"COMPLETE","study_metadata_status":"OBSERVED_IN_COMPLETED_LEDGER","comparison_state":"ELIGIBLE_COMPLETED_WORK"},
+    {"queue_no":4,"work_id":"GUI_CHUI_DENG","title":"鬼吹灯全集","queue_status":"ACTIVE","study_metadata_status":"PARTIAL_OBSERVATION_ONLY__SOURCE_LINE_77_3913","comparison_state":"CHALLENGE_ONLY_UNTIL_COMPLETE"},
+    {"queue_no":5,"work_id":"QING_YU_NIAN","title":"庆余年","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":6,"work_id":"HARRY_POTTER","title":"哈利·波特全集","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":7,"work_id":"DUNE_01","title":"沙丘01_沙丘","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":8,"work_id":"DUNE_02","title":"沙丘02_沙丘救世主","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":9,"work_id":"DUNE_03","title":"沙丘03_沙丘之子","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":10,"work_id":"DEVOTION_OF_SUSPECT_X","title":"嫌疑人X的献身","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":11,"work_id":"MALICE","title":"恶意","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":12,"work_id":"BYAKUYAKO","title":"白夜行","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":13,"work_id":"KITE_RUNNER","title":"追风筝的人","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":14,"work_id":"TO_LIVE","title":"活着","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":15,"work_id":"XU_SANGUAN","title":"许三观卖血记","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":16,"work_id":"ORDINARY_WORLD","title":"平凡的世界","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":17,"work_id":"NORWEGIAN_WOOD","title":"挪威的森林","queue_status":"EXCLUDED_BY_USER","study_metadata_status":"EXCLUDED","comparison_state":"FORBIDDEN_UNLESS_USER_REOPENS"},
+    {"queue_no":18,"work_id":"ONE_HUNDRED_YEARS","title":"百年孤独","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":19,"work_id":"NINETEEN_EIGHTY_FOUR","title":"1984","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":20,"work_id":"ANIMAL_FARM","title":"动物庄园","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":21,"work_id":"THE_STRANGER","title":"局外人","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"},
+    {"queue_no":22,"work_id":"OLD_MAN_AND_SEA","title":"老人与海","queue_status":"PENDING","study_metadata_status":"D1_PREFLIGHT_REQUIRED","comparison_state":"NOT_YET_EVIDENCE"}
+  ]
+}

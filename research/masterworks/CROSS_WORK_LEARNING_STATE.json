@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.1",
+  "status": "ACTIVE_CAMPAIGN",
+  "authority_role": "CROSS_WORK_LEARNING_EVIDENCE__NOT_PROSE_CANON_OR_ACTIVE_RULE_AUTHORITY",
+  "campaign_id": "FQ001_POST_REJECTION_REBUILD_2026",
+  "corpus_map_ref": "research/masterworks/CORPUS_MAP.json",
+  "narrative_evidence_schema_ref": "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
+  "study_state_ref": "research/masterworks/STUDY_STATE.json",
+  "bootstrap_comparison": {
+    "status": "COMPLETE__REFERENCE_ONLY__RETROACTIVE_DEPENDENCY_REVIEW_REQUIRED",
+    "evidence_ref": "research/masterworks/CROSS_WORK_PROVISIONAL_SYNTHESIS_2026-10-15.md",
+    "completed_work_ids": ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU", "DAO_MU_BI_JI"],
+    "partial_challenge_only": ["GUI_CHUI_DENG"],
+    "active_rule_promotions": [],
+    "reason_for_retroactive_review": "initial bootstrap comparison used an over-coarse evidence-family abstraction; all mechanism hypotheses were downgraded to REFERENCE until claim-conditioned multidimensional comparison is run"
+  },
+  "learning_loop": {
+    "after_each_completed_work": [
+      "CLOSED_CONTEXT_RECONSTRUCTION_FROM_COMPACT_LEARNING_INDEX",
+      "SELECT_CLAIMS_AND_TARGET_NARRATIVE_DIMENSIONS",
+      "SELECT_INFORMATION_MAXIMIZING_COMPARISON_DESIGNS",
+      "ASSESS_SHARED_FACTORS_PER_CLAIM__AUTHOR_SERIES_GENRE_POV_MARKET_PERIOD_ETC",
+      "COMPARE_SUPPORT_CONTRADICTION_BOUNDARY_AND_ALTERNATIVE_EXPLANATIONS",
+      "UPDATE_OBSERVATION_AXES_FOR_NEXT_WORK",
+      "RUN_TRANSFER_PROBES_ON_NEW_NON_COPIED_CASES",
+      "ADVERSARIAL_REVIEW_FOR_OVERFIT_CONFOUND_AND_PAGE_COST",
+      "ONLY_THEN_ADVANCE_QUEUE"
+    ],
+    "interim_promotion_policy": "NON_PROMOTIONAL__REFERENCE_ONLY_UNTIL_DEPENDENCY_REVIEW__THEN_EXPERIMENTAL",
+    "formal_promotion_policy": "ACTIVE_RULE_BLOCKED_UNTIL_CORPUS_CAMPAIGN_COMPLETE_AND_FORMAL_SYNTHESIS_PASS",
+    "dependence_policy": "NO_FIXED_FAMILY_WEIGHT__DEPENDENCE_IS_CLAIM_CONDITIONED_AND_DIMENSION_SPECIFIC",
+    "same_author_or_series_policy": "CAN_BE_HIGH_VALUE_CONTROLLED_CONTRAST_OR_CORRELATED_EVIDENCE_DEPENDING_ON_CLAIM__NEVER_AUTOMATICALLY_MERGE_OR_COUNT_AS_INDEPENDENT"
+  },
+  "comparison_strategy": {
+    "available_designs": [
+      "WITHIN_AUTHOR_CROSS_WORK",
+      "WITHIN_SERIES_CROSS_STAGE",
+      "CROSS_AUTHOR_SAME_OR_ADJACENT_GENRE",
+      "CROSS_GENRE_SAME_FUNCTION",
+      "CROSS_FORMAT_OR_MARKET",
+      "WITHIN_WORK_CROSS_ARC",
+      "MATCHED_SURFACE_DIFFERENT_FUNCTION",
+      "MATCHED_FUNCTION_DIFFERENT_SURFACE"
+    ],
+    "selection_rule": "CHOOSE_DESIGNS_BY_CLAIM_AND_UNRESOLVED_CONFOUND__NOT_BY_STATIC_BOOK_PAIRING",
+    "promotion_confounds": "HIGH_RELEVANCE_SHARED_FACTORS_MUST_BE_CHALLENGED_OR_REMAIN_EXPLICIT_BLOCKERS"
+  },
+  "current_gate": {
+    "active_work": "GUI_CHUI_DENG",
+    "active_work_must_finish_before_its_interbook_cycle": true,
+    "retroactive_completed_work_calibration_allowed_during_pause": true,
+    "next_interbook_cycle_trigger": "GUI_CHUI_DENG_TERMINAL_COMPLETE",
+    "next_queue_work": "QING_YU_NIAN",
+    "queue_advance_before_cycle": "DENIED"
+  },
+  "formal_campaign_synthesis": {
+    "status": "BLOCKED_UNTIL_ALL_NON_EXCLUDED_QUEUE_WORKS_COMPLETE",
+    "required_outputs": [
+      "CLAIM_CONDITIONED_MECHANISM_GRAPH_WITH_SUPPORT_CONTRADICTION_BOUNDARY_AND_SHARED_FACTOR_EDGES",
+      "MULTIDIMENSIONAL_COMPETENCY_EVIDENCE_MATRIX",
+      "FAILURE_AND_BOUNDARY_LIBRARY",
+      "COMPARISON_DESIGN_COVERAGE_MAP",
+      "TRANSFER_BENCHMARK_RESULTS",
+      "PLATFORM_CURRENT_EVIDENCE_REFRESH",
+      "ZERO_BASED_STORY_RESELECTION_PACKET"
+    ]
+  },
+  "story_reselection": {
+    "status": "BLOCKED_PENDING_FORMAL_CAMPAIGN_SYNTHESIS",
+    "historical_fq001_role": "ONE_CANDIDATE_OR_EVIDENCE_SOURCE_ONLY__NO_INCUMBENT_PRIVILEGE",
+    "minimum_materially_distinct_candidates": 3,
+    "selection_rule": "VECTOR_COMPARISON_PLUS_PAIRWISE_OR_PARETO_EVIDENCE__NO_SINGLE_WEIGHTED_SCORE_ONLY",
+    "drafting_before_reselection": "DENIED"
+  }
+}

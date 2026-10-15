@@ -1,8 +1,8 @@
 {
-  "schema_version":"2.2",
-  "profile_version":4,
+  "schema_version":"2.4",
+  "profile_version":5,
   "domain_id":"novel",
-  "policy":"MINIMUM_SUFFICIENT_CONTEXT__SOURCE_IDENTITY_BOUND__NO_FALSE_INDEPENDENCE__OWNER_NATIVE_COMMON_BEHAVIOR_ADMISSION",
+  "policy":"MINIMUM_SUFFICIENT_CONTEXT__SOURCE_IDENTITY_BOUND__CLAIM_CONDITIONED_MULTIDIMENSIONAL_EVIDENCE__TRANSFER_GATED__ZERO_BASED_RESELECTION__NO_FALSE_INDEPENDENCE__OWNER_NATIVE_COMMON_BEHAVIOR_ADMISSION",
   "uaos_common_capabilities_ref":"D1traverser-debug/universal-agent-os@main:config/COMMON_CAPABILITIES.json",
   "common_capabilities_inheritance":"UAOS_HOSTED",
   "uaos_common_behavior_assurance_ref":"D1traverser-debug/universal-agent-os@main:config/COMMON_BEHAVIOR_ASSURANCE.json",
@@ -11,15 +11,18 @@
   "canonical_evolution_evidence_ref":"audits/EVOLUTION_INDEX.json",
   "domain_evolution_role":"DOMAIN_EVIDENCE_EVAL_AND_BUSINESS_OWNER_PROMOTION",
   "authority_context":"DOMAIN:novel",
-  "updated_at":"2026-10-15T11:11:00+08:00",
+  "updated_at":"2026-10-15T15:44:58+08:00",
   "capabilities":[
     {"capability_id":"project_recovery","required":["current_checkpoint","canon_identity"],"side_channel_allowed":false},
     {"capability_id":"recover_before_user_escalation","required":["recovery_attempt_receipt","bounded_unknowns","user_escalation_admission"],"execution_ref":"runtime/owner_behavior_admission.py","side_channel_allowed":false},
     {"capability_id":"problem_to_action_closure","required":["problem_detection","repair_or_block_decision","closure_receipt"],"execution_ref":"runtime/owner_behavior_admission.py","side_channel_allowed":false},
-    {"capability_id":"large_corpus_distillation","required":["source_identity","coverage_cursor","rolling_ledger"],"side_channel_allowed":false},
+    {"capability_id":"material_deliberation_admission","required":["current_authority","internal_evidence","external_grounding_or_not_material_reason","alternative_comparison","counterexample","assumption_challenge","risk_and_recovery"],"execution_ref":"runtime/deliberation_admission.py","side_channel_allowed":false},
+    {"capability_id":"large_corpus_distillation","required":["source_identity","coverage_cursor","rolling_ledger","single_work_context_isolation"],"execution_ref":"runtime/masterwork_distillation_guard.py","side_channel_allowed":false},
+    {"capability_id":"continual_cross_work_learning","required":["multidimensional_evidence_schema","claim_conditioned_dependency_assessment","comparison_design","shared_factor_assessment","closed_context_reconstruction","non_promotional_interbook_comparison","alternative_explanations","negative_or_boundary_evidence","transfer_probe","mechanism_registry"],"execution_ref":"runtime/learning_transfer_admission.py","side_channel_allowed":false},
+    {"capability_id":"zero_based_story_reselection","required":["corpus_campaign_complete","formal_cross_work_synthesis","current_platform_evidence","materially_distinct_candidates","vector_or_pairwise_comparison","blind_and_adversarial_evidence","long_horizon_stress","dynamic_hierarchical_outline"],"execution_ref":"runtime/story_reselection_admission.py","side_channel_allowed":false},
     {"capability_id":"draft_and_revision","required":["model_runtime","frozen_project_context"],"side_channel_allowed":false},
     {"capability_id":"review_fanout","required":["review_evidence"],"assurance_rule":"ROLE_SEPARATION_IS_NOT_PROVIDER_INDEPENDENCE","side_channel_allowed":false},
     {"capability_id":"release_and_canon_commit","required":["same_source_hash_review","deterministic_guards"],"side_channel_allowed":false},
-    {"capability_id":"learning_promotion","required":["cross_case_or_project_benchmark_evidence"],"side_channel_allowed":false}
+    {"capability_id":"learning_promotion","required":["target_narrative_dimensions","multiple_comparison_designs","shared_factor_challenge","negative_or_boundary_evidence","transfer_benchmark_evidence","project_or_external_outcome"],"execution_ref":"runtime/learning_transfer_admission.py","side_channel_allowed":false}
   ]
 }

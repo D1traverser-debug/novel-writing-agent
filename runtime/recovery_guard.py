@@ -31,9 +31,21 @@ CURRENT_REQUIRED = [
     ".uaos/CAPABILITIES.json",
     "config/ARTIFACT_CONTEXT_GOVERNANCE.json",
     "protocols/ACTIVE_RULEBOOK.md",
+    "protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
     "protocols/NOVEL_MASTERY_MODEL.md",
     "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
     "research/masterworks/STUDY_STATE.json",
+    "research/masterworks/CORPUS_MAP.json",
+    "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
+    "research/masterworks/CROSS_WORK_LEARNING_STATE.json",
+    "research/masterworks/MECHANISM_REGISTRY.json",
+    "runtime/owner_behavior_admission.py",
+    "runtime/deliberation_admission.py",
+    "runtime/learning_transfer_admission.py",
+    "runtime/story_reselection_admission.py",
+    "runtime/dynamic_outline.py",
+    "runtime/story_dependency_graph.py",
+    "runtime/narrative_evaluation.py",
     "runtime/release_evidence_guard.py",
     "runtime/masterwork_distillation_guard.py",
     "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
@@ -42,15 +54,6 @@ CURRENT_REQUIRED = [
     "projects/FQ001_MINGRI_ORDER/NEXT_CHAPTER_CONTRACT.md",
     "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
     "projects/FQ001_MINGRI_ORDER/PLATFORM_PUBLICATION_LOG.md",
-    "projects/FQ001_MINGRI_ORDER/outline/SERIES_MASTER_OUTLINE.md",
-    "projects/FQ001_MINGRI_ORDER/outline/FRONT_ARC_REBASE_ARCHITECTURE_V1.md",
-    "projects/FQ001_MINGRI_ORDER/outline/ARC_001.md",
-    "projects/FQ001_MINGRI_ORDER/canon/CHARACTERS.json",
-    "projects/FQ001_MINGRI_ORDER/canon/CHARACTER_DRIVES.json",
-    "projects/FQ001_MINGRI_ORDER/canon/THREADS.json",
-    "projects/FQ001_MINGRI_ORDER/canon/FORESHADOW.jsonl",
-    "projects/FQ001_MINGRI_ORDER/canon/TIMELINE.jsonl",
-    "projects/FQ001_MINGRI_ORDER/canon/READER_PROMISES.json",
     "projects/FQ001_MINGRI_ORDER/manuscript/CH0008_FINAL.md",
     "projects/FQ001_MINGRI_ORDER/reviews/CH0008_ACCEPTANCE.md",
 ]
@@ -58,15 +61,8 @@ for rel in CURRENT_REQUIRED:
     need(rel)
 
 RETIRED_ACTIVE_PATHS = [
-    "ENTRYPOINT.md",
-    "PROTOCOL.md",
-    "SKILL.md",
-    "TASK_INDEX.json",
-    "CONTINUITY_ADAPTER.json",
-    "AUTHORITY_STATUS.json",
-    "continuity",
-    "migration",
-    "research/masterworks/INDEX.json",
+    "ENTRYPOINT.md", "PROTOCOL.md", "SKILL.md", "TASK_INDEX.json", "CONTINUITY_ADAPTER.json",
+    "AUTHORITY_STATUS.json", "continuity", "migration", "research/masterworks/INDEX.json",
 ]
 for rel in RETIRED_ACTIVE_PATHS:
     if (ROOT / rel).exists():
@@ -79,11 +75,11 @@ gov = load("config/ARTIFACT_CONTEXT_GOVERNANCE.json")
 m = load("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
 cp = load("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
 study = load("research/masterworks/STUDY_STATE.json")
+cross = load("research/masterworks/CROSS_WORK_LEARNING_STATE.json")
+corpus = load("research/masterworks/CORPUS_MAP.json")
 
-if uaos_manifest.get("controller") != "D1traverser-debug/universal-agent-os@main":
-    problems.append("uaos-manifest-controller")
-if uaos_manifest.get("status") != "UAOS_CONTROL_PLANE_ACTIVE":
-    problems.append("uaos-manifest-status")
+if uaos_manifest.get("controller") != "D1traverser-debug/universal-agent-os@main" or uaos_manifest.get("status") != "UAOS_CONTROL_PLANE_ACTIVE":
+    problems.append("uaos-manifest-controller-or-status")
 if uaos_manifest.get("skill", {}).get("entrypoint") != "UAOS_SKILL.md":
     problems.append("uaos-skill-entry")
 if uaos_adapter.get("task_identity_authority") != "UAOS" or uaos_adapter.get("cross_chat_continuity_authority") != "UAOS":
@@ -92,19 +88,24 @@ if uaos_adapter.get("legacy_controller_compatibility") != "NONE":
     problems.append("uaos-legacy-compatibility")
 if gov.get("controller") != "D1traverser-debug/universal-agent-os@main":
     problems.append("artifact-governance-controller")
+if caps.get("profile_version") != 5:
+    problems.append("profile-version")
 
 cap_ids = {c.get("capability_id") for c in caps.get("capabilities", [])}
-for required_cap in {"project_recovery", "large_corpus_distillation", "draft_and_revision", "review_fanout", "release_and_canon_commit", "learning_promotion"}:
+for required_cap in {
+    "project_recovery", "recover_before_user_escalation", "problem_to_action_closure",
+    "material_deliberation_admission", "large_corpus_distillation", "continual_cross_work_learning",
+    "zero_based_story_reselection", "draft_and_revision", "review_fanout", "release_and_canon_commit",
+    "learning_promotion",
+}:
     if required_cap not in cap_ids:
         problems.append("missing-capability:" + required_cap)
 
 for f in ("task_id", "current_stage", "next_action", "canon_version", "last_final_chapter", "last_final_hash", "next_serial_chapter", "next_serial_status"):
     if m.get(f) != cp.get(f):
         problems.append("checkpoint-drift:" + f)
-if m.get("task_id") != "FQ001_MINGRI_ORDER":
-    problems.append("task-id")
-if m.get("status") != "ACTIVE" or cp.get("status") != "ACTIVE":
-    problems.append("task-not-active")
+if m.get("task_id") != "FQ001_MINGRI_ORDER" or m.get("status") != "ACTIVE" or cp.get("status") != "ACTIVE":
+    problems.append("task-identity-or-status")
 if m.get("controller_authority") != "D1traverser-debug/universal-agent-os@main" or cp.get("controller_authority") != "D1traverser-debug/universal-agent-os@main":
     problems.append("controller-authority")
 if m.get("controller_task_ref") != "state/tasks/FQ001_MINGRI_ORDER.json" or cp.get("controller_task_ref") != "state/tasks/FQ001_MINGRI_ORDER.json":
@@ -112,17 +113,21 @@ if m.get("controller_task_ref") != "state/tasks/FQ001_MINGRI_ORDER.json" or cp.g
 for payload, label in ((m, "manifest"), (cp, "checkpoint")):
     if "continuity_protocol_version" in payload or "universal_lease_authority" in payload:
         problems.append(label + "-legacy-control-field")
-    if payload.get("masterwork_learning", {}).get("registry_ref") is not None:
-        problems.append(label + "-duplicate-learning-registry-ref")
 
-expected_stage = "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING"
-expected_serial_status = "HELD_DURING_MASTERWORK_DISTILLATION_AND_STORY_RESELECTION"
-if m.get("current_stage") != expected_stage:
-    problems.append("study-stage")
-if m.get("next_serial_status") != expected_serial_status:
-    problems.append("next-serial-status")
-if cp.get("production_mode") != "FULL_FRONT_ARC_REBASE":
+expected_stage = "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__CLAIM_CONDITIONED_LEARNING__ZERO_BASED_STORY_RESELECTION_PENDING"
+expected_serial_status = "HELD_DURING_MASTERWORK_DISTILLATION_AND_ZERO_BASED_STORY_RESELECTION"
+if m.get("current_stage") != expected_stage or m.get("next_serial_status") != expected_serial_status:
+    problems.append("learning-stage-or-serial-status")
+if cp.get("production_mode") != "LEARNING_CAMPAIGN__HISTORICAL_PROJECT_FROZEN":
     problems.append("production-mode")
+
+locks = {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}
+if set(m.get("user_locked_business_constraints", [])) != locks or set(cp.get("user_locked_business_constraints", [])) != locks:
+    problems.append("user-lock-scope")
+if m.get("historical_project_identity", {}).get("role") != "HISTORICAL_CANDIDATE_AND_FAILURE_EVIDENCE__NO_INCUMBENT_PRIVILEGE":
+    problems.append("historical-project-incumbent-drift")
+if cp.get("story_reselection", {}).get("historical_fq001_role") != "MAY_COMPETE_AS_ONE_CANDIDATE__NO_INCUMBENT_PRIVILEGE":
+    problems.append("checkpoint-incumbent-drift")
 
 expected_hashes = {
     1: "79f1a1778c4023fe185606f0493d2019938b61f6cc8e5697408453302e0d0043",
@@ -141,20 +146,20 @@ if hashlib.sha256((TASK / "manuscript/CH0008_FINAL.md").read_bytes()).hexdigest(
     problems.append("ch8-hash")
 
 current = study.get("active_work", {})
-if current.get("work_id") != "GUI_CHUI_DENG":
+if current.get("work_id") != "GUI_CHUI_DENG" or current.get("status") != "ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT":
     problems.append("active-masterwork")
-if current.get("status") != "ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT":
-    problems.append("active-masterwork-status")
 if current.get("coverage", {}).get("next_location") != "源第3914行；继续第二十六章《天砖秘道》玉石王座场景":
     problems.append("active-masterwork-next-location")
 if current.get("next_pass") != "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_CH26_FROM_SOURCE_LINE_3914":
     problems.append("active-masterwork-next-pass")
-if m.get("masterwork_learning", {}).get("active_work") != cp.get("masterwork_learning", {}).get("active_work") or m.get("masterwork_learning", {}).get("active_work") != current.get("work_id"):
-    problems.append("masterwork-binding-drift")
-if m.get("masterwork_learning", {}).get("active_work_status") != cp.get("masterwork_learning", {}).get("active_work_status") or m.get("masterwork_learning", {}).get("active_work_status") != current.get("status"):
-    problems.append("masterwork-status-drift")
-if cp.get("masterwork_learning", {}).get("active_work_next_location") != "SOURCE_LINE_3914__JINGJUE_GUCHENG_CH26_CONTINUE":
-    problems.append("checkpoint-masterwork-cursor")
+if current.get("completion_gate_after_fulltext") != "RUN_D8_D11_CLAIM_CONDITIONED_INTERBOOK_LEARNING_CYCLE_BEFORE_QING_YU_NIAN":
+    problems.append("active-masterwork-completion-gate")
+for payload, label in ((m, "manifest"), (cp, "checkpoint")):
+    ml = payload.get("masterwork_learning", {})
+    if ml.get("active_work") != current.get("work_id") or ml.get("active_work_status") != current.get("status"):
+        problems.append(label + "-masterwork-binding-drift")
+    if ml.get("completion_gate") != "RUN_D8_D11_CLAIM_CONDITIONED_INTERBOOK_LEARNING_CYCLE_BEFORE_QING_YU_NIAN":
+        problems.append(label + "-interbook-cycle-gate")
 
 queue = study.get("queue", [])
 active_rows = [w for w in queue if w.get("status") == "ACTIVE"]
@@ -164,10 +169,13 @@ if not any(w.get("work_id") == "QING_YU_NIAN" and w.get("status") == "PENDING" f
     problems.append("qing-yu-nian-not-pending")
 if not any(w.get("work_id") == "NORWEGIAN_WOOD" and w.get("status") == "EXCLUDED_BY_USER" for w in queue):
     problems.append("norwegian-not-excluded")
-completed_queue = {w.get("work_id") for w in queue if w.get("status") == "COMPLETE"}
-completed_state = {w.get("work_id") for w in study.get("completed_works", [])}
-if completed_queue != completed_state:
-    problems.append("completed-work-summary-drift")
+
+if cross.get("story_reselection", {}).get("status") != "BLOCKED_PENDING_FORMAL_CAMPAIGN_SYNTHESIS":
+    problems.append("story-reselection-not-blocked")
+if cross.get("learning_loop", {}).get("dependence_policy") != "NO_FIXED_FAMILY_WEIGHT__DEPENDENCE_IS_CLAIM_CONDITIONED_AND_DIMENSION_SPECIFIC":
+    problems.append("dependency-model-drift")
+if corpus.get("policy", {}).get("evidence_dependence_rule") != "CLAIM_CONDITIONED_AND_DIMENSION_SPECIFIC__NEVER_FIXED_BY_AUTHOR_OR_SERIES_ALONE":
+    problems.append("corpus-dependence-drift")
 
 contract = (TASK / "NEXT_CHAPTER_CONTRACT.md").read_text(encoding="utf-8")
 if "chapter_no: 9" not in contract or "status: SUPERSEDED_BY_FULL_FRONT_ARC_REBASE" not in contract or "Do not write old CH9 next" not in contract:
@@ -176,10 +184,10 @@ if "chapter_no: 9" not in contract or "status: SUPERSEDED_BY_FULL_FRONT_ARC_REBA
 rebase = m.get("rebase", {})
 for key, expected in {
     "authorized_by_user": True,
-    "mode": "CONTROLLED_FULL_FRONT_ARC_REBASE",
-    "execution_status": "SUSPENDED_PENDING_POST_DISTILLATION_STORY_RESELECTION",
+    "mode": "SUSPENDED_HISTORICAL_REBASE_CANDIDATE",
+    "execution_status": "SUSPENDED_PENDING_POST_DISTILLATION_ZERO_BASED_STORY_RESELECTION",
     "old_finals_role": "IMMUTABLE_HISTORICAL_BASELINE",
-    "candidate_promotion": "BLOCKED_UNTIL_POST_DISTILLATION_STORY_RESELECTION",
+    "candidate_promotion": "BLOCKED_UNTIL_POST_DISTILLATION_ZERO_BASED_STORY_RESELECTION",
 }.items():
     if rebase.get(key) != expected:
         problems.append("rebase:" + key)
@@ -187,8 +195,11 @@ for key in cp.get("rebase", {}):
     if cp.get("rebase", {}).get(key) != rebase.get(key):
         problems.append("rebase-checkpoint-drift:" + key)
 
+rulebook = (ROOT / "protocols/ACTIVE_RULEBOOK.md").read_text(encoding="utf-8")
+if "version: 2.5-github" not in rulebook or "old FQ001" not in rulebook and "historical FQ001" not in rulebook:
+    problems.append("rulebook-version-or-historical-boundary")
 mastery = (ROOT / "protocols/NOVEL_MASTERY_MODEL.md").read_text(encoding="utf-8")
-for token in [f"C{i:02d}" for i in range(1, 21)]:
+for token in [f"C{i:02d}" for i in range(1, 22)]:
     if token not in mastery:
         problems.append("mastery-competency-missing:" + token)
 for level in ("L0", "L1", "L2", "L3", "L4"):
@@ -202,11 +213,12 @@ result = {
     "status": "PASS" if not problems else "FAIL",
     "task_id": m.get("task_id"),
     "controller": uaos_manifest.get("controller"),
+    "profile_version": caps.get("profile_version"),
     "stage": m.get("current_stage"),
     "active_masterwork": current.get("work_id"),
-    "active_masterwork_status": current.get("status"),
     "next_source_line": 3914,
-    "retired_active_paths_absent": not any((ROOT / p).exists() for p in RETIRED_ACTIVE_PATHS),
+    "story_reselection": cross.get("story_reselection", {}).get("status"),
+    "historical_project_role": m.get("historical_project_identity", {}).get("role"),
     "failures": problems,
 }
 print(json.dumps(result, ensure_ascii=False, indent=2))

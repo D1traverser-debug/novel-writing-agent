@@ -1,6 +1,6 @@
 ---
 name: novel-writing-agent-uaos
-scope: long-form fiction production, distillation, serialization, audit and recovery
+scope: long-form fiction learning, story selection, planning, production, serialization, audit and recovery
 ---
 
 # Novel Writing Agent — Current UAOS Entry
@@ -8,48 +8,81 @@ scope: long-form fiction production, distillation, serialization, audit and reco
 Controller: `D1traverser-debug/universal-agent-os@main`.
 Domain repository: `D1traverser-debug/novel-writing-agent@main`.
 
-UAOS owns intent, task identity, requirements, cross-chat continuation, common behavior governance, capability orchestration and controller action lineage. This repository owns Canon, project state, research, craft rules, chapter/release artifacts, domain guards and Novel-domain evolution evidence.
+UAOS owns intent, task identity, requirements, cross-chat continuation, common behavior governance, capability orchestration and controller action lineage. This repository owns Novel learning evidence, story-selection evidence, project checkpoint, Plan/Canon boundaries, prose/release evidence, craft rules and domain evolution.
 
 ## Start
 After UAOS resolves the exact task, load progressively:
 1. `.uaos/ADAPTER.json`;
 2. `.uaos/MANIFEST.json`;
 3. `.uaos/CAPABILITIES.json`;
-4. the UAOS task controller state;
-5. the exact project checkpoint and only the Canon/research/rule slices required now.
+4. UAOS task controller state;
+5. the exact project checkpoint;
+6. only the learning/Canon/plan/rule slices required for the current action.
 
-For `FQ001_MINGRI_ORDER`, business checkpoint authority is `projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json`. Current masterwork continuation remains `GUI_CHUI_DENG` source line 3914 after verified sequential coverage lines 77-3913; do not begin `QING_YU_NIAN` before the active work is complete.
+For `FQ001_MINGRI_ORDER`, business checkpoint authority remains `projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json`. The active masterwork is still `GUI_CHUI_DENG`; verified sequential coverage stops at source line 3913 and the only prose-learning resume point is line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》. Do not start `QING_YU_NIAN` until GUI_CHUI_DENG completes and its mandatory D8–D11 claim-conditioned interbook learning cycle passes.
 
-Never reconstruct task state from chat memory, repository search, old task indexes or another controller.
+Do not reconstruct task state from chat memory, broad repository search, retired task indexes or another controller.
 
 ## Business authorities
-- `protocols/ACTIVE_RULEBOOK.md`: production/review rules;
-- `protocols/NOVEL_MASTERY_MODEL.md`: learning/benchmark authority;
+- `protocols/ACTIVE_RULEBOOK.md`: active production/review rules;
+- `protocols/NOVEL_PRODUCT_ARCHITECTURE.md`: learning-to-outcome system architecture;
+- `protocols/NOVEL_MASTERY_MODEL.md`: competency/benchmark authority;
+- `protocols/MASTERWORK_DISTILLATION_PROTOCOL.md`: masterwork learning/transfer protocol;
+- `research/masterworks/STUDY_STATE.json`: exact corpus queue/cursor;
+- `research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json`: multidimensional comparison ontology;
+- `research/masterworks/CROSS_WORK_LEARNING_STATE.json`: campaign comparison/promotion gates;
+- `research/masterworks/MECHANISM_REGISTRY.json`: compact learning index, never Rulebook authority;
 - `config/ARTIFACT_CONTEXT_GOVERNANCE.json`: artifact/context governance;
-- `audits/EVOLUTION_INDEX.json`: canonical discoverable Novel-domain evolution evidence entrypoint;
-- `runtime/owner_behavior_admission.py`: Novel-native recover-before-user-escalation and problem-to-action admission;
-- `projects/<task>/PROJECT_PROFILE.md`: project identity;
-- `projects/<task>/canon/`: factual Canon;
-- current outline/architecture selected by the project;
+- `audits/EVOLUTION_INDEX.json`: canonical domain-evolution entrypoint;
+- `runtime/owner_behavior_admission.py`: recover-before-user-escalation and problem closure;
+- `runtime/deliberation_admission.py`: research/compare/challenge admission for material mutations;
+- `runtime/learning_transfer_admission.py`: closed-context reconstruction, claim-conditioned comparison, transfer and promotion admission;
+- `runtime/story_reselection_admission.py`: post-campaign zero-based story-selection and pre-draft admission;
+- `runtime/dynamic_outline.py`: evidence-driven hierarchical replan contract;
+- `runtime/story_dependency_graph.py`: Plan/Canon dependency and invalidation contract;
+- `runtime/narrative_evaluation.py`: calibrated uncertainty-bounded vector/Pareto quality evaluation;
+- `projects/<task>/canon/`: accepted factual Canon;
 - `projects/<task>/checkpoints/CURRENT_CHECKPOINT.json`: fine-grained business checkpoint.
 
-Plans and research are not Canon. Learning evidence is not automatically a production rule.
+## Hard separations
+`LEARNING_EVIDENCE != ACTIVE_RULE`
 
-## Common behavior
-Novel adopts UAOS Common Behavior Assurance 1.2 owner-natively. A plausibly recoverable dependency must be investigated from currently lawful authority/state/artifacts/context before it is externalized to the user. If a bounded provisional path is safe, continue with explicit uncertainty instead of blocking by default. A detected repairable problem must be repaired now or end with a concrete blocker or evidence-backed no-change; recommendation-only is not valid closure when the current Agent has authority and capability to repair it.
+`STORY_CANDIDATE != ACTIVE_PROJECT_IDENTITY`
 
-The executable admission and trajectory evidence live in Novel-owned runtime/tests. This does not claim physical interception of every host-language response or live literary outcome verification.
+`PLAN != CANON`
+
+`CANON != PROSE_SURFACE`
+
+`MODEL_SELF_EVALUATION != LIVE_READER_OR_PLATFORM_OUTCOME`
+
+`ROLE_SEPARATION != PROVIDER_ATTESTED_INDEPENDENCE`
+
+Any current execution that silently collapses these layers is a system defect.
+
+## Common behavior / material decision discipline
+Novel adopts UAOS Common Behavior Assurance 1.2 owner-natively. Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
+
+For a material learning/system/story decision, do not execute the first plausible idea. Build an evidence-bound decision receipt: current authority, internal evidence, external research when material (or explicit not-material reason), >=2 alternatives, counterexample, challenged assumption, rejection reasoning, risks and rollback/recovery. Then mutate.
+
+## Masterwork learning
+Sequential full-text reading remains one work at a time. Cross-work comparison occurs only after a work completes, but no longer waits until the entire corpus is finished.
+
+Evidence dependence is claim-conditioned and dimension-specific. Same author, series, genre, POV, market or period can be a confound or a useful controlled contrast depending on the claim. Never collapse same-author/same-series works into a fixed evidence vote.
+
+Current campaign keeps interim mechanisms at REFERENCE until retroactive dependency-aware comparison verifies them; ACTIVE_RULE promotion remains blocked by the campaign/formal-synthesis gate.
+
+## Post-study story selection
+After all non-excluded works complete and formal synthesis passes, refresh current Fanqie evidence and run a zero-based story tournament. Historical FQ001 may compete only as one candidate/evidence source and receives no incumbent privilege. Candidate diversity must be proved on relevant story/product axes; broad genre/engine labels are not quotas. Only signing mode and serialization mode remain user-locked.
+
+No new replacement prose before reselection + pre-draft architecture admission.
 
 ## Production
-Use minimum sufficient context. Normal flow:
-`RECOVER -> CHECK_MODE -> FREEZE_CONTEXT -> ARCHITECT+CANON -> DRAFT -> REVIEW_FANOUT -> ISSUE_MERGE -> REVISE -> RE-AUDIT -> FINAL_PROOFREAD -> ARTIFACT_QA -> DETERMINISTIC_GUARD -> CANON_COMMIT -> RELEASE -> CHECKPOINT`.
+After a winner exists, use minimum sufficient context:
+`RECOVER -> PLAN_SLICE/FREEZE -> CONTEXT_PACK -> DRAFT -> REVIEW_FANOUT -> ISSUE_MERGE -> REVISE -> RE-AUDIT -> FINAL_PROOFREAD -> ARTIFACT_QA -> RELEASE_EVIDENCE_GUARD -> CANON_RECONCILIATION/COMMIT -> RELEASE -> CHECKPOINT`.
 
-Role separation inside one chat is not provider-attested independence. A changed prose hash invalidates body-dependent review evidence.
-
-## Distillation and learning
-Large-work distillation preserves source identity, exact coverage and next cursor. Produce mechanism-level reusable knowledge rather than copied wording/distinctive plot. Single-work findings remain scoped candidates until broader evidence supports promotion.
+A prose hash change invalidates body-dependent review evidence. Research cannot directly promote Canon. Plan changes require impact-scoped replanning. `NEAR + FLEXIBLE` material may improve before acceptance; only accepted/`FROZEN` structure requires hard-defect/live-signal evidence to reopen. Numeric candidate comparison requires shared rubric/calibration scope and explicit uncertainty; otherwise use qualitative/pairwise tradeoff evidence.
 
 ## Completion
-Completion requires UAOS task/action satisfaction plus exact project checkpoint/Canon/release evidence. Historical rejected/superseded artifacts may remain immutable evidence but never active execution inputs.
+System completion is not a literary-success claim. Internal tests may verify authority, admissions, state/cursor, dependency invalidation, evaluation mechanics and release evidence. Commercial/literary outcome stays open until actual post-reselection prose receives real reader/platform evidence.
 
-Do not create a parallel controller, task registry, lease, resume epoch or cross-chat continuation protocol in this repository.
+Do not create a parallel controller, local task registry, lease, resume epoch or cross-chat continuation protocol in this repository.

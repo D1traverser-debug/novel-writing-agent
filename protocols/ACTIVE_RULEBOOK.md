@@ -1,344 +1,253 @@
 # Novel Writing Agent — Active Rulebook
 
-version: 2.4-github
+version: 2.5-github
 status: ACTIVE
 scope: NOVEL
-source: distilled from NOVEL_OS 1.9.0 active protocols plus accepted GitHub-owner evolution; legacy protocol/research snapshots are archived in the Google Drive artifact vault as non-authoritative historical evidence.
+architecture_ref: protocols/NOVEL_PRODUCT_ARCHITECTURE.md
+mastery_ref: protocols/NOVEL_MASTERY_MODEL.md
+masterwork_ref: protocols/MASTERWORK_DISTILLATION_PROTOCOL.md
+business_authority: D1traverser-debug/novel-writing-agent@main
+parent_authority: D1traverser-debug/universal-agent-os@main
 
-## 1. Non-negotiable authority
-- Business authority: `D1traverser-debug/novel-writing-agent@main`.
-- Parent control-plane authority: `D1traverser-debug/universal-agent-os@main`.
-- UAOS owns cross-domain intent, task identity, routing, cross-chat continuation, common behavior governance and controller action lineage. This repository owns Novel checkpoint, Canon, research, release evidence, craft rules and domain evolution.
+## 1. Authority and non-negotiable boundaries
+
+- UAOS owns cross-domain intent, task identity, routing, cross-chat continuation and common behavior governance.
+- This repository owns Novel learning evidence, project checkpoints, story-selection evidence, Plan/Canon/prose state, release evidence and domain evolution.
 - Chat/model memory is never Canon or executable state.
-- Before any material Novel write, re-read the UAOS task controller state and the exact current Novel project checkpoint; reconcile any cursor/stage drift before continuing. No Novel-local lease, resume epoch or parallel controller is active.
-- External publication/delete/payment/sign/compliance declarations remain user-controlled. Never infer publication/withdrawal/replacement.
-- User is not QA manager. QA may not depend on user prompting.
-- Google Drive is derived-artifact/history vault only; retired Notion/Library/legacy Drive material cannot regain execution authority by presence.
-- `universal-continuity-agent`, `active_lease`, `resume_epoch` and retired Novel controller surfaces are historical only and must never be required by current execution.
+- Before any material Novel action, reread the exact current Novel checkpoint and relevant authority slices.
+- External publish/delete/payment/sign/compliance actions remain user-controlled unless an explicit connected action is authorized.
+- Google Drive fulltext/ledgers are source/history evidence; GitHub Novel authority owns executable state.
+- `universal-continuity-agent`, local leases and resume epochs are retired.
 
-### 1.1 Common behavior admission
-Novel adopts UAOS Common Behavior Assurance 1.2 with Novel-native execution evidence:
-- before externalizing a plausibly recoverable dependency to the user, inspect current authority/checkpoint/Canon/artifacts/context and relevant external evidence when it can materially reduce uncertainty;
-- if safe progress remains possible, continue with a bounded provisional candidate plus explicit unknowns/validation conditions rather than manufacturing certainty or blocking by default;
-- user escalation remains mandatory when the missing item is a user fact, approval, authorization, preference or safety/permission-sensitive choice that cannot be safely inferred;
-- a detected repairable problem cannot end as recommendation-only when a current legal repair path exists and no user choice is required; valid terminals are repair executed, concrete blocker, or evidence-backed no-change;
-- owner-native executable admission lives in `runtime/owner_behavior_admission.py`; current domain evolution evidence is discoverable from `audits/EVOLUTION_INDEX.json`.
+Hard separations:
+`LEARNING_EVIDENCE != ACTIVE_RULE`
+`STORY_CANDIDATE != ACTIVE_PROJECT_IDENTITY`
+`PLAN != CANON`
+`CANON != PROSE_SURFACE`
+`MODEL_SELF_EVALUATION != LIVE_OUTCOME`
+`ROLE_SEPARATION != ATTESTED_EXECUTOR_INDEPENDENCE`
 
-## 2. Production organization
-Use minimum sufficient specialization, not “one micro-check = one permanent agent”.
-Core roles:
-- ORCHESTRATOR: state recovery, context freeze, task decomposition, issue merge, conflict arbitration, final gate collection. Must not self-approve its own prose.
-- ARCHITECT: chapter/unit function, scene engine, promises, escalation, alternatives.
-- CANON_LIBRARIAN: facts, timeline, characters, threads, foreshadow, promises.
-- WRITER: writes only from frozen Context Pack + contract/architecture slice; cannot edit Canon.
-- CONTINUITY_AUDITOR: facts/contract only.
-- FRESH_READER: reader-visible text only; finds confusion/drop points.
-- RETENTION_AUDITOR: promises, attachment, tension, follow-read, hook, cross-chapter repetition.
-- EDITORIAL: scene life, dialogue, voice, prose, pacing, AI/template roughness.
-- ADVERSARIAL_RELEASE: default REJECT until no BLOCKER/HIGH.
-- QUALITY_DISCOVERY: searches for missing quality dimensions/unknown unknowns.
-- REFINER: fixes registered issues; any text hash change invalidates body-dependent audits.
-- COPYEDITOR/PROOFREADER: final typo/grammar/punctuation/numerical/read-aloud pass after literary changes stop.
-- ARTIFACT_RELEASE_ENGINEER: same-source DOCX/render/hash/guard/recovery artifact.
-- CANON_COMMITTER: commits only after release gates pass.
-Risk-triggered specialists: domain reality, dialogue/subtext, spatial staging, suspense fairness, longform, world rules, theme, foreshadow/payoff, reader memory, transition bridge, opposition/counter-agency.
+## 2. Common behavior and material deliberation
 
-Independent first judgments mean input-level separation from peer conclusions. Normal same-session role separation is `CHAT_BRIDGED` and must be labeled `ROLE_SEPARATED_NOT_ATTESTED_ISOLATED`; do not claim distinct independent executor identity unless an external/isolated trace proves it. No open-ended group debate and no majority vote overriding hard facts. Two+ role-separated reviewers finding the same defect escalates severity but does not magically increase assurance level.
+Novel adopts UAOS Common Behavior Assurance 1.2.
 
-### 2.1 Execution evidence contract（CH9+ / replacement promotion）
-A release pipeline is not proven by a checklist saying every role PASS. Normal serialization from CH9 onward, and any rebase replacement candidate that is promoted as new authoritative prose, must leave applicable execution evidence:
-- snapshot the chapter contract to `projects/<task>/contracts/CHxxxx_CONTRACT.md` before execution/promotion review;
-- freeze `projects/<task>/execution/CHxxxx_CONTEXT_PACK.json` with owner commit and exact input refs/hashes;
-- persist `projects/<task>/reviews/CHxxxx_EXECUTION_EVIDENCE.json` with role receipts, source hash, peer-visibility and issue ledger;
-- bind Acceptance to the Context Pack and execution-evidence hashes;
-- run `runtime/release_evidence_guard.py` before `FINAL_ACCEPTED / PUBLISH_READY` where the current evidence contract applies.
+Before asking the user for a plausibly recoverable dependency, inspect current authority/checkpoint/Canon/artifacts/context and materially useful external evidence. Continue with bounded uncertainty when safe.
 
-Historical CH8 is a pre-v1 legacy aggregate acceptance. Preserve its accepted business state as history; never replay its old Acceptance as proof for a rebase replacement candidate.
+A detected repairable problem cannot legally end as recommendation-only if the current Agent has authority/capability to fix it. Valid closure is repair executed, concrete blocker, or evidence-backed no-change.
 
-## 3. Revision hierarchy
-Fix in this order:
-1. concept/unit/chapter function;
-2. structure/scene engine;
-3. character/relationship/choice;
-4. scene rendering and reality friction;
-5. prose rhythm/voice;
-6. sentence/word;
-7. copyedit.
-Default maximum two full evaluator→optimizer rounds at a stable structural level. If HIGH/BLOCKER remains, escalate upward to architecture/specialist diagnosis instead of infinite polishing.
+For material mutations—learning ontology, evidence rules, project identity, story selection, Rulebook, Canon schema, large outline replan—first use `runtime/deliberation_admission.py`: authority + internal evidence + external evidence/not-material reason + alternatives + counterexample + challenged assumption + risks/recovery. Do not execute the first plausible idea.
 
-## 4. Project identity regression
-FQ001 must remain:
-- 都市脑洞 × 悬疑单元剧 × 城市群像;
-- realistic modern city occupation/institution friction;
-- supernatural opens one narrow aperture;
-- third-person limited Chen Du;
-- Chen Du is route/city/logistics smart, not omniscient detective;
-- restrained suspense with human texture, not report/memo narration;
-- future information is useful but incomplete; modifying future migrates risk;
-- Mingrida does not provide the “correct answer” or convenient new powers;
-- the durable human axis is small-person choice/responsibility, not a mandatory wealth/status "逆袭" promise.
+## 3. Masterwork learning campaign
 
-Reject drift toward pure detective fiction, rule-horror, mindless system power fantasy, universal conspiracy explanation, omniscient protagonist, or procedural report.
+Sequential fulltext study stays one book at a time. Current queue/cursor lives in `research/masterworks/STUDY_STATE.json`.
 
-## 5. Context budget / drift control
-Writer receives:
-- ACTIVE project identity/profile;
-- frozen current chapter contract or current rebase architecture slice;
-- minimum relevant Canon;
-- only recent/old FINAL material explicitly selected as relevant input;
-- at most 2–4 relevant specialist rule slices.
-Do not load all research/history into Writer.
-New learning enters REFERENCE/EXPERIMENTAL/LEARNING_EVIDENCE quarantine first. Promote only if repeated defects, a hard failure, new story phase, platform change, or evidence shows meaningful gain. Context Pack freezes when a chapter/candidate slice starts; new craft tips do not rewrite it unless they reveal a hard fact/compliance/blocker issue.
-Profile structural upgrade: at most every 10 chapters absent a hard failure. A recorded signing rejection or equivalent hard outcome can reopen that cadence through a bounded evolution/rebase pass.
+After each completed work:
+1. closed-context reconstruction;
+2. choose claim + narrative dimensions;
+3. choose information-maximizing comparison designs;
+4. assess author/series/genre/POV/market/period/translation/etc only as claim-specific shared factors;
+5. compare support/contradiction/boundary and alternative explanations;
+6. update observation axes;
+7. transfer to new, non-copied cases;
+8. adversarial review;
+9. only then advance queue.
 
-The frozen Context Pack must be durable when the evidence contract applies; chat-only recollection is not evidence of what the Writer or reviewers actually received.
+Same-author or same-series works are never automatically merged, discounted or counted as independent. They may be high-value controlled contrasts.
 
-## 6. Scene engine
-A major scene must have:
-- concrete goal;
-- conflict/friction/uncertainty;
-- consequential choice/turn;
-- at least one memorable nonfunctional person/object/body detail.
-Use Goal→Conflict→Disaster and Reaction→Dilemma→Decision as diagnostic models, not templates.
-If a scene is only “ask → exact answer”, restructure.
-Professional information survives only if it changes choice, risk, character, foreshadow/payoff, fair-play understanding, or real-world friction.
-Temporary characters have local priorities: workload, liability, convenience, fear, money, fatigue, misunderstanding, curiosity.
+Current campaign bootstrap mechanisms remain REFERENCE until dependency-aware review. ACTIVE_RULE promotion waits for formal campaign synthesis unless a separate hard external event justifies an admitted exception.
 
-## 7. Voice / psychic distance
-Narration is not Chen Du’s spreadsheet.
-His rationality is shown primarily through:
-1. choices;
-2. consequences;
-3. missed/misjudged factors;
-4. only then concise conclusions.
-Psychic distance may move closer under pressure.
-Perception should be character-specific, not generic camera prose.
-Short sentences are impact tools, not default formatting.
-Avoid repeated formulae such as “不是X，是Y”, “没有X，只Y”, symmetric triads, checklist-thinking and conclusion slogans.
-Do not intentionally add typos or awkwardness to appear human.
+## 4. Current FQ001 phase boundary
 
-## 8. Dialogue / relationship
-Dialogue has text + subtext + context. Participants pursue different goals and may refuse, misunderstand, withhold, redirect, or care about something else.
-Avoid interview/Q&A pipelines.
+Historical project: `FQ001_MINGRI_ORDER / 《凌晨零点，我接到明天的订单》`.
+
+During the active masterwork campaign:
+- CH1–CH8 remain immutable historical evidence;
+- old CH9 is non-executable;
+- historical Project Profile/Story Bible/Canon/outline are diagnostic and candidate evidence, not future mandatory identity;
+- no replacement prose is written;
+- GUI_CHUI_DENG remains the only active study work, paused after source line 3913; resume line 3914;
+- QING_YU_NIAN remains pending until GUI_CHUI_DENG completes and its D8–D11 interbook cycle passes.
+
+User-locked constraints: `SIGNING_MODE_IMMUTABLE`, `SERIALIZATION_MODE_IMMUTABLE`.
+
+Everything else may be rebuilt after learning: title, premise, genre mix, protagonist, POV, world, character network, relationship structure, story engine, theme, long-form architecture and old FQ001 identity.
+
+## 5. Zero-based story reselection
+
+After all non-excluded works complete and formal synthesis passes:
+1. refresh current Fanqie first-party rules/courses/category evidence;
+2. derive transferable mechanisms + failure boundaries, not surface trope mixtures;
+3. generate >=3 story-product candidates and prove every pair is materially distinct on >=2 relevant axes; do not manufacture diversity through arbitrary genre/engine quotas;
+4. historical FQ001 may compete but receives no incumbent privilege;
+5. vector evaluation + pairwise/Pareto comparison;
+6. blind-reader + adversarial evidence;
+7. long-horizon 100k/300k/800k structural stress;
+8. select winner + backup;
+9. establish a new Active Project Identity only after selection receipt passes;
+10. no new prose before pre-draft architecture admission.
+
+Runtime: `runtime/story_reselection_admission.py` + `runtime/narrative_evaluation.py`.
+
+## 6. Dynamic architecture
+
+Do not write a rigid million-character chapter list.
+
+Use `SERIES -> VOLUME -> ARC -> PACKET -> CHAPTER -> SCENE` with variable resolution:
+- far horizon: flexible hypotheses tied to intended ending;
+- mid horizon: bounded architecture and obligations;
+- near horizon: higher resolution; freeze only when accepted/approaching execution.
+
+A replan requires trigger evidence, >=2 alternatives, selected/rejected reasoning, complete downstream invalidation and review. A `FROZEN` structure requires hard defect/live signal to reopen; `NEAR + FLEXIBLE` structure may still improve before acceptance. Outline replan cannot silently mutate Canon.
+
+Runtime: `runtime/dynamic_outline.py`.
+
+## 7. Plan / Canon / dependency integrity
+
+Existing `projects/<task>/canon/` files remain accepted factual authority for the current active project state.
+
+`runtime/story_dependency_graph.py` coordinates dependencies among premise, events, character/relationship state, world rules, promises, foreshadow, threads and outline nodes.
+
+Research/Plan does not become Canon because it is plausible. Candidate/Plan → Canon requires accepted prose + acceptance evidence + Canon reconciliation. Upstream changes invalidate all semantically dependent future Plan/Context evidence before reuse; edge direction is defined by relation semantics, not by one generic graph orientation.
+
+## 8. Production organization
+
+Minimum sufficient specialization:
+- ORCHESTRATOR: recovery, freeze, decomposition, issue merge, final gate; no self-approval;
+- ARCHITECT: plan slice/scene/packet architecture;
+- CANON_LIBRARIAN: factual truth and dependency impact;
+- WRITER: prose from frozen Context Pack; cannot edit Canon;
+- CONTINUITY_AUDITOR;
+- FRESH_READER;
+- RETENTION_AUDITOR;
+- EDITORIAL;
+- ADVERSARIAL_RELEASE: default reject until no BLOCKER/HIGH;
+- QUALITY_DISCOVERY: unknown-unknown search;
+- REFINER;
+- COPYEDITOR/PROOFREADER;
+- ARTIFACT_RELEASE_ENGINEER;
+- CANON_COMMITTER.
+
+Risk-triggered specialists: domain reality, dialogue/subtext, space/action, suspense fairness, longform, world rules, theme, foreshadow/payoff, reader memory, transition, opposition/counter-agency.
+
+Same-session roles are `CHAT_BRIDGED` unless isolated trace proves otherwise.
+
+## 9. Execution evidence contract
+
+For CH9+ or any replacement promotion:
+- snapshot chapter/packet contract;
+- freeze Context Pack with authority commit + exact refs/hashes;
+- persist role execution evidence with source hash and issue ledger;
+- bind Acceptance to Context Pack/evidence hashes;
+- run `runtime/release_evidence_guard.py` before FINAL_ACCEPTED/PUBLISH_READY;
+- any body hash change invalidates body-dependent review evidence.
+
+Historical CH8 remains pre-v1 legacy evidence and cannot prove a replacement candidate.
+
+## 10. Narrative evaluation
+
+Do not authorize story selection/release with one average score.
+
+`runtime/narrative_evaluation.py` requires evidence-bound dimensions including acquisition, reader contract, attachment, relationships, serial sustainability, engine diversity, narrative orchestration, continuity, development/richness, mystery/revelation, emotional range, voice/prose, cognitive load, originality, platform fit and production complexity/risk.
+
+Hard gates override averages. Numeric Pareto dominance is legal only when the compared values share the same dimension rubric and calibration scope; uncertainty is explicit and conservative. Incommensurable evidence remains a qualitative/pairwise tradeoff until re-benchmarked. Model self-evaluation cannot be a hard gate or claim fake precision.
+
+Internal vector scores are evidence, not live literary outcome.
+
+## 11. Scene / chapter craft
+
+Major scenes require goal, friction/uncertainty, consequential turn/choice and at least one memorable nonfunctional person/object/body detail.
+
+Every retained scene changes at least one: goal, knowledge, relationship, risk, resource, location, world model, moral commitment.
+
+Avoid default `ask -> exact answer`, report/memo narration, mechanical countdowns, omniscient protagonist, exposition-terminal NPCs and repeated hook shapes.
+
+POV/focalization, psychic distance, sensory choice and sentence rhythm serve the current scene. Do not copy masterwork author voice or manufacture typos to look human.
+
+## 12. Character / relationship / opposition
+
+Characters need independent goals, information, costs, competencies, blind spots and actions. Supporting characters must still want/do something if protagonist disappears.
+
 Track relationship deltas: trust, debt, power, obligation, intimacy, suspicion.
-Supporting characters need independent agendas and actions they would take even without protagonist.
-A recurring relationship engine should not be postponed behind repeated mechanism verification when the project evidence shows attachment/character setup is lagging.
 
-## 9. Opposition / counter-agency
-Opposition includes people, institutions, stakeholders, system constraints, logistics, evidence uncertainty and protagonist habits.
-For each meaningful opposing force know:
-- current goal;
-- believed truth;
-- missing information;
-- capabilities;
-- unaffordable costs;
-- trigger for tactic change;
-- what it would do without protagonist.
-No omniscient antagonists without information paths. No protagonist wins merely because everyone else becomes careless/stupid. Mingrida is not automatically antagonist.
+Opposition may be people, institutions, stakeholders, environment, system constraints, uncertainty or protagonist habits; no omniscient antagonist without information path.
 
-## 10. Suspense / information architecture
-Use a mix of:
-- curiosity: what happened/how does it work;
-- suspense: what bad outcome may happen next;
-- surprise: new fact forces reinterpretation;
-- dramatic irony where useful.
-Maintain nested promises across scene/chapter/unit/volume.
-Fair-play: important reversals should be surprising now but explainable in retrospect.
-Rule reveal progression: OBSERVED → HYPOTHESIS → REPEATED → OPERATIONAL → CONFIRMED → BROKEN/REFRAMED.
-Never write hypothesis as confirmed.
-A rule reveal should clarify an old contradiction and create new consequence/choice/limitation/cost.
-Avoid mystery debris.
+## 13. Mystery / world / theme
 
-## 11. Longform escalation
-Track Scene / Chapter / Unit (3–10 chapters) / Volume / Series.
-Rotate escalation dimensions:
-information depth, relationship/personal cost, moral ambiguity, time pressure, public scale, rule complexity, opponent sophistication, irreversible consequence.
-Adjacent units cannot rely on the same primary engine + dominant cost + reveal shape.
-Reject endless “new order → investigate → solve → new order”.
-Every 10 chapters: longform/world-rule/foreshadow review.
-Every 50 chapters: full Canon reconciliation.
+Mystery manages curiosity, suspense, surprise and source credibility. Important reveals should be surprising now but reconstructable later. Maintain payoff debt; do not replace payoff with endless new unknowns.
 
-## 12. Theme / moral argument
-Theme is a pressure system of competing legitimate values, not speeches.
-FQ001 territory:
-- knowing future vs controlling future;
-- whether information creates responsibility;
-- who has authority to decide another person’s future;
-- prediction vs consent;
-- harm reduction vs agency.
-Recurring characters should embody workable competing answers. No strawman/cost-free morality.
+World rules earn page cost when they change action, risk, resources, institutions or relationships.
 
-## 13. Foreshadow / payoff
-Important elements follow Seed → Echo/Transform → Payoff/Reframe.
-Track who knows, visibility, payoff horizon, echoes, payoff type, staleness risk.
-Do not accumulate mystery debris. Payoffs should be retrospectively legible.
+Theme is a pressure system of competing legitimate values expressed through costly choices, not moral summary.
 
-## 14. Emotion / tension
-Track tension and emotion separately: entering emotion → disturbance → escalation → peak/turn → aftershock → exit appetite.
-Avoid same emotional color across five chapters.
-Breather scenes must still accomplish at least two of relationship/consequence/ordinary-life/seed conflict/change decision/world texture.
-Emotion through body, behavior, relationship, choice—not explanatory labels.
+## 14. Narrative orchestration / pacing / memory
 
-## 15. Reader memory / cognitive load
-Per 3–5 chapter window track new names, locations, mechanism terms, high-priority promises, distinctive objects and exact times/numbers.
-Classify details:
-- MUST_REMEMBER
-- RECOGNIZE_ON_RETURN
-- ATMOSPHERE_ONLY
-After absence, reactivate through action/sensory/relationship/consequence, not naked recap.
-Avoid name collisions, timestamp homework and simultaneous spikes in multiple categories.
+Track scene/chapter/packet/arc/volume/series rhythm. Rotate local engines while preserving larger promises and identity.
 
-## 16. Spatial staging / action clarity
-Render actionable geography only:
-- POV position;
-- blockers/visibility;
-- goal/threat;
-- 1–2 stable anchors.
-Update position through action/consequence, not coordinates.
-Physical action order: intent/perception → movement → contact/change → consequence → reaction.
-Exact geography belongs in Canon when it does not affect reader action comprehension.
-No teleporting or silent POV reorientation.
+Control information, relationship, emotion, ordinary life, action, mystery, world expansion, payoff and rest as separate channels. Causal rigor does not substitute for narrative orchestration.
 
-## 17. Transition / bridge
-A transition must do at least two:
-- aftermath/process cost/emotional residue/relationship change;
-- reorientation/new goal/rule/place/phase;
-- attachment/ordinary life/humor/intimacy/obligation/social texture;
-- load future conflict/resource/misunderstanding/choice.
-It ends with a changed state: decision, relationship delta, resource, commitment, belief, concrete next action.
-Compress pure transport/info; do not skip consequences.
+Budget names, locations, terms, promises, exact times/numbers and distinctive objects. Reactivate memory through action/sensory/relationship/consequence rather than recap lectures.
 
-## 18. Domain reality
-Precision increases truth burden **and page-cost burden**.
-Before using professional/institutional mechanisms ask:
-- Can this character realistically know/access it?
-- Would staff disclose it?
-- What privacy/liability/workload friction exists?
-- Does the mechanism actually work this way?
-- Does the exact precision change choice, consequence, fair-play reasoning or action clarity enough to earn its page space?
-Real-world professional mechanism changing plot outcome is a hard gate.
-Do not give ordinary protagonist confidential backends/medical/police/vehicle data without legitimate access.
+## 15. Space / reality / research
 
-## 19. Chapter title / first screen / hook
-Every release explicitly audits:
-- title click value without fake spoilers;
-- first-screen actionable problem/novelty;
-- chapter promise;
-- end hook that changes story state.
-Do not end with abstract moral/theme summary.
-Avoid consecutive chapters using the same hook shape.
+Actionable geography uses POV position, blockers/visibility, goal/threat and stable anchors. Environment should affect route, resource, choice, risk, emotion or clue.
 
-Project-specific front-arc architecture may set an earlier payoff target after evidence-backed rebase. Such targets are hypotheses for that project, not universal "golden-three" formulas.
+Professional/institutional precision has truth burden and page-cost burden. Verify access/liability/workload/privacy where plot depends on it; do not give ordinary protagonists convenient protected data.
 
-## 20. Chapter length
-Use actual Fanqie backend count when available; otherwise authoritative FINAL non-whitespace character count.
-Regular target roughly 2400–3000; major payoff/climax 2600–3300, but story need outranks arbitrary quota.
-Compare against recent four chapters:
-- >30% deviation → mandatory special review;
-- >45% deviation → default release block unless structurally justified.
-Never bloat to chase update incentives.
-Every five chapters inspect length × read-through/follow-read when data exists.
+## 16. Revision hierarchy
 
-During a structural front-arc rebase, do not preserve old chapter boundaries/lengths merely to satisfy this historical baseline. Re-establish the length baseline after the replacement packet's actual chapter boundaries stabilize.
+Fix in order:
+1. product/premise;
+2. series/volume/arc/packet architecture;
+3. character/relationship/opposition;
+4. scene engine;
+5. rendering/POV/emotion/dialogue/environment;
+6. prose rhythm/voice;
+7. sentence/copyedit.
 
-## 21. Beta reader panel
-Fixed personas:
-- target male suspense/brain-hole reader;
-- casual mobile reader;
-- mystery fair-play reader;
-- character-first reader;
-- skim reader.
-If 2+ role-separated personas identify the same defect, escalate severity. If target + casual both DROP, default HIGH. Persona simulation remains `CHAT_BRIDGED` unless a distinct external execution identity proves otherwise.
+Do not line-edit a structural failure. At a stable structural level, default max two evaluator→optimizer rounds before escalating diagnosis.
 
-## 22. Final proofread hard gate
-After literary edits stop, run:
-A. Mechanical pass: typos, missing/extra/repeated characters, quotation/bracket/punctuation, times, numbers, plates, names, measure-word order.
-B. Semantic copyedit: grammar, collocation, reference ambiguity, logic, unnatural spoken phrasing.
-C. Read-aloud pass: awkward rhythm, repetitions, unnatural pauses.
-D. deterministic proofread guard.
-Any body change invalidates old hash-bound audits. Re-run required gates on new hash.
+## 17. Fanqie and live outcome
 
-## 23. Autonomous release checklist
-Before saying “可以传/可以发布”, ORCHESTRATOR must verify on the same FINAL hash:
-1. contract/architecture;
-2. scene internal QA;
-3. continuity;
-4. Fresh Reader Blind;
-5. Reader Retention;
-6. Editorial;
-7. Adversarial Release = RELEASE;
-8. title;
-9. first screen;
-10. emotion/attachment/theme embodiment;
-11. prose texture/template scan;
-12. cross-chapter engine/repetition;
-13. length variance;
-14. Quality Discovery;
-15. current platform risk;
-16. Domain Reality when applicable;
-17. Project Identity Regression;
-18. Final Proofread;
-19. deterministic guards;
-20. applicable release evidence guard + hash-bound role receipts;
-21. same-source DOCX;
-22. render every page visually;
-23. text parity.
-BLOCKER=0 and HIGH=0. Numerical average scores never override a hard gate. Aggregate PASS prose cannot substitute for the evidence contract.
+A signing attempt is high-value external evidence, not a milestone to consume automatically.
 
-For a multi-chapter replacement packet, each chapter's local gate is necessary but not sufficient; the whole packet also needs cross-chapter engine, promise/payoff, attachment, continuity and signing-readiness PASS before promotion.
+Before application, refresh official current thresholds/guidance and audit opening, pacing, character setup, immersion, mainline and signing packet. A generic rejection proves the submission did not pass the quality evaluation; it does not prove AI detection, plagiarism, safety or a single editor-side cause.
 
-If user finds a responsibility defect only after “可以发布”, immediately revoke release, mark REMINDER_DEPENDENCY_INCIDENT, fix, invalidate stale audits, diagnose gate miss, upgrade guard/reviewer/rubric, and only re-release after full applicable gates pass.
+Replacing already published chapters remains user-controlled.
 
-## 24. Data / evidence hierarchy
-1. actual reader/platform data;
-2. current Fanqie official rules/courses/governance;
-3. reproducible craft/editorial methods;
-4. authoritative domain/public research;
-5. blind readers;
-6. community heuristics;
-7. model self-evaluation.
-Research does not count as evolution unless it changes a rule/process/benchmark/reviewer/script/data field and passes the relevant regression/evidence gate.
+## 18. Release gate
 
-Raw external learning is `LEARNING_EVIDENCE`, not direct execution authority. Distinguish platform rule, reusable principle, heuristic and anecdote; do not hard-code brittle numerical advice without stable authority and scope fit.
+Before “可以发布/上传”, same FINAL hash must pass applicable:
+- contract/plan/Canon checks;
+- continuity;
+- Fresh Reader;
+- retention;
+- editorial;
+- adversarial release;
+- title/first-screen/end appetite;
+- emotion/attachment;
+- prose/template scan;
+- cross-chapter engine/repetition;
+- length/page-cost where applicable;
+- Quality Discovery;
+- current platform risk;
+- domain reality;
+- project identity of the selected winner;
+- final proofread;
+- deterministic guards;
+- release evidence guard;
+- same-source artifact/render/text parity;
+- Canon reconciliation.
 
-### 24.1 Fanqie signing-readiness
-A signing attempt is a high-value external evaluation event, not a word-count milestone to consume automatically.
+BLOCKER=0 and HIGH=0. Numerical averages cannot override a hard gate.
 
-Before each application:
-- refresh current official Fanqie signing thresholds and evaluation guidance;
-- run a signing-readiness audit on at least opening, pacing, character setup, immersion and mainline;
-- treat real platform rejection as stronger evidence than model self-score;
-- never infer AI detection, safety failure, plagiarism or another hidden reason from a generic quality rejection unless the platform explicitly says so;
-- after a rejection, do not simply continue unchanged to the next threshold; first diagnose the visible front arc and create a bounded repair/evolution plan;
-- a previously frozen baseline may be reopened when the rejection is a genuine external hard-quality signal, but changes must remain traceable and dependency-audited;
-- replacing already-published platform chapters remains user-controlled even when internal candidate revisions are prepared;
-- the next signing attempt is blocked until its project-specific readiness gate passes.
+## 19. Evolution / checkpoint
 
-### 24.2 Full-unit rebase / owner evolution
-A front-arc/full-unit rebase is allowed only when a real defect operates above local prose/chapter level and the impact boundary supports it.
+Checkpoint every material stage/next-action/constraint/artifact/blocker/authority change, every promotion and every external platform result.
 
-Workflow:
-`FREEZE_OLD_BASELINE -> CLASSIFY_SIGNAL -> EVIDENCE_SCOUT -> COMPARE_CANDIDATES -> ARCHITECTURE_PROTOTYPE -> RED_TEAM -> FREEZE_REBASE_ARCHITECTURE -> WRITE_CANDIDATE_PACKET -> PACKET_QA -> ACCEPT_OR_REJECT -> PROMOTE_WITH_DEPENDENCY_INVALIDATION -> CLEAN_SUPERSEDED_ACTIVE_PATHS`.
+A material problem record preserves symptom, impact, diagnosis, challenged assumptions, research, alternatives, failed/rejected paths, action, verification, residual unknowns and parent guidance when applicable.
 
-Hard rules:
-- user permission for large changes changes reversibility/migration cost; it does not automatically prove blank-slate rewrite is best;
-- old FINAL bodies/hashes are historical business evidence and remain immutable until an explicit promotion transaction supersedes them;
-- chapter boundaries are prose architecture, not Canon; factual truth changes still require Retcon/Canon reconciliation;
-- old active plan/contract must be marked superseded/held so the runtime cannot execute both paths;
-- strong old scenes may be reused only when selected by the new architecture;
-- packet-level failure cannot be "fixed" by eight isolated local PASS decisions;
-- architecture/readiness CI proves recovery/enforcement mechanics only, not improved literary/business outcome;
-- outcome claim remains open until actual packet reviews and ultimately reader/platform/live-signing evidence exist.
+Do not erase failed approaches after success.
 
-FQ001 current project targets—first major first-order payoff near new CH3 and durable Xu Zhiwei relationship engine around new CH6–CH7—are explicit design hypotheses in the active plan, not global writing doctrine.
+## 20. Current assurance ceiling
 
-## 25. Checkpoint cadence
-- every material stage/next_action/constraint/artifact/blocker/authority change: checkpoint;
-- every promoted chapter: immutable FINAL + immutable chapter contract snapshot + frozen Context Pack + role execution evidence + acceptance + derived delivery artifact;
-- every 5 chapters: lightweight checkpoint + cross-chapter texture scan;
-- every 10 chapters: full project snapshot + longform review at the assurance actually available;
-- every 50 chapters: global Canon reconciliation;
-- major rebase/structural change: pre/post snapshot;
-- every signing evaluation result: persist exact platform fact, inference boundary, next threshold/gate and any resulting front-arc state;
-- full-unit rebase: checkpoint architecture freeze, candidate packet ready and promotion/rejection decision.
-Store execution truth, not chat transcript.
+This system may claim executable policy/trajectory verification after CI and production reread. It may not claim improved literary/commercial outcome until post-reselection work receives real reader/platform evidence.

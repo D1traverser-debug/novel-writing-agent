@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "authority_role": "COMPARATIVE_NARRATIVE_EVIDENCE_ONTOLOGY__NOT_PROSE_OR_CANON_AUTHORITY",
+  "principle": "EVIDENCE_DEPENDENCE_IS_CLAIM_CONDITIONED_AND_DIMENSION_SPECIFIC__NOT_A_FIXED_PROPERTY_OF_AUTHOR_WORK_OR_SERIES",
+  "narrative_dimensions": [
+    {"id":"N01_STORY_FABULA_CAUSAL_ENGINE","covers":["event causality","goal-pressure chain","story engine","ending constraint","state change"]},
+    {"id":"N02_DISCOURSE_TEMPORAL_ORDER","covers":["order","duration","frequency","flashback/flashforward","repetition","summary/scene allocation"]},
+    {"id":"N03_NARRATOR_POV_FOCALIZATION","covers":["narrator role","person","focalization","psychic distance","information access","reliability"]},
+    {"id":"N04_CHARACTER_CONSTRUCTION_AGENCY","covers":["desire","belief","competence","blind spot","decision model","change pressure","independent agency"]},
+    {"id":"N05_RELATIONSHIP_NETWORK_ARCS","covers":["trust","debt","power","intimacy","alliance","enmity","network position","relational trajectory"]},
+    {"id":"N06_WORLD_SETTING_INSTITUTIONS","covers":["world rules","setting","social systems","institutions","resources","second-order consequences"]},
+    {"id":"N07_INFORMATION_MYSTERY_REVELATION","covers":["question-answer ladder","clues","source credibility","misdirection","reframing","payoff debt"]},
+    {"id":"N08_EMOTION_TENSION_READER_AFFECT","covers":["emotion arc","tension","aftershock","attachment","fear/humor regulation","reader desire"]},
+    {"id":"N09_PACING_RHYTHM_PAGE_COST","covers":["scene density","information density","paragraph rhythm","compression","breather","page-cost"]},
+    {"id":"N10_DIALOGUE_VOICE_SUBTEXT","covers":["speech goals","subtext","idiolect","turn-taking","withholding","social power"]},
+    {"id":"N11_PROSE_STYLOMETRY_SURFACE","covers":["syntax","lexicon","function words","sentence length","paragraph shape","imagery","rhetorical pattern"]},
+    {"id":"N12_SERIAL_ENGINE_ESCALATION_PAYOFF","covers":["unit rotation","volume turns","escalation","promise renewal","mid-series fatigue","long-horizon payoff"]},
+    {"id":"N13_ACQUISITION_PRODUCT_PLATFORM","covers":["title/intro/first-screen","first-20k conversion","target reader","serialization fit","platform constraints"]},
+    {"id":"N14_THEME_VALUE_CONFLICT","covers":["competing values","moral argument","cost of positions","thematic embodiment","climax relation"]},
+    {"id":"N15_SPACE_ENVIRONMENT_ACTION","covers":["spatial topology","orientation","environmental constraints","action surface","resource clocks"]},
+    {"id":"N16_READER_MEMORY_COGNITIVE_LOAD","covers":["name/rule load","recall/reactivation","information chunking","recognition cues","working-memory burden"]}
+  ],
+  "potential_dependency_factors": [
+    {"id":"F_AUTHOR","rule":"author identity may correlate with some style/craft choices but cannot be assumed to dominate every narrative dimension"},
+    {"id":"F_SERIES_CONTINUITY","rule":"shared canon/world/characters can correlate observations, while cross-volume change can itself be valuable within-series evidence"},
+    {"id":"F_GENRE","rule":"genre conventions can explain apparent common mechanisms or expose transfer boundaries"},
+    {"id":"F_MARKET_PLATFORM","rule":"serialization venue, reader expectations and publication model can alter acquisition/pacing without determining all literary dimensions"},
+    {"id":"F_PERIOD","rule":"historical period can affect language, institutions, audience and narrative convention"},
+    {"id":"F_LANGUAGE_TRANSLATION","rule":"translated surface prose is not clean evidence of original author stylometry; story/discourse evidence may remain usable with care"},
+    {"id":"F_POV_MODE","rule":"shared POV/focalization can create similar information architecture independent of author"},
+    {"id":"F_LENGTH_FORMAT","rule":"short novel, epic series and web serial impose different structural/page-cost pressures"},
+    {"id":"F_TOPIC_SETTING","rule":"topic/setting can contaminate lexical/style comparisons and some worldbuilding observations"},
+    {"id":"F_EDITORIAL_TRANSLATION_EDITION","rule":"edition, translator and editorial intervention can affect surface/style evidence"},
+    {"id":"F_PROJECT_SELECTION","rule":"successful/canonical works create survivorship bias and are not automatically causal examples"}
+  ],
+  "comparison_designs": [
+    {"id":"WITHIN_AUTHOR_CROSS_WORK","value":"holds author partly constant while varying work/topic/structure; useful for detecting within-author variation and challenging author-essentialist claims"},
+    {"id":"WITHIN_SERIES_CROSS_STAGE","value":"holds much canon/context constant while observing engine, character, discourse and pacing change across volumes/arcs"},
+    {"id":"CROSS_AUTHOR_SAME_OR_ADJACENT_GENRE","value":"reduces genre mismatch while testing whether a mechanism survives author change"},
+    {"id":"CROSS_GENRE_SAME_FUNCTION","value":"tests whether a functional mechanism transfers when surface genre changes"},
+    {"id":"CROSS_FORMAT_OR_MARKET","value":"tests book/web-serial/platform dependencies"},
+    {"id":"WITHIN_WORK_CROSS_ARC","value":"tests whether a claimed mechanism actually varies inside one work"},
+    {"id":"MATCHED_SURFACE_DIFFERENT_FUNCTION","value":"same-looking trope/device but different narrative function; useful against surface imitation"},
+    {"id":"MATCHED_FUNCTION_DIFFERENT_SURFACE","value":"different trope/device producing similar reader/story function; useful for extracting transferable mechanism"}
+  ],
+  "comparison_rule": "NO_SINGLE_METADATA_FIELD_AUTOMATICALLY_MERGES_OR_ZERO_WEIGHTS_EVIDENCE__EACH_CLAIM_MUST_NAME_TARGET_DIMENSIONS_SHARED_FACTORS_CONTRAST_DESIGN_AND_UNRESOLVED_CONFOUNDS"
+}
