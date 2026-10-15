@@ -77,7 +77,7 @@ Everything else may be rebuilt after learning: title, premise, genre mix, protag
 After all non-excluded works complete and formal synthesis passes:
 1. refresh current Fanqie first-party rules/courses/category evidence;
 2. derive transferable mechanisms + failure boundaries, not surface trope mixtures;
-3. generate >=3 materially distinct story-engine candidates;
+3. generate >=3 story-product candidates and prove every pair is materially distinct on >=2 relevant axes; do not manufacture diversity through arbitrary genre/engine quotas;
 4. historical FQ001 may compete but receives no incumbent privilege;
 5. vector evaluation + pairwise/Pareto comparison;
 6. blind-reader + adversarial evidence;
@@ -95,9 +95,9 @@ Do not write a rigid million-character chapter list.
 Use `SERIES -> VOLUME -> ARC -> PACKET -> CHAPTER -> SCENE` with variable resolution:
 - far horizon: flexible hypotheses tied to intended ending;
 - mid horizon: bounded architecture and obligations;
-- near horizon: freeze only when approaching execution.
+- near horizon: higher resolution; freeze only when accepted/approaching execution.
 
-A replan requires trigger evidence, >=2 alternatives, selected/rejected reasoning, complete downstream invalidation and review. Near/frozen structures require hard defect/live signal to reopen. Outline replan cannot silently mutate Canon.
+A replan requires trigger evidence, >=2 alternatives, selected/rejected reasoning, complete downstream invalidation and review. A `FROZEN` structure requires hard defect/live signal to reopen; `NEAR + FLEXIBLE` structure may still improve before acceptance. Outline replan cannot silently mutate Canon.
 
 Runtime: `runtime/dynamic_outline.py`.
 
@@ -107,7 +107,7 @@ Existing `projects/<task>/canon/` files remain accepted factual authority for th
 
 `runtime/story_dependency_graph.py` coordinates dependencies among premise, events, character/relationship state, world rules, promises, foreshadow, threads and outline nodes.
 
-Research/Plan does not become Canon because it is plausible. Candidate/Plan → Canon requires accepted prose + acceptance evidence + Canon reconciliation. Upstream changes invalidate all dependent future Plan/Context evidence before reuse.
+Research/Plan does not become Canon because it is plausible. Candidate/Plan → Canon requires accepted prose + acceptance evidence + Canon reconciliation. Upstream changes invalidate all semantically dependent future Plan/Context evidence before reuse; edge direction is defined by relation semantics, not by one generic graph orientation.
 
 ## 8. Production organization
 
@@ -149,7 +149,7 @@ Do not authorize story selection/release with one average score.
 
 `runtime/narrative_evaluation.py` requires evidence-bound dimensions including acquisition, reader contract, attachment, relationships, serial sustainability, engine diversity, narrative orchestration, continuity, development/richness, mystery/revelation, emotional range, voice/prose, cognitive load, originality, platform fit and production complexity/risk.
 
-Hard gates override averages. Use Pareto/pairwise reasoning to preserve tradeoffs.
+Hard gates override averages. Numeric Pareto dominance is legal only when the compared values share the same dimension rubric and calibration scope; uncertainty is explicit and conservative. Incommensurable evidence remains a qualitative/pairwise tradeoff until re-benchmarked. Model self-evaluation cannot be a hard gate or claim fake precision.
 
 Internal vector scores are evidence, not live literary outcome.
 
