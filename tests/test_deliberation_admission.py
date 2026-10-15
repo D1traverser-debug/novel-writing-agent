@@ -2,8 +2,12 @@ import pytest
 
 from runtime.deliberation_admission import (
     DeliberationAdmissionError,
+    HypothesisDisposition,
+    ProblemLayer,
+    RootScopeHypothesis,
     admit_material_mutation,
     build_material_decision_receipt,
+    build_root_scope_receipt,
 )
 
 
@@ -20,6 +24,31 @@ def valid_receipt():
         rejection_reasons=["end-only comparison delays correction of a biased observation frame"],
         risks=["comparison can prematurely overfit current completed works"],
         rollback_or_recovery=["keep interim comparison non-promotional and revise observation axes"],
+    )
+
+
+def hypothesis(hid: str, layer: ProblemLayer, disposition: HypothesisDisposition) -> RootScopeHypothesis:
+    return RootScopeHypothesis(
+        hypothesis_id=hid,
+        layer=layer,
+        statement=f"candidate cause {hid}",
+        disposition=disposition,
+        supporting_evidence_refs=(f"support:{hid}",),
+        falsification_or_rejection_refs=(f"probe:{hid}",),
+    )
+
+
+def valid_root(*, systemic: bool = False):
+    items = [hypothesis("local", ProblemLayer.DOMAIN_WORKFLOW, HypothesisDisposition.SELECTED)]
+    refs = []
+    if systemic:
+        items.append(hypothesis("upstream", ProblemLayer.DOMAIN_ARCHITECTURE, HypothesisDisposition.REJECTED))
+        refs = ["audit:architecture-reassessment"]
+    return build_root_scope_receipt(
+        hypotheses=items,
+        selected_hypothesis_id="local",
+        systemic_signal=systemic,
+        architecture_reassessment_refs=refs,
     )
 
 
@@ -60,3 +89,30 @@ def test_external_research_may_be_declared_not_material_but_not_silently_skipped
         external_research_not_material_reason="pure internal metadata consistency; no external fact changes the decision",
     )
     assert admit_material_mutation(receipt).startswith("MATERIAL_MUTATION_ADMITTED")
+
+
+def test_root_scope_rejects_user_or_external_claim_promoted_without_test():
+    with pytest.raises(DeliberationAdmissionError, match="promoted without falsification"):
+        build_root_scope_receipt(
+            hypotheses=[hypothesis("architecture", ProblemLayer.DOMAIN_ARCHITECTURE, HypothesisDisposition.SELECTED)],
+            selected_hypothesis_id="architecture",
+            direct_user_or_external_claim_promoted_without_test=True,
+        )
+
+
+def test_systemic_root_scope_requires_cross_layer_upstream_hypothesis_and_rejection():
+    with pytest.raises(DeliberationAdmissionError, match="at least two layers"):
+        build_root_scope_receipt(
+            hypotheses=[
+                hypothesis("a", ProblemLayer.DOMAIN_WORKFLOW, HypothesisDisposition.SELECTED),
+                hypothesis("b", ProblemLayer.DOMAIN_WORKFLOW, HypothesisDisposition.REJECTED),
+            ],
+            selected_hypothesis_id="a",
+            systemic_signal=True,
+            architecture_reassessment_refs=["audit:architecture"],
+        )
+
+    receipt = valid_root(systemic=True)
+    assert receipt.selected_layer == ProblemLayer.DOMAIN_WORKFLOW
+    assert ProblemLayer.DOMAIN_ARCHITECTURE in receipt.compared_layers
+    assert receipt.rejected_hypothesis_ids == ("upstream",)
