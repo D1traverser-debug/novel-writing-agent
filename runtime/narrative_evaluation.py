@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Evidence-bound vector evaluation for Novel product/literary decisions.
 
-A single scalar score is deliberately insufficient. Candidate comparison is performed on
-named dimensions with hard gates, missing-evidence handling and Pareto dominance.
-This is an evaluation contract, not a replacement for reader/platform outcomes.
+A single scalar score is insufficient. Candidate comparison uses named dimensions, hard
+gates, explicit provenance and conservative uncertainty. Numeric Pareto comparison is
+allowed only when a dimension shares the same rubric/calibration scope across candidates;
+otherwise the tradeoff must remain qualitative or be re-benchmarked.
 """
 from __future__ import annotations
 
@@ -42,6 +43,7 @@ VALID_EVIDENCE_CLASSES = {
     "STRUCTURAL_ANALYSIS",
     "MODEL_SELF_EVALUATION",
 }
+VALID_CONFIDENCE = {"LOW", "MEDIUM", "HIGH"}
 
 
 @dataclass(frozen=True)
@@ -53,6 +55,9 @@ class DimensionEvidence:
     evidence_refs: tuple[str, ...]
     confidence: str
     rationale: str
+    rubric_id: str
+    calibration_scope: str
+    uncertainty: float
     hard_gate: bool = False
     hard_gate_pass: bool = True
 
@@ -80,13 +85,21 @@ def validate_candidate_evaluation(
     for dimension in evaluation.dimensions:
         if dimension.evidence_class not in VALID_EVIDENCE_CLASSES:
             raise NarrativeEvaluationError(f"unknown evidence class: {dimension.evidence_class}")
+        if dimension.confidence not in VALID_CONFIDENCE:
+            raise NarrativeEvaluationError(f"unknown confidence: {dimension.dimension}")
         if not dimension.evidence_refs or not dimension.rationale.strip():
             raise NarrativeEvaluationError(f"dimension lacks evidence: {dimension.dimension}")
+        if not dimension.rubric_id.strip() or not dimension.calibration_scope.strip():
+            raise NarrativeEvaluationError(f"dimension lacks comparison rubric/calibration scope: {dimension.dimension}")
         if not 0.0 <= dimension.value <= 1.0:
             raise NarrativeEvaluationError(f"dimension out of range: {dimension.dimension}")
-        if dimension.hard_gate and not dimension.hard_gate_pass:
-            # Failure is legal evidence, but this candidate cannot be promoted.
-            continue
+        if not 0.0 <= dimension.uncertainty <= 0.5:
+            raise NarrativeEvaluationError(f"dimension uncertainty out of range: {dimension.dimension}")
+        if dimension.evidence_class == "MODEL_SELF_EVALUATION":
+            if dimension.hard_gate:
+                raise NarrativeEvaluationError("model self-evaluation cannot be a hard promotion gate")
+            if dimension.uncertainty < 0.20:
+                raise NarrativeEvaluationError("model self-evaluation may not claim artificially precise uncertainty")
     return "NARRATIVE_VECTOR_EVALUATION_VALID"
 
 
@@ -100,8 +113,22 @@ def promotion_gate(evaluation: CandidateEvaluation) -> str:
     return "NARRATIVE_PROMOTION_GATE_PASS"
 
 
-def _oriented(dimension: DimensionEvidence) -> float:
-    return dimension.value if dimension.higher_is_better else 1.0 - dimension.value
+def _oriented_interval(dimension: DimensionEvidence) -> tuple[float, float]:
+    low = max(0.0, dimension.value - dimension.uncertainty)
+    high = min(1.0, dimension.value + dimension.uncertainty)
+    if dimension.higher_is_better:
+        return low, high
+    # For lower-is-better metrics, orient so larger is still better.
+    return 1.0 - high, 1.0 - low
+
+
+def _require_dimension_comparability(left: DimensionEvidence, right: DimensionEvidence) -> None:
+    if left.higher_is_better != right.higher_is_better:
+        raise NarrativeEvaluationError(f"direction mismatch for dimension: {left.dimension}")
+    if left.rubric_id != right.rubric_id or left.calibration_scope != right.calibration_scope:
+        raise NarrativeEvaluationError(
+            f"dimension is not numerically comparable across candidates without re-benchmarking: {left.dimension}"
+        )
 
 
 def pareto_dominates(
@@ -115,15 +142,22 @@ def pareto_dominates(
     left_by = {d.dimension: d for d in left.dimensions}
     right_by = {d.dimension: d for d in right.dimensions}
     selected = tuple(dimensions)
-    at_least_one_better = False
+    at_least_one_definitely_better = False
     for name in selected:
-        l = _oriented(left_by[name])
-        r = _oriented(right_by[name])
-        if l < r:
-            return False
-        if l > r:
-            at_least_one_better = True
-    return at_least_one_better
+        ldim = left_by[name]
+        rdim = right_by[name]
+        _require_dimension_comparability(ldim, rdim)
+        l_low, l_high = _oriented_interval(ldim)
+        r_low, r_high = _oriented_interval(rdim)
+        # Conservative dominance: if intervals overlap, do not manufacture certainty.
+        if l_low < r_high:
+            if l_high < r_low:
+                return False
+            # overlap means neither side is definitely better on this dimension
+            continue
+        if l_low > r_high:
+            at_least_one_definitely_better = True
+    return at_least_one_definitely_better
 
 
 def pareto_front(
@@ -166,7 +200,6 @@ def require_pairwise_reasoning(
 
 
 def reject_scalar_override(*, aggregate_score: float, hard_gate_failed: bool) -> str:
-    """Regression helper: no average may override a hard gate."""
     if hard_gate_failed:
         raise NarrativeEvaluationError(
             f"aggregate score {aggregate_score:.3f} cannot override a failed hard gate"
