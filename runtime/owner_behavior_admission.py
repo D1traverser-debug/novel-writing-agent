@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Novel-owner executable admission for recovery, user escalation and problem closure.
 
-This module does not replace UAOS. It realizes UAOS Common Behavior Assurance 1.2
-inside the Novel domain with owner-native receipts that can be trajectory-tested.
+This module realizes UAOS Common Behavior Assurance 1.3 inside the Novel domain with
+owner-native receipts. It does not replace UAOS or create a second control plane.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Iterable
+
+from .deliberation_admission import RootScopeReceipt
 
 
 RECOVERY_OUTCOMES = {"RESOLVED", "PROVISIONAL", "UNRESOLVED"}
@@ -20,6 +22,10 @@ class BehaviorAdmissionError(RuntimeError):
 
 def _clean(values: Iterable[str] | None) -> tuple[str, ...]:
     return tuple(v.strip() for v in (values or ()) if isinstance(v, str) and v.strip())
+
+
+def _present(value: str | None) -> bool:
+    return isinstance(value, str) and bool(value.strip())
 
 
 @dataclass(frozen=True)
@@ -81,7 +87,6 @@ def require_user_escalation_admission(
     explicit_user_confirmation: bool = False,
     requires_user_fact_or_authorization: bool = False,
 ) -> str:
-    """Return an admitted reason or raise when escalation would externalize recoverable work."""
     if explicit_user_confirmation:
         return "ADMITTED_EXPLICIT_USER_CONFIRMATION"
     if receipt is None or not receipt.attempted:
@@ -95,6 +100,21 @@ def require_user_escalation_admission(
     raise BehaviorAdmissionError("user escalation denied: blocker conditions are not satisfied")
 
 
+def _require_cognition_and_evolution(
+    *,
+    root_scope_receipt: RootScopeReceipt | None,
+    evolution_disposition: str | None,
+    problem_record_required: bool,
+    problem_record_ref: str | None,
+) -> None:
+    if root_scope_receipt is None:
+        raise BehaviorAdmissionError("problem action denied: root-scope cognition receipt is missing")
+    if not _present(evolution_disposition):
+        raise BehaviorAdmissionError("problem action denied: evolution/learning disposition is missing")
+    if problem_record_required and not _present(problem_record_ref):
+        raise BehaviorAdmissionError("material/evolution-relevant problem requires durable problem evidence")
+
+
 def finalize_problem_closure(
     *,
     problem_detected: bool,
@@ -105,18 +125,45 @@ def finalize_problem_closure(
     repair_succeeded: bool,
     blocker_reason: str | None = None,
     no_change_evidence: Iterable[str] | None = None,
+    root_scope_receipt: RootScopeReceipt | None = None,
+    evolution_disposition: str | None = None,
+    problem_record_required: bool = False,
+    problem_record_ref: str | None = None,
 ) -> str:
-    """Mechanically reject recommendation-only closure for a repairable Novel problem."""
+    """Reject action/closure before root-scope and learning admission.
+
+    A real external blocker may still be surfaced without fabricating a root cause. Repair
+    and no-change require the owner-native cognition/evolution transaction first.
+    """
     if not problem_detected:
         return "CLEAN_NO_PROBLEM"
 
     evidence = _clean(no_change_evidence)
     blocker = blocker_reason.strip() if isinstance(blocker_reason, str) else ""
 
+    if explicit_user_choice_required and blocker:
+        if problem_record_required and not _present(problem_record_ref):
+            raise BehaviorAdmissionError("material blocked problem requires durable problem evidence")
+        return "BLOCKED_WITH_REASON"
+    if not authority_permits_repair and blocker:
+        if problem_record_required and not _present(problem_record_ref):
+            raise BehaviorAdmissionError("material blocked problem requires durable problem evidence")
+        return "BLOCKED_WITH_REASON"
+    if not repair_path_available and blocker:
+        if problem_record_required and not _present(problem_record_ref):
+            raise BehaviorAdmissionError("material blocked problem requires durable problem evidence")
+        return "BLOCKED_WITH_REASON"
+
     if repair_path_available and authority_permits_repair and not explicit_user_choice_required:
+        _require_cognition_and_evolution(
+            root_scope_receipt=root_scope_receipt,
+            evolution_disposition=evolution_disposition,
+            problem_record_required=problem_record_required,
+            problem_record_ref=problem_record_ref,
+        )
         if not repair_attempted:
             raise BehaviorAdmissionError(
-                "problem closure denied: authorized repair exists but was not attempted"
+                "problem closure denied: cognitively-admitted authorized repair exists but was not attempted"
             )
         if repair_succeeded:
             return "REPAIR_EXECUTED"
@@ -126,15 +173,15 @@ def finalize_problem_closure(
             "problem closure denied: failed repair requires a concrete blocker or further repair"
         )
 
-    if explicit_user_choice_required and blocker:
-        return "BLOCKED_WITH_REASON"
-    if not authority_permits_repair and blocker:
-        return "BLOCKED_WITH_REASON"
-    if not repair_path_available and blocker:
-        return "BLOCKED_WITH_REASON"
     if evidence:
+        _require_cognition_and_evolution(
+            root_scope_receipt=root_scope_receipt,
+            evolution_disposition=evolution_disposition,
+            problem_record_required=problem_record_required,
+            problem_record_ref=problem_record_ref,
+        )
         return "NO_CHANGE_WITH_EVIDENCE"
 
     raise BehaviorAdmissionError(
-        "problem closure denied: no valid repair, blocker, or evidence-backed no-change terminal"
+        "problem closure denied: no valid cognitively-admitted repair, blocker, or evidence-backed no-change terminal"
     )
