@@ -157,12 +157,14 @@ def test_mechanism_registry_is_reference_only_until_dependency_review():
 
 def test_uaos_capability_contract_exposes_learning_to_planning_mechanics():
     caps = load_json(".uaos/CAPABILITIES.json")
-    assert caps["profile_version"] == 5
+    assert caps["profile_version"] >= 6
+    assert caps["common_behavior_assurance_min"] == "1.3.0"
     by_id = {c["capability_id"]: c for c in caps["capabilities"]}
     assert {
         "large_corpus_distillation",
         "continual_cross_work_learning",
         "material_deliberation_admission",
+        "problem_root_scope_admission",
         "zero_based_story_reselection",
     }.issubset(by_id)
     continual_required = set(by_id["continual_cross_work_learning"]["required"])
