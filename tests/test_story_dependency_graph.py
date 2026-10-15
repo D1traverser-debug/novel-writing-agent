@@ -19,18 +19,26 @@ def graph():
             StoryNode("arc", "OUTLINE_NODE", "PLAN", ("outline:arc",)),
             StoryNode("promise", "READER_PROMISE", "PLAN", ("outline:promise",)),
             StoryNode("event", "EVENT", "PLAN", ("outline:event",)),
+            StoryNode("door", "EVENT", "PLAN", ("outline:door",)),
+            StoryNode("entry", "EVENT", "PLAN", ("outline:entry",)),
         ),
         edges=(
             StoryEdge("arc", "premise", "DEPENDS_ON", ("architecture",)),
             StoryEdge("promise", "arc", "DEPENDS_ON", ("architecture",)),
             StoryEdge("event", "arc", "DEPENDS_ON", ("architecture",)),
+            StoryEdge("door", "entry", "ENABLES", ("causal-design",)),
         ),
     )
 
 
-def test_graph_validates_and_computes_downstream_invalidation():
+def test_graph_validates_and_computes_dependency_downstream_invalidation():
     assert validate_graph(graph()) == "STORY_DEPENDENCY_GRAPH_VALID"
     assert set(invalidation_closure(graph(), ("premise",))) == {"premise", "arc", "promise", "event"}
+
+
+def test_enables_propagates_from_enabler_to_enabled_not_backwards():
+    assert set(invalidation_closure(graph(), ("door",))) == {"door", "entry"}
+    assert set(invalidation_closure(graph(), ("entry",))) == {"entry"}
 
 
 def test_dependency_cycle_is_rejected():
