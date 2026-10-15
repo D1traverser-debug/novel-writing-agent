@@ -29,12 +29,19 @@ def test_novel_adopts_common_behavior_1_2_with_owner_native_execution():
         assert capabilities[cap_id]["execution_ref"] == "runtime/owner_behavior_admission.py"
 
 
-def test_canonical_evolution_entrypoint_is_novel_owned_and_discoverable():
+def test_canonical_evolution_entrypoint_is_novel_owned_and_event_scoped():
     index = load_json("audits/EVOLUTION_INDEX.json")
     assert index["owner"] == "DOMAIN:novel"
     assert index["common_behavior_assurance_min"] == "1.2.0"
-    assert "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR" in index["current_open_items"]
-    assert index["current_problem_refs"]["N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR"] == "audits/UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR_2026-10-15.md"
+    assert index["current_open_items"] == []
+    assert index["current_problem_refs"] == {}
+    receipts = index["recent_resolved_or_promoted"]
+    row = next(item for item in receipts if item["problem_ref"] == "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR")
+    assert row["status"] == "PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_BEHAVIOR_OBSERVATION_OPEN"
+    assert row["production_commit"] == "7cc56fbdca5139c2b61d0a16823d963693e9094c"
+    assert row["production_ci_run"] == 38676046948
+    assert row["production_ci_number"] == 289
+    assert row["result"] == "PASS"
     assert "runtime/owner_behavior_admission.py" in index["execution_refs"]
 
 

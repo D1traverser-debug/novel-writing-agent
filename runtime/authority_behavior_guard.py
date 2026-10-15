@@ -64,10 +64,21 @@ if evolution.get("owner") != "DOMAIN:novel":
     problems.append("evolution-owner")
 if evolution.get("common_behavior_assurance_min") != "1.2.0":
     problems.append("evolution-common-behavior-min")
-if not evolution.get("current_open_items"):
-    problems.append("evolution-open-problem-ref-missing")
-if not evolution.get("current_problem_refs"):
-    problems.append("evolution-problem-map-missing")
+open_items = evolution.get("current_open_items")
+current_refs = evolution.get("current_problem_refs")
+resolved = evolution.get("recent_resolved_or_promoted")
+if not isinstance(open_items, list):
+    problems.append("evolution-open-items-not-list")
+if not isinstance(current_refs, dict):
+    problems.append("evolution-problem-map-not-object")
+if isinstance(open_items, list) and isinstance(current_refs, dict):
+    if set(open_items) != set(current_refs):
+        problems.append("evolution-open-item-map-mismatch")
+if not isinstance(resolved, list) or not resolved:
+    problems.append("evolution-resolved-history-missing")
+else:
+    if not any(row.get("problem_ref") == "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR" for row in resolved if isinstance(row, dict)):
+        problems.append("evolution-current-promotion-receipt-missing")
 
 result = {
     "status": "PASS" if not problems else "FAIL",
@@ -78,6 +89,7 @@ result = {
         p.startswith("retired-active-authority-semantics:") for p in problems
     ),
     "owner_behavior_admission": "runtime/owner_behavior_admission.py",
+    "open_evolution_items": len(open_items) if isinstance(open_items, list) else None,
     "failures": problems,
 }
 print(json.dumps(result, ensure_ascii=False, indent=2))
