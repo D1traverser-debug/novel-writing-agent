@@ -1,0 +1,29 @@
+{
+  "schema_version":"1.0",
+  "owner":"DOMAIN:novel",
+  "revision":"1.0-candidate",
+  "updated_at":"2026-10-15T11:11:00+08:00",
+  "common_behavior_assurance_min":"1.2.0",
+  "current_open_items":[
+    "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR"
+  ],
+  "recent_resolved_or_promoted_refs":[
+    "audits/MASTERWORK_PROGRESS_PERSISTENCE_REPAIR_2026-10-11.md",
+    "audits/MASTERWORK_QUEUE_TRANSITION_GENERALIZATION_2026-10-11.md",
+    "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
+    "audits/NOVEL_SYSTEM_EVOLUTION_AUDIT_2026-10-10.md"
+  ],
+  "open_parent_guidance_refs":[
+    "UAOS_COMMON_BEHAVIOR_ASSURANCE_1_2_ADOPTION"
+  ],
+  "current_problem_refs":{
+    "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR":"audits/UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR_2026-10-15.md"
+  },
+  "execution_refs":[
+    "runtime/recovery_guard.py",
+    "runtime/owner_behavior_admission.py",
+    "tests/test_recovery_contract.py",
+    "tests/test_owner_behavior_admission.py"
+  ],
+  "assurance":"CANDIDATE__OWNER_NATIVE_ENTRYPOINT_AND_TRAJECTORY_EVIDENCE_PENDING_CI_PROMOTION"
+}
