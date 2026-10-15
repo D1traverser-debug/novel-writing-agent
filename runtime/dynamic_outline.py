@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Dynamic hierarchical outline contracts for long-form Novel planning.
 
-The design follows two principles:
-1) near-horizon accepted structure is harder to change than far-horizon hypotheses;
-2) plan revisions are evidence-driven, impact-scoped and non-destructive.
+Principles:
+1) accepted/frozen structure is harder to change than unaccepted hypotheses;
+2) horizon controls planning resolution, not automatic rigidity;
+3) plan revisions are evidence-driven, impact-scoped and non-destructive.
 
-It does not replace project-specific outline prose. It provides executable invariants for
-series/volume/arc/packet/chapter planning and replanning.
+This does not replace project-specific outline prose. It provides executable invariants
+for series/volume/arc/packet/chapter planning and replanning.
 """
 from __future__ import annotations
 
@@ -92,10 +93,6 @@ def validate_outline(outline: DynamicOutline) -> str:
             parent = by_id[node.parent_id]
             if LEVEL_ORDER[parent.level] >= LEVEL_ORDER[node.level]:
                 raise OutlineAdmissionError("outline hierarchy level inversion")
-        if node.horizon == "NEAR" and node.status == "FLEXIBLE" and node.level in {"CHAPTER", "SCENE"}:
-            # Near material can be flexible before it is accepted, so this is allowed.
-            pass
-    # parent hierarchy must be acyclic
     for node in outline.nodes:
         seen = set()
         current = node
@@ -140,13 +137,14 @@ def admit_replan(outline: DynamicOutline, receipt: ReplanReceipt) -> str:
     declared_affected = set(receipt.invalidated_refs)
     if not required_affected.issubset(declared_affected):
         raise OutlineAdmissionError("replan under-declares downstream invalidation scope")
-    frozen_or_near = [
-        by_id[node_id]
-        for node_id in receipt.changed_node_ids
-        if by_id[node_id].status == "FROZEN" or by_id[node_id].horizon == "NEAR"
-    ]
-    if frozen_or_near and not receipt.hard_failure_or_live_signal_refs:
-        raise OutlineAdmissionError("near/frozen structural change requires hard defect or live outcome signal")
+
+    # Horizon controls how much detail is planned. Rigidity comes from acceptance/freeze,
+    # not merely from being near in time. A near but FLEXIBLE chapter may still be improved
+    # before acceptance; a FROZEN node requires stronger evidence to reopen.
+    frozen_changed = [by_id[node_id] for node_id in receipt.changed_node_ids if by_id[node_id].status == "FROZEN"]
+    if frozen_changed and not receipt.hard_failure_or_live_signal_refs:
+        raise OutlineAdmissionError("frozen structural change requires hard defect or live outcome signal")
+
     if receipt.canon_change_requested:
         raise OutlineAdmissionError("outline replan cannot silently mutate Canon; use explicit canon promotion/reconciliation")
     if not receipt.downstream_review_refs:
