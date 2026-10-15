@@ -47,7 +47,7 @@ def test_replan_rejects_first_idea_execution_and_underdeclared_impact():
         )
 
 
-def test_near_frozen_change_requires_hard_failure_or_live_signal():
+def test_frozen_change_requires_hard_failure_or_live_signal():
     with pytest.raises(OutlineAdmissionError):
         admit_replan(
             outline(),
@@ -62,6 +62,22 @@ def test_near_frozen_change_requires_hard_failure_or_live_signal():
                 hard_failure_or_live_signal_refs=(),
             ),
         )
+
+
+def test_near_but_flexible_chapter_can_improve_before_acceptance_without_live_failure():
+    assert admit_replan(
+        outline(),
+        ReplanReceipt(
+            changed_node_ids=("ch1",),
+            trigger_refs=("adversarial-review:new-opening-option",),
+            alternatives_considered=("reorder reveal", "keep baseline"),
+            selected_change="reorder reveal",
+            rejected_alternative_reasons=("baseline has slower immediate causal clarity",),
+            invalidated_refs=("ch1",),
+            downstream_review_refs=("chapter-review",),
+            hard_failure_or_live_signal_refs=(),
+        ),
+    ).startswith("REPLAN_ADMITTED")
 
 
 def test_replan_cannot_silently_mutate_canon():
@@ -82,7 +98,7 @@ def test_replan_cannot_silently_mutate_canon():
         )
 
 
-def test_evidence_driven_replan_is_admitted_when_scope_and_review_complete():
+def test_evidence_driven_frozen_replan_is_admitted_when_scope_and_review_complete():
     assert admit_replan(
         outline(),
         ReplanReceipt(
