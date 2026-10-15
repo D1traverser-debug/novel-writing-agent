@@ -1,10 +1,23 @@
 {
-  "schema_version":"2.0",
+  "schema_version":"2.1",
   "agent_id":"novel",
   "domain_id":"novel",
   "controller":"D1traverser-debug/universal-agent-os@main",
   "status":"UAOS_CONTROL_PLANE_ACTIVE",
   "skill":{"entrypoint":"UAOS_SKILL.md"},
-  "binding":{"controller_ref":"D1traverser-debug/universal-agent-os@main:CURRENT_SYSTEM.json","adapter_ref":".uaos/ADAPTER.json","capability_ref":".uaos/CAPABILITIES.json"},
-  "domain_authority":{"project_root":"projects","rulebook_ref":"protocols/ACTIVE_RULEBOOK.md","mastery_ref":"protocols/NOVEL_MASTERY_MODEL.md","artifact_context_ref":"config/ARTIFACT_CONTEXT_GOVERNANCE.json","checkpoint_pattern":"projects/<task>/checkpoints/CURRENT_CHECKPOINT.json"}
+  "binding":{
+    "controller_ref":"D1traverser-debug/universal-agent-os@main:CURRENT_SYSTEM.json",
+    "adapter_ref":".uaos/ADAPTER.json",
+    "capability_ref":".uaos/CAPABILITIES.json",
+    "common_behavior_assurance_ref":"D1traverser-debug/universal-agent-os@main:config/COMMON_BEHAVIOR_ASSURANCE.json"
+  },
+  "domain_authority":{
+    "project_root":"projects",
+    "rulebook_ref":"protocols/ACTIVE_RULEBOOK.md",
+    "mastery_ref":"protocols/NOVEL_MASTERY_MODEL.md",
+    "artifact_context_ref":"config/ARTIFACT_CONTEXT_GOVERNANCE.json",
+    "checkpoint_pattern":"projects/<task>/checkpoints/CURRENT_CHECKPOINT.json",
+    "evolution_evidence_ref":"audits/EVOLUTION_INDEX.json",
+    "behavior_admission_ref":"runtime/owner_behavior_admission.py"
+  }
 }
