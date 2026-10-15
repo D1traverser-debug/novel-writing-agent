@@ -1,29 +1,41 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "owner":"DOMAIN:novel",
-  "revision":"1.0-candidate",
-  "updated_at":"2026-10-15T11:11:00+08:00",
+  "revision":"1.0",
+  "updated_at":"2026-10-15T11:23:46+08:00",
   "common_behavior_assurance_min":"1.2.0",
-  "current_open_items":[
-    "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR"
+  "current_open_items":[],
+  "current_problem_refs":{},
+  "recent_resolved_or_promoted":[
+    {
+      "problem_ref":"N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR",
+      "status":"PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_BEHAVIOR_OBSERVATION_OPEN",
+      "evidence_ref":"audits/UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR_2026-10-15.md",
+      "pull_request":1,
+      "baseline_reproduction_ci_run":38675471138,
+      "candidate_ci_run":38675978812,
+      "candidate_ci_number":288,
+      "production_commit":"7cc56fbdca5139c2b61d0a16823d963693e9094c",
+      "production_ci_run":38676046948,
+      "production_ci_number":289,
+      "result":"PASS",
+      "assurance":"EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_LITERARY_OUTCOME_OPEN"
+    }
   ],
-  "recent_resolved_or_promoted_refs":[
+  "historical_evidence_refs":[
     "audits/MASTERWORK_PROGRESS_PERSISTENCE_REPAIR_2026-10-11.md",
     "audits/MASTERWORK_QUEUE_TRANSITION_GENERALIZATION_2026-10-11.md",
     "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
     "audits/NOVEL_SYSTEM_EVOLUTION_AUDIT_2026-10-10.md"
   ],
-  "open_parent_guidance_refs":[
-    "UAOS_COMMON_BEHAVIOR_ASSURANCE_1_2_ADOPTION"
-  ],
-  "current_problem_refs":{
-    "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR":"audits/UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR_2026-10-15.md"
-  },
+  "open_parent_guidance_refs":[],
   "execution_refs":[
     "runtime/recovery_guard.py",
+    "runtime/authority_behavior_guard.py",
     "runtime/owner_behavior_admission.py",
     "tests/test_recovery_contract.py",
+    "tests/test_authority_behavior_contract.py",
     "tests/test_owner_behavior_admission.py"
   ],
-  "assurance":"CANDIDATE__OWNER_NATIVE_ENTRYPOINT_AND_TRAJECTORY_EVIDENCE_PENDING_CI_PROMOTION"
+  "assurance":"OWNER_NATIVE_ENTRYPOINT__AUTHORITY_AND_COMMON_BEHAVIOR_EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_LITERARY_OUTCOME_OPEN"
 }
