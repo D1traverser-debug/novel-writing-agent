@@ -29,9 +29,16 @@ def load(rel: str) -> dict:
 
 protocol_p = need("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 state = load("research/masterworks/STUDY_STATE.json")
+corpus = load("research/masterworks/CORPUS_MAP.json")
+cross = load("research/masterworks/CROSS_WORK_LEARNING_STATE.json")
+registry = load("research/masterworks/MECHANISM_REGISTRY.json")
 caps = load(".uaos/CAPABILITIES.json")
 
 for rel in [
+    "research/masterworks/CROSS_WORK_PROVISIONAL_SYNTHESIS_2026-10-15.md",
+    "runtime/deliberation_admission.py",
+    "runtime/learning_transfer_admission.py",
+    "runtime/story_reselection_admission.py",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_01.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_02_OPENING_MICROCRAFT.md",
     "research/masterworks/SHIRI_ZHONGYAN/DISTILLATION_PASS_03_CHARACTER_ENSEMBLE.md",
@@ -42,19 +49,21 @@ for rel in [
 
 if protocol_p.exists():
     protocol = protocol_p.read_text(encoding="utf-8")
-    if "status: ACTIVE_SYSTEM_PROTOCOL" not in protocol:
-        problems.append("protocol-not-active")
+    if "version: 2.0" not in protocol or "status: ACTIVE_SYSTEM_PROTOCOL" not in protocol:
+        problems.append("protocol-version-or-status")
     for stage in (
         "D0 RIGHTS_AND_SOURCE",
         "D3 COLD_READ_TRACE",
         "D5 MICROCRAFT_ANNOTATION",
         "D6 POSITIVE_NEGATIVE_DIFF",
         "D7 ABLATION / COUNTERFACTUAL",
-        "D8 CROSS-WORK_TRIANGULATION",
-        "D9 PROJECT_TRANSFER_EXPERIMENT",
-        "D10 ADVERSARIAL_REVIEW",
-        "D11 PROMOTION",
-        "D12 STOP / DECAY",
+        "D8 CLOSED_CONTEXT_RECONSTRUCTION",
+        "D9 CROSS-WORK_TRIANGULATION",
+        "D10 PROJECT_TRANSFER_EXPERIMENT",
+        "D11 ADVERSARIAL_REVIEW",
+        "D12 PROMOTION",
+        "D13 STOP / DECAY",
+        "D14 CAMPAIGN_SYNTHESIS_AND_STORY_RESELECTION",
     ):
         if stage not in protocol:
             problems.append("protocol-stage:" + stage)
@@ -64,12 +73,18 @@ if state.get("status") != "ACTIVE":
 if state.get("authority_role") != "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY":
     problems.append("study-state-authority-role")
 policy = state.get("study_policy", {})
-if policy.get("mode") != "ONE_BOOK_AT_A_TIME" or policy.get("rule") != "COMPLETE_CURRENT_WORK_BEFORE_NEXT":
-    problems.append("study-policy")
-if policy.get("cross_work_synthesis") != "DEFER_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE":
-    problems.append("cross-work-policy")
-if policy.get("source_scope") != "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_UNLESS_USER_EXPLICITLY_EXPANDS_SCOPE":
-    problems.append("source-scope-policy")
+expected_policy = {
+    "mode": "ONE_BOOK_AT_A_TIME",
+    "rule": "COMPLETE_CURRENT_WORK_BEFORE_NEXT",
+    "interbook_comparison": "AFTER_EACH_COMPLETED_WORK__NON_PROMOTIONAL",
+    "formal_cross_work_synthesis": "DEFER_ACTIVE_RULE_PROMOTION_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE",
+    "closed_context_reconstruction": "REQUIRED_AFTER_EACH_COMPLETED_WORK_BEFORE_LEDGER_REOPEN",
+    "transfer_probe": "REQUIRED_AFTER_EACH_COMPLETED_WORK_BEFORE_QUEUE_ADVANCE",
+    "source_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_UNLESS_USER_EXPLICITLY_EXPANDS_SCOPE",
+}
+for key, value in expected_policy.items():
+    if policy.get(key) != value:
+        problems.append("study-policy:" + key)
 if set(state.get("user_locked_business_constraints", [])) != {"SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"}:
     problems.append("user-locked-constraints")
 
@@ -95,6 +110,11 @@ if active_status in {"ACTIVE__SEQUENTIAL_READ_IN_PROGRESS", "ACTIVE__PAUSED_BY_U
         problems.append("study-state-coverage")
     if not active_work.get("rolling_ledger_file_id"):
         problems.append("study-state-rolling-ledger-id")
+if work_id == "GUI_CHUI_DENG":
+    if active_work.get("coverage", {}).get("next_location") != "源第3914行；继续第二十六章《天砖秘道》玉石王座场景":
+        problems.append("gui-chui-deng-cursor-drift")
+    if active_work.get("completion_gate_after_fulltext") != "RUN_D8_D11_INTERBOOK_LEARNING_CYCLE_BEFORE_QING_YU_NIAN":
+        problems.append("gui-chui-deng-post-completion-gate")
 
 queue = state.get("queue", [])
 queue_by_id = {w.get("work_id"): w for w in queue}
@@ -117,25 +137,71 @@ if active_status in ACTIVE_STATUSES and work_id in state_complete_ids:
 if active_status == TERMINAL and work_id not in state_complete_ids:
     problems.append("terminal-work-not-completed")
 
-cap = next((c for c in caps.get("capabilities", []) if c.get("capability_id") == "large_corpus_distillation"), None)
-if cap is None:
-    problems.append("uaos-large-corpus-capability-missing")
-else:
-    required = set(cap.get("required", []))
-    if not {"source_identity", "coverage_cursor", "rolling_ledger"}.issubset(required):
-        problems.append("uaos-large-corpus-capability-contract")
+corpus_rows = corpus.get("works", [])
+corpus_by_id = {w.get("work_id"): w for w in corpus_rows}
+if set(queue_by_id) != set(corpus_by_id):
+    problems.append("corpus-map-queue-coverage-drift")
+for qid, qrow in queue_by_id.items():
+    crow = corpus_by_id.get(qid, {})
+    if qrow.get("no") != crow.get("queue_no") or qrow.get("title") != crow.get("title"):
+        problems.append("corpus-map-identity-drift:" + str(qid))
+    if not crow.get("genre_cluster") or not crow.get("evidence_family_id"):
+        problems.append("corpus-map-classification-missing:" + str(qid))
+if corpus.get("policy", {}).get("evidence_family_rule") != "WORK_COUNT_IS_NOT_INDEPENDENT_EVIDENCE_COUNT":
+    problems.append("corpus-map-evidence-family-policy")
+
+if cross.get("status") != "ACTIVE_CAMPAIGN":
+    problems.append("cross-work-state-not-active")
+if cross.get("current_gate", {}).get("active_work") != work_id:
+    problems.append("cross-work-active-binding")
+if cross.get("learning_loop", {}).get("interim_promotion_policy") != "NON_PROMOTIONAL__REFERENCE_AND_EXPERIMENTAL_ONLY":
+    problems.append("cross-work-interim-promotion-policy")
+if cross.get("formal_campaign_synthesis", {}).get("status") != "BLOCKED_UNTIL_ALL_NON_EXCLUDED_QUEUE_WORKS_COMPLETE":
+    problems.append("cross-work-formal-synthesis-gate")
+if cross.get("story_reselection", {}).get("status") != "BLOCKED_PENDING_FORMAL_CAMPAIGN_SYNTHESIS":
+    problems.append("story-reselection-premature")
+if cross.get("story_reselection", {}).get("historical_fq001_role") != "ONE_CANDIDATE_OR_EVIDENCE_SOURCE_ONLY__NO_INCUMBENT_PRIVILEGE":
+    problems.append("historical-fq001-incumbent-privilege")
+
+if registry.get("current_campaign_max_level") != "EXPERIMENTAL":
+    problems.append("mechanism-registry-campaign-ceiling")
+for mechanism in registry.get("mechanisms", []):
+    works = mechanism.get("support_work_ids", [])
+    families = mechanism.get("support_evidence_family_ids", [])
+    if len(works) != len(families):
+        problems.append("mechanism-family-cardinality:" + str(mechanism.get("mechanism_id")))
+    if mechanism.get("active_rule"):
+        problems.append("premature-active-rule:" + str(mechanism.get("mechanism_id")))
+    if mechanism.get("status") not in {"REFERENCE", "EXPERIMENTAL"}:
+        problems.append("premature-mechanism-promotion:" + str(mechanism.get("mechanism_id")))
+
+required_caps = {
+    "large_corpus_distillation",
+    "continual_cross_work_learning",
+    "material_deliberation_admission",
+    "zero_based_story_reselection",
+}
+cap_by_id = {c.get("capability_id"): c for c in caps.get("capabilities", [])}
+missing_caps = required_caps - set(cap_by_id)
+if missing_caps:
+    problems.append("uaos-learning-capabilities-missing:" + ",".join(sorted(missing_caps)))
+large = cap_by_id.get("large_corpus_distillation", {})
+if not {"source_identity", "coverage_cursor", "rolling_ledger"}.issubset(set(large.get("required", []))):
+    problems.append("uaos-large-corpus-capability-contract")
 
 if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists() or (ROOT / "research/masterworks/INDEX.json").exists():
     problems.append("retired-learning-index-returned")
 
 result = {
     "status": "PASS" if not problems else "FAIL",
-    "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@1.0",
+    "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@2.0",
     "active_study_binding": work_id,
     "active_status": active_status,
     "completed_studies": sorted(queue_complete_ids),
     "next_pass": next_pass,
-    "assurance": "LEARNING_EVIDENCE_ONLY__PROJECT_TRANSFER_PENDING",
+    "cross_work_learning": cross.get("status"),
+    "story_reselection": cross.get("story_reselection", {}).get("status"),
+    "assurance": "SEQUENTIAL_SOURCE_COVERAGE__CONTINUAL_COMPARISON__TRANSFER_GATED__STORY_RESELECTION_BLOCKED_UNTIL_CAMPAIGN_COMPLETE",
     "failures": problems,
 }
 print(json.dumps(result, ensure_ascii=False, indent=2))
