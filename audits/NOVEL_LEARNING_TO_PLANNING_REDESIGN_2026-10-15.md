@@ -4,7 +4,7 @@ problem_ref: N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN
 status: CANDIDATE_EVALUATION
 owner: DOMAIN:novel
 parent: D1traverser-debug/universal-agent-os@main
-updated_at: 2026-10-15T16:11:53+08:00
+updated_at: 2026-10-15T16:30:21+08:00
 
 ## 1. Trigger
 
@@ -110,13 +110,13 @@ Rejected. Published/final text, generic platform rejection, Canon and prior desi
 Rejected. Useful end-state constraints are retained, but million-character chapter-level rigidity creates false confidence and expensive downstream invalidation.
 
 ### I — Dynamic hierarchical outline with evidence-driven replan
-Selected: series/volume/arc/packet/chapter/scene, variable resolution by horizon, hard evidence to reopen near/frozen structure, impact-scoped invalidation.
+Selected: series/volume/arc/packet/chapter/scene, variable resolution by horizon, accepted/frozen structure protected by stronger reopen evidence, flexible pre-acceptance structure still revisable, impact-scoped invalidation.
 
 ### J — One scalar quality score
 Rejected. It hides tradeoffs among acquisition, attachment, consistency, richness, pacing/orchestration, originality and production risk. A hard-gate failure cannot be averaged away.
 
-### K — Vector + Pareto/pairwise evaluation
-Selected. Hard gates remain authoritative; vector evidence exposes tradeoffs; live outcomes later recalibrate the system.
+### K — Calibrated vector + Pareto/pairwise evaluation
+Selected. Hard gates remain authoritative; numeric comparison is allowed only under shared rubrics/calibration scope with explicit uncertainty; incommensurable evidence stays qualitative/pairwise until re-benchmarked; live outcomes later recalibrate the system.
 
 ## 6. Candidate architecture implemented
 
@@ -144,7 +144,7 @@ New evidence/state surfaces include:
 
 Novel capability profile candidate moves from Profile 4 to Profile 5.
 
-## 7. Important failed path preserved
+## 7. Important failed path preserved — fixed evidence family
 
 ### FIXED_EVIDENCE_FAMILY_OVERCOMPRESSION
 Sequence:
@@ -159,7 +159,47 @@ Sequence:
 
 This failure remains part of the causal record and must not be rewritten as if the selected architecture existed from the beginning.
 
-## 8. Tool/maintenance issue preserved
+## 8. Post-green adversarial review found four additional defects
+
+Candidate PR #3 first reached a fully green run at CI #293 after one brittle wording-only test failure in CI #292 was repaired at the test layer. The system was **not** merged at that point. A separate adversarial diff review challenged the green candidate and found four design defects that tests had not yet exposed.
+
+### A. NEAR_HORIZON_OVERFREEZE
+Problem: `dynamic_outline.py` said near flexible material could change before acceptance, but `admit_replan()` mechanically required a hard failure/live signal for every NEAR node.
+
+Risk: chapters/scenes could become prematurely frozen simply because they were near in time, turning dynamic planning into rigidity.
+
+Repair: horizon now controls resolution; acceptance status controls rigidity. `NEAR + FLEXIBLE` may improve from ordinary evidence/critique before acceptance. Only `FROZEN` structure requires hard defect/live outcome evidence to reopen. Added explicit regression trajectory.
+
+### B. ENABLES_INVALIDATION_DIRECTION
+Problem: `story_dependency_graph.py` initially treated `ENABLES` with the same reverse dependency propagation as `DEPENDS_ON`.
+
+Risk: if A enables B, changing A should review B; the old direction could review the wrong side and miss the true downstream impact.
+
+Repair: invalidation semantics are now edge-specific. `DEPENDS_ON/REQUIRES_KNOWLEDGE_OF` invalidate from target to source; `ENABLES/CAUSES/FORESHADOWS` invalidate from source to target; `PAYS_OFF` conservatively reviews both sides. Added directional tests.
+
+### C. UNCALIBRATED_NUMERIC_DOMINANCE
+Problem: vector/Pareto evaluation originally allowed raw 0–1 scores to dominate even when candidates used different rubrics/evidence calibration.
+
+Risk: an internal/model score could appear numerically superior to stronger real-reader/platform evidence without a common measurement basis.
+
+Repair: each dimension now carries `rubric_id`, `calibration_scope`, explicit uncertainty and confidence. Numeric dominance requires common rubric/calibration. Conservative interval overlap does not manufacture certainty. Model self-evaluation cannot be a hard gate and cannot claim artificially narrow uncertainty.
+
+### D. ARTIFICIAL_ENGINE_DIVERSITY_QUOTA
+Problem: story reselection originally required at least three distinct `engine_family` labels.
+
+Risk: this could force superficial genre/engine diversity and reject three genuinely different product concepts that share a broad family but differ materially in reader contract, acquisition, relationship engine, world logic or serial structure.
+
+Repair: the quota was removed. Reselection still requires >=3 candidates, but every candidate pair must have explicit evidence of material difference on at least two valid story/product axes. Broad genre/engine labels are no longer diversity authority.
+
+These defects were discovered **after** a successful CI and therefore demonstrate why green tests are necessary but insufficient for system architecture promotion.
+
+## 9. CI failure history preserved
+
+- PR #3 CI #292: all guards passed; pytest had 66 PASS / 1 FAIL. Failure was a brittle wording assertion requiring the literal phrase `never collapse`, while the production semantics already encoded within-author comparison and claim-specific confound handling. The test was rewritten to validate semantics instead of prose wording; production logic was not weakened to satisfy the test.
+- PR #3 CI #293: PASS on the then-current candidate. Despite success, promotion was intentionally withheld for the adversarial architecture review described above.
+- A new full candidate CI is required after the four post-green repairs. Only that later head is eligible for merge.
+
+## 10. Tool/maintenance issue preserved
 
 `TOOL_FRESHNESS_409_NO_SIDE_EFFECT`:
 - an update to `tests/test_learning_transfer_admission.py` initially used a stale blob SHA;
@@ -169,7 +209,7 @@ This failure remains part of the causal record and must not be rewritten as if t
 
 This is an operational freshness event, not a Novel architecture failure.
 
-## 9. Invariants after redesign
+## 11. Invariants after redesign
 
 - fulltext reading remains one work at a time;
 - exact GUI_CHUI_DENG cursor remains line 3914;
@@ -178,11 +218,15 @@ This is an operational freshness event, not a Novel architecture failure.
 - interim learning cannot silently become ACTIVE_RULE;
 - historical FQ001 has no incumbent privilege;
 - no replacement prose before corpus synthesis + story reselection + pre-draft architecture gate;
+- candidate diversity is evidence-backed, not a genre/engine quota;
+- flexible near-horizon planning is not prematurely frozen;
 - Plan cannot silently become Canon;
+- dependency invalidation follows edge semantics;
 - scalar quality cannot override hard gates;
+- numeric vector comparison cannot cross incompatible rubrics/calibration scopes;
 - internal CI cannot be claimed as live literary/commercial outcome.
 
-## 10. Remaining candidate verification
+## 12. Remaining candidate verification
 
 Before promotion:
 - run recovery guard;
@@ -191,12 +235,12 @@ Before promotion:
 - masterwork distillation guard;
 - learning-to-planning system guard;
 - full pytest including deliberate rejection trajectories;
-- inspect PR diff for stale fixed-family and incumbent-identity language;
-- merge only after candidate CI passes;
+- inspect PR diff for stale fixed-family, arbitrary diversity-quota, overfreeze and incumbent-identity language;
+- merge only after the latest candidate head CI passes;
 - run production main CI;
 - close this evolution with event-scoped production evidence;
 - refresh UAOS parent Novel observation if it caches the old Profile 4 assurance.
 
-## 11. Assurance boundary
+## 13. Assurance boundary
 
 Successful CI can prove executable architecture/trajectory/state contracts. It cannot prove the future selected novel will sign, retain readers or earn revenue. The live literary outcome remains open until post-reselection material reaches real reader/platform evaluation.
