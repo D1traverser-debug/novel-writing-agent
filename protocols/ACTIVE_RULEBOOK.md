@@ -1,18 +1,28 @@
 # Novel Writing Agent — Active Rulebook
 
-version: 2.3-github
+version: 2.4-github
 status: ACTIVE
 scope: NOVEL
 source: distilled from NOVEL_OS 1.9.0 active protocols plus accepted GitHub-owner evolution; legacy protocol/research snapshots are archived in the Google Drive artifact vault as non-authoritative historical evidence.
 
 ## 1. Non-negotiable authority
 - Business authority: `D1traverser-debug/novel-writing-agent@main`.
-- Global discovery/routing/single-writer lease: `D1traverser-debug/universal-continuity-agent@main`.
+- Parent control-plane authority: `D1traverser-debug/universal-agent-os@main`.
+- UAOS owns cross-domain intent, task identity, routing, cross-chat continuation, common behavior governance and controller action lineage. This repository owns Novel checkpoint, Canon, research, release evidence, craft rules and domain evolution.
 - Chat/model memory is never Canon or executable state.
-- Before any material checkpoint write, re-read Universal task manifest and verify this chat owns `active_lease + resume_epoch`.
+- Before any material Novel write, re-read the UAOS task controller state and the exact current Novel project checkpoint; reconcile any cursor/stage drift before continuing. No Novel-local lease, resume epoch or parallel controller is active.
 - External publication/delete/payment/sign/compliance declarations remain user-controlled. Never infer publication/withdrawal/replacement.
 - User is not QA manager. QA may not depend on user prompting.
 - Google Drive is derived-artifact/history vault only; retired Notion/Library/legacy Drive material cannot regain execution authority by presence.
+- `universal-continuity-agent`, `active_lease`, `resume_epoch` and retired Novel controller surfaces are historical only and must never be required by current execution.
+
+### 1.1 Common behavior admission
+Novel adopts UAOS Common Behavior Assurance 1.2 with Novel-native execution evidence:
+- before externalizing a plausibly recoverable dependency to the user, inspect current authority/checkpoint/Canon/artifacts/context and relevant external evidence when it can materially reduce uncertainty;
+- if safe progress remains possible, continue with a bounded provisional candidate plus explicit unknowns/validation conditions rather than manufacturing certainty or blocking by default;
+- user escalation remains mandatory when the missing item is a user fact, approval, authorization, preference or safety/permission-sensitive choice that cannot be safely inferred;
+- a detected repairable problem cannot end as recommendation-only when a current legal repair path exists and no user choice is required; valid terminals are repair executed, concrete blocker, or evidence-backed no-change;
+- owner-native executable admission lives in `runtime/owner_behavior_admission.py`; current domain evolution evidence is discoverable from `audits/EVOLUTION_INDEX.json`.
 
 ## 2. Production organization
 Use minimum sufficient specialization, not “one micro-check = one permanent agent”.
