@@ -1,5 +1,5 @@
 {
-  "schema_version":"2.1",
+  "schema_version":"2.2",
   "agent_id":"novel",
   "domain_id":"novel",
   "controller":"D1traverser-debug/universal-agent-os@main",
@@ -15,9 +15,17 @@
     "project_root":"projects",
     "rulebook_ref":"protocols/ACTIVE_RULEBOOK.md",
     "mastery_ref":"protocols/NOVEL_MASTERY_MODEL.md",
+    "masterwork_learning_ref":"protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
+    "study_state_ref":"research/masterworks/STUDY_STATE.json",
+    "corpus_map_ref":"research/masterworks/CORPUS_MAP.json",
+    "cross_work_learning_state_ref":"research/masterworks/CROSS_WORK_LEARNING_STATE.json",
+    "mechanism_registry_ref":"research/masterworks/MECHANISM_REGISTRY.json",
     "artifact_context_ref":"config/ARTIFACT_CONTEXT_GOVERNANCE.json",
     "checkpoint_pattern":"projects/<task>/checkpoints/CURRENT_CHECKPOINT.json",
     "evolution_evidence_ref":"audits/EVOLUTION_INDEX.json",
-    "behavior_admission_ref":"runtime/owner_behavior_admission.py"
+    "behavior_admission_ref":"runtime/owner_behavior_admission.py",
+    "material_deliberation_admission_ref":"runtime/deliberation_admission.py",
+    "learning_transfer_admission_ref":"runtime/learning_transfer_admission.py",
+    "story_reselection_admission_ref":"runtime/story_reselection_admission.py"
   }
 }
