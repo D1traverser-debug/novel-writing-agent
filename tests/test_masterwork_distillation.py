@@ -93,9 +93,13 @@ def test_corpus_map_covers_queue_without_fixed_independence_keys():
         assert "evidence_family_id" not in work
         assert "independent_vote" not in work
     relation_by_id = {row["relation_id"]: row for row in corpus["relation_hints"]}
-    assert relation_by_id["R_HIGASHINO_WORKS"]["type"] == "SAME_AUTHOR_HINT"
-    assert "never collapse" in relation_by_id["R_HIGASHINO_WORKS"]["use"]
-    assert relation_by_id["R_DUNE_SERIES"]["type"] == "SAME_SERIES_SAME_AUTHOR_HINT"
+    higashino = relation_by_id["R_HIGASHINO_WORKS"]
+    assert higashino["type"] == "SAME_AUTHOR_HINT"
+    assert "WITHIN_AUTHOR_CROSS_WORK" in higashino["use"]
+    assert "confound only when relevant to the claim dimension" in higashino["use"]
+    dune = relation_by_id["R_DUNE_SERIES"]
+    assert dune["type"] == "SAME_SERIES_SAME_AUTHOR_HINT"
+    assert "does not merge works into one evidence item" in dune["use"]
 
 
 def test_narrative_evidence_schema_is_multidimensional_and_claim_conditioned():
