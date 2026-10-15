@@ -34,7 +34,7 @@ Do not reconstruct task state from chat memory, broad repository search, retired
 - `research/masterworks/MECHANISM_REGISTRY.json`: compact learning index, never Rulebook authority;
 - `config/ARTIFACT_CONTEXT_GOVERNANCE.json`: artifact/context governance;
 - `audits/EVOLUTION_INDEX.json`: canonical domain-evolution entrypoint;
-- `runtime/owner_behavior_admission.py`: recover-before-user-escalation and problem closure;
+- `runtime/owner_behavior_admission.py`: recovery, root-scope cognition, typed evolution and problem closure;
 - `runtime/deliberation_admission.py`: research/compare/challenge admission for material mutations;
 - `runtime/learning_transfer_admission.py`: closed-context reconstruction, claim-conditioned comparison, transfer and promotion admission;
 - `runtime/story_reselection_admission.py`: post-campaign zero-based story-selection and pre-draft admission;
@@ -60,9 +60,16 @@ Do not reconstruct task state from chat memory, broad repository search, retired
 Any current execution that silently collapses these layers is a system defect.
 
 ## Common behavior / material decision discipline
-Novel adopts UAOS Common Behavior Assurance 1.2 owner-natively. Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
+Novel adopts UAOS Common Behavior Assurance 1.3 owner-natively. Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
 
-For a material learning/system/story decision, do not execute the first plausible idea. Build an evidence-bound decision receipt: current authority, internal evidence, external research when material (or explicit not-material reason), >=2 alternatives, counterexample, challenged assumption, rejection reasoning, risks and rollback/recovery. Then mutate.
+A detected problem does not become repairable merely because a plausible edit exists. User framing, external methods and the first repairable symptom are evidence rather than root-cause authority. Before repair or evidence-backed no-change, `runtime/owner_behavior_admission.py` must produce a root-scope receipt and typed evolution disposition. A small one-off local defect may use a single-layer receipt; material, repeated, cross-subsystem, architecture-gap, complexity-growth or scope-expansion signals must compare multiple causal layers, test an architecture/upstream hypothesis and preserve a rejected alternative.
+
+For those material/systemic problems, root-scope admission reuses the existing `MaterialDecisionReceipt` from `runtime/deliberation_admission.py`; it does not create a second deliberation system. That receipt supplies current authority, internal evidence, relevant external research (or a justified not-material reason), >=2 alternatives, counterexample, challenged assumption, rejection reasoning, risks and rollback/recovery. Root-scope then answers the distinct causal question: which Novel layer actually owns the failure?
+
+Material/evolution-relevant problems require durable causal evidence in `audits/EVOLUTION_INDEX.json` or a linked owner-native record. A genuine user-controlled fact/authorization/publication choice may be surfaced as a blocker without fabricating a root-cause claim. An admitted, owner-authorized repair cannot terminate at recommendation-only; it must be attempted and verified or converted to a real blocker.
+
+The problem transaction is:
+`DETECT -> RECOVER WHEN APPLICABLE -> MATERIAL DELIBERATION WHEN REQUIRED -> ROOT_SCOPE_ADMISSION -> TYPED_EVOLUTION_DISPOSITION -> REPAIR / NO_CHANGE / BLOCK -> VERIFY`.
 
 ## Masterwork learning
 Sequential full-text reading remains one work at a time. Cross-work comparison occurs only after a work completes, but no longer waits until the entire corpus is finished.

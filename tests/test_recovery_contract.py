@@ -17,7 +17,8 @@ def test_uaos_is_the_only_current_controller_surface():
     assert manifest["controller"] == "D1traverser-debug/universal-agent-os@main"
     assert manifest["status"] == "UAOS_CONTROL_PLANE_ACTIVE"
     assert manifest["skill"]["entrypoint"] == "UAOS_SKILL.md"
-    assert caps["profile_version"] == 5
+    assert caps["profile_version"] >= 6
+    assert caps["common_behavior_assurance_min"] == "1.3.0"
     assert adapter["task_identity_authority"] == "UAOS"
     assert adapter["cross_chat_continuity_authority"] == "UAOS"
     assert adapter["legacy_controller_compatibility"] == "NONE"

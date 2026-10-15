@@ -1,11 +1,13 @@
 {
-  "schema_version":"1.2",
+  "schema_version":"1.3",
   "owner":"DOMAIN:novel",
-  "revision":"1.2",
-  "updated_at":"2026-10-15T16:32:56+08:00",
-  "common_behavior_assurance_min":"1.2.0",
-  "current_open_items":[],
-  "current_problem_refs":{},
+  "revision":"1.3-candidate",
+  "updated_at":"2026-10-16T07:13:00+08:00",
+  "common_behavior_assurance_min":"1.3.0",
+  "current_open_items":["N-20261016-03-COMMON-BEHAVIOR-1-3-ROOT-SCOPE-ADOPTION"],
+  "current_problem_refs":{
+    "N-20261016-03-COMMON-BEHAVIOR-1-3-ROOT-SCOPE-ADOPTION":"runtime/owner_behavior_admission.py + tests/test_owner_behavior_admission.py"
+  },
   "recent_resolved_or_promoted":[
     {
       "problem_ref":"N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN",
@@ -43,6 +45,29 @@
       "assurance":"EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_LITERARY_OUTCOME_OPEN"
     }
   ],
+  "candidate_evolution":[
+    {
+      "problem_ref":"N-20261016-03-COMMON-BEHAVIOR-1-3-ROOT-SCOPE-ADOPTION",
+      "status":"CANDIDATE_IMPLEMENTED__CI_PENDING",
+      "failure_class":"FC-COMMON-BEHAVIOR-1-3-OWNER-ADOPTION-OPEN",
+      "symptom":"Novel Common Behavior 1.2 enforced recovery and repair-or-block outcomes, while material deliberation separately enforced alternatives/counterexamples; neither mechanism mechanically established root problem layer and typed evolution disposition before problem action.",
+      "selected_architecture":"EXTEND_OWNER_BEHAVIOR_ADMISSION_WITH_ROOT_SCOPE__REUSE_EXISTING_MATERIAL_DECISION_RECEIPT_FOR_SYSTEMIC_EVIDENCE__DO_NOT_DUPLICATE_DELIBERATION_OR_PARENT_CONTROL_PLANE",
+      "competing_hypotheses":[
+        "H1 version declaration only -> rejected: no behavioral proof",
+        "H2 copy UAOS kernel -> rejected: duplicate control plane and wrong ownership",
+        "H3 replace material deliberation with root-scope -> rejected: loses existing evidence/alternatives discipline",
+        "H4 connect material deliberation + root-scope + typed evolution + closure -> selected"
+      ],
+      "evidence_refs":[
+        "runtime/owner_behavior_admission.py",
+        "runtime/deliberation_admission.py",
+        "tests/test_owner_behavior_admission.py",
+        ".uaos/CAPABILITIES.json",
+        ".uaos/MANIFEST.json"
+      ],
+      "open_followup":"candidate CI, controlled promotion, production reread; live literary/commercial outcome remains open"
+    }
+  ],
   "historical_evidence_refs":[
     "audits/MASTERWORK_PROGRESS_PERSISTENCE_REPAIR_2026-10-11.md",
     "audits/MASTERWORK_QUEUE_TRANSITION_GENERALIZATION_2026-10-11.md",
@@ -73,5 +98,5 @@
     "tests/test_story_dependency_graph.py",
     "tests/test_narrative_evaluation.py"
   ],
-  "assurance":"OWNER_NATIVE_LEARNING_TO_PLANNING_OS__EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
+  "assurance":"COMMON_BEHAVIOR_1_3_OWNER_NATIVE_CANDIDATE__EXISTING_LEARNING_TO_PLANNING_OS_PRESERVED__CI_AND_LIVE_OUTCOME_OPEN"
 }

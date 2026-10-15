@@ -37,9 +37,9 @@ mastery = text("protocols/NOVEL_MASTERY_MODEL.md")
 learning_protocol = text("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 architecture = text("protocols/NOVEL_PRODUCT_ARCHITECTURE.md")
 
-# Authority/version alignment.
-if caps.get("profile_version") != 5:
-    problems.append("profile-not-5")
+# Authority/version alignment. Capability profiles are monotonic capability floors, not frozen identities.
+if int(caps.get("profile_version", 0)) < 6:
+    problems.append("profile-below-6")
 if "version: 2.5-github" not in rulebook:
     problems.append("rulebook-not-2.5")
 if "version: 2.0" not in mastery:

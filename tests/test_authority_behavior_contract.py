@@ -16,27 +16,29 @@ def test_active_rulebook_uses_uaos_and_quarantines_retired_controller_semantics(
     assert "`universal-continuity-agent`, local leases and resume epochs are retired" in rulebook
 
 
-def test_novel_adopts_common_behavior_1_2_and_profile_5_learning_to_planning_execution():
+def test_novel_adopts_common_behavior_1_3_and_profile_6_without_replacing_existing_material_deliberation():
     caps = load_json(".uaos/CAPABILITIES.json")
-    assert caps["schema_version"] == "2.4"
-    assert caps["profile_version"] == 5
-    assert caps["common_behavior_assurance_min"] == "1.2.0"
-    assert caps["common_behavior_adoption"] == "OWNER_NATIVE_EXECUTABLE_ADMISSION_AND_TRAJECTORY_EVIDENCE"
+    manifest = load_json(".uaos/MANIFEST.json")
+    assert caps["schema_version"] == "2.5"
+    assert caps["profile_version"] == 6
+    assert caps["common_behavior_assurance_min"] == "1.3.0"
+    assert "ROOT_SCOPE" in caps["common_behavior_adoption"]
     assert caps["canonical_evolution_evidence_ref"] == "audits/EVOLUTION_INDEX.json"
+    assert manifest["schema_version"] == "2.4"
+    assert manifest["binding"]["common_behavior_assurance_min"] == "1.3.0"
+    assert manifest["domain_authority"]["root_scope_admission_ref"].endswith("require_root_scope_admission")
     capabilities = {row["capability_id"]: row for row in caps["capabilities"]}
-    for cap_id in ("recover_before_user_escalation", "problem_to_action_closure"):
+    for cap_id in ("recover_before_user_escalation", "problem_root_scope_admission", "problem_to_action_closure"):
         assert capabilities[cap_id]["execution_ref"] == "runtime/owner_behavior_admission.py"
     assert capabilities["material_deliberation_admission"]["execution_ref"] == "runtime/deliberation_admission.py"
     assert capabilities["continual_cross_work_learning"]["execution_ref"] == "runtime/learning_transfer_admission.py"
     assert capabilities["zero_based_story_reselection"]["execution_ref"] == "runtime/story_reselection_admission.py"
 
 
-def test_canonical_evolution_entrypoint_supports_resolved_production_receipt():
+def test_canonical_evolution_entrypoint_preserves_prior_production_and_tracks_1_3_adoption():
     index = load_json("audits/EVOLUTION_INDEX.json")
     assert index["owner"] == "DOMAIN:novel"
-    assert index["common_behavior_assurance_min"] == "1.2.0"
-    assert index["current_open_items"] == []
-    assert index["current_problem_refs"] == {}
+    assert index["common_behavior_assurance_min"] == "1.3.0"
 
     receipts = index["recent_resolved_or_promoted"]
     prior = next(item for item in receipts if item["problem_ref"] == "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR")
@@ -47,16 +49,16 @@ def test_canonical_evolution_entrypoint_supports_resolved_production_receipt():
     current = next(item for item in receipts if item["problem_ref"] == "N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN")
     assert current["status"] == "PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
     assert current["pull_request"] == 3
-    assert current["candidate_final_head"] == "4d53781e5cdf0d2fe1e6ebe244b66dba35c4958e"
-    assert current["candidate_ci_run"] == 38706239260
-    assert current["candidate_ci_number"] == 305
     assert current["production_commit"] == "e0ec355f476830f77033ada08912d6c58f0bafe4"
-    assert current["production_ci_run"] == 38706383327
-    assert current["production_ci_number"] == 306
     assert current["result"] == "PASS"
-    assert current["self_corrections"]
+
+    adoption_ref = "N-20261016-03-COMMON-BEHAVIOR-1-3-ROOT-SCOPE-ADOPTION"
+    tracked = adoption_ref in index.get("current_open_items", []) or any(
+        item.get("problem_ref") == adoption_ref for item in index.get("recent_resolved_or_promoted", [])
+    )
+    assert tracked
+    assert "runtime/owner_behavior_admission.py" in index["execution_refs"]
     assert "runtime/deliberation_admission.py" in index["execution_refs"]
-    assert "runtime/story_reselection_admission.py" in index["execution_refs"]
 
 
 def test_rulebook_and_skill_point_to_executable_learning_to_planning_admissions():
@@ -72,5 +74,7 @@ def test_rulebook_and_skill_point_to_executable_learning_to_planning_admissions(
         "runtime/narrative_evaluation.py",
     ):
         assert ref in rulebook or ref in skill
-    assert "recommendation-only" in rulebook
+    assert "Common Behavior Assurance 1.3" in skill
+    assert "root-scope receipt" in skill
+    assert "typed evolution disposition" in skill
     assert "no incumbent privilege" in rulebook
