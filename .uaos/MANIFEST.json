@@ -1,5 +1,5 @@
 {
-  "schema_version":"2.2",
+  "schema_version":"2.3",
   "agent_id":"novel",
   "domain_id":"novel",
   "controller":"D1traverser-debug/universal-agent-os@main",
@@ -14,10 +14,12 @@
   "domain_authority":{
     "project_root":"projects",
     "rulebook_ref":"protocols/ACTIVE_RULEBOOK.md",
+    "product_architecture_ref":"protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
     "mastery_ref":"protocols/NOVEL_MASTERY_MODEL.md",
     "masterwork_learning_ref":"protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
     "study_state_ref":"research/masterworks/STUDY_STATE.json",
     "corpus_map_ref":"research/masterworks/CORPUS_MAP.json",
+    "narrative_evidence_schema_ref":"research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
     "cross_work_learning_state_ref":"research/masterworks/CROSS_WORK_LEARNING_STATE.json",
     "mechanism_registry_ref":"research/masterworks/MECHANISM_REGISTRY.json",
     "artifact_context_ref":"config/ARTIFACT_CONTEXT_GOVERNANCE.json",
@@ -26,6 +28,9 @@
     "behavior_admission_ref":"runtime/owner_behavior_admission.py",
     "material_deliberation_admission_ref":"runtime/deliberation_admission.py",
     "learning_transfer_admission_ref":"runtime/learning_transfer_admission.py",
-    "story_reselection_admission_ref":"runtime/story_reselection_admission.py"
+    "story_reselection_admission_ref":"runtime/story_reselection_admission.py",
+    "dynamic_outline_ref":"runtime/dynamic_outline.py",
+    "story_dependency_graph_ref":"runtime/story_dependency_graph.py",
+    "narrative_evaluation_ref":"runtime/narrative_evaluation.py"
   }
 }
