@@ -1,30 +1,33 @@
 {
   "schema_version":"1.2",
   "owner":"DOMAIN:novel",
-  "revision":"1.1",
-  "updated_at":"2026-10-15T16:11:53+08:00",
+  "revision":"1.2",
+  "updated_at":"2026-10-15T16:32:56+08:00",
   "common_behavior_assurance_min":"1.2.0",
-  "current_open_items":["N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN"],
-  "current_problem_refs":{
-    "N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN":{
-      "status":"CANDIDATE_EVALUATION",
-      "evidence_ref":"audits/NOVEL_LEARNING_TO_PLANNING_REDESIGN_2026-10-15.md",
-      "candidate_branch":"feat/learning-to-planning-os-20261015",
-      "failure_classes":[
-        "END_ONLY_CROSS_WORK_FEEDBACK_DELAY",
-        "READING_WITHOUT_TRANSFER_ASSURANCE",
-        "HISTORICAL_PROJECT_INCUMBENT_BIAS",
-        "STATIC_LONGFORM_PLAN_RISK",
-        "SCALAR_QUALITY_COLLAPSE",
-        "LEARNING_PLAN_CANON_OUTCOME_BOUNDARY_FRAGMENTATION",
-        "MATERIAL_MUTATION_WITHOUT_EXPLICIT_DELIBERATION_RECEIPT",
-        "FIXED_EVIDENCE_FAMILY_OVERCOMPRESSION"
-      ],
-      "known_self_correction":"FIXED_EVIDENCE_FAMILY_MODEL_REJECTED__CLAIM_CONDITIONED_MULTIDIMENSIONAL_DEPENDENCY_MODEL_SELECTED",
-      "next_gate":"CANDIDATE_PR_CI_AND_DIFF_REVIEW"
-    }
-  },
+  "current_open_items":[],
+  "current_problem_refs":{},
   "recent_resolved_or_promoted":[
+    {
+      "problem_ref":"N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN",
+      "status":"PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN",
+      "evidence_ref":"audits/NOVEL_LEARNING_TO_PLANNING_REDESIGN_2026-10-15.md",
+      "pull_request":3,
+      "candidate_final_head":"4d53781e5cdf0d2fe1e6ebe244b66dba35c4958e",
+      "candidate_ci_run":38706239260,
+      "candidate_ci_number":305,
+      "production_commit":"e0ec355f476830f77033ada08912d6c58f0bafe4",
+      "production_ci_run":38706383327,
+      "production_ci_number":306,
+      "result":"PASS",
+      "self_corrections":[
+        "FIXED_EVIDENCE_FAMILY_MODEL_REJECTED__CLAIM_CONDITIONED_MULTIDIMENSIONAL_DEPENDENCY_MODEL_SELECTED",
+        "NEAR_HORIZON_OVERFREEZE_REPAIRED__FROZEN_STATUS_NOW_CONTROLS_HARD_REOPEN_GATE",
+        "ENABLES_INVALIDATION_DIRECTION_REPAIRED__EDGE_SPECIFIC_PROPAGATION",
+        "UNCALIBRATED_NUMERIC_DOMINANCE_REPAIRED__SHARED_RUBRIC_CALIBRATION_AND_UNCERTAINTY_REQUIRED",
+        "ARTIFICIAL_ENGINE_DIVERSITY_QUOTA_REPAIRED__PAIRWISE_MATERIAL_DIFFERENCE_EVIDENCE_REQUIRED"
+      ],
+      "assurance":"EXECUTABLE_LEARNING_TO_PLANNING_ARCHITECTURE_AND_TRAJECTORY_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
+    },
     {
       "problem_ref":"N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR",
       "status":"PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_BEHAVIOR_OBSERVATION_OPEN",
@@ -70,5 +73,5 @@
     "tests/test_story_dependency_graph.py",
     "tests/test_narrative_evaluation.py"
   ],
-  "assurance":"CANDIDATE_LEARNING_TO_PLANNING_OS__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
+  "assurance":"OWNER_NATIVE_LEARNING_TO_PLANNING_OS__EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
 }
