@@ -31,17 +31,30 @@ def test_novel_adopts_common_behavior_1_2_and_profile_5_learning_to_planning_exe
     assert capabilities["zero_based_story_reselection"]["execution_ref"] == "runtime/story_reselection_admission.py"
 
 
-def test_canonical_evolution_entrypoint_preserves_prior_receipt_and_current_candidate():
+def test_canonical_evolution_entrypoint_supports_resolved_production_receipt():
     index = load_json("audits/EVOLUTION_INDEX.json")
     assert index["owner"] == "DOMAIN:novel"
     assert index["common_behavior_assurance_min"] == "1.2.0"
-    assert index["current_open_items"] == ["N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN"]
-    assert index["current_problem_refs"]["N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN"]["status"] == "CANDIDATE_EVALUATION"
+    assert index["current_open_items"] == []
+    assert index["current_problem_refs"] == {}
+
     receipts = index["recent_resolved_or_promoted"]
-    row = next(item for item in receipts if item["problem_ref"] == "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR")
-    assert row["production_commit"] == "7cc56fbdca5139c2b61d0a16823d963693e9094c"
-    assert row["production_ci_run"] == 38676046948
-    assert row["result"] == "PASS"
+    prior = next(item for item in receipts if item["problem_ref"] == "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR")
+    assert prior["production_commit"] == "7cc56fbdca5139c2b61d0a16823d963693e9094c"
+    assert prior["production_ci_run"] == 38676046948
+    assert prior["result"] == "PASS"
+
+    current = next(item for item in receipts if item["problem_ref"] == "N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN")
+    assert current["status"] == "PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
+    assert current["pull_request"] == 3
+    assert current["candidate_final_head"] == "4d53781e5cdf0d2fe1e6ebe244b66dba35c4958e"
+    assert current["candidate_ci_run"] == 38706239260
+    assert current["candidate_ci_number"] == 305
+    assert current["production_commit"] == "e0ec355f476830f77033ada08912d6c58f0bafe4"
+    assert current["production_ci_run"] == 38706383327
+    assert current["production_ci_number"] == 306
+    assert current["result"] == "PASS"
+    assert current["self_corrections"]
     assert "runtime/deliberation_admission.py" in index["execution_refs"]
     assert "runtime/story_reselection_admission.py" in index["execution_refs"]
 
