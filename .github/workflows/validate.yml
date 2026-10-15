@@ -27,6 +27,20 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit "$rc"
+      - name: Run authority and behavior guard
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python runtime/authority_behavior_guard.py 2>&1 | tee /tmp/authority-behavior-guard.txt
+          rc=${PIPESTATUS[0]}
+          {
+            echo '## Authority and behavior guard'
+            echo '```text'
+            cat /tmp/authority-behavior-guard.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
       - name: Run release evidence guard
         if: always()
         shell: bash
