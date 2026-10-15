@@ -8,7 +8,7 @@ scope: long-form fiction production, distillation, serialization, audit and reco
 Controller: `D1traverser-debug/universal-agent-os@main`.
 Domain repository: `D1traverser-debug/novel-writing-agent@main`.
 
-UAOS owns intent, task identity, requirements, cross-chat continuation, capability orchestration and controller action lineage. This repository owns Canon, project state, research, craft rules, chapter/release artifacts and domain guards.
+UAOS owns intent, task identity, requirements, cross-chat continuation, common behavior governance, capability orchestration and controller action lineage. This repository owns Canon, project state, research, craft rules, chapter/release artifacts, domain guards and Novel-domain evolution evidence.
 
 ## Start
 After UAOS resolves the exact task, load progressively:
@@ -26,12 +26,19 @@ Never reconstruct task state from chat memory, repository search, old task index
 - `protocols/ACTIVE_RULEBOOK.md`: production/review rules;
 - `protocols/NOVEL_MASTERY_MODEL.md`: learning/benchmark authority;
 - `config/ARTIFACT_CONTEXT_GOVERNANCE.json`: artifact/context governance;
+- `audits/EVOLUTION_INDEX.json`: canonical discoverable Novel-domain evolution evidence entrypoint;
+- `runtime/owner_behavior_admission.py`: Novel-native recover-before-user-escalation and problem-to-action admission;
 - `projects/<task>/PROJECT_PROFILE.md`: project identity;
 - `projects/<task>/canon/`: factual Canon;
 - current outline/architecture selected by the project;
 - `projects/<task>/checkpoints/CURRENT_CHECKPOINT.json`: fine-grained business checkpoint.
 
 Plans and research are not Canon. Learning evidence is not automatically a production rule.
+
+## Common behavior
+Novel adopts UAOS Common Behavior Assurance 1.2 owner-natively. A plausibly recoverable dependency must be investigated from currently lawful authority/state/artifacts/context before it is externalized to the user. If a bounded provisional path is safe, continue with explicit uncertainty instead of blocking by default. A detected repairable problem must be repaired now or end with a concrete blocker or evidence-backed no-change; recommendation-only is not valid closure when the current Agent has authority and capability to repair it.
+
+The executable admission and trajectory evidence live in Novel-owned runtime/tests. This does not claim physical interception of every host-language response or live literary outcome verification.
 
 ## Production
 Use minimum sufficient context. Normal flow:
