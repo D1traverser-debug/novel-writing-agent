@@ -88,12 +88,14 @@ if uaos_adapter.get("legacy_controller_compatibility") != "NONE":
     problems.append("uaos-legacy-compatibility")
 if gov.get("controller") != "D1traverser-debug/universal-agent-os@main":
     problems.append("artifact-governance-controller")
-if caps.get("profile_version") != 5:
+if caps.get("profile_version") != 6:
     problems.append("profile-version")
+if caps.get("common_behavior_assurance_min") != "1.3.0":
+    problems.append("common-behavior-min")
 
 cap_ids = {c.get("capability_id") for c in caps.get("capabilities", [])}
 for required_cap in {
-    "project_recovery", "recover_before_user_escalation", "problem_to_action_closure",
+    "project_recovery", "recover_before_user_escalation", "problem_root_scope_admission", "problem_to_action_closure",
     "material_deliberation_admission", "large_corpus_distillation", "continual_cross_work_learning",
     "zero_based_story_reselection", "draft_and_revision", "review_fanout", "release_and_canon_commit",
     "learning_promotion",
