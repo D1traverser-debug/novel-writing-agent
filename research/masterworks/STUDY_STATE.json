@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "status": "ACTIVE",
   "authority_role": "SYSTEM_LEARNING_CHECKPOINT_NOT_PROSE_OR_CANON_AUTHORITY",
   "updated_at": "2026-10-15T15:44:58+08:00",
@@ -11,12 +11,14 @@
     "formal_cross_work_synthesis": "DEFER_ACTIVE_RULE_PROMOTION_UNTIL_SINGLE_BOOK_QUEUE_COMPLETE",
     "closed_context_reconstruction": "REQUIRED_AFTER_EACH_COMPLETED_WORK_BEFORE_LEDGER_REOPEN",
     "transfer_probe": "REQUIRED_AFTER_EACH_COMPLETED_WORK_BEFORE_QUEUE_ADVANCE",
-    "evidence_family_map": "research/masterworks/CORPUS_MAP.json",
+    "corpus_relation_map": "research/masterworks/CORPUS_MAP.json",
+    "narrative_evidence_schema": "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
     "cross_work_state": "research/masterworks/CROSS_WORK_LEARNING_STATE.json",
     "mechanism_registry": "research/masterworks/MECHANISM_REGISTRY.json",
     "single_work_output": "ONE_ROLLING_LEDGER_PER_WORK__OVERWRITE_NOT_VERSION_PILE",
     "per_work_storage_rule": "EACH_NOVEL_KEEPS_SOURCE_BINDING__ROLLING_LEDGER__STAGE_DISTILLATION__EVIDENCE_AND_EXECUTION_RECEIPTS_COLOCATED_IN_ITS_OWN_WORK_RESEARCH_SCOPE__INTERNAL_VOLUMES_DO_NOT_CREATE_SEPARATE_RESEARCH_SILOS",
     "cross_work_storage_rule": "CROSS_WORK_COMPARISON_IS_SEPARATE_FROM_SINGLE_WORK_EVIDENCE__INTERIM_COMPARISON_CANNOT_PROMOTE_ACTIVE_RULES",
+    "dependency_rule": "AUTHOR_SERIES_GENRE_POV_MARKET_PERIOD_AND_TRANSLATION_ARE_CLAIM_SPECIFIC_FACTORS__NOT_FIXED_EVIDENCE_FAMILIES",
     "source_scope": "USER_PROVIDED_STANDARDIZED_TEXT_ONLY_UNLESS_USER_EXPLICITLY_EXPANDS_SCOPE"
   },
   "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"],
@@ -50,7 +52,7 @@
       "next_location": "源第3914行；继续第二十六章《天砖秘道》玉石王座场景"
     },
     "next_pass": "SEQUENTIAL_CONTINUE__JINGJUE_GUCHENG_CH26_FROM_SOURCE_LINE_3914",
-    "completion_gate_after_fulltext": "RUN_D8_D11_INTERBOOK_LEARNING_CYCLE_BEFORE_QING_YU_NIAN",
+    "completion_gate_after_fulltext": "RUN_D8_D11_CLAIM_CONDITIONED_INTERBOOK_LEARNING_CYCLE_BEFORE_QING_YU_NIAN",
     "activation_receipt": "research/masterworks/GUI_CHUI_DENG/EXECUTION_BINDING_RECEIPT_2026-10-12_ACTIVATION.json",
     "latest_pause_receipt": "research/masterworks/GUI_CHUI_DENG/EXECUTION_RECEIPT_2026-10-12_PAUSE_LINE3913.json"
   },
@@ -83,5 +85,5 @@
     {"no": 21, "work_id": "THE_STRANGER", "title": "局外人", "status": "PENDING"},
     {"no": 22, "work_id": "OLD_MAN_AND_SEA", "title": "老人与海", "status": "PENDING"}
   ],
-  "resume_rule": "GUI_CHUI_DENG is the only ACTIVE work and is paused by user at a safe checkpoint. Resume exactly from source line 3914 in Jingjue Gucheng CH26. Complete the work, then run the mandatory interbook learning cycle before QING_YU_NIAN may activate."
+  "resume_rule": "GUI_CHUI_DENG is the only ACTIVE work and is paused by user at a safe checkpoint. Resume exactly from source line 3914 in Jingjue Gucheng CH26. Complete the work, then run the mandatory claim-conditioned interbook learning cycle before QING_YU_NIAN may activate."
 }
