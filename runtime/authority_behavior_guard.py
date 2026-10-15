@@ -33,9 +33,17 @@ if manifest.get("controller") != "D1traverser-debug/universal-agent-os@main":
 if adapter.get("task_identity_authority") != "UAOS" or adapter.get("cross_chat_continuity_authority") != "UAOS":
     problems.append("adapter-uaos-authority")
 
-for retired in ("universal-continuity-agent", "active_lease", "resume_epoch"):
-    if retired in rulebook:
-        problems.append("retired-authority-semantics:" + retired)
+# Historical names may appear only to state that they are retired. Reject the old
+# executable requirements themselves, not every textual mention of their names.
+for retired_active_pattern in (
+    "Global discovery/routing/single-writer lease: `D1traverser-debug/universal-continuity-agent@main`",
+    "verify this chat owns `active_lease + resume_epoch`",
+    "Before any material checkpoint write, re-read Universal task manifest",
+):
+    if retired_active_pattern in rulebook:
+        problems.append("retired-active-authority-semantics:" + retired_active_pattern)
+if "`universal-continuity-agent`, `active_lease`, `resume_epoch` and retired Novel controller surfaces are historical only" not in rulebook:
+    problems.append("retired-authority-quarantine-marker-missing")
 if "D1traverser-debug/universal-agent-os@main" not in rulebook:
     problems.append("rulebook-current-parent-missing")
 if "runtime/owner_behavior_admission.py" not in rulebook:
@@ -66,7 +74,9 @@ result = {
     "controller": manifest.get("controller"),
     "common_behavior_assurance_min": caps.get("common_behavior_assurance_min"),
     "canonical_evolution_evidence_ref": caps.get("canonical_evolution_evidence_ref"),
-    "retired_authority_semantics_absent": not any(p.startswith("retired-authority-semantics:") for p in problems),
+    "retired_active_authority_semantics_absent": not any(
+        p.startswith("retired-active-authority-semantics:") for p in problems
+    ),
     "owner_behavior_admission": "runtime/owner_behavior_admission.py",
     "failures": problems,
 }
