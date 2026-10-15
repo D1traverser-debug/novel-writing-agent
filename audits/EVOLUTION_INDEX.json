@@ -1,12 +1,30 @@
 {
-  "schema_version":"1.2",
+  "schema_version":"1.3",
   "owner":"DOMAIN:novel",
-  "revision":"1.2",
-  "updated_at":"2026-10-15T16:32:56+08:00",
-  "common_behavior_assurance_min":"1.2.0",
-  "current_open_items":[],
-  "current_problem_refs":{},
+  "revision":"1.3",
+  "updated_at":"2026-10-16T01:18:00+08:00",
+  "common_behavior_assurance_min":"1.3.0",
+  "current_open_items":["N-20261016-01-COMMON-BEHAVIOR-1_3-ROOT-SCOPE-ADOPTION"],
+  "current_problem_refs":{
+    "N-20261016-01-COMMON-BEHAVIOR-1_3-ROOT-SCOPE-ADOPTION":"maintenance/common-behavior-1-3-root-scope"
+  },
   "recent_resolved_or_promoted":[
+    {
+      "problem_ref":"N-20261016-01-COMMON-BEHAVIOR-1_3-ROOT-SCOPE-ADOPTION",
+      "status":"CANDIDATE_IMPLEMENTED__DOMAIN_CI_PENDING",
+      "failure_class":"FC-PREMATURE-PROBLEM-FRAMING-AND-REPAIR-BEFORE-ROOT-SCOPE-001",
+      "governance_basis":"UAOS FROZEN_REQUIREMENTS_v2.2 + COMMON_BEHAVIOR_ASSURANCE 1.3",
+      "selected_repair":"extend existing deliberation_admission with owner-native RootScopeReceipt and make owner_behavior_admission consume root scope plus evolution disposition before repair/no-change",
+      "rejected_paths":[
+        "copy parent UAOS kernel into Novel",
+        "create a second cognition controller",
+        "treat user/external framing as root cause without falsification",
+        "rebuild the whole Novel learning-to-planning architecture without evidence"
+      ],
+      "verification_refs":["tests/test_deliberation_admission.py","tests/test_owner_behavior_admission.py"],
+      "parent_ref":"UAOS:EVO-20261016-PROBLEM-COGNITION-ACTION-TRANSACTION",
+      "open_followup":"candidate CI then production observation; live literary outcome remains open"
+    },
     {
       "problem_ref":"N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN",
       "status":"PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN",
@@ -30,7 +48,7 @@
     },
     {
       "problem_ref":"N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR",
-      "status":"PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_BEHAVIOR_OBSERVATION_OPEN",
+      "status":"PROMOTED__PRODUCTION_CI_VERIFIED__SUPERSEDED_BY_COMMON_BEHAVIOR_1_3_ROOT_SCOPE_EXTENSION__LIVE_BEHAVIOR_OBSERVATION_OPEN",
       "evidence_ref":"audits/UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR_2026-10-15.md",
       "pull_request":1,
       "baseline_reproduction_ci_run":38675471138,
@@ -49,7 +67,7 @@
     "audits/NOVEL_MASTERY_EVOLUTION_2026-10-11.md",
     "audits/NOVEL_SYSTEM_EVOLUTION_AUDIT_2026-10-10.md"
   ],
-  "open_parent_guidance_refs":[],
+  "open_parent_guidance_refs":["UAOS:EVO-20261016-PROBLEM-COGNITION-ACTION-TRANSACTION"],
   "execution_refs":[
     "runtime/recovery_guard.py",
     "runtime/authority_behavior_guard.py",
@@ -73,5 +91,5 @@
     "tests/test_story_dependency_graph.py",
     "tests/test_narrative_evaluation.py"
   ],
-  "assurance":"OWNER_NATIVE_LEARNING_TO_PLANNING_OS__EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
+  "assurance":"COMMON_BEHAVIOR_1_3_ROOT_SCOPE_CANDIDATE__OWNER_NATIVE_LEARNING_TO_PLANNING_OS__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
 }
