@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from itertools import combinations
 from typing import Iterable
 
 
@@ -12,6 +13,21 @@ class StoryReselectionAdmissionError(RuntimeError):
 
 def _clean(values: Iterable[str] | None) -> tuple[str, ...]:
     return tuple(v.strip() for v in (values or ()) if isinstance(v, str) and v.strip())
+
+
+MATERIAL_DIFFERENCE_AXES = {
+    "PREMISE",
+    "STORY_ENGINE",
+    "READER_CONTRACT",
+    "ACQUISITION",
+    "CHARACTER_ATTACHMENT",
+    "RELATIONSHIP_ENGINE",
+    "WORLD_OR_INSTITUTIONAL_LOGIC",
+    "SERIAL_SUSTAINABILITY",
+    "EMOTIONAL_RANGE",
+    "DIFFERENTIATION",
+    "PRODUCTION_RISK",
+}
 
 
 @dataclass(frozen=True)
@@ -29,8 +45,17 @@ class StoryCandidate:
 
 
 @dataclass(frozen=True)
+class CandidateContrast:
+    left_candidate_id: str
+    right_candidate_id: str
+    materially_different_axes: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class ReselectionDecisionReceipt:
     candidates: tuple[StoryCandidate, ...]
+    candidate_contrasts: tuple[CandidateContrast, ...]
     selected_candidate_id: str
     pairwise_or_pareto_evidence_refs: tuple[str, ...]
     platform_evidence_refs: tuple[str, ...]
@@ -40,6 +65,10 @@ class ReselectionDecisionReceipt:
     long_horizon_stress_refs: tuple[str, ...]
     rejected_candidate_reasons: tuple[str, ...]
     current_project_was_privileged: bool = False
+
+
+def _pair(left: str, right: str) -> tuple[str, str]:
+    return tuple(sorted((left, right)))
 
 
 def admit_story_reselection(
@@ -57,10 +86,31 @@ def admit_story_reselection(
     ids = [c.candidate_id for c in receipt.candidates]
     if len(set(ids)) != len(ids) or receipt.selected_candidate_id not in ids:
         raise StoryReselectionAdmissionError("candidate ids must be unique and include the winner")
-    if len({c.engine_family for c in receipt.candidates}) < 3:
-        raise StoryReselectionAdmissionError("candidates must span at least three distinct story-engine families")
     if receipt.current_project_was_privileged:
         raise StoryReselectionAdmissionError("historical FQ001 design may compete but cannot receive incumbent privilege")
+
+    # Diversity is evidence-backed, not an arbitrary quota such as 'three engine families'.
+    # Candidates may share a broad genre/engine family if they are materially different on
+    # reader contract, attachment, acquisition, world logic, serial engine, etc.
+    required_pairs = {_pair(a, b) for a, b in combinations(ids, 2)}
+    seen_pairs: set[tuple[str, str]] = set()
+    for contrast in receipt.candidate_contrasts:
+        if contrast.left_candidate_id not in ids or contrast.right_candidate_id not in ids:
+            raise StoryReselectionAdmissionError("candidate contrast references unknown candidate")
+        pair = _pair(contrast.left_candidate_id, contrast.right_candidate_id)
+        if pair[0] == pair[1] or pair in seen_pairs:
+            raise StoryReselectionAdmissionError("candidate contrasts must be unique pairwise comparisons")
+        axes = set(contrast.materially_different_axes)
+        if len(axes) < 2 or not axes.issubset(MATERIAL_DIFFERENCE_AXES):
+            raise StoryReselectionAdmissionError(
+                "each candidate pair must show at least two valid material difference axes"
+            )
+        if not contrast.evidence_refs:
+            raise StoryReselectionAdmissionError("candidate material difference requires evidence")
+        seen_pairs.add(pair)
+    if seen_pairs != required_pairs:
+        raise StoryReselectionAdmissionError("all candidate pairs require explicit material-difference evidence")
+
     if not receipt.learning_synthesis_ref or not receipt.platform_evidence_refs:
         raise StoryReselectionAdmissionError("reselection requires formal learning synthesis and current platform evidence")
     if not receipt.pairwise_or_pareto_evidence_refs:
@@ -117,7 +167,7 @@ def admit_pre_draft_architecture(
     if not canon_or_story_graph_ref.strip() or not first_20k_packet_ref.strip():
         raise StoryReselectionAdmissionError("pre-draft architecture requires story graph/canon and first-20k packet")
     if len(benchmarks) < 3:
-        raise StoryReselectionAdmissionError("pre-draft architecture requires multiple independent benchmark dimensions")
+        raise StoryReselectionAdmissionError("pre-draft architecture requires multiple benchmark dimensions")
     if not platform:
         raise StoryReselectionAdmissionError("pre-draft architecture requires current platform evidence")
     return "PRE_DRAFT_ARCHITECTURE_ADMITTED__DYNAMIC_HIERARCHY_AND_BENCHMARKS_PASS"
