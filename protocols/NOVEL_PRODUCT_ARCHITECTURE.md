@@ -36,7 +36,7 @@ Hard boundary: LEARNING does not directly change Rulebook, Canon or prose.
 ### L2 — STORY PRODUCT CANDIDATES
 Authority: a future reselection packet admitted through `runtime/story_reselection_admission.py`.
 
-Each candidate must define premise, story engine, target reader, reader contract, acquisition hypothesis, character attachment engine, serial sustainability, differentiation and risks.
+Each candidate must define premise, story engine, target reader, reader contract, acquisition hypothesis, character attachment engine, serial sustainability, differentiation and risks. Candidate diversity is established pairwise on relevant story/product axes; broad genre or engine labels are not diversity quotas.
 
 Hard boundary: historical FQ001 has no incumbent privilege.
 
@@ -45,12 +45,12 @@ Runtime: `runtime/dynamic_outline.py`.
 
 Hierarchy: `SERIES -> VOLUME -> ARC -> PACKET -> CHAPTER -> SCENE`.
 
-Near horizon may freeze for execution; mid/far horizon remains revisable. Replan requires evidence, alternatives, downstream invalidation and review. Plan is expectation, not truth.
+Horizon controls planning resolution. `NEAR + FLEXIBLE` material may continue improving before acceptance; `FROZEN` material requires a hard defect/live outcome signal to reopen. Replan requires evidence, alternatives, downstream invalidation and review. Plan is expectation, not truth.
 
 ### L4 — STORY/CANON DEPENDENCY GRAPH
 Runtime: `runtime/story_dependency_graph.py`.
 
-Coordinates premise, events, character/relationship state, world rules, promises, foreshadowing, threads and outline dependencies. Existing project Canon files remain the accepted factual authority.
+Coordinates premise, events, character/relationship state, world rules, promises, foreshadowing, threads and outline dependencies. Edge-specific semantics determine invalidation direction; not every relation uses the same graph orientation. Existing project Canon files remain the accepted factual authority.
 
 Hard boundary: research or plan alone cannot become Canon. Canon promotion requires accepted prose + acceptance evidence + reconciliation.
 
@@ -64,7 +64,7 @@ Runtime: `runtime/narrative_evaluation.py` plus owner review roles.
 
 Candidate/prose evaluation is a vector, not a scalar. Required dimensions include acquisition, reader contract, character attachment, relationship dynamics, serial sustainability, engine diversity, narrative orchestration, continuity, development/richness, mystery/revelation, emotional range, voice/prose, cognitive load, originality, platform fit and production-complexity risk.
 
-Hard gates override averages. Pareto/pairwise evidence preserves tradeoffs instead of hiding them in one weighted score.
+Hard gates override averages. Numeric Pareto dominance is permitted only under a shared rubric and calibration scope for the same dimension, with explicit uncertainty. Incommensurable or overlapping evidence remains a qualitative/pairwise tradeoff until re-benchmarked. Model self-evaluation cannot become a hard gate or claim artificial precision.
 
 ### L7 — LIVE OUTCOME
 Strongest evidence:
@@ -119,14 +119,15 @@ Same-author and same-series works are often unusually valuable controlled contra
 When all non-excluded corpus works complete:
 1. formal synthesis of mechanisms and contradictions;
 2. refresh current Fanqie first-party rules/courses/category signals;
-3. generate >=3 materially different engine candidates;
-4. include historical FQ001 only if it remains competitive, without bonus weight;
-5. vector evaluation + pairwise/Pareto analysis;
-6. blind-reader and adversarial review;
-7. long-horizon stress at approximately 100k/300k/800k structural horizons;
-8. select winner + backup;
-9. create dynamic series/volume/arc/opening-packet architecture;
-10. freeze first acquisition/signing packet before new prose starts.
+3. generate >=3 story-product candidates;
+4. prove every candidate pair is materially different on >=2 relevant axes instead of forcing arbitrary genre/engine quotas;
+5. include historical FQ001 only if it remains competitive, without bonus weight;
+6. vector evaluation + pairwise/Pareto analysis under comparable rubrics/calibration scopes;
+7. blind-reader and adversarial review;
+8. long-horizon stress at approximately 100k/300k/800k structural horizons;
+9. select winner + backup;
+10. create dynamic series/volume/arc/opening-packet architecture;
+11. freeze first acquisition/signing packet before new prose starts.
 
 ## 5. Long-form planning principle
 
@@ -135,7 +136,7 @@ Do not prewrite a rigid 1.2-million-character chapter list. Plan the intended en
 - VOLUME: major state transitions and promise/payoff obligations;
 - ARC: engine, character/relationship changes, reveal/payoff ladder;
 - PACKET: near-horizon reading experience and acquisition/retention function;
-- CHAPTER/SCENE: frozen only near execution.
+- CHAPTER/SCENE: high resolution near execution, frozen only after acceptance.
 
 New evidence may replan future nodes, but accepted prose and Canon require explicit reconciliation.
 
@@ -145,9 +146,9 @@ No single weighted quality score can authorize release or story selection.
 
 Use:
 - hard gates for identity, continuity, safety/platform constraints, source/evidence integrity and unresolved HIGH/BLOCKER defects;
-- vector scores only as bounded evidence;
-- Pareto front to expose non-dominated alternatives;
-- pairwise tradeoff reasoning for product selection;
+- vector scores only as calibrated, uncertainty-bounded evidence;
+- Pareto front only where dimensions are numerically comparable;
+- pairwise tradeoff reasoning when evidence is incommensurable or overlapping;
 - live outcomes to recalibrate dimensions after publication.
 
 ## 7. Current FQ001 transition
