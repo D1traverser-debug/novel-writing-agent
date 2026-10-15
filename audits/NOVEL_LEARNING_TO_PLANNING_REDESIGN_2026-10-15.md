@@ -1,10 +1,10 @@
 # Novel Learning-to-Planning OS Redesign — Causal Audit
 
 problem_ref: N-20261015-02-LEARNING_TO_PLANNING_OS_REDESIGN
-status: CANDIDATE_EVALUATION
+status: PROMOTED__PRODUCTION_CI_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN
 owner: DOMAIN:novel
 parent: D1traverser-debug/universal-agent-os@main
-updated_at: 2026-10-15T16:30:21+08:00
+updated_at: 2026-10-15T16:32:56+08:00
 
 ## 1. Trigger
 
@@ -142,7 +142,7 @@ New evidence/state surfaces include:
 - `research/masterworks/CROSS_WORK_LEARNING_STATE.json` 1.1
 - `research/masterworks/MECHANISM_REGISTRY.json` 2.0
 
-Novel capability profile candidate moves from Profile 4 to Profile 5.
+Novel capability profile promoted from Profile 4 to Profile 5.
 
 ## 7. Important failed path preserved — fixed evidence family
 
@@ -193,21 +193,30 @@ Repair: the quota was removed. Reselection still requires >=3 candidates, but ev
 
 These defects were discovered **after** a successful CI and therefore demonstrate why green tests are necessary but insufficient for system architecture promotion.
 
-## 9. CI failure history preserved
+## 9. CI failure and promotion history preserved
 
-- PR #3 CI #292: all guards passed; pytest had 66 PASS / 1 FAIL. Failure was a brittle wording assertion requiring the literal phrase `never collapse`, while the production semantics already encoded within-author comparison and claim-specific confound handling. The test was rewritten to validate semantics instead of prose wording; production logic was not weakened to satisfy the test.
-- PR #3 CI #293: PASS on the then-current candidate. Despite success, promotion was intentionally withheld for the adversarial architecture review described above.
-- A new full candidate CI is required after the four post-green repairs. Only that later head is eligible for merge.
+- PR #3 CI #292 / run `38704354202`: all guards passed; pytest had 66 PASS / 1 FAIL. Failure was a brittle wording assertion requiring the literal phrase `never collapse`, while the production semantics already encoded within-author comparison and claim-specific confound handling. The test was rewritten to validate semantics instead of prose wording; production logic was not weakened to satisfy the test.
+- PR #3 CI #293 / run `38705039352`: PASS on the then-current candidate. Despite success, promotion was intentionally withheld for the adversarial architecture review described above.
+- Final eligible candidate head: `4d53781e5cdf0d2fe1e6ebe244b66dba35c4958e`.
+- Final candidate CI #305 / run `38706239260`: PASS, including recovery guard, authority/common-behavior guard, release evidence guard, masterwork distillation guard, learning-to-planning system guard and owner contract tests.
+- PR #3 merged as production commit `e0ec355f476830f77033ada08912d6c58f0bafe4`.
+- Production main CI #306 / run `38706383327`: PASS on that production commit with the same full guard/test chain.
 
-## 10. Tool/maintenance issue preserved
+## 10. Tool/maintenance issues preserved
 
-`TOOL_FRESHNESS_409_NO_SIDE_EFFECT`:
+### TOOL_FRESHNESS_409_NO_SIDE_EFFECT
 - an update to `tests/test_learning_transfer_admission.py` initially used a stale blob SHA;
 - GitHub rejected the write with 409;
 - no repository state was overwritten;
 - the candidate file was reread and updated against the current SHA.
 
-This is an operational freshness event, not a Novel architecture failure.
+### CLOSURE_BRANCH_ADMISSION_SEQUENCE_ERROR
+- after production promotion, closure setup mistakenly attempted PR creation before the closure branch existed;
+- GitHub returned 422 and no repository mutation occurred;
+- the invalid attempt was repeated rather than immediately correcting the sequence, exposing a branch-existence admission lapse;
+- recovery: explicitly load branch-creation capability, create `chore/close-learning-to-planning-os-20261015` from the verified production commit, then perform closure writes and PR creation in order.
+
+These are operational workflow defects, not literary architecture failures, and are retained rather than erased by eventual success.
 
 ## 11. Invariants after redesign
 
@@ -226,21 +235,13 @@ This is an operational freshness event, not a Novel architecture failure.
 - numeric vector comparison cannot cross incompatible rubrics/calibration scopes;
 - internal CI cannot be claimed as live literary/commercial outcome.
 
-## 12. Remaining candidate verification
+## 12. Production promotion result
 
-Before promotion:
-- run recovery guard;
-- authority/common-behavior guard;
-- release evidence guard;
-- masterwork distillation guard;
-- learning-to-planning system guard;
-- full pytest including deliberate rejection trajectories;
-- inspect PR diff for stale fixed-family, arbitrary diversity-quota, overfreeze and incumbent-identity language;
-- merge only after the latest candidate head CI passes;
-- run production main CI;
-- close this evolution with event-scoped production evidence;
-- refresh UAOS parent Novel observation if it caches the old Profile 4 assurance.
+The architecture is now production-promoted at the executable-policy/trajectory layer. Production verification proves the governance, recovery, learning, comparison, planning, dependency, evaluation and release-evidence mechanics are internally consistent and regression-tested.
+
+It does **not** prove that the future post-study selected novel will sign, retain readers or earn revenue. That remains an explicit live-outcome observation boundary.
 
 ## 13. Assurance boundary
 
-Successful CI can prove executable architecture/trajectory/state contracts. It cannot prove the future selected novel will sign, retain readers or earn revenue. The live literary outcome remains open until post-reselection material reaches real reader/platform evaluation.
+Maximum current claim:
+`EXECUTABLE_LEARNING_TO_PLANNING_ARCHITECTURE_AND_TRAJECTORY_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN`.
