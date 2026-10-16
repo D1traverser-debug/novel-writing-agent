@@ -59,8 +59,11 @@ Do not reconstruct task state from chat memory, broad repository search, retired
 
 Any current execution that silently collapses these layers is a system defect.
 
-## Common behavior / material decision discipline
-Novel adopts UAOS Common Behavior Assurance 1.3 owner-natively. Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
+## Parent cognition binding and material decision discipline
+
+Novel adopts UAOS Common Behavior Assurance 1.3 through the owner-native gates below. Parent cognition stages and evidence/search depth are owned only by current UAOS `config/DELIBERATION_POLICY.json`. This Skill does not define a second parent problem-response floor; `.uaos/CAPABILITIES.json` declares `CURRENT_UAOS_DELIBERATION_POLICY` with no local cognition override. Novel owns the owner-native recovery, material-decision, root-scope, evolution and action-admission mechanisms below.
+
+Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
 
 A detected problem does not become repairable merely because a plausible edit exists. User framing, external methods and the first repairable symptom are evidence rather than root-cause authority. Before repair or evidence-backed no-change, `runtime/owner_behavior_admission.py` must produce a root-scope receipt and typed evolution disposition. A small one-off local defect may use a single-layer receipt; material, repeated, cross-subsystem, architecture-gap, complexity-growth or scope-expansion signals must compare multiple causal layers, test an architecture/upstream hypothesis and preserve a rejected alternative.
 
