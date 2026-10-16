@@ -16,14 +16,19 @@ def test_active_rulebook_uses_uaos_and_quarantines_retired_controller_semantics(
     assert "`universal-continuity-agent`, local leases and resume epochs are retired" in rulebook
 
 
-def test_novel_adopts_common_behavior_1_3_and_profile_6_without_replacing_existing_material_deliberation():
+def test_novel_adopts_common_behavior_1_3_and_profile_7_without_copying_parent_cognition():
     caps = load_json(".uaos/CAPABILITIES.json")
     manifest = load_json(".uaos/MANIFEST.json")
-    assert caps["schema_version"] == "2.5"
-    assert caps["profile_version"] == 6
+    assert caps["schema_version"] == "2.6"
+    assert caps["profile_version"] == 7
     assert caps["common_behavior_assurance_min"] == "1.3.0"
     assert "ROOT_SCOPE" in caps["common_behavior_adoption"]
     assert caps["canonical_evolution_evidence_ref"] == "audits/EVOLUTION_INDEX.json"
+    assert caps["uaos_deliberation_policy_ref"].endswith("config/DELIBERATION_POLICY.json")
+    assert caps["hosted_cognition_semantics"] == {
+        "source": "CURRENT_UAOS_DELIBERATION_POLICY",
+        "local_overrides": "NONE",
+    }
     assert manifest["schema_version"] == "2.4"
     assert manifest["binding"]["common_behavior_assurance_min"] == "1.3.0"
     assert manifest["domain_authority"]["root_scope_admission_ref"].endswith("require_root_scope_admission")
