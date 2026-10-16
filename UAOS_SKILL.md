@@ -61,7 +61,7 @@ Any current execution that silently collapses these layers is a system defect.
 
 ## Parent cognition binding and material decision discipline
 
-Parent cognition stages and evidence/search depth are owned only by current UAOS `config/DELIBERATION_POLICY.json`. This Skill does not define a second parent problem-response floor; `.uaos/CAPABILITIES.json` declares `CURRENT_UAOS_DELIBERATION_POLICY` with no local cognition override. Novel owns the owner-native recovery, material-decision, root-scope, evolution and action-admission mechanisms below.
+Novel adopts UAOS Common Behavior Assurance 1.3 through the owner-native gates below. Parent cognition stages and evidence/search depth are owned only by current UAOS `config/DELIBERATION_POLICY.json`. This Skill does not define a second parent problem-response floor; `.uaos/CAPABILITIES.json` declares `CURRENT_UAOS_DELIBERATION_POLICY` with no local cognition override. Novel owns the owner-native recovery, material-decision, root-scope, evolution and action-admission mechanisms below.
 
 Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
 
