@@ -17,16 +17,6 @@ def load_json(rel: str) -> dict:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
-def version_at_least(actual: object, minimum: str) -> bool:
-    try:
-        left = tuple(int(part) for part in str(actual).split("."))
-        right = tuple(int(part) for part in minimum.split("."))
-    except ValueError:
-        return False
-    width = max(len(left), len(right))
-    return left + (0,) * (width - len(left)) >= right + (0,) * (width - len(right))
-
-
 governance = load_json("config/CAOS_GOVERNANCE.json")
 caps = load_json("config/DOMAIN_CAPABILITIES.json")
 evolution = load_json("audits/EVOLUTION_INDEX.json")
@@ -40,6 +30,8 @@ if caos.get("system") != "CAOS" or caos.get("mode") != "CHAT_GOVERNED_EXTERNAL":
     problems.append("caos-governance-system-or-mode")
 if caos.get("runtime_dependency") is not False or caos.get("api_dependency") is not False:
     problems.append("caos-runtime-or-api-dependency")
+if caos.get("source_mutation") != "FORBIDDEN":
+    problems.append("caos-source-mutation-not-forbidden")
 if governance.get("execution_boundary", {}).get("parent_task_identity") is not False:
     problems.append("caos-parent-task-identity")
 if governance.get("execution_boundary", {}).get("runtime_upcall") is not False:
