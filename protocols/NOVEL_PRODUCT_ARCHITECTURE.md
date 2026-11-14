@@ -1,6 +1,6 @@
 # Novel Writing Agent — Evidence-to-Outcome Product Architecture
 
-version: 1.0
+version: 1.1
 status: CANDIDATE_SYSTEM_ARCHITECTURE
 scope: learning -> story selection -> planning -> canon -> production -> evaluation -> outcome -> evolution
 business_authority: D1traverser-debug/novel-writing-agent@main
