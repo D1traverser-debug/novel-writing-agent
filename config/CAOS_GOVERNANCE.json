@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "domain_id": "novel",
+  "owner": "DOMAIN:novel",
+  "governance": {
+    "system": "CAOS",
+    "source_repository": "D1traverser-debug/cognition-agent-os@main",
+    "source_revision_verified": "9686cedeb3fd8171ecf70eab33aaea641217b04a",
+    "mode": "CHAT_GOVERNED_EXTERNAL",
+    "entrypoint": "CAOS_NOVEL_ENTRY.md",
+    "skill": "cognition-parent-chatgpt-intake",
+    "runtime_dependency": false,
+    "api_dependency": false,
+    "source_mutation": "FORBIDDEN",
+    "scope": [
+      "COMPLETE_GOAL_AND_REQUIREMENT_RECOVERY",
+      "RECURSIVE_ROOT_CAUSE_AND_COUNTEREXAMPLE_ANALYSIS",
+      "PROFESSIONAL_METHOD_RESEARCH_AND_ALTERNATIVE_COMPARISON",
+      "DECISION_RECHALLENGE_BEFORE_ACTION",
+      "EXECUTION_DISCIPLINE",
+      "INDEPENDENT_ACCEPTANCE",
+      "DURABLE_LEARNING_AND_CROSS_DOMAIN_TRANSFER"
+    ]
+  },
+  "business_authority": {
+    "repository": "D1traverser-debug/novel-writing-agent@main",
+    "identity": "projects/<task_id>/TASK_MANIFEST.json::task_id",
+    "state": "projects/<task_id>/checkpoints/CURRENT_CHECKPOINT.json",
+    "rulebook": "protocols/ACTIVE_RULEBOOK.md",
+    "learning": "research/masterworks/STUDY_STATE.json",
+    "canon": "projects/<task_id>/canon/",
+    "evolution": "audits/EVOLUTION_INDEX.json"
+  },
+  "execution_boundary": {
+    "direct_domain_activation": true,
+    "business_owner": "DOMAIN:novel",
+    "parent_task_identity": false,
+    "parent_business_state_mirror": false,
+    "runtime_upcall": false,
+    "caos_permission_grant": false
+  },
+  "legacy_cleanup": {
+    "uaos_binding": "REMOVED_FROM_ACTIVE_DEFAULT_BRANCH",
+    "retired_paths": [
+      ".uaos/",
+      "UAOS_SKILL.md"
+    ],
+    "historical_provenance": "PRESERVED_IN_GIT_HISTORY_AND_DATED_AUDIT_RECORDS",
+    "novel_business_state_or_canon_changed": false
+  }
+}

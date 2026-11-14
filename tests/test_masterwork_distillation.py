@@ -155,10 +155,14 @@ def test_mechanism_registry_is_reference_only_until_dependency_review():
         assert "support_evidence_family_ids" not in row
 
 
-def test_uaos_capability_contract_exposes_learning_to_planning_mechanics():
-    caps = load_json(".uaos/CAPABILITIES.json")
-    assert caps["profile_version"] >= 6
-    assert caps["common_behavior_assurance_min"] == "1.3.0"
+def test_caos_governance_and_novel_capability_contract_expose_learning_to_planning_mechanics():
+    caps = load_json("config/DOMAIN_CAPABILITIES.json")
+    governance = load_json("config/CAOS_GOVERNANCE.json")
+    assert caps["profile_version"] >= 8
+    assert caps["caos_governance_ref"] == "config/CAOS_GOVERNANCE.json"
+    assert governance["governance"]["system"] == "CAOS"
+    assert governance["governance"]["mode"] == "CHAT_GOVERNED_EXTERNAL"
+    assert governance["governance"]["runtime_dependency"] is False
     by_id = {c["capability_id"]: c for c in caps["capabilities"]}
     assert {
         "large_corpus_distillation",

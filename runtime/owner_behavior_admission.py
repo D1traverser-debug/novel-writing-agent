@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Novel-owner executable admission for recovery, root-scope cognition and problem closure.
 
-This module realizes UAOS Common Behavior Assurance 1.3 inside the Novel domain.
+This module provides Novel-owned execution admission for recovery, root-scope and problem closure.
 It reuses the existing material-decision admission instead of creating a second
-cognition engine or transferring Novel business ownership to UAOS.
+cognition engine. CAOS governs cross-project reasoning externally in the active chat; Novel retains business ownership.
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ class ProblemLayer(str, Enum):
     LEARNING_OR_PLAN = "LEARNING_OR_PLAN"
     DOMAIN_ARCHITECTURE = "DOMAIN_ARCHITECTURE"
     COMMON_CAPABILITY = "COMMON_CAPABILITY"
-    PARENT_CONTROL_PLANE = "PARENT_CONTROL_PLANE"
+    CAOS_GOVERNANCE = "CAOS_GOVERNANCE"
     HOST = "HOST"
     REQUIREMENT_OR_GOAL = "REQUIREMENT_OR_GOAL"
 
@@ -44,7 +44,7 @@ class EvolutionDisposition(str, Enum):
     NO_DURABLE_EVOLUTION_WITH_EVIDENCE = "NO_DURABLE_EVOLUTION_WITH_EVIDENCE"
     DOMAIN_EVOLUTION_CANDIDATE = "DOMAIN_EVOLUTION_CANDIDATE"
     DOMAIN_EVOLUTION_UPDATED = "DOMAIN_EVOLUTION_UPDATED"
-    PARENT_OR_COMMON_UPCALL = "PARENT_OR_COMMON_UPCALL"
+    CAOS_GOVERNANCE_REVIEW = "CAOS_GOVERNANCE_REVIEW"
 
 
 @dataclass(frozen=True)
@@ -57,10 +57,23 @@ class RootScopeHypothesis:
     falsification_or_rejection_refs: tuple[str, ...]
 
     def __post_init__(self) -> None:
-        if not self.hypothesis_id.strip() or not self.statement.strip():
-            raise ValueError("root-scope hypothesis requires identity and statement")
-        if not self.supporting_evidence_refs or not self.falsification_or_rejection_refs:
-            raise ValueError("root-scope hypothesis requires support and falsification/rejection evidence")
+        if not isinstance(self.hypothesis_id, str) or not self.hypothesis_id.strip():
+            raise ValueError("root-scope hypothesis requires a non-blank string identity")
+        if not isinstance(self.statement, str) or not self.statement.strip():
+            raise ValueError("root-scope hypothesis requires a non-blank string statement")
+        if not isinstance(self.layer, ProblemLayer):
+            raise ValueError("root-scope hypothesis requires a valid ProblemLayer")
+        if not isinstance(self.disposition, HypothesisDisposition):
+            raise ValueError("root-scope hypothesis requires a valid HypothesisDisposition")
+        for label, refs in (
+            ("supporting", self.supporting_evidence_refs),
+            ("falsification/rejection", self.falsification_or_rejection_refs),
+        ):
+            if not isinstance(refs, tuple) or not refs or any(
+                not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+                for ref in refs
+            ):
+                raise ValueError(f"root-scope hypothesis requires non-blank {label} evidence references")
 
 
 @dataclass(frozen=True)
@@ -73,15 +86,45 @@ class RootScopeReceipt:
     architecture_reassessment_performed: bool
     durable_problem_record_required: bool
     evidence_refs: tuple[str, ...]
+    hypotheses: tuple[RootScopeHypothesis, ...] = ()
+    rejected_hypothesis_ids: tuple[str, ...] = ()
+    architecture_reassessment_refs: tuple[str, ...] = ()
+    material_decision_receipt: MaterialDecisionReceipt | None = None
 
 
 _UPSTREAM_LAYERS = {
     ProblemLayer.DOMAIN_ARCHITECTURE,
     ProblemLayer.COMMON_CAPABILITY,
-    ProblemLayer.PARENT_CONTROL_PLANE,
+    ProblemLayer.CAOS_GOVERNANCE,
     ProblemLayer.HOST,
     ProblemLayer.REQUIREMENT_OR_GOAL,
 }
+
+
+def _validate_root_scope_hypothesis(hypothesis: object, *, context: str) -> RootScopeHypothesis:
+    """Revalidate nested hypothesis data at every trust boundary."""
+    if not isinstance(hypothesis, RootScopeHypothesis):
+        raise BehaviorAdmissionError(f"{context}: invalid nested hypothesis type")
+    if not isinstance(hypothesis.hypothesis_id, str) or not hypothesis.hypothesis_id.strip():
+        raise BehaviorAdmissionError(f"{context}: hypothesis identity must be a non-blank string")
+    if not isinstance(hypothesis.statement, str) or not hypothesis.statement.strip():
+        raise BehaviorAdmissionError(f"{context}: hypothesis statement must be a non-blank string")
+    if not isinstance(hypothesis.layer, ProblemLayer):
+        raise BehaviorAdmissionError(f"{context}: hypothesis layer is invalid")
+    if not isinstance(hypothesis.disposition, HypothesisDisposition):
+        raise BehaviorAdmissionError(f"{context}: hypothesis disposition is invalid")
+    for label, refs in (
+        ("supporting", hypothesis.supporting_evidence_refs),
+        ("falsification/rejection", hypothesis.falsification_or_rejection_refs),
+    ):
+        if not isinstance(refs, tuple) or not refs or any(
+            not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+            for ref in refs
+        ):
+            raise BehaviorAdmissionError(
+                f"{context}: hypothesis requires non-blank {label} evidence references"
+            )
+    return hypothesis
 
 
 def require_root_scope_admission(
@@ -110,10 +153,13 @@ def require_root_scope_admission(
         raise BehaviorAdmissionError(
             "root-scope admission denied: user/external framing was promoted without falsification"
         )
-    if not hypotheses:
-        raise BehaviorAdmissionError("root-scope admission requires hypotheses")
-    if len({h.hypothesis_id for h in hypotheses}) != len(hypotheses):
-        raise BehaviorAdmissionError("root-scope hypothesis identifiers must be unique")
+    if not isinstance(hypotheses, tuple) or not hypotheses:
+        raise BehaviorAdmissionError("root-scope admission requires a non-empty hypothesis tuple")
+    for hypothesis in hypotheses:
+        _validate_root_scope_hypothesis(hypothesis, context="root-scope admission denied")
+    hypothesis_ids = [h.hypothesis_id.strip() for h in hypotheses]
+    if any(not value for value in hypothesis_ids) or len(set(hypothesis_ids)) != len(hypothesis_ids):
+        raise BehaviorAdmissionError("root-scope hypothesis identifiers must be non-empty and unique")
 
     selected = [h for h in hypotheses if h.hypothesis_id == selected_hypothesis_id]
     if len(selected) != 1 or selected[0].disposition is not HypothesisDisposition.SELECTED:
@@ -121,6 +167,8 @@ def require_root_scope_admission(
     if sum(h.disposition is HypothesisDisposition.SELECTED for h in hypotheses) != 1:
         raise BehaviorAdmissionError("exactly one root-scope hypothesis may be SELECTED")
 
+    architecture_refs = _clean(architecture_reassessment_refs)
+    compared_layers = tuple(sorted({h.layer for h in hypotheses}, key=lambda layer: layer.value))
     systemic = any(
         (
             material_problem,
@@ -129,10 +177,12 @@ def require_root_scope_admission(
             architecture_gap,
             complexity_growth,
             scope_expansion,
+            material_decision_receipt is not None,
+            len(hypotheses) > 1,
+            len(compared_layers) > 1,
+            any(h.disposition is HypothesisDisposition.REJECTED for h in hypotheses),
         )
     )
-    architecture_refs = _clean(architecture_reassessment_refs)
-    compared_layers = tuple(sorted({h.layer for h in hypotheses}, key=lambda layer: layer.value))
 
     if systemic:
         if material_decision_receipt is None:
@@ -155,15 +205,17 @@ def require_root_scope_admission(
             raise BehaviorAdmissionError("systemic/material problem requires architecture/upstream reassessment evidence")
 
     chosen = selected[0]
-    refs = tuple(
-        sorted(
-            {
-                *chosen.supporting_evidence_refs,
-                *chosen.falsification_or_rejection_refs,
-                *architecture_refs,
-            }
-        )
-    )
+    rejected_ids = tuple(sorted(
+        h.hypothesis_id for h in hypotheses if h.disposition is HypothesisDisposition.REJECTED
+    ))
+    refs = tuple(sorted({
+        *(
+            ref
+            for hypothesis in hypotheses
+            for ref in (*hypothesis.supporting_evidence_refs, *hypothesis.falsification_or_rejection_refs)
+        ),
+        *architecture_refs,
+    }))
     return RootScopeReceipt(
         selected_hypothesis_id=chosen.hypothesis_id,
         selected_layer=chosen.layer,
@@ -173,11 +225,114 @@ def require_root_scope_admission(
         architecture_reassessment_performed=bool(architecture_refs),
         durable_problem_record_required=systemic,
         evidence_refs=refs,
+        hypotheses=tuple(hypotheses),
+        rejected_hypothesis_ids=rejected_ids,
+        architecture_reassessment_refs=architecture_refs,
+        material_decision_receipt=material_decision_receipt,
     )
 
 
 def _clean(values: Iterable[str] | None) -> tuple[str, ...]:
     return tuple(v.strip() for v in (values or ()) if isinstance(v, str) and v.strip())
+
+
+def _validate_root_scope_receipt(receipt: RootScopeReceipt) -> None:
+    """Revalidate a receipt at the action boundary; dataclass construction is not proof."""
+    if not isinstance(receipt, RootScopeReceipt):
+        raise BehaviorAdmissionError("problem closure denied: invalid root-scope receipt type")
+    hypotheses = receipt.hypotheses
+    if (
+        not isinstance(hypotheses, tuple)
+        or not hypotheses
+        or not isinstance(receipt.hypothesis_count, int)
+        or isinstance(receipt.hypothesis_count, bool)
+        or len(hypotheses) != receipt.hypothesis_count
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt lost its hypotheses")
+    for hypothesis in hypotheses:
+        _validate_root_scope_hypothesis(
+            hypothesis,
+            context="problem closure denied: root-scope receipt",
+        )
+    if not isinstance(receipt.selected_hypothesis_id, str) or not receipt.selected_hypothesis_id.strip():
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt selected identity is invalid")
+    if not isinstance(receipt.selected_layer, ProblemLayer):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt selected layer is invalid")
+    if not isinstance(receipt.compared_layers, tuple) or any(
+        not isinstance(layer, ProblemLayer) for layer in receipt.compared_layers
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt compared layers are invalid")
+    if not isinstance(receipt.rejected_hypothesis_ids, tuple) or any(
+        not isinstance(value, str) or not value.strip() for value in receipt.rejected_hypothesis_ids
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt rejected IDs are invalid")
+    if not isinstance(receipt.evidence_refs, tuple) or any(
+        not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+        for ref in receipt.evidence_refs
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt evidence refs are invalid")
+    if not isinstance(receipt.architecture_reassessment_refs, tuple) or any(
+        not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+        for ref in receipt.architecture_reassessment_refs
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope architecture refs are invalid")
+    if receipt.material_decision_receipt is not None and not isinstance(
+        receipt.material_decision_receipt, MaterialDecisionReceipt
+    ):
+        raise BehaviorAdmissionError("problem closure denied: material deliberation receipt type is invalid")
+    ids = [h.hypothesis_id.strip() for h in hypotheses]
+    if any(not value for value in ids) or len(set(ids)) != len(ids):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt has invalid hypothesis identities")
+    selected = [h for h in hypotheses if h.hypothesis_id == receipt.selected_hypothesis_id]
+    if len(selected) != 1 or selected[0].disposition is not HypothesisDisposition.SELECTED:
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt selected hypothesis is invalid")
+    if sum(h.disposition is HypothesisDisposition.SELECTED for h in hypotheses) != 1:
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt must have exactly one selected hypothesis")
+
+    layers = tuple(sorted({h.layer for h in hypotheses}, key=lambda layer: layer.value))
+    rejected = tuple(sorted(h.hypothesis_id for h in hypotheses if h.disposition is HypothesisDisposition.REJECTED))
+    architecture_refs = _clean(receipt.architecture_reassessment_refs)
+    expected_refs = tuple(sorted({
+        *(
+            ref
+            for hypothesis in hypotheses
+            for ref in (*hypothesis.supporting_evidence_refs, *hypothesis.falsification_or_rejection_refs)
+        ),
+        *architecture_refs,
+    }))
+    if receipt.selected_layer is not selected[0].layer or receipt.compared_layers != layers:
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt layer binding is invalid")
+    if receipt.rejected_hypothesis_ids != rejected:
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt rejected-hypothesis evidence is incomplete")
+    if receipt.evidence_refs != expected_refs:
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt evidence references are incomplete or altered")
+    if receipt.architecture_reassessment_refs != architecture_refs or receipt.architecture_reassessment_performed != bool(architecture_refs):
+        raise BehaviorAdmissionError("problem closure denied: root-scope architecture reassessment binding is invalid")
+    if receipt.material_deliberation_bound != (receipt.material_decision_receipt is not None):
+        raise BehaviorAdmissionError("problem closure denied: root-scope material deliberation binding is invalid")
+
+    expected_systemic = bool(
+        len(hypotheses) > 1
+        or len(layers) > 1
+        or rejected
+        or receipt.material_decision_receipt is not None
+    )
+    if receipt.durable_problem_record_required != expected_systemic:
+        raise BehaviorAdmissionError("problem closure denied: root-scope systemic/evolution flag is inconsistent")
+    if expected_systemic:
+        if len(hypotheses) < 2 or len(layers) < 2 or not rejected:
+            raise BehaviorAdmissionError("problem closure denied: systemic root-scope receipt lacks competing/rejected hypotheses")
+        if not any(h.layer in _UPSTREAM_LAYERS for h in hypotheses):
+            raise BehaviorAdmissionError("problem closure denied: systemic root-scope receipt lacks an upstream hypothesis")
+        if not architecture_refs:
+            raise BehaviorAdmissionError("problem closure denied: systemic root-scope receipt lacks architecture reassessment")
+        if receipt.material_decision_receipt is None:
+            raise BehaviorAdmissionError("problem closure denied: systemic root-scope receipt lacks material deliberation")
+    if receipt.material_decision_receipt is not None:
+        try:
+            admit_material_mutation(receipt.material_decision_receipt)
+        except Exception as exc:
+            raise BehaviorAdmissionError(f"problem closure denied: material deliberation receipt invalid: {exc}") from exc
 
 
 @dataclass(frozen=True)
@@ -274,6 +429,7 @@ def finalize_problem_closure(
 
     if root_scope_receipt is None:
         raise BehaviorAdmissionError("problem closure denied: root-scope admission is missing")
+    _validate_root_scope_receipt(root_scope_receipt)
     if not isinstance(evolution_disposition, EvolutionDisposition):
         raise BehaviorAdmissionError("problem closure denied: typed evolution disposition is missing")
 
@@ -283,7 +439,7 @@ def finalize_problem_closure(
         in {
             EvolutionDisposition.DOMAIN_EVOLUTION_CANDIDATE,
             EvolutionDisposition.DOMAIN_EVOLUTION_UPDATED,
-            EvolutionDisposition.PARENT_OR_COMMON_UPCALL,
+            EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
         }
     )
     if durable_required and not (isinstance(durable_problem_ref, str) and durable_problem_ref.strip()):

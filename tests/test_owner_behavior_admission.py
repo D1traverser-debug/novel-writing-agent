@@ -1,3 +1,5 @@
+from types import SimpleNamespace
+
 import pytest
 
 from runtime.deliberation_admission import build_material_decision_receipt
@@ -7,6 +9,7 @@ from runtime.owner_behavior_admission import (
     HypothesisDisposition,
     ProblemLayer,
     RootScopeHypothesis,
+    RootScopeReceipt,
     finalize_problem_closure,
     record_recovery_attempt,
     require_root_scope_admission,
@@ -208,3 +211,136 @@ def test_no_change_requires_root_scope_evolution_and_evidence():
         root_scope_receipt=local_root(),
         evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
     ) == "NO_CHANGE_WITH_EVIDENCE"
+
+
+def test_caos_governance_is_an_upstream_hypothesis_layer_not_a_runtime_upcall():
+    receipt = require_root_scope_admission(
+        hypotheses=(
+            hypothesis("workflow", ProblemLayer.PROJECT_WORKFLOW, HypothesisDisposition.SELECTED),
+            hypothesis("caos-governance", ProblemLayer.CAOS_GOVERNANCE, HypothesisDisposition.REJECTED),
+        ),
+        selected_hypothesis_id="workflow",
+        material_problem=True,
+        architecture_reassessment_refs=["evidence:caos-governance-reassessed"],
+        material_decision_receipt=material_receipt(),
+    )
+    assert ProblemLayer.CAOS_GOVERNANCE in receipt.compared_layers
+    assert receipt.selected_layer is ProblemLayer.PROJECT_WORKFLOW
+
+
+def test_caos_governance_review_disposition_requires_durable_problem_evidence():
+    with pytest.raises(BehaviorAdmissionError, match="durable causal evidence"):
+        finalize_problem_closure(
+            problem_detected=True,
+            repair_path_available=False,
+            authority_permits_repair=False,
+            explicit_user_choice_required=False,
+            repair_attempted=False,
+            repair_succeeded=False,
+            blocker_reason="CAOS chat governance review is required for a cross-domain decision",
+            root_scope_receipt=local_root(),
+            evolution_disposition=EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
+        )
+
+
+def test_root_scope_receipt_preserves_rejected_hypothesis_evidence():
+    receipt = systemic_root()
+    assert receipt.rejected_hypothesis_ids == ("architecture",)
+    assert len(receipt.hypotheses) == 2
+    assert "evidence:support:architecture" in receipt.evidence_refs
+    assert "evidence:probe:architecture" in receipt.evidence_refs
+    assert "evidence:support:workflow" in receipt.evidence_refs
+    assert "evidence:probe:workflow" in receipt.evidence_refs
+
+
+def test_root_scope_rejects_blank_hypothesis_evidence_references():
+    with pytest.raises(ValueError, match="non-blank supporting evidence"):
+        RootScopeHypothesis(
+            hypothesis_id="blank-evidence",
+            layer=ProblemLayer.PROJECT_WORKFLOW,
+            statement="blank evidence must not pass",
+            disposition=HypothesisDisposition.SELECTED,
+            supporting_evidence_refs=("",),
+            falsification_or_rejection_refs=("evidence:probe",),
+        )
+    with pytest.raises(ValueError, match="non-blank falsification/rejection evidence"):
+        RootScopeHypothesis(
+            hypothesis_id="blank-rejection",
+            layer=ProblemLayer.PROJECT_WORKFLOW,
+            statement="blank rejection evidence must not pass",
+            disposition=HypothesisDisposition.SELECTED,
+            supporting_evidence_refs=("evidence:support",),
+            falsification_or_rejection_refs=("   ",),
+        )
+
+
+def test_closure_revalidates_nested_hypothesis_types_and_nonblank_evidence():
+    forged_values = {
+        "hypothesis_id": "forged",
+        "layer": ProblemLayer.PROJECT_WORKFLOW,
+        "statement": "forged nested hypothesis",
+        "disposition": HypothesisDisposition.SELECTED,
+        "supporting_evidence_refs": (),
+        "falsification_or_rejection_refs": (),
+    }
+    fake_objects = [SimpleNamespace(**forged_values)]
+    forged_dataclass = object.__new__(RootScopeHypothesis)
+    for key, value in forged_values.items():
+        object.__setattr__(forged_dataclass, key, value)
+    fake_objects.append(forged_dataclass)
+
+    for nested in fake_objects:
+        forged = RootScopeReceipt(
+            selected_hypothesis_id="forged",
+            selected_layer=ProblemLayer.PROJECT_WORKFLOW,
+            compared_layers=(ProblemLayer.PROJECT_WORKFLOW,),
+            hypothesis_count=1,
+            material_deliberation_bound=False,
+            architecture_reassessment_performed=False,
+            durable_problem_record_required=False,
+            evidence_refs=(),
+            hypotheses=(nested,),
+        )
+        with pytest.raises(BehaviorAdmissionError, match="invalid nested hypothesis type|non-blank supporting evidence"):
+            finalize_problem_closure(
+                problem_detected=True,
+                repair_path_available=True,
+                authority_permits_repair=True,
+                explicit_user_choice_required=False,
+                repair_attempted=True,
+                repair_succeeded=True,
+                root_scope_receipt=forged,
+                evolution_disposition=EvolutionDisposition.LOCAL_LEARNING_ONLY,
+            )
+
+
+def test_root_scope_admission_rejects_non_hypothesis_objects_before_field_access():
+    with pytest.raises(BehaviorAdmissionError, match="invalid nested hypothesis type"):
+        require_root_scope_admission(
+            hypotheses=(SimpleNamespace(hypothesis_id="forged"),),
+            selected_hypothesis_id="forged",
+        )
+
+
+def test_forged_empty_root_scope_receipt_cannot_admit_problem_closure():
+    forged = RootScopeReceipt(
+        selected_hypothesis_id="forged",
+        selected_layer=ProblemLayer.PROJECT_WORKFLOW,
+        compared_layers=(),
+        hypothesis_count=0,
+        material_deliberation_bound=False,
+        architecture_reassessment_performed=False,
+        durable_problem_record_required=False,
+        evidence_refs=(),
+    )
+    with pytest.raises(BehaviorAdmissionError, match="receipt lost its hypotheses"):
+        finalize_problem_closure(
+            problem_detected=True,
+            repair_path_available=True,
+            authority_permits_repair=True,
+            explicit_user_choice_required=False,
+            repair_attempted=True,
+            repair_succeeded=True,
+            root_scope_receipt=forged,
+            evolution_disposition=EvolutionDisposition.LOCAL_LEARNING_ONLY,
+        )

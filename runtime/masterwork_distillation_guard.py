@@ -33,7 +33,8 @@ corpus = load("research/masterworks/CORPUS_MAP.json")
 evidence_schema = load("research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json")
 cross = load("research/masterworks/CROSS_WORK_LEARNING_STATE.json")
 registry = load("research/masterworks/MECHANISM_REGISTRY.json")
-caps = load(".uaos/CAPABILITIES.json")
+governance = load("config/CAOS_GOVERNANCE.json")
+caps = load("config/DOMAIN_CAPABILITIES.json")
 
 for rel in [
     "research/masterworks/CROSS_WORK_PROVISIONAL_SYNTHESIS_2026-10-15.md",
@@ -202,21 +203,26 @@ for mechanism in registry.get("mechanisms", []):
     if mechanism.get("status") != "REFERENCE":
         problems.append("premature-mechanism-promotion:" + str(mechanism.get("mechanism_id")))
 
+if governance.get("governance", {}).get("system") != "CAOS" or governance.get("governance", {}).get("mode") != "CHAT_GOVERNED_EXTERNAL":
+    problems.append("caos-governance-binding")
+if governance.get("governance", {}).get("runtime_dependency") is not False:
+    problems.append("caos-runtime-dependency")
+
 required_caps = {"large_corpus_distillation", "continual_cross_work_learning", "material_deliberation_admission", "zero_based_story_reselection"}
 cap_by_id = {c.get("capability_id"): c for c in caps.get("capabilities", [])}
 missing_caps = required_caps - set(cap_by_id)
 if missing_caps:
-    problems.append("uaos-learning-capabilities-missing:" + ",".join(sorted(missing_caps)))
+    problems.append("domain-learning-capabilities-missing:" + ",".join(sorted(missing_caps)))
 large = cap_by_id.get("large_corpus_distillation", {})
 if not {"source_identity", "coverage_cursor", "rolling_ledger", "single_work_context_isolation"}.issubset(set(large.get("required", []))):
-    problems.append("uaos-large-corpus-capability-contract")
+    problems.append("domain-large-corpus-capability-contract")
 continual = cap_by_id.get("continual_cross_work_learning", {})
 if not {
     "multidimensional_evidence_schema", "claim_conditioned_dependency_assessment", "comparison_design",
     "shared_factor_assessment", "closed_context_reconstruction", "non_promotional_interbook_comparison",
     "alternative_explanations", "negative_or_boundary_evidence", "transfer_probe", "mechanism_registry",
 }.issubset(set(continual.get("required", []))):
-    problems.append("uaos-continual-learning-capability-contract")
+    problems.append("domain-continual-learning-capability-contract")
 
 if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists() or (ROOT / "research/masterworks/INDEX.json").exists():
     problems.append("retired-learning-index-returned")
@@ -224,6 +230,7 @@ if (ROOT / "continuity").exists() or (ROOT / "TASK_INDEX.json").exists() or (ROO
 result = {
     "status": "PASS" if not problems else "FAIL",
     "protocol": "MASTERWORK_DISTILLATION_PROTOCOL@2.1",
+    "governance_system": governance.get("governance", {}).get("system"),
     "evidence_model": "CLAIM_CONDITIONED_MULTIDIMENSIONAL_DEPENDENCY_GRAPH",
     "active_study_binding": work_id,
     "active_status": active_status,

@@ -1,11 +1,12 @@
 # Novel Writing Agent
 
-Dedicated Novel domain owner under `D1traverser-debug/universal-agent-os@main`.
+Novel domain owner governed by CAOS (`D1traverser-debug/cognition-agent-os`) through the active ChatGPT session.
 
 ## Current authority
 
-- Entry: `UAOS_SKILL.md`
-- UAOS binding: `.uaos/MANIFEST.json`, `.uaos/ADAPTER.json`, `.uaos/CAPABILITIES.json`
+- CAOS governance entry: `CAOS_NOVEL_ENTRY.md`
+- CAOS governance contract: `config/CAOS_GOVERNANCE.json`
+- Novel-owned capability profile: `config/DOMAIN_CAPABILITIES.json`
 - Product architecture: `protocols/NOVEL_PRODUCT_ARCHITECTURE.md`
 - Production Rulebook: `protocols/ACTIVE_RULEBOOK.md`
 - Competency model: `protocols/NOVEL_MASTERY_MODEL.md`
@@ -18,7 +19,7 @@ Dedicated Novel domain owner under `D1traverser-debug/universal-agent-os@main`.
 - Accepted factual Canon: `projects/<task>/canon/`
 - Domain evolution evidence: `audits/EVOLUTION_INDEX.json`
 
-UAOS owns cross-domain intent, task identity, continuation and common behavior. This repository owns Novel learning, story selection, planning, Canon, prose/release evidence and domain evolution. No second controller/lease/continuation system is active.
+CAOS governs cross-project cognition, complete-goal recovery, root-cause research, decision challenge, execution discipline and independent acceptance in the active ChatGPT session. Novel owns task identity, learning, story selection, planning, Canon, prose/release evidence and domain evolution. There is no CAOS runtime/API dependency, parent task identity, business-state mirror, permission grant or second controller/lease/continuation system.
 
 ## System shape
 

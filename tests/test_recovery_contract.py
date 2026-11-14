@@ -10,18 +10,18 @@ def load_json(rel: str):
     return json.loads((ROOT / rel).read_text(encoding="utf-8"))
 
 
-def test_uaos_is_the_only_current_controller_surface():
-    manifest = load_json(".uaos/MANIFEST.json")
-    adapter = load_json(".uaos/ADAPTER.json")
-    caps = load_json(".uaos/CAPABILITIES.json")
-    assert manifest["controller"] == "D1traverser-debug/universal-agent-os@main"
-    assert manifest["status"] == "UAOS_CONTROL_PLANE_ACTIVE"
-    assert manifest["skill"]["entrypoint"] == "UAOS_SKILL.md"
-    assert caps["profile_version"] >= 6
-    assert caps["common_behavior_assurance_min"] == "1.3.0"
-    assert adapter["task_identity_authority"] == "UAOS"
-    assert adapter["cross_chat_continuity_authority"] == "UAOS"
-    assert adapter["legacy_controller_compatibility"] == "NONE"
+def test_caos_is_the_only_current_cross_project_governance_surface():
+    governance = load_json("config/CAOS_GOVERNANCE.json")
+    caps = load_json("config/DOMAIN_CAPABILITIES.json")
+    assert governance["governance"]["system"] == "CAOS"
+    assert governance["governance"]["mode"] == "CHAT_GOVERNED_EXTERNAL"
+    assert governance["governance"]["runtime_dependency"] is False
+    assert governance["governance"]["api_dependency"] is False
+    assert governance["governance"]["source_mutation"] == "FORBIDDEN"
+    assert caps["profile_version"] == 8
+    assert caps["caos_governance_ref"] == "config/CAOS_GOVERNANCE.json"
+    assert not (ROOT / ".uaos").exists()
+    assert not (ROOT / "UAOS_SKILL.md").exists()
     for retired in (
         "ENTRYPOINT.md", "PROTOCOL.md", "SKILL.md", "TASK_INDEX.json", "CONTINUITY_ADAPTER.json",
         "AUTHORITY_STATUS.json", "continuity", "migration", "research/masterworks/INDEX.json",
@@ -29,30 +29,40 @@ def test_uaos_is_the_only_current_controller_surface():
         assert not (ROOT / retired).exists(), retired
 
 
-def test_product_architecture_and_runtime_entrypoints_exist():
-    manifest = load_json(".uaos/MANIFEST.json")
-    authority = manifest["domain_authority"]
-    assert authority["product_architecture_ref"] == "protocols/NOVEL_PRODUCT_ARCHITECTURE.md"
-    assert authority["narrative_evidence_schema_ref"] == "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json"
-    for key in (
-        "material_deliberation_admission_ref", "learning_transfer_admission_ref", "story_reselection_admission_ref",
-        "dynamic_outline_ref", "story_dependency_graph_ref", "narrative_evaluation_ref",
+def test_product_architecture_and_runtime_entrypoints_are_novel_owned():
+    governance = load_json("config/CAOS_GOVERNANCE.json")
+    authority = governance["business_authority"]
+    assert authority["repository"] == "D1traverser-debug/novel-writing-agent@main"
+    assert authority["state"] == "projects/<task_id>/checkpoints/CURRENT_CHECKPOINT.json"
+    assert authority["rulebook"] == "protocols/ACTIVE_RULEBOOK.md"
+    assert authority["canon"] == "projects/<task_id>/canon/"
+    for ref in (
+        "runtime/owner_behavior_admission.py",
+        "runtime/deliberation_admission.py",
+        "runtime/learning_transfer_admission.py",
+        "runtime/story_reselection_admission.py",
+        "runtime/dynamic_outline.py",
+        "runtime/story_dependency_graph.py",
+        "runtime/narrative_evaluation.py",
     ):
-        assert (ROOT / authority[key]).is_file()
+        assert (ROOT / ref).is_file()
 
 
-def test_project_checkpoint_is_uaos_native_and_zero_based_reselection_bound():
+def test_project_checkpoint_is_novel_native_and_caos_governance_is_not_task_identity():
     m = load_json("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
     cp = load_json("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
-    assert m["schema_version"] == cp["schema_version"] == "3.1-uaos"
-    assert m["controller_authority"] == cp["controller_authority"] == "D1traverser-debug/universal-agent-os@main"
-    assert m["controller_task_ref"] == cp["controller_task_ref"] == "state/tasks/FQ001_MINGRI_ORDER.json"
-    assert m["domain_binding_ref"] == cp["domain_binding_ref"] == ".uaos/MANIFEST.json"
+    assert m["schema_version"] == cp["schema_version"] == "3.2-caos"
+    assert m["governance_authority"] == cp["governance_authority"] == "D1traverser-debug/cognition-agent-os@main"
+    assert m["governance_mode"] == cp["governance_mode"] == "CHAT_GOVERNED_EXTERNAL"
+    assert m["governance_contract_ref"] == cp["governance_contract_ref"] == "config/CAOS_GOVERNANCE.json"
+    assert m["domain_business_authority"] == cp["domain_business_authority"] == "D1traverser-debug/novel-writing-agent@main"
+    assert m["task_id"] == cp["task_id"] == "FQ001_MINGRI_ORDER"
     assert m["current_stage"] == cp["current_stage"] == "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__CLAIM_CONDITIONED_LEARNING__ZERO_BASED_STORY_RESELECTION_PENDING"
     assert m["next_serial_status"] == cp["next_serial_status"] == "HELD_DURING_MASTERWORK_DISTILLATION_AND_ZERO_BASED_STORY_RESELECTION"
     assert m["historical_project_identity"]["role"] == "HISTORICAL_CANDIDATE_AND_FAILURE_EVIDENCE__NO_INCUMBENT_PRIVILEGE"
     assert cp["story_reselection"]["historical_fq001_role"] == "MAY_COMPETE_AS_ONE_CANDIDATE__NO_INCUMBENT_PRIVILEGE"
     for payload in (m, cp):
+        assert not any(key in payload for key in ("controller_authority", "controller_task_ref", "controller_contract_version", "domain_binding_ref"))
         assert "continuity_protocol_version" not in payload
         assert "universal_lease_authority" not in payload
 
@@ -132,9 +142,12 @@ def test_old_ch9_and_historical_rebase_remain_non_executable():
     assert "Do not write old CH9 next" in contract
 
 
-def test_artifact_governance_is_current_uaos_model():
+def test_artifact_governance_is_caos_external_and_novel_state_owned():
     gov = load_json("config/ARTIFACT_CONTEXT_GOVERNANCE.json")
-    assert gov["controller"] == "D1traverser-debug/universal-agent-os@main"
+    assert gov["business_owner"] == "NOVEL_WRITING_AGENT"
+    assert gov["governance"]["system"] == "CAOS"
+    assert gov["governance"]["mode"] == "CHAT_GOVERNED_EXTERNAL"
+    assert gov["governance"]["runtime_dependency"] is False
     assert gov["canonical_artifact_or_file_stores"] == ["D1traverser-debug/novel-writing-agent@main"]
-    assert "UAOS discovery/controller metadata" in gov["cache_or_reference_only_stores"]
+    assert "CAOS session governance metadata (not business state)" in gov["cache_or_reference_only_stores"]
     assert "universal-continuity-agent" not in json.dumps(gov, ensure_ascii=False)
