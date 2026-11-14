@@ -146,5 +146,17 @@
     }
   ],
   "caos_governance_ref": "config/CAOS_GOVERNANCE.json",
-  "caos_governance_mode": "CHAT_GOVERNED_EXTERNAL__NO_RUNTIME_OR_API_DEPENDENCY"
+  "caos_governance_mode": "CHAT_GOVERNED_EXTERNAL__NO_RUNTIME_OR_API_DEPENDENCY",
+  "domain_authority": {
+    "product_architecture_ref": "protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
+    "narrative_evidence_schema_ref": "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
+    "evolution_evidence_ref": "audits/EVOLUTION_INDEX.json",
+    "behavior_admission_ref": "runtime/owner_behavior_admission.py",
+    "material_deliberation_admission_ref": "runtime/deliberation_admission.py",
+    "learning_transfer_admission_ref": "runtime/learning_transfer_admission.py",
+    "story_reselection_admission_ref": "runtime/story_reselection_admission.py",
+    "dynamic_outline_ref": "runtime/dynamic_outline.py",
+    "story_dependency_graph_ref": "runtime/story_dependency_graph.py",
+    "narrative_evaluation_ref": "runtime/narrative_evaluation.py"
+  }
 }
