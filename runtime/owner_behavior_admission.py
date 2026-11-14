@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Novel-owner executable admission for recovery, root-scope cognition and problem closure.
 
-This module realizes UAOS Common Behavior Assurance 1.3 inside the Novel domain.
-It reuses the existing material-decision admission instead of creating a second
-cognition engine or transferring Novel business ownership to UAOS.
+This module provides Novel-owned recovery, root-scope and problem-closure admission.
+CAOS governs cross-domain cognition in the active ChatGPT session; Novel retains its
+business authority and executable domain gates without a parent runtime dependency.
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ class ProblemLayer(str, Enum):
     LEARNING_OR_PLAN = "LEARNING_OR_PLAN"
     DOMAIN_ARCHITECTURE = "DOMAIN_ARCHITECTURE"
     COMMON_CAPABILITY = "COMMON_CAPABILITY"
-    PARENT_CONTROL_PLANE = "PARENT_CONTROL_PLANE"
+    CAOS_GOVERNANCE = "CAOS_GOVERNANCE"
     HOST = "HOST"
     REQUIREMENT_OR_GOAL = "REQUIREMENT_OR_GOAL"
 
@@ -44,7 +44,7 @@ class EvolutionDisposition(str, Enum):
     NO_DURABLE_EVOLUTION_WITH_EVIDENCE = "NO_DURABLE_EVOLUTION_WITH_EVIDENCE"
     DOMAIN_EVOLUTION_CANDIDATE = "DOMAIN_EVOLUTION_CANDIDATE"
     DOMAIN_EVOLUTION_UPDATED = "DOMAIN_EVOLUTION_UPDATED"
-    PARENT_OR_COMMON_UPCALL = "PARENT_OR_COMMON_UPCALL"
+    CAOS_GOVERNANCE_REVIEW = "CAOS_GOVERNANCE_REVIEW"
 
 
 @dataclass(frozen=True)
@@ -57,10 +57,20 @@ class RootScopeHypothesis:
     falsification_or_rejection_refs: tuple[str, ...]
 
     def __post_init__(self) -> None:
-        if not self.hypothesis_id.strip() or not self.statement.strip():
-            raise ValueError("root-scope hypothesis requires identity and statement")
-        if not self.supporting_evidence_refs or not self.falsification_or_rejection_refs:
-            raise ValueError("root-scope hypothesis requires support and falsification/rejection evidence")
+        if not isinstance(self.hypothesis_id, str) or not self.hypothesis_id.strip():
+            raise ValueError("root-scope hypothesis requires a nonblank identity")
+        if not isinstance(self.statement, str) or not self.statement.strip():
+            raise ValueError("root-scope hypothesis requires a nonblank statement")
+        if not isinstance(self.layer, ProblemLayer) or not isinstance(self.disposition, HypothesisDisposition):
+            raise ValueError("root-scope hypothesis requires typed layer and disposition")
+        for label, refs in (
+            ("supporting", self.supporting_evidence_refs),
+            ("falsification/rejection", self.falsification_or_rejection_refs),
+        ):
+            if not isinstance(refs, tuple) or not refs or any(
+                not isinstance(ref, str) or not ref.strip() for ref in refs
+            ):
+                raise ValueError(f"root-scope hypothesis requires usable {label} evidence references")
 
 
 @dataclass(frozen=True)
@@ -73,12 +83,75 @@ class RootScopeReceipt:
     architecture_reassessment_performed: bool
     durable_problem_record_required: bool
     evidence_refs: tuple[str, ...]
+    hypotheses: tuple[RootScopeHypothesis, ...]
+    architecture_reassessment_refs: tuple[str, ...]
+    material_decision_receipt: MaterialDecisionReceipt | None
+    systemic: bool
+
+    def __post_init__(self) -> None:
+        self.validate()
+
+    def validate(self) -> None:
+        if not isinstance(self.selected_hypothesis_id, str) or not self.selected_hypothesis_id.strip():
+            raise ValueError("root-scope receipt requires a selected hypothesis identity")
+        if not isinstance(self.hypotheses, tuple) or not self.hypotheses:
+            raise ValueError("root-scope receipt must retain the compared hypotheses and their evidence")
+        if any(not isinstance(item, RootScopeHypothesis) for item in self.hypotheses):
+            raise ValueError("root-scope receipt contains an invalid hypothesis")
+        ids = [item.hypothesis_id for item in self.hypotheses]
+        if len(ids) != len(set(ids)):
+            raise ValueError("root-scope receipt hypothesis identifiers must be unique")
+        selected = [item for item in self.hypotheses if item.hypothesis_id == self.selected_hypothesis_id]
+        if len(selected) != 1 or selected[0].disposition is not HypothesisDisposition.SELECTED:
+            raise ValueError("root-scope receipt must retain exactly one selected hypothesis")
+        if sum(item.disposition is HypothesisDisposition.SELECTED for item in self.hypotheses) != 1:
+            raise ValueError("root-scope receipt must retain exactly one selected hypothesis")
+        layers = tuple(sorted({item.layer for item in self.hypotheses}, key=lambda layer: layer.value))
+        if self.compared_layers != layers or self.selected_layer is not selected[0].layer:
+            raise ValueError("root-scope receipt layer summary does not match its hypotheses")
+        if self.hypothesis_count != len(self.hypotheses):
+            raise ValueError("root-scope receipt hypothesis count does not match retained evidence")
+        architecture_refs = _clean(self.architecture_reassessment_refs)
+        if architecture_refs != self.architecture_reassessment_refs:
+            raise ValueError("root-scope receipt architecture evidence contains blank or duplicate references")
+        expected_refs = tuple(sorted({
+            *(
+                ref
+                for item in self.hypotheses
+                for ref in (*item.supporting_evidence_refs, *item.falsification_or_rejection_refs)
+            ),
+            *architecture_refs,
+        }))
+        if self.evidence_refs != expected_refs:
+            raise ValueError("root-scope receipt evidence must retain all selected and rejected hypothesis references")
+        if self.architecture_reassessment_performed != bool(architecture_refs):
+            raise ValueError("root-scope receipt architecture-reassessment flag is inconsistent")
+        if self.material_deliberation_bound != (self.material_decision_receipt is not None):
+            raise ValueError("root-scope receipt material-deliberation binding is inconsistent")
+        if self.material_decision_receipt is not None:
+            try:
+                admit_material_mutation(self.material_decision_receipt)
+            except Exception as exc:
+                raise ValueError(f"root-scope receipt has invalid material-deliberation evidence: {exc}") from exc
+        if self.systemic:
+            if not self.durable_problem_record_required:
+                raise ValueError("systemic root-scope receipt must require durable problem evidence")
+            if len(self.hypotheses) < 2 or len(layers) < 2:
+                raise ValueError("systemic root-scope receipt requires competing hypotheses across layers")
+            if not any(item.disposition is HypothesisDisposition.REJECTED for item in self.hypotheses):
+                raise ValueError("systemic root-scope receipt requires a rejected alternative")
+            if not any(layer in _UPSTREAM_LAYERS for layer in layers):
+                raise ValueError("systemic root-scope receipt must test an architecture/upstream layer")
+            if not architecture_refs or self.material_decision_receipt is None:
+                raise ValueError("systemic root-scope receipt requires architecture and material-deliberation evidence")
+        elif self.durable_problem_record_required:
+            raise ValueError("non-systemic root-scope receipt cannot assert a systemic durable-record requirement")
 
 
 _UPSTREAM_LAYERS = {
     ProblemLayer.DOMAIN_ARCHITECTURE,
     ProblemLayer.COMMON_CAPABILITY,
-    ProblemLayer.PARENT_CONTROL_PLANE,
+    ProblemLayer.CAOS_GOVERNANCE,
     ProblemLayer.HOST,
     ProblemLayer.REQUIREMENT_OR_GOAL,
 }
@@ -158,8 +231,11 @@ def require_root_scope_admission(
     refs = tuple(
         sorted(
             {
-                *chosen.supporting_evidence_refs,
-                *chosen.falsification_or_rejection_refs,
+                *(
+                    ref
+                    for hypothesis in hypotheses
+                    for ref in (*hypothesis.supporting_evidence_refs, *hypothesis.falsification_or_rejection_refs)
+                ),
                 *architecture_refs,
             }
         )
@@ -173,6 +249,10 @@ def require_root_scope_admission(
         architecture_reassessment_performed=bool(architecture_refs),
         durable_problem_record_required=systemic,
         evidence_refs=refs,
+        hypotheses=hypotheses,
+        architecture_reassessment_refs=architecture_refs,
+        material_decision_receipt=material_decision_receipt,
+        systemic=systemic,
     )
 
 
@@ -272,8 +352,12 @@ def finalize_problem_closure(
     if explicit_user_choice_required and blocker:
         return "BLOCKED_WITH_REASON"
 
-    if root_scope_receipt is None:
-        raise BehaviorAdmissionError("problem closure denied: root-scope admission is missing")
+    if not isinstance(root_scope_receipt, RootScopeReceipt):
+        raise BehaviorAdmissionError("problem closure denied: a valid root-scope admission receipt is missing")
+    try:
+        root_scope_receipt.validate()
+    except Exception as exc:
+        raise BehaviorAdmissionError(f"problem closure denied: invalid root-scope receipt: {exc}") from exc
     if not isinstance(evolution_disposition, EvolutionDisposition):
         raise BehaviorAdmissionError("problem closure denied: typed evolution disposition is missing")
 
@@ -283,7 +367,7 @@ def finalize_problem_closure(
         in {
             EvolutionDisposition.DOMAIN_EVOLUTION_CANDIDATE,
             EvolutionDisposition.DOMAIN_EVOLUTION_UPDATED,
-            EvolutionDisposition.PARENT_OR_COMMON_UPCALL,
+            EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
         }
     )
     if durable_required and not (isinstance(durable_problem_ref, str) and durable_problem_ref.strip()):
