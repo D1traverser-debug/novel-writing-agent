@@ -23,8 +23,8 @@ def text(rel: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
-manifest = load(".uaos/MANIFEST.json")
-caps = load(".uaos/CAPABILITIES.json")
+manifest = load("config/DOMAIN_MANIFEST.json")
+caps = load("config/DOMAIN_CAPABILITIES.json")
 study = load("research/masterworks/STUDY_STATE.json")
 corpus = load("research/masterworks/CORPUS_MAP.json")
 evidence_schema = load("research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json")
@@ -38,10 +38,10 @@ learning_protocol = text("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 architecture = text("protocols/NOVEL_PRODUCT_ARCHITECTURE.md")
 
 # Authority/version alignment. Capability profiles are monotonic capability floors, not frozen identities.
-if int(caps.get("profile_version", 0)) < 6:
-    problems.append("profile-below-6")
-if "version: 2.5-github" not in rulebook:
-    problems.append("rulebook-not-2.5")
+if int(caps.get("profile_version", 0)) < 1:
+    problems.append("domain-capability-profile-missing")
+if "version: 2.6-caos" not in rulebook:
+    problems.append("rulebook-not-2.6-caos")
 if "version: 2.0" not in mastery:
     problems.append("mastery-not-2.0")
 if "version: 2.1" not in learning_protocol:
@@ -111,7 +111,7 @@ for invariant in (
     "PLAN != CANON",
     "MODEL_SELF_EVALUATION != LIVE_READER_OR_PLATFORM_OUTCOME",
 ):
-    if invariant not in text("UAOS_SKILL.md") and invariant not in architecture:
+    if invariant not in text("CAOS_NOVEL_ENTRY.md") and invariant not in architecture:
         problems.append("missing-invariant:" + invariant)
 
 result = {
