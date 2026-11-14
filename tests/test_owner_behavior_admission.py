@@ -1,5 +1,4 @@
 import pytest
-from dataclasses import replace
 
 from runtime.deliberation_admission import build_material_decision_receipt
 from runtime.owner_behavior_admission import (
@@ -253,13 +252,13 @@ def test_manually_constructed_empty_root_scope_receipt_is_rejected():
 
 def test_receipt_cannot_drop_rejected_hypothesis_evidence_before_closure():
     receipt = systemic_root()
-    forged = replace(
-        receipt,
-        evidence_refs=(
-            "evidence:support:workflow",
-            "evidence:probe:workflow",
-            "evidence:architecture:reassessed",
-        ),
+    forged = object.__new__(RootScopeReceipt)
+    for field in RootScopeReceipt.__dataclass_fields__:
+        object.__setattr__(forged, field, getattr(receipt, field))
+    object.__setattr__(
+        forged,
+        "evidence_refs",
+        ("evidence:support:workflow", "evidence:probe:workflow", "evidence:architecture:reassessed"),
     )
     with pytest.raises(BehaviorAdmissionError, match="invalid root-scope receipt"):
         finalize_problem_closure(
