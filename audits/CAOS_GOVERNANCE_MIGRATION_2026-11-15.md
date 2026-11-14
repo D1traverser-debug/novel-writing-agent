@@ -1,11 +1,15 @@
 # CAOS Governance Migration — Novel Writing Agent
 
 Date: 2026-11-15
-Status: CANDIDATE — CI and independent review pending
+Status: PROMOTED__MAINLINE_CI_VERIFIED
 Domain: `DOMAIN:novel`
 CAOS source repository: `D1traverser-debug/cognition-agent-os`
 CAOS source revision inspected: `9686cedeb3fd8171ecf70eab33aaea641217b04a`
 Candidate branch: `migration/caos-governance-20261115`
+Merged PR: #10
+Merge commit: `a471fcc06fdc71db576c1a3802ca705dfa9b97b8`
+Candidate CI: run `43623621111` — PASS (85 tests)
+Mainline CI: run `43625817951` — PASS (85 tests)
 
 ## Root cause
 
@@ -69,4 +73,14 @@ Independent full code and security reviews must confirm:
 - no business-state, task identity, Canon, cursor, publication or external authorization was moved or changed;
 - owner-native admission and all existing learning/Plan/Canon/release gates remain intact.
 
-After clean candidate CI/review, merge this migration PR, verify mainline CI, then close any stale UAOS-only PRs as superseded. Do not report production takeover before mainline verification.
+## Acceptance — passed
+
+- Exact-head candidate CI run `43623621111`: 85 passed.
+- Fresh full Codex code review on `1ff8b46b3b2a521855c9a65478db9485cfbbf175`: no major issues.
+- Manual security/authority review: no CAOS runtime/API/upcall/permission grant, no duplicated Novel business state, and root-scope receipts are revalidated at closure. The GitHub integration returned no separate security-review receipt.
+- PR #10 merged to main as `a471fcc06fdc71db576c1a3802ca705dfa9b97b8`.
+- Mainline CI run `43625817951`: 85 passed.
+- All active UAOS paths are absent from main. The superseded UAOS-only PR #5 is closed; its branch/history is retained.
+- CAOS source revision `9686cedeb3fd8171ecf70eab33aaea641217b04a` remains unchanged.
+
+Governance migration is complete. Live literary quality, publication outcomes and commercial outcomes remain separate and OPEN.
