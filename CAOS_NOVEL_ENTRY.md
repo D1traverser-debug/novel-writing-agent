@@ -40,7 +40,7 @@ For a new Novel task or continuation:
 
 ## 4. Domain execution gates remain active
 
-Novel's owner-native `runtime/owner_behavior_admission.py` and `runtime/deliberation_admission.py` remain narrow domain execution gates. They enforce Novel-specific recovery, material decision evidence, root-scope admission, typed evolution disposition and repair/no-change/block closure. They are not a second CAOS cognition controller and do not invoke a parent runtime.
+Novel's owner-native `runtime/owner_behavior_admission.py` and `runtime/deliberation_admission.py` remain narrow domain execution gates. They enforce Novel-specific recovery, material decision evidence, root-scope admission and its evidence-bearing receipt, typed evolution disposition and repair/no-change/block closure. They are not a second CAOS cognition controller and do not invoke a parent runtime.
 
 Keep these separations:
 - `LEARNING_EVIDENCE != ACTIVE_RULE`
