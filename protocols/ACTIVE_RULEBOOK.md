@@ -7,12 +7,12 @@ architecture_ref: protocols/NOVEL_PRODUCT_ARCHITECTURE.md
 mastery_ref: protocols/NOVEL_MASTERY_MODEL.md
 masterwork_ref: protocols/MASTERWORK_DISTILLATION_PROTOCOL.md
 business_authority: D1traverser-debug/novel-writing-agent@main
-parent_authority: D1traverser-debug/universal-agent-os@main
+governance_authority: CAOS_CHAT_GOVERNED_EXTERNAL
 
 ## 1. Authority and non-negotiable boundaries
 
-- UAOS owns cross-domain intent, task identity, routing, cross-chat continuation and common behavior governance.
-- This repository owns Novel learning evidence, project checkpoints, story-selection evidence, Plan/Canon/prose state, release evidence and domain evolution.
+- CAOS governs cross-project cognition, complete-goal recovery, root-cause investigation, method research, decision rechallenge, execution discipline and independent acceptance in the active ChatGPT session.
+- This repository owns Novel task identity, learning evidence, project checkpoints, story-selection evidence, Plan/Canon/prose state, release evidence and domain evolution. CAOS does not own Novel business state or grant permissions.
 - Chat/model memory is never Canon or executable state.
 - Before any material Novel action, reread the exact current Novel checkpoint and relevant authority slices.
 - External publish/delete/payment/sign/compliance actions remain user-controlled unless an explicit connected action is authorized.
@@ -29,7 +29,7 @@ Hard separations:
 
 ## 2. Common behavior and material deliberation
 
-Novel adopts UAOS Common Behavior Assurance 1.2.
+Novel's owner-native recovery, root-scope, material-deliberation and problem-closure gates remain domain execution contracts. CAOS supplies cross-project cognition governance externally in the active ChatGPT session; no parent runtime or automatic upcall exists.
 
 Before asking the user for a plausibly recoverable dependency, inspect current authority/checkpoint/Canon/artifacts/context and materially useful external evidence. Continue with bounded uncertainty when safe.
 
