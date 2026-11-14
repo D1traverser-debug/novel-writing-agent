@@ -51,8 +51,8 @@ if "version: 2.0" not in mastery:
     problems.append("mastery-not-2.0")
 if "version: 2.1" not in learning_protocol:
     problems.append("masterwork-protocol-not-2.1")
-if "version: 1.0" not in architecture:
-    problems.append("product-architecture-not-1.0")
+if "version: 1.1" not in architecture:
+    problems.append("product-architecture-not-1.1")
 
 required_refs = {
     "product_architecture_ref": "protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
