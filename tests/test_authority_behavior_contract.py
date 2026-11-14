@@ -8,30 +8,34 @@ def load_json(rel: str):
     return json.loads((ROOT / rel).read_text(encoding="utf-8"))
 
 
-def test_active_rulebook_uses_uaos_and_quarantines_retired_controller_semantics():
+def test_active_rulebook_uses_caos_external_governance_and_quarantines_retired_controller_semantics():
     rulebook = (ROOT / "protocols/ACTIVE_RULEBOOK.md").read_text(encoding="utf-8")
-    assert "parent_authority: D1traverser-debug/universal-agent-os@main" in rulebook
+    assert "governance_authority: CAOS_CHAT_GOVERNANCE_EXTERNAL" in rulebook
     assert "Global discovery/routing/single-writer lease: `D1traverser-debug/universal-continuity-agent@main`" not in rulebook
     assert "verify this chat owns `active_lease + resume_epoch`" not in rulebook
     assert "`universal-continuity-agent`, local leases and resume epochs are retired" in rulebook
 
 
-def test_novel_adopts_common_behavior_1_3_and_profile_7_without_copying_parent_cognition():
-    caps = load_json(".uaos/CAPABILITIES.json")
-    manifest = load_json(".uaos/MANIFEST.json")
-    assert caps["schema_version"] == "2.6"
-    assert caps["profile_version"] == 7
-    assert caps["common_behavior_assurance_min"] == "1.3.0"
-    assert "ROOT_SCOPE" in caps["common_behavior_adoption"]
+def test_novel_domain_manifest_binds_caos_governance_without_parent_runtime():
+    caps = load_json("config/DOMAIN_CAPABILITIES.json")
+    manifest = load_json("config/DOMAIN_MANIFEST.json")
+    governance = load_json("config/CAOS_GOVERNANCE.json")
+    assert caps["schema_version"] == "1.0"
+    assert caps["profile_version"] == 1
+    assert caps["governance_ref"] == "config/CAOS_GOVERNANCE.json"
+    assert caps["governance_mode"] == "CHAT_GOVERNED_EXTERNAL__NO_RUNTIME_OR_API_DEPENDENCY"
     assert caps["canonical_evolution_evidence_ref"] == "audits/EVOLUTION_INDEX.json"
-    assert caps["uaos_deliberation_policy_ref"].endswith("config/DELIBERATION_POLICY.json")
-    assert caps["hosted_cognition_semantics"] == {
-        "source": "CURRENT_UAOS_DELIBERATION_POLICY",
-        "local_overrides": "NONE",
-    }
-    assert manifest["schema_version"] == "2.4"
-    assert manifest["binding"]["common_behavior_assurance_min"] == "1.3.0"
+    assert manifest["owner"] == "NOVEL_WRITING_AGENT"
+    assert manifest["skill"]["entrypoint"] == "CAOS_NOVEL_ENTRY.md"
     assert manifest["domain_authority"]["root_scope_admission_ref"].endswith("require_root_scope_admission")
+    assert governance["governance"]["system"] == "CAOS"
+    assert governance["governance"]["mode"] == "CHAT_GOVERNED_EXTERNAL"
+    assert governance["governance"]["runtime_dependency"] is False
+    assert governance["governance"]["api_dependency"] is False
+    assert governance["execution_boundary"]["parent_task_identity"] is False
+    assert governance["execution_boundary"]["runtime_upcall"] is False
+    assert not (ROOT / ".uaos").exists()
+    assert not (ROOT / "UAOS_SKILL.md").exists()
     capabilities = {row["capability_id"]: row for row in caps["capabilities"]}
     for cap_id in ("recover_before_user_escalation", "problem_root_scope_admission", "problem_to_action_closure"):
         assert capabilities[cap_id]["execution_ref"] == "runtime/owner_behavior_admission.py"
@@ -40,10 +44,10 @@ def test_novel_adopts_common_behavior_1_3_and_profile_7_without_copying_parent_c
     assert capabilities["zero_based_story_reselection"]["execution_ref"] == "runtime/story_reselection_admission.py"
 
 
-def test_canonical_evolution_entrypoint_preserves_prior_production_and_tracks_1_3_adoption():
+def test_canonical_evolution_entrypoint_preserves_prior_production_and_tracks_caos_migration():
     index = load_json("audits/EVOLUTION_INDEX.json")
     assert index["owner"] == "DOMAIN:novel"
-    assert index["common_behavior_assurance_min"] == "1.3.0"
+    assert "common_behavior_assurance_min" not in index
 
     receipts = index["recent_resolved_or_promoted"]
     prior = next(item for item in receipts if item["problem_ref"] == "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR")
@@ -66,9 +70,9 @@ def test_canonical_evolution_entrypoint_preserves_prior_production_and_tracks_1_
     assert "runtime/deliberation_admission.py" in index["execution_refs"]
 
 
-def test_rulebook_and_skill_point_to_executable_learning_to_planning_admissions():
+def test_rulebook_and_caos_entry_point_to_executable_learning_to_planning_admissions():
     rulebook = (ROOT / "protocols/ACTIVE_RULEBOOK.md").read_text(encoding="utf-8")
-    skill = (ROOT / "UAOS_SKILL.md").read_text(encoding="utf-8")
+    skill = (ROOT / "CAOS_NOVEL_ENTRY.md").read_text(encoding="utf-8")
     for ref in (
         "runtime/owner_behavior_admission.py",
         "runtime/deliberation_admission.py",
@@ -79,7 +83,6 @@ def test_rulebook_and_skill_point_to_executable_learning_to_planning_admissions(
         "runtime/narrative_evaluation.py",
     ):
         assert ref in rulebook or ref in skill
-    assert "Common Behavior Assurance 1.3" in skill
     assert "root-scope receipt" in skill
     assert "typed evolution disposition" in skill
     assert "no incumbent privilege" in rulebook
