@@ -4,7 +4,8 @@ version: 1.0
 status: CANDIDATE_SYSTEM_ARCHITECTURE
 scope: learning -> story selection -> planning -> canon -> production -> evaluation -> outcome -> evolution
 business_authority: D1traverser-debug/novel-writing-agent@main
-parent_control: D1traverser-debug/universal-agent-os@main
+governance_model: CAOS_CHAT_GOVERNED_EXTERNAL__NOVEL_OWNS_ALL_BUSINESS_STATE
+caos_governance_ref: config/CAOS_GOVERNANCE.json
 
 ## 0. Product objective
 
