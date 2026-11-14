@@ -28,6 +28,7 @@ CURRENT_REQUIRED = [
     "CAOS_NOVEL_ENTRY.md",
     "config/CAOS_GOVERNANCE.json",
     "config/DOMAIN_CAPABILITIES.json",
+    "audits/CAOS_GOVERNANCE_MIGRATION_2026-11-15.md",
     "config/ARTIFACT_CONTEXT_GOVERNANCE.json",
     "protocols/ACTIVE_RULEBOOK.md",
     "protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
