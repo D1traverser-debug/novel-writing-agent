@@ -1,6 +1,6 @@
 {
-  "schema_version": "3.1-uaos",
-  "manifest_version": 23,
+  "schema_version": "3.2-caos",
+  "manifest_version": 24,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
@@ -10,30 +10,33 @@
   "resume_eligible": true,
   "resume_visibility": "DEFAULT",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-15T15:44:58+08:00",
-  "control_binding_updated_at": "2026-10-15",
+  "updated_at": "2026-11-15T00:38:00+08:00",
   "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__CLAIM_CONDITIONED_LEARNING__ZERO_BASED_STORY_RESELECTION_PENDING",
   "next_action": "Resume GUI_CHUI_DENG exactly from source line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》 after the jade-throne observation. Verified sequential coverage remains lines 77-3913. After GUI_CHUI_DENG completes, run the mandatory D8-D11 claim-conditioned interbook learning cycle before QING_YU_NIAN can activate. Do not draft replacement prose or restore historical FQ001 identity as active before full corpus synthesis and zero-based story reselection.",
   "checkpoint_ref": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
-  "controller_contract_version": "UAOS_TASK_BINDING_1.0",
-  "domain_contract_version": "3.1-uaos",
-  "skill_version": "Novel Writing Agent UAOS 2.0",
+  "domain_contract_version": "3.2-caos",
+  "skill_version": "Novel Writing Agent CAOS-governed 2.1",
   "runtime_version": "novel-owner-4.0-learning-to-planning",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strict_from_chapter": 9,
   "manifest_ref": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json",
   "business_authority": "D1traverser-debug/novel-writing-agent@main",
-  "controller_authority": "D1traverser-debug/universal-agent-os@main",
-  "controller_task_ref": "state/tasks/FQ001_MINGRI_ORDER.json",
-  "domain_binding_ref": ".uaos/MANIFEST.json",
   "canon_version": 12,
   "last_final_chapter": 8,
   "last_final_hash": "fbdc1d4b2b37c905225f9abf2feb38bc8706732a8a1eb43b4fb12fa42015ba14",
   "next_serial_chapter": 9,
   "next_serial_status": "HELD_DURING_MASTERWORK_DISTILLATION_AND_ZERO_BASED_STORY_RESELECTION",
-  "external_publication": {"confirmed_published_through": 7, "chapter_8": "PUBLISH_READY_NOT_CONFIRMED_PUBLISHED"},
-  "external_fact_pending": ["CH8 Fanqie publication status remains unconfirmed. This does not block internal learning, synthesis or story reselection."],
-  "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"],
+  "external_publication": {
+    "confirmed_published_through": 7,
+    "chapter_8": "PUBLISH_READY_NOT_CONFIRMED_PUBLISHED"
+  },
+  "external_fact_pending": [
+    "CH8 Fanqie publication status remains unconfirmed. This does not block internal learning, synthesis or story reselection."
+  ],
+  "user_locked_business_constraints": [
+    "SIGNING_MODE_IMMUTABLE",
+    "SERIALIZATION_MODE_IMMUTABLE"
+  ],
   "historical_project_identity": {
     "role": "HISTORICAL_CANDIDATE_AND_FAILURE_EVIDENCE__NO_INCUMBENT_PRIVILEGE",
     "profile_ref": "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
@@ -51,7 +54,11 @@
     "mechanism_registry_ref": "research/masterworks/MECHANISM_REGISTRY.json",
     "policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT__CLAIM_CONDITIONED_INTERBOOK_CYCLE_BEFORE_QUEUE_ADVANCE",
     "storage_policy": "PER_WORK_COLOCATED_RESEARCH__CROSS_WORK_COMPARISON_SEPARATE__PLAN_CANON_PROSE_SEPARATED",
-    "completed_works": ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU", "DAO_MU_BI_JI"],
+    "completed_works": [
+      "SHIRI_ZHONGYAN",
+      "GUI_MI_ZHI_ZHU",
+      "DAO_MU_BI_JI"
+    ],
     "active_work": "GUI_CHUI_DENG",
     "active_work_status": "ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT",
     "active_work_coverage": "SOURCE_LINE_77_THROUGH_3913__JINGJUE_GUCHENG_CH26_PARTIAL",
@@ -120,5 +127,12 @@
     "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
     "projects/FQ001_MINGRI_ORDER/CURRENT_STATE.md",
     "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json"
-  ]
+  ],
+  "governance_binding_updated_at": "2026-11-15",
+  "governance_contract_version": "CAOS_CHAT_GOVERNANCE_1.0",
+  "governance_authority": "D1traverser-debug/cognition-agent-os@main",
+  "governance_mode": "CHAT_GOVERNED_EXTERNAL",
+  "governance_entrypoint": "CAOS_NOVEL_ENTRY.md",
+  "governance_contract_ref": "config/CAOS_GOVERNANCE.json",
+  "domain_business_authority": "D1traverser-debug/novel-writing-agent@main"
 }
