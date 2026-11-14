@@ -1,4 +1,5 @@
 import pytest
+from dataclasses import replace
 
 from runtime.deliberation_admission import build_material_decision_receipt
 from runtime.owner_behavior_admission import (
@@ -7,6 +8,7 @@ from runtime.owner_behavior_admission import (
     HypothesisDisposition,
     ProblemLayer,
     RootScopeHypothesis,
+    RootScopeReceipt,
     finalize_problem_closure,
     record_recovery_attempt,
     require_root_scope_admission,
@@ -208,3 +210,65 @@ def test_no_change_requires_root_scope_evolution_and_evidence():
         root_scope_receipt=local_root(),
         evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
     ) == "NO_CHANGE_WITH_EVIDENCE"
+
+
+def test_root_scope_receipt_preserves_support_and_rejection_evidence_for_every_hypothesis():
+    receipt = systemic_root()
+    assert "evidence:support:workflow" in receipt.evidence_refs
+    assert "evidence:probe:workflow" in receipt.evidence_refs
+    assert "evidence:support:architecture" in receipt.evidence_refs
+    assert "evidence:probe:architecture" in receipt.evidence_refs
+    assert "evidence:architecture:reassessed" in receipt.evidence_refs
+
+
+def test_root_scope_hypothesis_rejects_blank_evidence_references():
+    with pytest.raises(ValueError, match="usable supporting evidence"):
+        RootScopeHypothesis(
+            hypothesis_id="blank",
+            layer=ProblemLayer.PROJECT_WORKFLOW,
+            statement="blank evidence must not pass",
+            disposition=HypothesisDisposition.SELECTED,
+            supporting_evidence_refs=(" ",),
+            falsification_or_rejection_refs=("evidence:probe",),
+        )
+
+
+def test_manually_constructed_empty_root_scope_receipt_is_rejected():
+    with pytest.raises(ValueError, match="retain the compared hypotheses"):
+        RootScopeReceipt(
+            selected_hypothesis_id="forged",
+            selected_layer=ProblemLayer.PROSE_OR_ARTIFACT,
+            compared_layers=(),
+            hypothesis_count=0,
+            material_deliberation_bound=False,
+            architecture_reassessment_performed=False,
+            durable_problem_record_required=False,
+            evidence_refs=(),
+            hypotheses=(),
+            architecture_reassessment_refs=(),
+            material_decision_receipt=None,
+            systemic=False,
+        )
+
+
+def test_receipt_cannot_drop_rejected_hypothesis_evidence_before_closure():
+    receipt = systemic_root()
+    forged = replace(
+        receipt,
+        evidence_refs=(
+            "evidence:support:workflow",
+            "evidence:probe:workflow",
+            "evidence:architecture:reassessed",
+        ),
+    )
+    with pytest.raises(BehaviorAdmissionError, match="invalid root-scope receipt"):
+        finalize_problem_closure(
+            problem_detected=True,
+            repair_path_available=True,
+            authority_permits_repair=True,
+            explicit_user_choice_required=False,
+            repair_attempted=True,
+            repair_succeeded=True,
+            root_scope_receipt=forged,
+            evolution_disposition=EvolutionDisposition.LOCAL_LEARNING_ONLY,
+        )
