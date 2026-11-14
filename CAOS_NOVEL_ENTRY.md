@@ -1,6 +1,6 @@
 # CAOS Governance Entry — Novel Writing Agent
 
-Status: ACTIVE CANDIDATE
+Status: CANDIDATE__NOT_MERGED
 Effective date: 2026-11-15
 Domain: NOVEL
 Authority Context: DOMAIN:novel
@@ -30,7 +30,7 @@ Novel remains the sole owner of `task_id`, `TASK_MANIFEST.json`, `CURRENT_CHECKP
 
 For a new Novel task or continuation:
 
-1. Load CAOS governance in the current ChatGPT session when available.
+1. Activate CAOS governance in the current ChatGPT session for every material Novel task and every cross-project decision. If CAOS governance is unavailable, do not claim a CAOS-governed acceptance.
 2. Read this file, `README.md`, `config/CAOS_GOVERNANCE.json`, `config/DOMAIN_CAPABILITIES.json`, `protocols/ACTIVE_RULEBOOK.md` and `protocols/NOVEL_PRODUCT_ARCHITECTURE.md`.
 3. Resolve the exact Novel task from the Novel-owned task manifest and checkpoint; do not reconstruct business state from CAOS memory or historical controller records.
 4. Read the exact `STUDY_STATE.json`, corpus, Canon, Plan and artifact slices needed for the requested action.
