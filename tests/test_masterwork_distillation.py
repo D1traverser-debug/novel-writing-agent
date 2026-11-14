@@ -155,9 +155,9 @@ def test_mechanism_registry_is_reference_only_until_dependency_review():
         assert "support_evidence_family_ids" not in row
 
 
-def test_uaos_capability_contract_exposes_learning_to_planning_mechanics():
-    caps = load_json(".uaos/CAPABILITIES.json")
-    assert caps["profile_version"] >= 6
+def test_domain_capability_contract_exposes_learning_to_planning_mechanics():
+    caps = load_json("config/DOMAIN_CAPABILITIES.json")
+    assert caps["profile_version"] >= 1
     assert caps["common_behavior_assurance_min"] == "1.3.0"
     by_id = {c["capability_id"]: c for c in caps["capabilities"]}
     assert {
