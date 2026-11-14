@@ -7,6 +7,7 @@ from runtime.owner_behavior_admission import (
     HypothesisDisposition,
     ProblemLayer,
     RootScopeHypothesis,
+    RootScopeReceipt,
     finalize_problem_closure,
     record_recovery_attempt,
     require_root_scope_admission,
@@ -237,4 +238,59 @@ def test_caos_governance_review_disposition_requires_durable_problem_evidence():
             blocker_reason="CAOS chat governance review is required for a cross-domain decision",
             root_scope_receipt=local_root(),
             evolution_disposition=EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
+        )
+
+
+def test_root_scope_receipt_preserves_rejected_hypothesis_evidence():
+    receipt = systemic_root()
+    assert receipt.rejected_hypothesis_ids == ("architecture",)
+    assert len(receipt.hypotheses) == 2
+    assert "evidence:support:architecture" in receipt.evidence_refs
+    assert "evidence:probe:architecture" in receipt.evidence_refs
+    assert "evidence:support:workflow" in receipt.evidence_refs
+    assert "evidence:probe:workflow" in receipt.evidence_refs
+
+
+def test_root_scope_rejects_blank_hypothesis_evidence_references():
+    with pytest.raises(ValueError, match="non-blank supporting evidence"):
+        RootScopeHypothesis(
+            hypothesis_id="blank-evidence",
+            layer=ProblemLayer.PROJECT_WORKFLOW,
+            statement="blank evidence must not pass",
+            disposition=HypothesisDisposition.SELECTED,
+            supporting_evidence_refs=("",),
+            falsification_or_rejection_refs=("evidence:probe",),
+        )
+    with pytest.raises(ValueError, match="non-blank falsification/rejection evidence"):
+        RootScopeHypothesis(
+            hypothesis_id="blank-rejection",
+            layer=ProblemLayer.PROJECT_WORKFLOW,
+            statement="blank rejection evidence must not pass",
+            disposition=HypothesisDisposition.SELECTED,
+            supporting_evidence_refs=("evidence:support",),
+            falsification_or_rejection_refs=("   ",),
+        )
+
+
+def test_forged_empty_root_scope_receipt_cannot_admit_problem_closure():
+    forged = RootScopeReceipt(
+        selected_hypothesis_id="forged",
+        selected_layer=ProblemLayer.PROJECT_WORKFLOW,
+        compared_layers=(),
+        hypothesis_count=0,
+        material_deliberation_bound=False,
+        architecture_reassessment_performed=False,
+        durable_problem_record_required=False,
+        evidence_refs=(),
+    )
+    with pytest.raises(BehaviorAdmissionError, match="receipt lost its hypotheses"):
+        finalize_problem_closure(
+            problem_detected=True,
+            repair_path_available=True,
+            authority_permits_repair=True,
+            explicit_user_choice_required=False,
+            repair_attempted=True,
+            repair_succeeded=True,
+            root_scope_receipt=forged,
+            evolution_disposition=EvolutionDisposition.LOCAL_LEARNING_ONLY,
         )
