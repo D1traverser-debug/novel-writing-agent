@@ -69,6 +69,7 @@ def test_canonical_evolution_preserves_prior_production_and_tracks_caos_migratio
     migration = next(item for item in receipts if item["problem_ref"] == "N-20261115-01-CAOS-GOVERNANCE-MIGRATION")
     assert migration["status"] == "CANDIDATE__CI_PENDING"
     assert migration["historical_uaos_provenance"] == "PRESERVED_IN_DATED_AUDITS_AND_GIT_HISTORY_ONLY"
+    assert (ROOT / "audits/CAOS_GOVERNANCE_MIGRATION_2026-11-15.md").is_file()
 
 
 def test_rulebook_and_caos_entry_point_bind_executable_novel_domain_admissions():
