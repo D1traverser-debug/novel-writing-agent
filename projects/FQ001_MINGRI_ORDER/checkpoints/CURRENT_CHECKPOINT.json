@@ -1,23 +1,18 @@
 {
-  "schema_version": "3.1-uaos",
-  "checkpoint_version": 26,
+  "schema_version": "3.2-domain-owned",
+  "checkpoint_version": 27,
   "task_id": "FQ001_MINGRI_ORDER",
   "task_class": "USER",
   "domain": "NOVEL",
   "display_name_zh": "《凌晨零点，我接到明天的订单》",
   "status": "ACTIVE",
   "recovery_owner": "NOVEL_WRITING_AGENT",
-  "updated_at": "2026-10-15T15:44:58+08:00",
-  "control_binding_updated_at": "2026-10-15",
+  "updated_at": "2026-11-14",
   "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__CLAIM_CONDITIONED_LEARNING__ZERO_BASED_STORY_RESELECTION_PENDING",
   "next_action": "Resume GUI_CHUI_DENG exactly from source line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》 after the jade-throne observation. Verified sequential coverage remains lines 77-3913. After GUI_CHUI_DENG completes, run the mandatory D8-D11 claim-conditioned interbook learning cycle before QING_YU_NIAN can activate. Do not draft replacement prose or restore historical FQ001 identity as active before full corpus synthesis and zero-based story reselection.",
-  "controller_contract_version": "UAOS_TASK_BINDING_1.0",
-  "domain_contract_version": "3.1-uaos",
-  "skill_version": "Novel Writing Agent UAOS 2.0",
+  "domain_contract_version": "3.2-domain-owned",
+  "skill_version": "Novel Writing Agent CAOS 2.1",
   "runtime_version": "novel-owner-4.0-learning-to-planning",
-  "controller_authority": "D1traverser-debug/universal-agent-os@main",
-  "controller_task_ref": "state/tasks/FQ001_MINGRI_ORDER.json",
-  "domain_binding_ref": ".uaos/MANIFEST.json",
   "release_evidence_contract_version": "1.0",
   "release_evidence_strict_from_chapter": 9,
   "canon_version": 12,
@@ -27,7 +22,10 @@
   "next_serial_status": "HELD_DURING_MASTERWORK_DISTILLATION_AND_ZERO_BASED_STORY_RESELECTION",
   "production_mode": "LEARNING_CAMPAIGN__HISTORICAL_PROJECT_FROZEN",
   "story_time": "10月8日 01:47",
-  "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"],
+  "user_locked_business_constraints": [
+    "SIGNING_MODE_IMMUTABLE",
+    "SERIALIZATION_MODE_IMMUTABLE"
+  ],
   "historical_project_identity": {
     "role": "HISTORICAL_CANDIDATE_AND_FAILURE_EVIDENCE__NO_INCUMBENT_PRIVILEGE",
     "profile_ref": "projects/FQ001_MINGRI_ORDER/PROJECT_PROFILE.md",
@@ -42,7 +40,11 @@
     "cross_work_state_ref": "research/masterworks/CROSS_WORK_LEARNING_STATE.json",
     "mechanism_registry_ref": "research/masterworks/MECHANISM_REGISTRY.json",
     "policy": "ONE_BOOK_AT_A_TIME__COMPLETE_BEFORE_NEXT__CLAIM_CONDITIONED_INTERBOOK_CYCLE_BEFORE_QUEUE_ADVANCE",
-    "completed_works": ["SHIRI_ZHONGYAN", "GUI_MI_ZHI_ZHU", "DAO_MU_BI_JI"],
+    "completed_works": [
+      "SHIRI_ZHONGYAN",
+      "GUI_MI_ZHI_ZHU",
+      "DAO_MU_BI_JI"
+    ],
     "active_work": "GUI_CHUI_DENG",
     "active_work_status": "ACTIVE__PAUSED_BY_USER_AT_SAFE_CHECKPOINT",
     "active_work_coverage": "SOURCE_LINE_77_THROUGH_3913__JINGJUE_GUCHENG_CH26_PARTIAL",
@@ -91,6 +93,20 @@
   ],
   "blockers": [],
   "waiting_on": [],
-  "external_fact_pending": [{"type": "USER_EXTERNAL_FACT_NOT_REQUIRED_FOR_INTERNAL_LEARNING_OR_RESELECTION", "detail": "CH8 Fanqie publication status remains unconfirmed. Do not infer published/withdrawn/replaced state."}],
-  "derived_artifact_refs": ["Google Drive file 1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/鬼吹灯全集/鬼吹灯全集_学习总账.md#sha256=3cec0a78067c7d1acbc6605b4af859d1860f13d46e1770141b979b7f3143c02f"]
+  "external_fact_pending": [
+    {
+      "type": "USER_EXTERNAL_FACT_NOT_REQUIRED_FOR_INTERNAL_LEARNING_OR_RESELECTION",
+      "detail": "CH8 Fanqie publication status remains unconfirmed. Do not infer published/withdrawn/replaced state."
+    }
+  ],
+  "derived_artifact_refs": [
+    "Google Drive file 1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF /ChatGPT/NOVEL_OS_名作蒸馏研究库/01_逐本学习/鬼吹灯全集/鬼吹灯全集_学习总账.md#sha256=3cec0a78067c7d1acbc6605b4af859d1860f13d46e1770141b979b7f3143c02f"
+  ],
+  "domain_task_contract_version": "NOVEL_DOMAIN_TASK_BINDING_1.0",
+  "domain_authority": "D1traverser-debug/novel-writing-agent@main",
+  "domain_task_identity_ref": "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json::task_id",
+  "domain_capabilities_ref": "config/DOMAIN_CAPABILITIES.json",
+  "caos_governance_ref": "config/CAOS_GOVERNANCE.json",
+  "governance_mode": "CHAT_GOVERNED_EXTERNAL",
+  "domain_governance_binding_updated_at": "2026-11-14"
 }
