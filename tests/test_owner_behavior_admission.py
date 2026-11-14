@@ -1,3 +1,5 @@
+from types import SimpleNamespace
+
 import pytest
 
 from runtime.deliberation_admission import build_material_decision_receipt
@@ -269,6 +271,54 @@ def test_root_scope_rejects_blank_hypothesis_evidence_references():
             disposition=HypothesisDisposition.SELECTED,
             supporting_evidence_refs=("evidence:support",),
             falsification_or_rejection_refs=("   ",),
+        )
+
+
+def test_closure_revalidates_nested_hypothesis_types_and_nonblank_evidence():
+    forged_values = {
+        "hypothesis_id": "forged",
+        "layer": ProblemLayer.PROJECT_WORKFLOW,
+        "statement": "forged nested hypothesis",
+        "disposition": HypothesisDisposition.SELECTED,
+        "supporting_evidence_refs": (),
+        "falsification_or_rejection_refs": (),
+    }
+    fake_objects = [SimpleNamespace(**forged_values)]
+    forged_dataclass = object.__new__(RootScopeHypothesis)
+    for key, value in forged_values.items():
+        object.__setattr__(forged_dataclass, key, value)
+    fake_objects.append(forged_dataclass)
+
+    for nested in fake_objects:
+        forged = RootScopeReceipt(
+            selected_hypothesis_id="forged",
+            selected_layer=ProblemLayer.PROJECT_WORKFLOW,
+            compared_layers=(ProblemLayer.PROJECT_WORKFLOW,),
+            hypothesis_count=1,
+            material_deliberation_bound=False,
+            architecture_reassessment_performed=False,
+            durable_problem_record_required=False,
+            evidence_refs=(),
+            hypotheses=(nested,),
+        )
+        with pytest.raises(BehaviorAdmissionError, match="invalid nested hypothesis type|non-blank supporting evidence"):
+            finalize_problem_closure(
+                problem_detected=True,
+                repair_path_available=True,
+                authority_permits_repair=True,
+                explicit_user_choice_required=False,
+                repair_attempted=True,
+                repair_succeeded=True,
+                root_scope_receipt=forged,
+                evolution_disposition=EvolutionDisposition.LOCAL_LEARNING_ONLY,
+            )
+
+
+def test_root_scope_admission_rejects_non_hypothesis_objects_before_field_access():
+    with pytest.raises(BehaviorAdmissionError, match="invalid nested hypothesis type"):
+        require_root_scope_admission(
+            hypotheses=(SimpleNamespace(hypothesis_id="forged"),),
+            selected_hypothesis_id="forged",
         )
 
 
