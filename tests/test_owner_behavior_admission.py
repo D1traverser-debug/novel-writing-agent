@@ -208,3 +208,33 @@ def test_no_change_requires_root_scope_evolution_and_evidence():
         root_scope_receipt=local_root(),
         evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
     ) == "NO_CHANGE_WITH_EVIDENCE"
+
+
+def test_caos_governance_is_an_upstream_hypothesis_layer_not_a_runtime_upcall():
+    receipt = require_root_scope_admission(
+        hypotheses=(
+            hypothesis("workflow", ProblemLayer.PROJECT_WORKFLOW, HypothesisDisposition.SELECTED),
+            hypothesis("caos-governance", ProblemLayer.CAOS_GOVERNANCE, HypothesisDisposition.REJECTED),
+        ),
+        selected_hypothesis_id="workflow",
+        material_problem=True,
+        architecture_reassessment_refs=["evidence:caos-governance-reassessed"],
+        material_decision_receipt=material_receipt(),
+    )
+    assert ProblemLayer.CAOS_GOVERNANCE in receipt.compared_layers
+    assert receipt.selected_layer is ProblemLayer.PROJECT_WORKFLOW
+
+
+def test_caos_governance_review_disposition_requires_durable_problem_evidence():
+    with pytest.raises(BehaviorAdmissionError, match="durable causal evidence"):
+        finalize_problem_closure(
+            problem_detected=True,
+            repair_path_available=False,
+            authority_permits_repair=False,
+            explicit_user_choice_required=False,
+            repair_attempted=False,
+            repair_succeeded=False,
+            blocker_reason="CAOS chat governance review is required for a cross-domain decision",
+            root_scope_receipt=local_root(),
+            evolution_disposition=EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
+        )
