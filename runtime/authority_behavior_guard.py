@@ -116,7 +116,7 @@ result = {
     "domain_owner": manifest.get("owner"),
     "caos_governance_mode": caos.get("mode"),
     "profile_version": caps.get("profile_version"),
-    "common_behavior_assurance_min": caps.get("common_behavior_assurance_min"),
+    "governance_mode": caos.get("mode"),
     "open_evolution_items": len(open_items) if isinstance(open_items, list) else None,
     "failures": problems,
 }
