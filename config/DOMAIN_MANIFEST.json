@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "agent_id": "novel",
+  "domain_id": "novel",
+  "owner": "NOVEL_WRITING_AGENT",
+  "status": "NOVEL_DOMAIN_RUNTIME_ACTIVE",
+  "skill": {
+    "entrypoint": "CAOS_NOVEL_ENTRY.md"
+  },
+  "governance_ref": "config/CAOS_GOVERNANCE.json",
+  "capability_ref": "config/DOMAIN_CAPABILITIES.json",
+  "domain_authority": {
+    "project_root": "projects",
+    "rulebook_ref": "protocols/ACTIVE_RULEBOOK.md",
+    "product_architecture_ref": "protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
+    "mastery_ref": "protocols/NOVEL_MASTERY_MODEL.md",
+    "masterwork_learning_ref": "protocols/MASTERWORK_DISTILLATION_PROTOCOL.md",
+    "study_state_ref": "research/masterworks/STUDY_STATE.json",
+    "corpus_map_ref": "research/masterworks/CORPUS_MAP.json",
+    "narrative_evidence_schema_ref": "research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json",
+    "cross_work_learning_state_ref": "research/masterworks/CROSS_WORK_LEARNING_STATE.json",
+    "mechanism_registry_ref": "research/masterworks/MECHANISM_REGISTRY.json",
+    "artifact_context_ref": "config/ARTIFACT_CONTEXT_GOVERNANCE.json",
+    "checkpoint_pattern": "projects/<task>/checkpoints/CURRENT_CHECKPOINT.json",
+    "evolution_evidence_ref": "audits/EVOLUTION_INDEX.json",
+    "behavior_admission_ref": "runtime/owner_behavior_admission.py",
+    "root_scope_admission_ref": "runtime/owner_behavior_admission.py:require_root_scope_admission",
+    "material_deliberation_admission_ref": "runtime/deliberation_admission.py",
+    "learning_transfer_admission_ref": "runtime/learning_transfer_admission.py",
+    "story_reselection_admission_ref": "runtime/story_reselection_admission.py",
+    "dynamic_outline_ref": "runtime/dynamic_outline.py",
+    "story_dependency_graph_ref": "runtime/story_dependency_graph.py",
+    "narrative_evaluation_ref": "runtime/narrative_evaluation.py"
+  },
+  "execution_boundary": {
+    "direct_domain_activation": true,
+    "parent_task_identity": false,
+    "parent_business_state_mirror": false,
+    "runtime_upcall": false,
+    "caos_permission_grant": false
+  },
+  "legacy_cleanup": {
+    "uaos_binding": "REMOVED_FROM_ACTIVE_DEFAULT_BRANCH",
+    "historical_provenance": "PRESERVED"
+  }
+}
