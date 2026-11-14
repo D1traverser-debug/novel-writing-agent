@@ -25,10 +25,10 @@ def load(rel: str) -> dict:
 
 
 CURRENT_REQUIRED = [
-    "UAOS_SKILL.md",
-    ".uaos/MANIFEST.json",
-    ".uaos/ADAPTER.json",
-    ".uaos/CAPABILITIES.json",
+    "CAOS_NOVEL_ENTRY.md",
+    "config/CAOS_GOVERNANCE.json",
+    "config/DOMAIN_MANIFEST.json",
+    "config/DOMAIN_CAPABILITIES.json",
     "config/ARTIFACT_CONTEXT_GOVERNANCE.json",
     "protocols/ACTIVE_RULEBOOK.md",
     "protocols/NOVEL_PRODUCT_ARCHITECTURE.md",
@@ -63,14 +63,15 @@ for rel in CURRENT_REQUIRED:
 RETIRED_ACTIVE_PATHS = [
     "ENTRYPOINT.md", "PROTOCOL.md", "SKILL.md", "TASK_INDEX.json", "CONTINUITY_ADAPTER.json",
     "AUTHORITY_STATUS.json", "continuity", "migration", "research/masterworks/INDEX.json",
+    ".uaos", "UAOS_SKILL.md",
 ]
 for rel in RETIRED_ACTIVE_PATHS:
     if (ROOT / rel).exists():
         problems.append(f"retired-active-path-returned:{rel}")
 
-uaos_manifest = load(".uaos/MANIFEST.json")
-uaos_adapter = load(".uaos/ADAPTER.json")
-caps = load(".uaos/CAPABILITIES.json")
+domain_manifest = load("config/DOMAIN_MANIFEST.json")
+caps = load("config/DOMAIN_CAPABILITIES.json")
+caos_governance = load("config/CAOS_GOVERNANCE.json")
 gov = load("config/ARTIFACT_CONTEXT_GOVERNANCE.json")
 m = load("projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json")
 cp = load("projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
@@ -78,18 +79,23 @@ study = load("research/masterworks/STUDY_STATE.json")
 cross = load("research/masterworks/CROSS_WORK_LEARNING_STATE.json")
 corpus = load("research/masterworks/CORPUS_MAP.json")
 
-if uaos_manifest.get("controller") != "D1traverser-debug/universal-agent-os@main" or uaos_manifest.get("status") != "UAOS_CONTROL_PLANE_ACTIVE":
-    problems.append("uaos-manifest-controller-or-status")
-if uaos_manifest.get("skill", {}).get("entrypoint") != "UAOS_SKILL.md":
-    problems.append("uaos-skill-entry")
-if uaos_adapter.get("task_identity_authority") != "UAOS" or uaos_adapter.get("cross_chat_continuity_authority") != "UAOS":
-    problems.append("uaos-adapter-authority")
-if uaos_adapter.get("legacy_controller_compatibility") != "NONE":
-    problems.append("uaos-legacy-compatibility")
-if gov.get("controller") != "D1traverser-debug/universal-agent-os@main":
-    problems.append("artifact-governance-controller")
-if int(caps.get("profile_version", 0)) < 6:
-    problems.append("profile-version-below-6")
+if domain_manifest.get("owner") != "NOVEL_WRITING_AGENT" or domain_manifest.get("status") != "NOVEL_DOMAIN_RUNTIME_ACTIVE":
+    problems.append("domain-manifest-owner-or-status")
+if domain_manifest.get("skill", {}).get("entrypoint") != "CAOS_NOVEL_ENTRY.md":
+    problems.append("domain-skill-entry")
+if domain_manifest.get("governance_ref") != "config/CAOS_GOVERNANCE.json" or domain_manifest.get("capability_ref") != "config/DOMAIN_CAPABILITIES.json":
+    problems.append("domain-governance-or-capability-ref")
+caos = caos_governance.get("governance", {})
+if caos.get("system") != "CAOS" or caos.get("mode") != "CHAT_GOVERNED_EXTERNAL":
+    problems.append("caos-governance-mode")
+if caos.get("runtime_dependency") is not False or caos.get("api_dependency") is not False:
+    problems.append("caos-runtime-dependency")
+if caos_governance.get("execution_boundary", {}).get("parent_task_identity") is not False:
+    problems.append("caos-parent-task-identity")
+if gov.get("governance", {}).get("system") != "CAOS" or gov.get("governance", {}).get("runtime_dependency") is not False:
+    problems.append("artifact-context-governance")
+if int(caps.get("profile_version", 0)) < 1:
+    problems.append("domain-capability-profile-version")
 
 cap_ids = {c.get("capability_id") for c in caps.get("capabilities", [])}
 for required_cap in {
@@ -106,10 +112,22 @@ for f in ("task_id", "current_stage", "next_action", "canon_version", "last_fina
         problems.append("checkpoint-drift:" + f)
 if m.get("task_id") != "FQ001_MINGRI_ORDER" or m.get("status") != "ACTIVE" or cp.get("status") != "ACTIVE":
     problems.append("task-identity-or-status")
-if m.get("controller_authority") != "D1traverser-debug/universal-agent-os@main" or cp.get("controller_authority") != "D1traverser-debug/universal-agent-os@main":
-    problems.append("controller-authority")
-if m.get("controller_task_ref") != "state/tasks/FQ001_MINGRI_ORDER.json" or cp.get("controller_task_ref") != "state/tasks/FQ001_MINGRI_ORDER.json":
-    problems.append("controller-task-ref")
+for payload, label in ((m, "manifest"), (cp, "checkpoint")):
+    if payload.get("domain_authority") != "D1traverser-debug/novel-writing-agent@main":
+        problems.append(label + "-domain-authority")
+    if payload.get("domain_task_identity_ref") != "projects/FQ001_MINGRI_ORDER/TASK_MANIFEST.json::task_id":
+        problems.append(label + "-domain-task-identity-ref")
+    if payload.get("domain_capabilities_ref") != "config/DOMAIN_CAPABILITIES.json":
+        problems.append(label + "-domain-capabilities-ref")
+    if payload.get("caos_governance_ref") != "config/CAOS_GOVERNANCE.json":
+        problems.append(label + "-caos-governance-ref")
+    if payload.get("domain_task_contract_version") != "NOVEL_DOMAIN_TASK_BINDING_1.0":
+        problems.append(label + "-domain-task-contract-version")
+    if payload.get("governance_mode") != "CHAT_GOVERNED_EXTERNAL":
+        problems.append(label + "-governance-mode")
+    for retired_field in ("controller_authority", "controller_task_ref", "domain_binding_ref", "controller_contract_version"):
+        if retired_field in payload:
+            problems.append(label + "-retired-controller-field:" + retired_field)
 for payload, label in ((m, "manifest"), (cp, "checkpoint")):
     if "continuity_protocol_version" in payload or "universal_lease_authority" in payload:
         problems.append(label + "-legacy-control-field")
@@ -196,7 +214,7 @@ for key in cp.get("rebase", {}):
         problems.append("rebase-checkpoint-drift:" + key)
 
 rulebook = (ROOT / "protocols/ACTIVE_RULEBOOK.md").read_text(encoding="utf-8")
-if "version: 2.5-github" not in rulebook or "old FQ001" not in rulebook and "historical FQ001" not in rulebook:
+if "version: 2.6-caos" not in rulebook or "old FQ001" not in rulebook and "historical FQ001" not in rulebook:
     problems.append("rulebook-version-or-historical-boundary")
 mastery = (ROOT / "protocols/NOVEL_MASTERY_MODEL.md").read_text(encoding="utf-8")
 for token in [f"C{i:02d}" for i in range(1, 22)]:
@@ -212,7 +230,8 @@ for failure in validate_release_evidence(ROOT):
 result = {
     "status": "PASS" if not problems else "FAIL",
     "task_id": m.get("task_id"),
-    "controller": uaos_manifest.get("controller"),
+    "domain_authority": m.get("domain_authority"),
+    "governance": caos.get("mode"),
     "profile_version": caps.get("profile_version"),
     "stage": m.get("current_stage"),
     "active_masterwork": current.get("work_id"),
