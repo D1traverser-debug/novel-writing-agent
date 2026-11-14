@@ -271,3 +271,30 @@ def test_receipt_cannot_drop_rejected_hypothesis_evidence_before_closure():
             root_scope_receipt=forged,
             evolution_disposition=EvolutionDisposition.LOCAL_LEARNING_ONLY,
         )
+
+
+def test_caos_governance_review_disposition_requires_durable_domain_problem_evidence():
+    with pytest.raises(BehaviorAdmissionError, match="durable causal evidence"):
+        finalize_problem_closure(
+            problem_detected=True,
+            repair_path_available=False,
+            authority_permits_repair=False,
+            explicit_user_choice_required=False,
+            repair_attempted=False,
+            repair_succeeded=False,
+            blocker_reason="cross-domain method review is required",
+            root_scope_receipt=local_root(),
+            evolution_disposition=EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
+        )
+    assert finalize_problem_closure(
+        problem_detected=True,
+        repair_path_available=False,
+        authority_permits_repair=False,
+        explicit_user_choice_required=False,
+        repair_attempted=False,
+        repair_succeeded=False,
+        blocker_reason="cross-domain method review is required",
+        root_scope_receipt=local_root(),
+        evolution_disposition=EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
+        durable_problem_ref="audits/EVOLUTION_INDEX.json#N-20261114-CAOS-GOVERNANCE-MIGRATION",
+    ) == "BLOCKED_WITH_REASON"
