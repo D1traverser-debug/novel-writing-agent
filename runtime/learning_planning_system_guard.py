@@ -23,8 +23,9 @@ def text(rel: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
-manifest = load(".uaos/MANIFEST.json")
-caps = load(".uaos/CAPABILITIES.json")
+governance = load("config/CAOS_GOVERNANCE.json")
+caps = load("config/DOMAIN_CAPABILITIES.json")
+caos_entry = text("CAOS_NOVEL_ENTRY.md")
 study = load("research/masterworks/STUDY_STATE.json")
 corpus = load("research/masterworks/CORPUS_MAP.json")
 evidence_schema = load("research/masterworks/NARRATIVE_EVIDENCE_SCHEMA.json")
@@ -38,10 +39,14 @@ learning_protocol = text("protocols/MASTERWORK_DISTILLATION_PROTOCOL.md")
 architecture = text("protocols/NOVEL_PRODUCT_ARCHITECTURE.md")
 
 # Authority/version alignment. Capability profiles are monotonic capability floors, not frozen identities.
-if int(caps.get("profile_version", 0)) < 6:
-    problems.append("profile-below-6")
-if "version: 2.5-github" not in rulebook:
-    problems.append("rulebook-not-2.5")
+if int(caps.get("profile_version", 0)) < 8:
+    problems.append("domain-profile-below-8")
+if "version: 2.6-caos" not in rulebook:
+    problems.append("rulebook-not-2.6-caos")
+if governance.get("governance", {}).get("system") != "CAOS" or governance.get("governance", {}).get("mode") != "CHAT_GOVERNED_EXTERNAL":
+    problems.append("caos-governance-binding")
+if governance.get("governance", {}).get("runtime_dependency") is not False:
+    problems.append("caos-runtime-dependency")
 if "version: 2.0" not in mastery:
     problems.append("mastery-not-2.0")
 if "version: 2.1" not in learning_protocol:
@@ -60,7 +65,7 @@ required_refs = {
     "narrative_evaluation_ref": "runtime/narrative_evaluation.py",
 }
 for key, expected in required_refs.items():
-    if manifest.get("domain_authority", {}).get(key) != expected:
+    if caps.get("domain_authority", {}).get(key) != expected:
         problems.append("manifest-ref:" + key)
     if not (ROOT / expected).is_file():
         problems.append("manifest-ref-missing:" + key)
@@ -111,7 +116,7 @@ for invariant in (
     "PLAN != CANON",
     "MODEL_SELF_EVALUATION != LIVE_READER_OR_PLATFORM_OUTCOME",
 ):
-    if invariant not in text("UAOS_SKILL.md") and invariant not in architecture:
+    if invariant not in caos_entry and invariant not in architecture:
         problems.append("missing-invariant:" + invariant)
 
 result = {
