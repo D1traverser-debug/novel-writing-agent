@@ -49,13 +49,13 @@ def test_novel_domain_capabilities_bind_caos_without_copying_or_inheriting_paren
     assert capabilities["zero_based_story_reselection"]["execution_ref"] == "runtime/story_reselection_admission.py"
 
 
-def test_canonical_evolution_preserves_prior_production_and_tracks_caos_migration_candidate():
+def test_canonical_evolution_preserves_prior_production_and_tracks_promoted_caos_migration():
     index = load_json("audits/EVOLUTION_INDEX.json")
     assert index["owner"] == "DOMAIN:novel"
     assert index["governance"]["system"] == "CAOS"
     assert index["governance"]["mode"] == "CHAT_GOVERNED_EXTERNAL"
-    assert index["current_open_items"] == ["N-20261115-01-CAOS-GOVERNANCE-MIGRATION"]
-    assert set(index["current_open_items"]) == set(index["current_problem_refs"])
+    assert index["current_open_items"] == []
+    assert index["current_problem_refs"] == {}
     receipts = index["recent_resolved_or_promoted"]
     prior = next(item for item in receipts if item["problem_ref"] == "N-20261015-01-UAOS_AUTHORITY_AND_BEHAVIOR_REPAIR")
     assert prior["production_commit"] == "7cc56fbdca5139c2b61d0a16823d963693e9094c"
@@ -67,7 +67,12 @@ def test_canonical_evolution_preserves_prior_production_and_tracks_caos_migratio
     assert current["production_commit"] == "e0ec355f476830f77033ada08912d6c58f0bafe4"
     assert current["result"] == "PASS"
     migration = next(item for item in receipts if item["problem_ref"] == "N-20261115-01-CAOS-GOVERNANCE-MIGRATION")
-    assert migration["status"] == "CANDIDATE__CI_PENDING"
+    assert migration["status"] == "PROMOTED__MAINLINE_CI_VERIFIED"
+    assert migration["pull_request"] == 10
+    assert migration["production_commit"] == "a471fcc06fdc71db576c1a3802ca705dfa9b97b8"
+    assert migration["production_ci_run"] == 43625817951
+    assert migration["production_tests_passed"] == 85
+    assert migration["result"] == "PASS"
     assert migration["historical_uaos_provenance"] == "PRESERVED_IN_DATED_AUDITS_AND_GIT_HISTORY_ONLY"
     assert (ROOT / "audits/CAOS_GOVERNANCE_MIGRATION_2026-11-15.md").is_file()
 
