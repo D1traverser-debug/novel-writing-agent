@@ -5,7 +5,7 @@ scope: long-form fiction learning, story selection, planning, production, serial
 
 # Novel Writing Agent — CAOS-Governed Domain Entry
 
-Cross-domain governance: CAOS in the active ChatGPT session (`D1traverser-debug/cognition-agent-os`).
+Cross-domain governance: CAOS in the active ChatGPT session (`D1traverser-debug/cognition-agent-os`). Use the installed `cognition-parent-chatgpt-intake` Skill when available; CAOS source code and repository are read-only for this migration.
 Domain repository: `D1traverser-debug/novel-writing-agent@main`.
 
 CAOS governs cross-project goal recovery, recursive diagnosis, research and method comparison, decision rechallenge, execution discipline, independent acceptance and durable cross-domain learning in the active ChatGPT session. This repository remains the sole owner of Novel task identity, requirements, checkpoints, learning evidence, story-selection evidence, Plan/Canon boundaries, prose/release evidence, craft rules and domain evolution. CAOS creates no parent task ID, task ledger, runtime proxy, lease or permission grant.
@@ -55,7 +55,7 @@ Any current execution that silently collapses these layers is a system defect.
 
 ## CAOS governance and Novel-native decision admission
 
-CAOS supplies cross-domain cognition governance in the active ChatGPT session; it is not a runtime external runtime controller and does not own Novel business state. Novel retains its owner-native recovery, material-decision, root-scope, evolution and action-admission mechanisms below. The current capability contract is `config/DOMAIN_CAPABILITIES.json`; there is no CAOS common-policy dependency or automatic governance upcall.
+CAOS supplies cross-domain cognition governance in the active ChatGPT session; it is not a runtime controller and does not own Novel business state. Novel retains its owner-native recovery, material-decision, root-scope, evolution and action-admission mechanisms below. The current capability contract is `config/DOMAIN_CAPABILITIES.json`; there is no CAOS common-policy dependency or automatic governance upcall.
 
 Before externalizing a plausibly recoverable dependency, inspect lawful authority/state/artifacts/context and materially useful external evidence. If safe bounded progress remains, continue provisionally instead of blocking.
 
