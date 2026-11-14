@@ -158,7 +158,8 @@ def test_mechanism_registry_is_reference_only_until_dependency_review():
 def test_domain_capability_contract_exposes_learning_to_planning_mechanics():
     caps = load_json("config/DOMAIN_CAPABILITIES.json")
     assert caps["profile_version"] >= 1
-    assert caps["common_behavior_assurance_min"] == "1.3.0"
+    assert caps["governance_ref"] == "config/CAOS_GOVERNANCE.json"
+    assert caps["governance_mode"] == "CHAT_GOVERNED_EXTERNAL__NO_RUNTIME_OR_API_DEPENDENCY"
     by_id = {c["capability_id"]: c for c in caps["capabilities"]}
     assert {
         "large_corpus_distillation",
