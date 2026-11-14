@@ -1,6 +1,6 @@
 # CAOS Governance Entry — Novel Writing Agent
 
-Status: CANDIDATE__NOT_MERGED
+Status: ACTIVE
 Effective date: 2026-11-15
 Domain: NOVEL
 Authority Context: DOMAIN:novel
