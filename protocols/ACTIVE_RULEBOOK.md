@@ -1,18 +1,19 @@
 # Novel Writing Agent — Active Rulebook
 
-version: 2.5-github
+version: 2.6-caos
 status: ACTIVE
 scope: NOVEL
 architecture_ref: protocols/NOVEL_PRODUCT_ARCHITECTURE.md
 mastery_ref: protocols/NOVEL_MASTERY_MODEL.md
 masterwork_ref: protocols/MASTERWORK_DISTILLATION_PROTOCOL.md
 business_authority: D1traverser-debug/novel-writing-agent@main
-parent_authority: D1traverser-debug/universal-agent-os@main
+governance_authority: CAOS_CHAT_GOVERNANCE_EXTERNAL
+governance_ref: config/CAOS_GOVERNANCE.json
 
 ## 1. Authority and non-negotiable boundaries
 
-- UAOS owns cross-domain intent, task identity, routing, cross-chat continuation and common behavior governance.
-- This repository owns Novel learning evidence, project checkpoints, story-selection evidence, Plan/Canon/prose state, release evidence and domain evolution.
+- CAOS governs cross-domain cognition and execution discipline in the active ChatGPT session; it does not create a parent task identity, task ledger, runtime route or permission grant.
+- This repository owns Novel task identity, learning evidence, project checkpoints, story-selection evidence, Plan/Canon/prose state, release evidence and domain evolution.
 - Chat/model memory is never Canon or executable state.
 - Before any material Novel action, reread the exact current Novel checkpoint and relevant authority slices.
 - External publish/delete/payment/sign/compliance actions remain user-controlled unless an explicit connected action is authorized.
@@ -29,7 +30,7 @@ Hard separations:
 
 ## 2. Common behavior and material deliberation
 
-Novel adopts UAOS Common Behavior Assurance 1.2.
+Novel's owner-native admission enforces recovery, root-scope cognition, typed evolution and problem closure. CAOS supplies cross-domain decision governance in the active session; there is no CAOS runtime dependency.
 
 Before asking the user for a plausibly recoverable dependency, inspect current authority/checkpoint/Canon/artifacts/context and materially useful external evidence. Continue with bounded uncertainty when safe.
 
