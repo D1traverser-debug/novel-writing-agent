@@ -4,9 +4,13 @@ version: 1.0
 status: CANDIDATE_SYSTEM_ARCHITECTURE
 scope: learning -> story selection -> planning -> canon -> production -> evaluation -> outcome -> evolution
 business_authority: D1traverser-debug/novel-writing-agent@main
-parent_control: D1traverser-debug/universal-agent-os@main
+cross_project_governance: CAOS_CHAT_GOVERNED_EXTERNAL
 
-## 0. Product objective
+## 0. Governance boundary
+
+CAOS provides cross-project cognition and governance in the active ChatGPT session. Novel remains the sole authority for task identity, learning state, story selection, Plan, Canon, prose, release evidence and domain evolution. No CAOS runtime/API dependency, parent task identity, business-state mirror, permission grant or automatic upcall is introduced.
+
+## 1. Product objective
 
 目标不是“写出一篇看起来像小说的文本”，也不是“把规则越堆越多”。目标是建立一个能够长期产出、诊断、学习和重规划的小说产品系统：
 
@@ -18,7 +22,7 @@ parent_control: D1traverser-debug/universal-agent-os@main
 6. 每次 material 决策先研究、比较、反例挑战，再执行；
 7. 用真实平台/读者结果反向更新规划和系统规则。
 
-## 1. Eight-layer authority model
+## 2. Eight-layer authority model
 
 ### L1 — LEARNING EVIDENCE
 Authority:
@@ -80,7 +84,7 @@ Authority: `audits/EVOLUTION_INDEX.json` + causal audit records.
 
 A real defect triggers diagnosis, external research where material, alternatives, counterexamples, repair-or-block action, regression and outcome observation. Failed approaches and rejected alternatives remain visible.
 
-## 2. Core data separation
+## 3. Core data separation
 
 `LEARNING_EVIDENCE != ACTIVE_RULE`
 
@@ -100,7 +104,7 @@ A real defect triggers diagnosis, external research where material, alternatives
 
 Any mechanism that collapses these boundaries is a system defect.
 
-## 3. Learning architecture
+## 4. Learning architecture
 
 Reading remains one work at a time and in source order. Comparison happens only after a work completes so full-text contexts do not contaminate the active sequential pass.
 
@@ -114,7 +118,7 @@ Cross-work comparison does not use a fixed book/author independence score. It is
 
 Same-author and same-series works are often unusually valuable controlled contrasts, not duplicates.
 
-## 4. Post-study zero-based product selection
+## 5. Post-study zero-based product selection
 
 When all non-excluded corpus works complete:
 1. formal synthesis of mechanisms and contradictions;
@@ -129,7 +133,7 @@ When all non-excluded corpus works complete:
 10. create dynamic series/volume/arc/opening-packet architecture;
 11. freeze first acquisition/signing packet before new prose starts.
 
-## 5. Long-form planning principle
+## 6. Long-form planning principle
 
 Do not prewrite a rigid 1.2-million-character chapter list. Plan the intended ending and irreversible transformations, then maintain variable-resolution hierarchy:
 - SERIES: end state, central transformation, final value conflict;
@@ -140,7 +144,7 @@ Do not prewrite a rigid 1.2-million-character chapter list. Plan the intended en
 
 New evidence may replan future nodes, but accepted prose and Canon require explicit reconciliation.
 
-## 6. Evaluation principle
+## 7. Evaluation principle
 
 No single weighted quality score can authorize release or story selection.
 
@@ -151,7 +155,7 @@ Use:
 - pairwise tradeoff reasoning when evidence is incommensurable or overlapping;
 - live outcomes to recalibrate dimensions after publication.
 
-## 7. Current FQ001 transition
+## 8. Current FQ001 transition
 
 During the active masterwork campaign:
 - historical CH1–CH8 remain immutable evidence;
@@ -165,7 +169,7 @@ After campaign synthesis:
 - title, premise, genre mix, protagonist, POV, world, character network, story engine, theme, outline and old FQ001 identity may all lose the candidate tournament;
 - if historical FQ001 wins, its identity becomes active again through an explicit selection receipt; otherwise it remains historical.
 
-## 8. Research-before-mutation rule
+## 9. Research-before-mutation rule
 
 Material mutations—learning ontology, capability model, story selection, Rulebook promotion, Canon schema, major outline replan—require `runtime/deliberation_admission.py` evidence:
 - current authority;
@@ -179,7 +183,7 @@ Material mutations—learning ontology, capability model, story selection, Ruleb
 
 This is the mechanical interpretation of “先学习、归类、比较、自我挑刺，再执行”。
 
-## 9. Assurance ceiling
+## 10. Assurance ceiling
 
 The system can prove:
 - authority and state consistency;
