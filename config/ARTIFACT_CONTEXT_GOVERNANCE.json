@@ -1,7 +1,6 @@
 {
   "schema_version": "2.0",
   "owner": "NOVEL_WRITING_AGENT",
-  "controller": "D1traverser-debug/universal-agent-os@main",
   "durable_task_state_location": "projects/<task_id>/TASK_MANIFEST.json + projects/<task_id>/checkpoints/CURRENT_CHECKPOINT.json",
   "authoritative_business_evidence_classes": [
     "Canon ledgers",
@@ -11,17 +10,19 @@
     "publication log",
     "current task/checkpoint state"
   ],
-  "canonical_artifact_or_file_stores": ["D1traverser-debug/novel-writing-agent@main"],
+  "canonical_artifact_or_file_stores": [
+    "D1traverser-debug/novel-writing-agent@main"
+  ],
   "cache_or_reference_only_stores": [
-    "UAOS discovery/controller metadata",
+    "CAOS session governance metadata (not business state)",
     "Google Drive /ChatGPT/NOVEL_OS_小说系统_交付归档 (derived artifact vault only)",
     "Google Drive /ChatGPT/NOVEL_OS_名作蒸馏研究库 (explicit user-source and learning-evidence reference only; never task-state or rule authority)",
     "Notion source material if explicitly referenced; never execution authority",
     "chat/model memory"
   ],
   "stable_identity_strategy": "stable task_id + canonical repo path + source SHA256 for FINAL prose or masterwork source + Git blob SHA/version for mutations + provider file ID for explicitly referenced external source/learning artifacts",
-  "read_freshness_requirements": "Read owner main and the exact project checkpoint before material work. Reconcile with UAOS task state when the controller cursor and project checkpoint differ. External stores may be read only when a current owner authority explicitly names the exact source/artifact with stable identity and provenance.",
-  "mutation_conflict_strategy": "GitHub blob-SHA or branch-head compare-and-swap; fail closed on mismatch. Controller-level writer authorization comes from UAOS. For explicitly designated external learning-evidence files, preserve provider file identity and verify replacement bytes/metadata by reread before binding the new hash into GitHub state.",
+  "read_freshness_requirements": "Read Novel owner main and the exact project task manifest/checkpoint before material work. Novel's checkpoint is the sole task/business-state cursor; CAOS session context supplies governance only and is never a competing task-state source. External stores may be read only when a current Novel authority explicitly names the exact source/artifact with stable identity and provenance.",
+  "mutation_conflict_strategy": "GitHub blob-SHA or branch-head compare-and-swap; fail closed on mismatch. Novel owner-native admissions and explicit user-controlled authorization remain the business mutation authority. CAOS supplies cognition/governance review only; it does not grant Novel permissions, authorize provider effects, or make runtime calls. For explicitly designated external learning-evidence files, preserve provider file identity and verify replacement bytes/metadata by reread before binding the new hash into GitHub state.",
   "post_write_verification_method": "Re-read authoritative owner file(s) from main and compare intended stage/next_action/hash/publication facts before reporting committed. External derived/source artifact mutations must also be verified at the provider before their new identity is referenced by project state.",
   "upstream_to_downstream_invalidation_rule": "Any FINAL prose body hash change invalidates dependent reviews, acceptance, derived DOCX parity and downstream checkpoint references until re-run/rebound. Any designated masterwork source hash change invalidates unverified downstream learning coverage; a rolling-ledger hash change must be rebound into STUDY_STATE before future recovery relies on that ledger version.",
   "delete_and_retention_rules": "Do not delete published FINAL/Canon history as cleanup. Destructive mutation requires stable identity and dependency analysis. External publication deletion/replacement remains user-controlled. Derived deliverables and clearly isolated historical snapshots may be retained externally, but executable copies must not become competing authorities.",
@@ -41,5 +42,16 @@
       "work_id",
       "coverage/next-location binding in GitHub STUDY_STATE"
     ]
+  },
+  "business_owner": "NOVEL_WRITING_AGENT",
+  "governance": {
+    "system": "CAOS",
+    "mode": "CHAT_GOVERNED_EXTERNAL",
+    "entrypoint": "CAOS_NOVEL_ENTRY.md",
+    "source_repository": "D1traverser-debug/cognition-agent-os@main",
+    "runtime_dependency": false,
+    "api_dependency": false,
+    "permission_grant": false,
+    "business_state_authority_remains": "D1traverser-debug/novel-writing-agent@main"
   }
 }
