@@ -130,6 +130,8 @@ def require_root_scope_admission(
     if sum(h.disposition is HypothesisDisposition.SELECTED for h in hypotheses) != 1:
         raise BehaviorAdmissionError("exactly one root-scope hypothesis may be SELECTED")
 
+    architecture_refs = _clean(architecture_reassessment_refs)
+    compared_layers = tuple(sorted({h.layer for h in hypotheses}, key=lambda layer: layer.value))
     systemic = any(
         (
             material_problem,
@@ -138,10 +140,12 @@ def require_root_scope_admission(
             architecture_gap,
             complexity_growth,
             scope_expansion,
+            material_decision_receipt is not None,
+            len(hypotheses) > 1,
+            len(compared_layers) > 1,
+            any(h.disposition is HypothesisDisposition.REJECTED for h in hypotheses),
         )
     )
-    architecture_refs = _clean(architecture_reassessment_refs)
-    compared_layers = tuple(sorted({h.layer for h in hypotheses}, key=lambda layer: layer.value))
 
     if systemic:
         if material_decision_receipt is None:
@@ -228,12 +232,20 @@ def _validate_root_scope_receipt(receipt: RootScopeReceipt) -> None:
         raise BehaviorAdmissionError("problem closure denied: root-scope receipt rejected-hypothesis evidence is incomplete")
     if receipt.evidence_refs != expected_refs:
         raise BehaviorAdmissionError("problem closure denied: root-scope receipt evidence references are incomplete or altered")
-    if receipt.architecture_reassessment_performed != bool(architecture_refs):
+    if receipt.architecture_reassessment_refs != architecture_refs or receipt.architecture_reassessment_performed != bool(architecture_refs):
         raise BehaviorAdmissionError("problem closure denied: root-scope architecture reassessment binding is invalid")
     if receipt.material_deliberation_bound != (receipt.material_decision_receipt is not None):
         raise BehaviorAdmissionError("problem closure denied: root-scope material deliberation binding is invalid")
 
-    if receipt.durable_problem_record_required:
+    expected_systemic = bool(
+        len(hypotheses) > 1
+        or len(layers) > 1
+        or rejected
+        or receipt.material_decision_receipt is not None
+    )
+    if receipt.durable_problem_record_required != expected_systemic:
+        raise BehaviorAdmissionError("problem closure denied: root-scope systemic/evolution flag is inconsistent")
+    if expected_systemic:
         if len(hypotheses) < 2 or len(layers) < 2 or not rejected:
             raise BehaviorAdmissionError("problem closure denied: systemic root-scope receipt lacks competing/rejected hypotheses")
         if not any(h.layer in _UPSTREAM_LAYERS for h in hypotheses):
@@ -242,6 +254,7 @@ def _validate_root_scope_receipt(receipt: RootScopeReceipt) -> None:
             raise BehaviorAdmissionError("problem closure denied: systemic root-scope receipt lacks architecture reassessment")
         if receipt.material_decision_receipt is None:
             raise BehaviorAdmissionError("problem closure denied: systemic root-scope receipt lacks material deliberation")
+    if receipt.material_decision_receipt is not None:
         try:
             admit_material_mutation(receipt.material_decision_receipt)
         except Exception as exc:
