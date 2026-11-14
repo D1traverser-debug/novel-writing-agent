@@ -59,3 +59,9 @@ No replacement prose is authorized during the current masterwork study. Historic
 ## 6. Historical cleanup
 
 The active UAOS manifest, adapter, capability profile and Skill are retired from the current Novel execution surface. Historical audits, migration records, prior CI evidence and Git history remain provenance only; they are not current startup instructions, business-state authorities or runtime dependencies.
+
+## Novel-owned admission evidence
+
+The Novel owner runtime preserves a validated **root-scope receipt** containing typed competing hypotheses, selected/rejected alternatives, nonblank supporting and falsification evidence, and any required upstream architecture reassessment. Problem closure also requires a typed evolution disposition and a durable problem reference whenever the problem is systemic or evolution-relevant. Historical projects receive no incumbent privilege: their prior selection or prior success cannot bypass current evidence, authority, dependency and acceptance gates.
+
+The learning-transfer gate remains Novel-owned at `runtime/learning_transfer_admission.py`; it admits Novel-specific evidence and promotion effects rather than creating a second cognition controller.
