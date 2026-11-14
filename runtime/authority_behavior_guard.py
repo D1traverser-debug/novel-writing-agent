@@ -27,19 +27,29 @@ def version_at_least(actual: object, minimum: str) -> bool:
     return left + (0,) * (width - len(left)) >= right + (0,) * (width - len(right))
 
 
-manifest = load_json(".uaos/MANIFEST.json")
-adapter = load_json(".uaos/ADAPTER.json")
-caps = load_json(".uaos/CAPABILITIES.json")
+manifest = load_json("config/DOMAIN_MANIFEST.json")
+caps = load_json("config/DOMAIN_CAPABILITIES.json")
+governance = load_json("config/CAOS_GOVERNANCE.json")
 evolution = load_json("audits/EVOLUTION_INDEX.json")
 rulebook_p = ROOT / "protocols/ACTIVE_RULEBOOK.md"
 rulebook = rulebook_p.read_text(encoding="utf-8") if rulebook_p.exists() else ""
 if not rulebook:
     problems.append("missing:protocols/ACTIVE_RULEBOOK.md")
 
-if manifest.get("controller") != "D1traverser-debug/universal-agent-os@main":
-    problems.append("manifest-controller")
-if adapter.get("task_identity_authority") != "UAOS" or adapter.get("cross_chat_continuity_authority") != "UAOS":
-    problems.append("adapter-uaos-authority")
+if manifest.get("owner") != "NOVEL_WRITING_AGENT" or manifest.get("status") != "NOVEL_DOMAIN_RUNTIME_ACTIVE":
+    problems.append("domain-manifest-owner-or-status")
+if manifest.get("skill", {}).get("entrypoint") != "CAOS_NOVEL_ENTRY.md":
+    problems.append("domain-entrypoint")
+if manifest.get("governance_ref") != "config/CAOS_GOVERNANCE.json" or manifest.get("capability_ref") != "config/DOMAIN_CAPABILITIES.json":
+    problems.append("domain-governance-or-capability-ref")
+caos = governance.get("governance", {})
+if caos.get("system") != "CAOS" or caos.get("mode") != "CHAT_GOVERNED_EXTERNAL":
+    problems.append("caos-governance-binding")
+if caos.get("runtime_dependency") is not False or caos.get("api_dependency") is not False:
+    problems.append("caos-runtime-dependency")
+if governance.get("execution_boundary", {}).get("parent_task_identity") is not False:
+    problems.append("caos-parent-task-identity");
+
 
 for retired_active_pattern in (
     "Global discovery/routing/single-writer lease: `D1traverser-debug/universal-continuity-agent@main`",
@@ -50,8 +60,8 @@ for retired_active_pattern in (
         problems.append("retired-active-authority-semantics:" + retired_active_pattern)
 if "`universal-continuity-agent`, local leases and resume epochs are retired" not in rulebook:
     problems.append("retired-authority-quarantine-marker-missing")
-if "D1traverser-debug/universal-agent-os@main" not in rulebook:
-    problems.append("rulebook-current-parent-missing")
+if "governance_authority: CAOS_CHAT_GOVERNANCE_EXTERNAL" not in rulebook:
+    problems.append("rulebook-caos-governance-missing")
 for ref in (
     "runtime/owner_behavior_admission.py",
     "runtime/deliberation_admission.py",
@@ -61,13 +71,13 @@ for ref in (
     "runtime/story_dependency_graph.py",
     "runtime/narrative_evaluation.py",
 ):
-    if ref not in rulebook and ref not in (ROOT / "UAOS_SKILL.md").read_text(encoding="utf-8"):
+    if ref not in rulebook and ref not in (ROOT / "CAOS_NOVEL_ENTRY.md").read_text(encoding="utf-8"):
         problems.append("runtime-entry-ref-missing:" + ref)
 
-if int(caps.get("profile_version", 0)) < 6:
-    problems.append("profile-version-below-6")
-if not version_at_least(caps.get("common_behavior_assurance_min"), "1.3.0"):
-    problems.append("common-behavior-min-below-1.3")
+if int(caps.get("profile_version", 0)) < 1:
+    problems.append("domain-capability-profile-version")
+if caps.get("governance_ref") != "config/CAOS_GOVERNANCE.json":
+    problems.append("domain-capability-governance-ref")
 if caps.get("canonical_evolution_evidence_ref") != "audits/EVOLUTION_INDEX.json":
     problems.append("canonical-evolution-ref")
 cap_ids = {c.get("capability_id") for c in caps.get("capabilities", [])}
@@ -84,8 +94,8 @@ for cap_id in (
 
 if evolution.get("owner") != "DOMAIN:novel":
     problems.append("evolution-owner")
-if not version_at_least(evolution.get("common_behavior_assurance_min"), "1.3.0"):
-    problems.append("evolution-common-behavior-min-below-1.3")
+if "common_behavior_assurance_min" in evolution:
+    problems.append("retired-common-behavior-parent-binding-remains-active")
 open_items = evolution.get("current_open_items")
 current_refs = evolution.get("current_problem_refs")
 resolved = evolution.get("recent_resolved_or_promoted")
@@ -103,7 +113,8 @@ if not isinstance(resolved, list) or not any(
 
 result = {
     "status": "PASS" if not problems else "FAIL",
-    "controller": manifest.get("controller"),
+    "domain_owner": manifest.get("owner"),
+    "caos_governance_mode": caos.get("mode"),
     "profile_version": caps.get("profile_version"),
     "common_behavior_assurance_min": caps.get("common_behavior_assurance_min"),
     "open_evolution_items": len(open_items) if isinstance(open_items, list) else None,
