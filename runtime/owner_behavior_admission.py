@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Novel-owner executable admission for recovery, root-scope cognition and problem closure.
 
-This module realizes UAOS Common Behavior Assurance 1.3 inside the Novel domain.
+This module provides Novel-owned execution admission for recovery, root-scope and problem closure.
 It reuses the existing material-decision admission instead of creating a second
-cognition engine or transferring Novel business ownership to UAOS.
+cognition engine. CAOS governs cross-project reasoning externally in the active chat; Novel retains business ownership.
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ class ProblemLayer(str, Enum):
     LEARNING_OR_PLAN = "LEARNING_OR_PLAN"
     DOMAIN_ARCHITECTURE = "DOMAIN_ARCHITECTURE"
     COMMON_CAPABILITY = "COMMON_CAPABILITY"
-    PARENT_CONTROL_PLANE = "PARENT_CONTROL_PLANE"
+    CAOS_GOVERNANCE = "CAOS_GOVERNANCE"
     HOST = "HOST"
     REQUIREMENT_OR_GOAL = "REQUIREMENT_OR_GOAL"
 
@@ -44,7 +44,7 @@ class EvolutionDisposition(str, Enum):
     NO_DURABLE_EVOLUTION_WITH_EVIDENCE = "NO_DURABLE_EVOLUTION_WITH_EVIDENCE"
     DOMAIN_EVOLUTION_CANDIDATE = "DOMAIN_EVOLUTION_CANDIDATE"
     DOMAIN_EVOLUTION_UPDATED = "DOMAIN_EVOLUTION_UPDATED"
-    PARENT_OR_COMMON_UPCALL = "PARENT_OR_COMMON_UPCALL"
+    CAOS_GOVERNANCE_REVIEW = "CAOS_GOVERNANCE_REVIEW"
 
 
 @dataclass(frozen=True)
@@ -78,7 +78,7 @@ class RootScopeReceipt:
 _UPSTREAM_LAYERS = {
     ProblemLayer.DOMAIN_ARCHITECTURE,
     ProblemLayer.COMMON_CAPABILITY,
-    ProblemLayer.PARENT_CONTROL_PLANE,
+    ProblemLayer.CAOS_GOVERNANCE,
     ProblemLayer.HOST,
     ProblemLayer.REQUIREMENT_OR_GOAL,
 }
@@ -283,7 +283,7 @@ def finalize_problem_closure(
         in {
             EvolutionDisposition.DOMAIN_EVOLUTION_CANDIDATE,
             EvolutionDisposition.DOMAIN_EVOLUTION_UPDATED,
-            EvolutionDisposition.PARENT_OR_COMMON_UPCALL,
+            EvolutionDisposition.CAOS_GOVERNANCE_REVIEW,
         }
     )
     if durable_required and not (isinstance(durable_problem_ref, str) and durable_problem_ref.strip()):
