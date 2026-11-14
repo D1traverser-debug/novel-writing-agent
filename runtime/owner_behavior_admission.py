@@ -57,13 +57,22 @@ class RootScopeHypothesis:
     falsification_or_rejection_refs: tuple[str, ...]
 
     def __post_init__(self) -> None:
-        if not self.hypothesis_id.strip() or not self.statement.strip():
-            raise ValueError("root-scope hypothesis requires identity and statement")
+        if not isinstance(self.hypothesis_id, str) or not self.hypothesis_id.strip():
+            raise ValueError("root-scope hypothesis requires a non-blank string identity")
+        if not isinstance(self.statement, str) or not self.statement.strip():
+            raise ValueError("root-scope hypothesis requires a non-blank string statement")
+        if not isinstance(self.layer, ProblemLayer):
+            raise ValueError("root-scope hypothesis requires a valid ProblemLayer")
+        if not isinstance(self.disposition, HypothesisDisposition):
+            raise ValueError("root-scope hypothesis requires a valid HypothesisDisposition")
         for label, refs in (
             ("supporting", self.supporting_evidence_refs),
             ("falsification/rejection", self.falsification_or_rejection_refs),
         ):
-            if not refs or any(not isinstance(ref, str) or not ref.strip() for ref in refs):
+            if not isinstance(refs, tuple) or not refs or any(
+                not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+                for ref in refs
+            ):
                 raise ValueError(f"root-scope hypothesis requires non-blank {label} evidence references")
 
 
@@ -92,6 +101,32 @@ _UPSTREAM_LAYERS = {
 }
 
 
+def _validate_root_scope_hypothesis(hypothesis: object, *, context: str) -> RootScopeHypothesis:
+    """Revalidate nested hypothesis data at every trust boundary."""
+    if not isinstance(hypothesis, RootScopeHypothesis):
+        raise BehaviorAdmissionError(f"{context}: invalid nested hypothesis type")
+    if not isinstance(hypothesis.hypothesis_id, str) or not hypothesis.hypothesis_id.strip():
+        raise BehaviorAdmissionError(f"{context}: hypothesis identity must be a non-blank string")
+    if not isinstance(hypothesis.statement, str) or not hypothesis.statement.strip():
+        raise BehaviorAdmissionError(f"{context}: hypothesis statement must be a non-blank string")
+    if not isinstance(hypothesis.layer, ProblemLayer):
+        raise BehaviorAdmissionError(f"{context}: hypothesis layer is invalid")
+    if not isinstance(hypothesis.disposition, HypothesisDisposition):
+        raise BehaviorAdmissionError(f"{context}: hypothesis disposition is invalid")
+    for label, refs in (
+        ("supporting", hypothesis.supporting_evidence_refs),
+        ("falsification/rejection", hypothesis.falsification_or_rejection_refs),
+    ):
+        if not isinstance(refs, tuple) or not refs or any(
+            not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+            for ref in refs
+        ):
+            raise BehaviorAdmissionError(
+                f"{context}: hypothesis requires non-blank {label} evidence references"
+            )
+    return hypothesis
+
+
 def require_root_scope_admission(
     *,
     hypotheses: tuple[RootScopeHypothesis, ...],
@@ -118,8 +153,10 @@ def require_root_scope_admission(
         raise BehaviorAdmissionError(
             "root-scope admission denied: user/external framing was promoted without falsification"
         )
-    if not hypotheses:
-        raise BehaviorAdmissionError("root-scope admission requires hypotheses")
+    if not isinstance(hypotheses, tuple) or not hypotheses:
+        raise BehaviorAdmissionError("root-scope admission requires a non-empty hypothesis tuple")
+    for hypothesis in hypotheses:
+        _validate_root_scope_hypothesis(hypothesis, context="root-scope admission denied")
     hypothesis_ids = [h.hypothesis_id.strip() for h in hypotheses]
     if any(not value for value in hypothesis_ids) or len(set(hypothesis_ids)) != len(hypothesis_ids):
         raise BehaviorAdmissionError("root-scope hypothesis identifiers must be non-empty and unique")
@@ -204,8 +241,45 @@ def _validate_root_scope_receipt(receipt: RootScopeReceipt) -> None:
     if not isinstance(receipt, RootScopeReceipt):
         raise BehaviorAdmissionError("problem closure denied: invalid root-scope receipt type")
     hypotheses = receipt.hypotheses
-    if not hypotheses or len(hypotheses) != receipt.hypothesis_count:
+    if (
+        not isinstance(hypotheses, tuple)
+        or not hypotheses
+        or not isinstance(receipt.hypothesis_count, int)
+        or isinstance(receipt.hypothesis_count, bool)
+        or len(hypotheses) != receipt.hypothesis_count
+    ):
         raise BehaviorAdmissionError("problem closure denied: root-scope receipt lost its hypotheses")
+    for hypothesis in hypotheses:
+        _validate_root_scope_hypothesis(
+            hypothesis,
+            context="problem closure denied: root-scope receipt",
+        )
+    if not isinstance(receipt.selected_hypothesis_id, str) or not receipt.selected_hypothesis_id.strip():
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt selected identity is invalid")
+    if not isinstance(receipt.selected_layer, ProblemLayer):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt selected layer is invalid")
+    if not isinstance(receipt.compared_layers, tuple) or any(
+        not isinstance(layer, ProblemLayer) for layer in receipt.compared_layers
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt compared layers are invalid")
+    if not isinstance(receipt.rejected_hypothesis_ids, tuple) or any(
+        not isinstance(value, str) or not value.strip() for value in receipt.rejected_hypothesis_ids
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt rejected IDs are invalid")
+    if not isinstance(receipt.evidence_refs, tuple) or any(
+        not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+        for ref in receipt.evidence_refs
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope receipt evidence refs are invalid")
+    if not isinstance(receipt.architecture_reassessment_refs, tuple) or any(
+        not isinstance(ref, str) or not ref.strip() or ref != ref.strip()
+        for ref in receipt.architecture_reassessment_refs
+    ):
+        raise BehaviorAdmissionError("problem closure denied: root-scope architecture refs are invalid")
+    if receipt.material_decision_receipt is not None and not isinstance(
+        receipt.material_decision_receipt, MaterialDecisionReceipt
+    ):
+        raise BehaviorAdmissionError("problem closure denied: material deliberation receipt type is invalid")
     ids = [h.hypothesis_id.strip() for h in hypotheses]
     if any(not value for value in ids) or len(set(ids)) != len(ids):
         raise BehaviorAdmissionError("problem closure denied: root-scope receipt has invalid hypothesis identities")
