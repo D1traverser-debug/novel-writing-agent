@@ -1,6 +1,6 @@
 # Novel Writing Agent — Active Rulebook
 
-version: 2.5-github
+version: 2.6-caos
 status: ACTIVE
 scope: NOVEL
 architecture_ref: protocols/NOVEL_PRODUCT_ARCHITECTURE.md
